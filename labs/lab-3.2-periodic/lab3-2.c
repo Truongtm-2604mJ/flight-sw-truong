@@ -44,6 +44,8 @@
 
 #define CONFIGURE_MICROSECONDS_PER_TICK 10000
 
+#define CONFIGURE_INIT_TASK_ATTRIBUTES RTEMS_FLOATING_POINT
+
 #define CONFIGURE_RTEMS_INIT_TASKS_TABLE
 #define CONFIGURE_INIT
 
@@ -62,7 +64,7 @@
  * ACS_CTRL has the shortest period (100 ms).
  * Therefore it gets the highest priority.
  */
-#define ACS_CTRL_PRIORITY 30
+#define ACS_CTRL_PRIORITY 10
 
 /*
  * TM_HK has a 500 ms period.
@@ -75,7 +77,7 @@
  * PL_LOG has the longest period (1000 ms).
  * Therefore it gets the lowest priority.
  */
-#define PL_LOG_PRIORITY 10
+#define PL_LOG_PRIORITY 30
 
 
 /* ============================================================
@@ -151,7 +153,7 @@ static rtems_task acs_ctrl_task(rtems_task_argument arg)
         /*
          * Nominal workload = approximately 20 ms.
          */
-        do_bounded_work(1000000);
+        do_bounded_work(195000);
 
         sc = rtems_rate_monotonic_period(
             period_id,
@@ -207,7 +209,7 @@ static rtems_task tm_hk_task(rtems_task_argument arg)
         /*
          * Nominal workload = approximately 50 ms.
          */
-        do_bounded_work(2500);
+        do_bounded_work(108000);
 
         sc = rtems_rate_monotonic_period(
             period_id,
@@ -263,7 +265,7 @@ static rtems_task pl_log_task(rtems_task_argument arg)
         /*
          * Nominal workload = approximately 100 ms.
          */
-        do_bounded_work(50000);
+        do_bounded_work(217000);
 
         sc = rtems_rate_monotonic_period(
             period_id,
@@ -306,9 +308,9 @@ rtems_task Init(rtems_task_argument arg)
     printf("\n");
 
     printf("Task configuration:\n");
-    printf("ACS_CTRL: T=100 ms, C=20 ms,  P=10\n");
-    printf("TM_HK:    T=500 ms, C=50 ms,  P=20\n");
-    printf("PL_LOG:   T=1000 ms, C=100 ms, P=30\n");
+    printf("ACS_CTRL: T=100 ms, C=20 ms,  P=%d\n", ACS_CTRL_PRIORITY);
+    printf("TM_HK:    T=500 ms, C=50 ms,  P=%d\n", TM_HK_PRIORITY);
+    printf("PL_LOG:   T=1000 ms, C=100 ms, P=%d\n",PL_LOG_PRIORITY);
     printf("\n");
 
     printf("Utilization U = 0.40\n");
