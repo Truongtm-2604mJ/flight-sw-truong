@@ -1,0 +1,64 @@
+[   0.000] # transport: child process: ./lab4-2.host
+[   0.002] console  *** HOST SIMULATION (POSIX shim, not RTEMS) ***
+[   0.002] console  ============================================
+[   0.002] console  Lab 4.2 - PUS service 17 with verification
+[   0.002] console  ============================================
+[   0.002] console  Command APID  : 0x010
+[   0.002] console  Link framing  : TC:<hex> in, TM:<hex> out
+[   1.002] # 1. Valid TC(17,1): expect acceptance, test report, completion
+[   1.002] TC -> 1810C00000062911010001306A  TC(17,1) are-you-alive
+[   1.002] TM <- 0810C00000122001010000000100000000FFF81810C0000C09
+[   1.002]         APID 0x010 seq     0 t=    1.000s TM(1,1)  acceptance OK for request 1810C000
+[   1.002] TM <- 0810C001000E2011020000000100000000FFFC3D77
+[   1.002]         APID 0x010 seq     1 t=    1.000s TM(17,2)  connection test report (alive)
+[   1.002] TM <- 0810C00200122001070000000100000000FFFD1810C0009253
+[   1.002]         APID 0x010 seq     2 t=    1.000s TM(1,7)  completion OK for request 1810C000
+[   1.602]   PASS  TM order is (1,1) (17,2) (1,7): got [(1, 1), (17, 2), (1, 7)]
+[   1.602]   PASS  verification reports carry request ID 1810C000
+[   1.602]   PASS  reports are addressed to source ID 1
+[   1.602] # 2. Corrupted checksum: expect acceptance failure, no execution
+[   1.602] TC -> 1810C0010006291101000177B8  TC(17,1) with the last CRC bit flipped
+[   1.603] TM <- 0810C0030013200102000000000000000199B61810C001032F9D
+[   1.603]         APID 0x010 seq     3 t=    1.600s TM(1,2)  acceptance FAILED for request 1810C001, failure code 3 (CHECKSUM)
+[   2.203]   PASS  only an acceptance failure TM(1,2): got [(1, 2)]
+[   2.203]   PASS  failure code is 3 CHECKSUM: got 3
+[   2.203]   PASS  no test report: not executed
+[   2.203] # 3. Unimplemented service 8: expect a different failure code
+[   2.203] TC -> 1810C00200062908010001571C  TC(8,1) service not implemented onboard
+[   2.203] TM <- 0810C0040013200102000000010000000233771810C00207351B
+[   2.203]         APID 0x010 seq     4 t=    2.201s TM(1,2)  acceptance FAILED for request 1810C002, failure code 7 (SERVICE)
+[   2.803]   PASS  only an acceptance failure TM(1,2): got [(1, 2)]
+[   2.803]   PASS  failure code is 7 SERVICE: got 7
+[   2.803]   PASS  failure code differs from the checksum failure code
+[   2.803] # Extra: other failure codes in the validation sequence
+[   2.803] TC -> 1810C003000629116300010D14  TC(17,99) unknown subtype
+[   2.806] TM <- 0810C00500132001020000000100000002CD2C1810C003088C15
+[   2.806]         APID 0x010 seq     5 t=    2.801s TM(1,2)  acceptance FAILED for request 1810C003, failure code 8 (SUBTYPE)
+[   3.404]   PASS  unknown subtype: TM(1,2) with code 8: got code 8
+[   3.404] TC -> 1810C004000729110100010078DD  TC(17,1) unexpected application data
+[   3.404] TM <- 0810C0060013200102000000010000000366E91810C004095F5A
+[   3.404]         APID 0x010 seq     6 t=    3.402s TM(1,2)  acceptance FAILED for request 1810C004, failure code 9 (APP_DATA)
+[   4.004]   PASS  unexpected application data: TM(1,2) with code 9: got code 9
+[   4.004] TC -> 1811C000000629110100015F2F  TC(17,1) wrong APID
+[   4.005] TM <- 0810C0070013200102000000000000000400A51811C0000546F1
+[   4.005]         APID 0x010 seq     7 t=    4.003s TM(1,2)  acceptance FAILED for request 1811C000, failure code 5 (APID)
+[   4.605]   PASS  wrong APID: TM(1,2) with code 5: got code 5
+[   4.605] TC -> 1810C005000629110100  TC(17,1) with 3 octets missing
+[   4.606] TM <- 0810C008001320010200000000000000049A591810C005028C32
+[   4.606]         APID 0x010 seq     8 t=    4.603s TM(1,2)  acceptance FAILED for request 1810C005, failure code 2 (LENGTH)
+[   5.205]   PASS  truncated packet: TM(1,2) with code 2: got code 2
+[   5.205] # Valid TC(17,1) again, all four acknowledgement flags set
+[   5.206] TC -> 1810C00600062F110100017D24  TC(17,1) ack flags 1111
+[   5.206] TM <- 0810C0090012200101000000010000000534281810C006D712
+[   5.206]         APID 0x010 seq     9 t=    5.204s TM(1,1)  acceptance OK for request 1810C006
+[   5.206] TM <- 0810C00A0012200103000000010000000534291810C0066E4F
+[   5.206]         APID 0x010 seq    10 t=    5.204s TM(1,3)  start OK for request 1810C006
+[   5.206] TM <- 0810C00B000E20110200000001000000053429D61D
+[   5.206]         APID 0x010 seq    11 t=    5.204s TM(17,2)  connection test report (alive)
+[   5.206] TM <- 0810C00C0012200107000000010000000534291810C0064857
+[   5.206]         APID 0x010 seq    12 t=    5.204s TM(1,7)  completion OK for request 1810C006
+[   5.806]   PASS  TM order is (1,1) (1,3) (17,2) (1,7): got [(1, 1), (1, 3), (17, 2), (1, 7)]
+[   5.806] # 4. Sequence counts across the whole exchange
+[   5.806]   PASS  APID 0x010: 13 packets, sequence counts consecutive (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, ... 12)
+[   5.806]   PASS  every TM line passed the ground CRC check
+[   5.907] # result: 16 passed, 0 failed
