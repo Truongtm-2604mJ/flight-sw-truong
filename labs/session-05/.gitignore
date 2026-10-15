@@ -1,0 +1,7 @@
+test_monitor
+test_liveness
+test_modes
+*.host
+*.exe
+fdir_nv.bin
+__pycache__/
