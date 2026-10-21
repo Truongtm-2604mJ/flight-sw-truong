@@ -120,6 +120,97 @@ static void test_ground_can_command_any_mode(void)
     CHECK_EQ(transitions, 3);
 }
 
+/* ---- Ground privilege is fail closed (review correction) --------------- */
+
+static void test_only_ground_cause_is_privileged(void)
+{
+    static const cause_src_t non_ground[] = {
+        CAUSE_BOOT, CAUSE_MONITOR, CAUSE_LIVENESS, CAUSE_WATCHDOG_RESET,
+        (cause_src_t)5, (cause_src_t)99, (cause_src_t)0xFF
+    };
+    size_t i;
+
+    CHECK_EQ(mode_is_ground(CAUSE_GROUND), 1);
+    CHECK_EQ(mode_is_autonomous(CAUSE_GROUND), 0);
+    for (i = 0; i < sizeof(non_ground) / sizeof(non_ground[0]); i++) {
+        CHECK_EQ(mode_is_ground(non_ground[i]), 0);
+        CHECK_EQ(mode_is_autonomous(non_ground[i]), 1);
+    }
+}
+
+static void test_ground_can_leave_degraded_and_safe(void)
+{
+    setup(MODE_DEGRADED);
+    CHECK_EQ(mode_request(&m, MODE_NOMINAL, CAUSE_GROUND, 0, 0), MODE_CHANGED);
+    CHECK_EQ(m.mode, MODE_NOMINAL);
+
+    setup(MODE_SAFE);
+    CHECK_EQ(mode_request(&m, MODE_DEGRADED, CAUSE_GROUND, 0, 0), MODE_CHANGED);
+    CHECK_EQ(m.mode, MODE_DEGRADED);
+
+    setup(MODE_SAFE);
+    CHECK_EQ(mode_request(&m, MODE_NOMINAL, CAUSE_GROUND, 0, 0), MODE_CHANGED);
+    CHECK_EQ(m.mode, MODE_NOMINAL);
+
+    /* Ground is never inhibited. */
+    setup(MODE_SAFE);
+    CHECK_EQ(mode_set_inhibit(&m, 1, 600, 0), 0);
+    CHECK_EQ(mode_request(&m, MODE_NOMINAL, CAUSE_GROUND, 0, 1), MODE_CHANGED);
+}
+
+static void test_monitor_and_liveness_cannot_de_escalate(void)
+{
+    static const cause_src_t fdir[] = { CAUSE_MONITOR, CAUSE_LIVENESS };
+    size_t i;
+
+    for (i = 0; i < 2; i++) {
+        setup(MODE_SAFE);
+        CHECK_EQ(mode_request(&m, MODE_DEGRADED, fdir[i], 1, 0), MODE_NO_CHANGE);
+        CHECK_EQ(mode_request(&m, MODE_NOMINAL, fdir[i], 1, 0), MODE_NO_CHANGE);
+        CHECK_EQ(m.mode, MODE_SAFE);
+        setup(MODE_DEGRADED);
+        CHECK_EQ(mode_request(&m, MODE_NOMINAL, fdir[i], 1, 0), MODE_NO_CHANGE);
+        CHECK_EQ(m.mode, MODE_DEGRADED);
+        CHECK_EQ(transitions, 0);
+    }
+}
+
+static void test_boot_watchdog_and_unknown_causes_get_no_ground_privilege(void)
+{
+    static const cause_src_t other[] = {
+        CAUSE_BOOT, CAUSE_WATCHDOG_RESET, (cause_src_t)5, (cause_src_t)99,
+        (cause_src_t)0xFF
+    };
+    size_t i;
+
+    for (i = 0; i < sizeof(other) / sizeof(other[0]); i++) {
+        /* Cannot de-escalate. */
+        setup(MODE_SAFE);
+        CHECK_EQ(mode_request(&m, MODE_NOMINAL, other[i], 0, 0), MODE_NO_CHANGE);
+        CHECK_EQ(mode_request(&m, MODE_DEGRADED, other[i], 0, 0), MODE_NO_CHANGE);
+        CHECK_EQ(m.mode, MODE_SAFE);
+        setup(MODE_DEGRADED);
+        CHECK_EQ(mode_request(&m, MODE_NOMINAL, other[i], 0, 0), MODE_NO_CHANGE);
+        CHECK_EQ(m.mode, MODE_DEGRADED);
+
+        /* Cannot bypass the inhibit either. */
+        setup(MODE_NOMINAL);
+        CHECK_EQ(mode_set_inhibit(&m, 1, 600, 0), 0);
+        CHECK_EQ(mode_request(&m, MODE_SAFE, other[i], 0, 1), MODE_REFUSED_INHIBIT);
+        CHECK_EQ(m.mode, MODE_NOMINAL);
+        CHECK_EQ(transitions, 0);
+    }
+}
+
+static void test_target_outside_the_mode_range_is_ignored(void)
+{
+    setup(MODE_NOMINAL);
+    CHECK_EQ(mode_request(&m, (vmode_t)3, CAUSE_GROUND, 0, 0), MODE_NO_CHANGE);
+    CHECK_EQ(mode_request(&m, (vmode_t)200, CAUSE_MONITOR, 0, 0), MODE_NO_CHANGE);
+    CHECK_EQ(m.mode, MODE_NOMINAL);
+    CHECK_EQ(transitions, 0);
+}
+
 /* ---- FDIR inhibit -------------------------------------------------------- */
 
 static void test_inhibit_blocks_autonomous_only(void)
@@ -265,6 +356,11 @@ int main(void)
     RUN(test_autonomous_requests_never_go_back);
     RUN(test_safe_is_left_only_by_ground);
     RUN(test_ground_can_command_any_mode);
+    RUN(test_only_ground_cause_is_privileged);
+    RUN(test_ground_can_leave_degraded_and_safe);
+    RUN(test_monitor_and_liveness_cannot_de_escalate);
+    RUN(test_boot_watchdog_and_unknown_causes_get_no_ground_privilege);
+    RUN(test_target_outside_the_mode_range_is_ignored);
     RUN(test_inhibit_blocks_autonomous_only);
     RUN(test_inhibit_expires_by_itself);
     RUN(test_inhibit_duration_is_bounded);

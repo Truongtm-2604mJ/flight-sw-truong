@@ -2,7 +2,8 @@
 #
 #   make host           lab5-test.host   test build on the POSIX RTEMS shim
 #   make host-flight    lab5-flight.host flight build on the shim
-#   make check-flight   prove the injection code is absent from flight builds
+#   make check-flight   injection code absent from the flight build, and
+#                       TC(200,x) rejected with TM(1,2) code 7 when run
 #   make rtems          lab5-test.exe and lab5-flight.exe for RTEMS 6 / LEON3
 #   make rtems-timing   lab5-timing.exe: flight build, 60 s, rate monotonic stats
 include ../rtems.mk
@@ -32,12 +33,16 @@ lab5-test.host: $(TEST_SRC) $(HDRS) $(SIM)/rtems_shim.c $(SIM)/rtems.h
 lab5-flight.host: $(SRC) $(HDRS) $(SIM)/rtems_shim.c $(SIM)/rtems.h
 	$(CC) $(HOST_CFLAGS) -I$(SIM) $(INC) -o $@ $(SRC) $(SIM)/rtems_shim.c -lpthread
 
-# A flight build must contain no fault injection symbol at all, and must
-# reject service 200 like any unknown service.
+# A flight build must contain no fault injection symbol at all (static
+# check), and must reject every service 200 telecommand with TM(1,2)
+# code 7 (executed against the running flight build).
 check-flight: lab5-flight.host
 	@if nm lab5-flight.host | grep -i finj; then \
 	    echo "FAIL: fault injection symbols in the flight build"; exit 1; \
 	else echo "OK: no finj_ symbols in lab5-flight.host"; fi
+	python3 ../lab-5.4-fault-injection/ground/check_flight.py \
+	    --spawn ./lab5-flight.host --nv-file /tmp/fdir_nv_flight.bin \
+	    --log ../lab-5.4-fault-injection/logs/host-sim-check-flight.log
 	@if [ -f lab5-flight.exe ]; then \
 	    if $(RTEMS_PREFIX)/bin/$(RTEMS_ARCH)-nm lab5-flight.exe | grep -i finj; then \
 	        echo "FAIL: fault injection symbols in lab5-flight.exe"; exit 1; \

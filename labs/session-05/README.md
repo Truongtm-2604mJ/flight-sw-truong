@@ -21,8 +21,8 @@ are reused by path from `../session-04`; nothing there was changed.
 
 | | Result |
 |---|---|
-| Unit tests (`make test`): 217 + 10 775 + 100 checks, `-Werror`, Address/UB sanitizers | pass |
-| Flight build has no injection code (`make check-flight`), and rejects TC(200,x) with code 7 | pass |
+| Unit tests (`make test`): 217 + 10 775 + 189 checks, `-Werror`, Address/UB sanitizers | pass |
+| Flight build has no injection code, and rejects every TC(200,x) with TM(1,2) code 7 when run (`make check-flight`, 11 checks) | pass |
 | Lab 5.3 scenario (`gs_modes.py`): 51 checks | pass |
 | Lab 5.4 campaign: 6 injections + 300 s false positive run, 33 checks | pass |
 | False positive run, 3600 s of onboard time: 0 detections, 43 of 43 glitches filtered | pass |
@@ -34,7 +34,7 @@ sources as RTEMS. Campaign table: `lab-5.4-fault-injection/results/`.
 
 ```
 make test            # unit tests
-make check-flight    # flight build contains no fault injection
+make check-flight    # no injection code in the flight build, TC(200,x) rejected
 make demo            # Lab 5.3 scenario + Lab 5.4 campaign, about 8 minutes
 ```
 

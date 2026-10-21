@@ -2,7 +2,7 @@
 
 **Scope:** Session 5, Labs 5.1 to 5.4. Builds on the Session 3 task set and the Session 4 TM/TC chain. Target: RTEMS 6 on LEON3 (SIS).
 
-**Evidence.** The FDIR logic is portable C, verified by unit tests (217 + 10 775 + 100 checks). The integrated application runs unmodified on a POSIX implementation of the RTEMS Classic API (`host-sim/`), where every result in Section 5 was measured: the Lab 5.3 scenario (51 checks), the six injections of the Lab 5.4 campaign, and a one-hour false positive run. The latencies are set by the onboard periods, not by CPU speed.
+**Evidence.** The FDIR logic is portable C, verified by unit tests (217 + 10 775 + 189 checks). The integrated application runs unmodified on a POSIX implementation of the RTEMS Classic API (`host-sim/`), where every result in Section 5 was measured: the Lab 5.3 scenario (51 checks), the six injections of the Lab 5.4 campaign, and a one-hour false positive run. The latencies are set by the onboard periods, not by CPU speed.
 
 ---
 
@@ -78,6 +78,7 @@ The state machine of one monitor is OK → WARN (violation being counted, no eve
 
 The rules live in one function (`mode_request()`):
 
+- **Ground privilege fails closed.** Only the cause value GROUND is a privileged request. Every other value, including BOOT, WATCHDOG_RESET and any value not defined today (a future cause or a corrupted one), is treated as autonomous: it can only escalate and it is subject to the inhibit. Unit tests check this for every defined non-ground cause and for out-of-range values.
 - **Autonomous requests only escalate.** They can go NOMINAL → DEGRADED or NOMINAL/DEGRADED → SAFE, never back and never sideways.
 - **Only the ground leaves SAFE or DEGRADED.** There is no timeout and no automatic exit.
 - **The inhibit blocks only autonomous requests.** While it is set, they are refused and an ACTION_INHIBITED event is reported; ground commands always work.
@@ -110,7 +111,7 @@ The rules live in one function (`mode_request()`):
 
 ## 5. Fault injection campaign
 
-The injection harness (`lab-5.4-fault-injection/finj.c`, TC service 200) exists only in the test build. In the flight build the injection points compile to nothing. `make check-flight` checks that no `finj_` symbol is present, and a flight build answers TC(200,x) with TM(1,2) code 7, "service not implemented".
+The injection harness (`lab-5.4-fault-injection/finj.c`, TC service 200) exists only in the test build. In the flight build the injection points compile to nothing. `make check-flight` provides two pieces of evidence. It checks statically that no `finj_` symbol is present in the flight executable. It then runs the flight build and sends every service 200 subtype (`ground/check_flight.py`, 11 checks): each is answered with TM(1,2) code 7, "service not implemented", and nothing else, while a TC(17,1) before and after shows the command handler is alive, and housekeeping shows no effect (log: `logs/host-sim-check-flight.log`).
 
 Each row runs on a freshly started spacecraft. Latency is onboard time from the injection command's completion report TM(1,7) to the detecting event.
 

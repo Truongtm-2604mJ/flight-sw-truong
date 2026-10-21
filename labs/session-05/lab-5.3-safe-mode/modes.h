@@ -14,7 +14,11 @@
  *     +------------------- ground "NOMINAL" from DEGRADED
  *
  * Rules, enforced here and nowhere else:
- *   - Autonomous (FDIR) requests only ever move towards SAFE:
+ *   - Only CAUSE_GROUND is a privileged (ground) request. Every other
+ *     cause value, known or not, is treated as autonomous: fail closed,
+ *     so a new or corrupted cause can never de-escalate the vehicle or
+ *     bypass the inhibit.
+ *   - Autonomous requests only ever move towards SAFE:
  *     NOMINAL -> DEGRADED, NOMINAL/DEGRADED -> SAFE. Never back.
  *   - Only the ground leaves SAFE or DEGRADED. No timeout, no automatic
  *     recovery.
@@ -91,7 +95,8 @@ typedef struct {
 void mode_init(mode_mgr_t *m, vmode_t mode, cause_src_t src, uint16_t detail,
                const mode_ops_t *ops, void *arg);
 
-/* Request a mode. src decides whether it is autonomous or ground. */
+/* Request a mode. Only src == CAUSE_GROUND is a ground request; any
+ * other value is autonomous. A target that is not a mode is ignored. */
 mode_result_t mode_request(mode_mgr_t *m, vmode_t target, cause_src_t src,
                            uint16_t detail, uint32_t now_ms);
 
@@ -106,6 +111,7 @@ void mode_tick(mode_mgr_t *m, uint32_t now_ms);
 /* Seconds of inhibit left (0 if not inhibited), for telemetry. */
 uint16_t mode_inhibit_remaining_s(const mode_mgr_t *m, uint32_t now_ms);
 
-int mode_is_autonomous(cause_src_t src);
+int mode_is_ground(cause_src_t src);      /* src == CAUSE_GROUND only */
+int mode_is_autonomous(cause_src_t src);  /* everything else           */
 
 #endif /* MODES_H */

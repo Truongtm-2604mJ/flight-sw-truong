@@ -3,9 +3,20 @@
 
 #include <string.h>
 
+/*
+ * Fail closed: exactly one cause value carries ground privileges. Every
+ * other value, including BOOT, WATCHDOG_RESET and any value that does
+ * not exist yet or got corrupted, is treated as a non-trusted request
+ * that may only escalate and is subject to the inhibit.
+ */
+int mode_is_ground(cause_src_t src)
+{
+    return src == CAUSE_GROUND;
+}
+
 int mode_is_autonomous(cause_src_t src)
 {
-    return src == CAUSE_MONITOR || src == CAUSE_LIVENESS;
+    return !mode_is_ground(src);
 }
 
 void mode_init(mode_mgr_t *m, vmode_t mode, cause_src_t src, uint16_t detail,
@@ -27,7 +38,11 @@ mode_result_t mode_request(mode_mgr_t *m, vmode_t target, cause_src_t src,
 {
     vmode_t from = m->mode;
 
-    if (mode_is_autonomous(src)) {
+    if (target > MODE_SAFE) {
+        return MODE_NO_CHANGE;           /* not a mode: ignore */
+    }
+
+    if (!mode_is_ground(src)) {
         if (target <= from) {
             return MODE_NO_CHANGE;       /* never back, never sideways */
         }
