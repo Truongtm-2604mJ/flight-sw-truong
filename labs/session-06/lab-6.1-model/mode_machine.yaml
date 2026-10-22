@@ -1,0 +1,170 @@
+# Lab 6.1 - Vehicle mode state machine, formal specification.
+#
+# Source of truth for the mode logic. The C module in
+# ../lab-6.2-generation/generated/ is generated from this file and must
+# never be edited by hand: change this file, regenerate.
+#
+# Derived from the hand written Lab 5.3 implementation
+# (../../session-05/lab-5.3-safe-mode/modes.c). Execution semantics are
+# stated in semantics.md and encoded in the `semantics` block below,
+# which the generator checks it supports.
+
+model: vehicle_mode
+version: 2   # v2: SAFE entry tightens monitoring (divergence log, D-01)
+
+semantics:
+  evaluation: cyclic                 # one step per supervisor period
+  input_sampling: start_of_cycle     # inputs and pending events frozen for the step
+  max_transitions_per_cycle: 1       # internal transitions count
+  conflict_resolution: priority      # lowest number wins, unique per state
+  self_transition_runs_entry: false  # no self transitions exist; internal ones never do
+  unconsumed_one_shot: discard_and_report
+  unconsumed_latched: retain_if_transition_fired
+
+initial: NOMINAL
+boot_states: [NOMINAL, SAFE]         # SAFE after a watchdog reset (MM-090)
+invalid_state_recovery: SAFE         # state variable corrupted (SEU): go SAFE (MM-120)
+
+inputs:
+  - name: fdir_inhibited
+    type: bool
+    doc: Autonomous FDIR actions inhibited by ground (TC(19,9)), sampled once per cycle.
+
+events:
+  # Ground commands, from TC(8,1) only. The only privileged events.
+  - name: tc_mode_nominal
+    source: ground
+    class: one_shot
+    req: [MM-120]
+  - name: tc_mode_degraded
+    source: ground
+    class: one_shot
+    req: [MM-120]
+  - name: tc_mode_safe
+    source: ground
+    class: one_shot
+    req: [MM-120]
+  # Autonomous FDIR conclusions (monitor alarm, liveness escalation, or any
+  # cause that is not the ground).
+  - name: fault_noncritical
+    source: autonomous
+    class: latched
+    req: [MM-130]
+  - name: fault_critical
+    source: autonomous
+    class: latched
+    req: [MM-130]
+  - name: fault_cleared
+    source: autonomous
+    class: one_shot
+    doc: A monitor returned inside its limits. Never causes recovery.
+    req: [MM-050]
+
+states:
+  - name: NOMINAL
+    doc: All tasks running, payload enabled, normal telemetry rate.
+    on_entry: [payload_enable, hk_rate_normal]
+    ignore: [tc_mode_nominal, fault_cleared]
+    req: [MM-100]
+
+  - name: DEGRADED
+    doc: Non critical fault confirmed. Payload suspended, monitoring tightened.
+    on_entry: [payload_suspend, hk_rate_high, monitors_tighten]
+    ignore: [tc_mode_degraded, fault_noncritical, fault_cleared]
+    req: [MM-100]
+
+  - name: SAFE
+    doc: Terminal autonomous state. Waits for the ground.
+    on_entry: [payload_off, schedule_suspend, hk_minimal, monitors_tighten, sun_pointing, rx_guarantee]
+    on_exit: [sun_pointing_release]   # see ambiguities.md, A5
+    ignore: [tc_mode_safe, fault_critical, fault_noncritical, fault_cleared]
+    req: [MM-020, MM-030, MM-100]
+
+transitions:
+  # ---- from NOMINAL ------------------------------------------------------
+  - id: T01
+    from: NOMINAL
+    to: SAFE
+    event: tc_mode_safe
+    priority: 1
+    req: [MM-070]
+  - id: T02
+    from: NOMINAL
+    to: SAFE
+    event: fault_critical
+    guard: "!fdir_inhibited"
+    priority: 2
+    req: [MM-040]
+  - id: T03
+    from: NOMINAL
+    to: DEGRADED
+    event: tc_mode_degraded
+    priority: 3
+    req: [MM-070]
+  - id: T04
+    from: NOMINAL
+    to: DEGRADED
+    event: fault_noncritical
+    guard: "!fdir_inhibited"
+    priority: 4
+    req: [MM-040]
+  - id: T05
+    from: NOMINAL
+    internal: true
+    event: fault_critical
+    guard: fdir_inhibited
+    action: [report_action_inhibited]
+    priority: 5
+    req: [MM-060]
+  - id: T06
+    from: NOMINAL
+    internal: true
+    event: fault_noncritical
+    guard: fdir_inhibited
+    action: [report_action_inhibited]
+    priority: 6
+    req: [MM-060]
+
+  # ---- from DEGRADED -----------------------------------------------------
+  - id: T07
+    from: DEGRADED
+    to: SAFE
+    event: tc_mode_safe
+    priority: 1
+    req: [MM-070]
+  - id: T08
+    from: DEGRADED
+    to: SAFE
+    event: fault_critical
+    guard: "!fdir_inhibited"
+    priority: 2
+    req: [MM-040]
+  - id: T09
+    from: DEGRADED
+    to: NOMINAL
+    event: tc_mode_nominal
+    priority: 3
+    req: [MM-010]
+  - id: T10
+    from: DEGRADED
+    internal: true
+    event: fault_critical
+    guard: fdir_inhibited
+    action: [report_action_inhibited]
+    priority: 4
+    req: [MM-060]
+
+  # ---- from SAFE ---------------------------------------------------------
+  # Two ground commands in one cycle: the less de-escalating one wins.
+  - id: T11
+    from: SAFE
+    to: DEGRADED
+    event: tc_mode_degraded
+    priority: 1
+    req: [MM-010]
+  - id: T12
+    from: SAFE
+    to: NOMINAL
+    event: tc_mode_nominal
+    priority: 2
+    req: [MM-010]

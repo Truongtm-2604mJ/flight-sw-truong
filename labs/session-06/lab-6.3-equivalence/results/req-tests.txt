@@ -1,0 +1,17 @@
+TC-SAFE-EXIT-01    MM-010          PASS
+TC-SAFE-EXIT-02    MM-010,MM-070   PASS
+TC-SAFE-EXIT-03    MM-010          PASS
+TC-SAFE-ENTRY-01   MM-030          PASS
+TC-SAFE-ENTRY-02   MM-020          PASS
+TC-FAULT-01        MM-040          PASS
+TC-NOREC-01        MM-050          PASS
+TC-INH-01          MM-060          PASS
+TC-GND-01          MM-070          PASS
+TC-REP-01          MM-080          PASS
+TC-BOOT-01         MM-090          PASS
+TC-DET-01          MM-110          PASS
+TC-FAIL-01         MM-120          PASS
+TC-FAIL-02         MM-120          PASS
+TC-LATCH-01        MM-130          PASS
+
+15 test cases, 0 failed

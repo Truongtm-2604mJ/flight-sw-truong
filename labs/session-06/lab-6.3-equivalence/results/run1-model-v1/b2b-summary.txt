@@ -1,0 +1,18 @@
+Back-to-back: hand written modes.c vs generated mode_sm.c
+
+suite_a.seq                                163 cases    336 cycles    300 events    68 divergences
+suite_b.seq                                234 cases    390 cycles    678 events   180 divergences
+soak_a.seq                                   1 cases   5000 cycles   4270 events   274 divergences
+soak_b.seq                                   1 cases   5000 cycles   7504 events  1120 divergences
+
+10726 cycles compared, 1642 divergences
+
+By class:
+  single-event mismatch                           502
+  intermediate transitions (hand)                 156
+  ground overrides same-cycle fault (hand)        105
+  fault lost to order (hand)                      158
+  conflicting ground commands                     393
+  same end state but different cause attribution   105
+  UNCLASSIFIED                                    223
+  timing only (not a divergence)                  478

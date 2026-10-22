@@ -1,0 +1,826 @@
+# Suite A: one event per cycle, generated from the model.
+# NOMINAL: tc_mode_nominal, inhibit 0
+CASE A-001 A
+CYCLE 0 tc_mode_nominal
+CYCLE 0 -
+END
+# NOMINAL: tc_mode_nominal, inhibit 1
+CASE A-002 A
+CYCLE 1 tc_mode_nominal
+CYCLE 1 -
+END
+# NOMINAL: tc_mode_degraded, inhibit 0
+CASE A-003 A
+CYCLE 0 tc_mode_degraded
+CYCLE 0 -
+END
+# NOMINAL: tc_mode_degraded, inhibit 1
+CASE A-004 A
+CYCLE 1 tc_mode_degraded
+CYCLE 1 -
+END
+# NOMINAL: tc_mode_safe, inhibit 0
+CASE A-005 A
+CYCLE 0 tc_mode_safe
+CYCLE 0 -
+END
+# NOMINAL: tc_mode_safe, inhibit 1
+CASE A-006 A
+CYCLE 1 tc_mode_safe
+CYCLE 1 -
+END
+# NOMINAL: fault_noncritical, inhibit 0
+CASE A-007 A
+CYCLE 0 fault_noncritical
+CYCLE 0 -
+END
+# NOMINAL: fault_noncritical, inhibit 1
+CASE A-008 A
+CYCLE 1 fault_noncritical
+CYCLE 1 -
+END
+# NOMINAL: fault_critical, inhibit 0
+CASE A-009 A
+CYCLE 0 fault_critical
+CYCLE 0 -
+END
+# NOMINAL: fault_critical, inhibit 1
+CASE A-010 A
+CYCLE 1 fault_critical
+CYCLE 1 -
+END
+# NOMINAL: fault_cleared, inhibit 0
+CASE A-011 A
+CYCLE 0 fault_cleared
+CYCLE 0 -
+END
+# NOMINAL: fault_cleared, inhibit 1
+CASE A-012 A
+CYCLE 1 fault_cleared
+CYCLE 1 -
+END
+# DEGRADED: tc_mode_nominal, inhibit 0
+CASE A-013 A
+CYCLE 0 tc_mode_degraded
+CYCLE 0 tc_mode_nominal
+CYCLE 0 -
+END
+# DEGRADED: tc_mode_nominal, inhibit 1
+CASE A-014 A
+CYCLE 0 tc_mode_degraded
+CYCLE 1 tc_mode_nominal
+CYCLE 1 -
+END
+# DEGRADED: tc_mode_degraded, inhibit 0
+CASE A-015 A
+CYCLE 0 tc_mode_degraded
+CYCLE 0 tc_mode_degraded
+CYCLE 0 -
+END
+# DEGRADED: tc_mode_degraded, inhibit 1
+CASE A-016 A
+CYCLE 0 tc_mode_degraded
+CYCLE 1 tc_mode_degraded
+CYCLE 1 -
+END
+# DEGRADED: tc_mode_safe, inhibit 0
+CASE A-017 A
+CYCLE 0 tc_mode_degraded
+CYCLE 0 tc_mode_safe
+CYCLE 0 -
+END
+# DEGRADED: tc_mode_safe, inhibit 1
+CASE A-018 A
+CYCLE 0 tc_mode_degraded
+CYCLE 1 tc_mode_safe
+CYCLE 1 -
+END
+# DEGRADED: fault_noncritical, inhibit 0
+CASE A-019 A
+CYCLE 0 tc_mode_degraded
+CYCLE 0 fault_noncritical
+CYCLE 0 -
+END
+# DEGRADED: fault_noncritical, inhibit 1
+CASE A-020 A
+CYCLE 0 tc_mode_degraded
+CYCLE 1 fault_noncritical
+CYCLE 1 -
+END
+# DEGRADED: fault_critical, inhibit 0
+CASE A-021 A
+CYCLE 0 tc_mode_degraded
+CYCLE 0 fault_critical
+CYCLE 0 -
+END
+# DEGRADED: fault_critical, inhibit 1
+CASE A-022 A
+CYCLE 0 tc_mode_degraded
+CYCLE 1 fault_critical
+CYCLE 1 -
+END
+# DEGRADED: fault_cleared, inhibit 0
+CASE A-023 A
+CYCLE 0 tc_mode_degraded
+CYCLE 0 fault_cleared
+CYCLE 0 -
+END
+# DEGRADED: fault_cleared, inhibit 1
+CASE A-024 A
+CYCLE 0 tc_mode_degraded
+CYCLE 1 fault_cleared
+CYCLE 1 -
+END
+# SAFE: tc_mode_nominal, inhibit 0
+CASE A-025 A
+CYCLE 0 tc_mode_safe
+CYCLE 0 tc_mode_nominal
+CYCLE 0 -
+END
+# SAFE: tc_mode_nominal, inhibit 1
+CASE A-026 A
+CYCLE 0 tc_mode_safe
+CYCLE 1 tc_mode_nominal
+CYCLE 1 -
+END
+# SAFE: tc_mode_degraded, inhibit 0
+CASE A-027 A
+CYCLE 0 tc_mode_safe
+CYCLE 0 tc_mode_degraded
+CYCLE 0 -
+END
+# SAFE: tc_mode_degraded, inhibit 1
+CASE A-028 A
+CYCLE 0 tc_mode_safe
+CYCLE 1 tc_mode_degraded
+CYCLE 1 -
+END
+# SAFE: tc_mode_safe, inhibit 0
+CASE A-029 A
+CYCLE 0 tc_mode_safe
+CYCLE 0 tc_mode_safe
+CYCLE 0 -
+END
+# SAFE: tc_mode_safe, inhibit 1
+CASE A-030 A
+CYCLE 0 tc_mode_safe
+CYCLE 1 tc_mode_safe
+CYCLE 1 -
+END
+# SAFE: fault_noncritical, inhibit 0
+CASE A-031 A
+CYCLE 0 tc_mode_safe
+CYCLE 0 fault_noncritical
+CYCLE 0 -
+END
+# SAFE: fault_noncritical, inhibit 1
+CASE A-032 A
+CYCLE 0 tc_mode_safe
+CYCLE 1 fault_noncritical
+CYCLE 1 -
+END
+# SAFE: fault_critical, inhibit 0
+CASE A-033 A
+CYCLE 0 tc_mode_safe
+CYCLE 0 fault_critical
+CYCLE 0 -
+END
+# SAFE: fault_critical, inhibit 1
+CASE A-034 A
+CYCLE 0 tc_mode_safe
+CYCLE 1 fault_critical
+CYCLE 1 -
+END
+# SAFE: fault_cleared, inhibit 0
+CASE A-035 A
+CYCLE 0 tc_mode_safe
+CYCLE 0 fault_cleared
+CYCLE 0 -
+END
+# SAFE: fault_cleared, inhibit 1
+CASE A-036 A
+CYCLE 0 tc_mode_safe
+CYCLE 1 fault_cleared
+CYCLE 1 -
+END
+# NOMINAL: fault_noncritical with cause BOOT, inhibit 0
+CASE A-037 A
+CYCLE 0 fault_noncritical:0
+END
+# NOMINAL: fault_noncritical with cause BOOT, inhibit 1
+CASE A-038 A
+CYCLE 1 fault_noncritical:0
+END
+# NOMINAL: fault_noncritical with cause MONITOR, inhibit 0
+CASE A-039 A
+CYCLE 0 fault_noncritical:2
+END
+# NOMINAL: fault_noncritical with cause MONITOR, inhibit 1
+CASE A-040 A
+CYCLE 1 fault_noncritical:2
+END
+# NOMINAL: fault_noncritical with cause LIVENESS, inhibit 0
+CASE A-041 A
+CYCLE 0 fault_noncritical:3
+END
+# NOMINAL: fault_noncritical with cause LIVENESS, inhibit 1
+CASE A-042 A
+CYCLE 1 fault_noncritical:3
+END
+# NOMINAL: fault_noncritical with cause WATCHDOG_RESET, inhibit 0
+CASE A-043 A
+CYCLE 0 fault_noncritical:4
+END
+# NOMINAL: fault_noncritical with cause WATCHDOG_RESET, inhibit 1
+CASE A-044 A
+CYCLE 1 fault_noncritical:4
+END
+# NOMINAL: fault_noncritical with cause UNDEFINED_5, inhibit 0
+CASE A-045 A
+CYCLE 0 fault_noncritical:5
+END
+# NOMINAL: fault_noncritical with cause UNDEFINED_5, inhibit 1
+CASE A-046 A
+CYCLE 1 fault_noncritical:5
+END
+# NOMINAL: fault_noncritical with cause UNDEFINED_99, inhibit 0
+CASE A-047 A
+CYCLE 0 fault_noncritical:99
+END
+# NOMINAL: fault_noncritical with cause UNDEFINED_99, inhibit 1
+CASE A-048 A
+CYCLE 1 fault_noncritical:99
+END
+# NOMINAL: fault_noncritical with cause UNDEFINED_255, inhibit 0
+CASE A-049 A
+CYCLE 0 fault_noncritical:255
+END
+# NOMINAL: fault_noncritical with cause UNDEFINED_255, inhibit 1
+CASE A-050 A
+CYCLE 1 fault_noncritical:255
+END
+# NOMINAL: fault_critical with cause BOOT, inhibit 0
+CASE A-051 A
+CYCLE 0 fault_critical:0
+END
+# NOMINAL: fault_critical with cause BOOT, inhibit 1
+CASE A-052 A
+CYCLE 1 fault_critical:0
+END
+# NOMINAL: fault_critical with cause MONITOR, inhibit 0
+CASE A-053 A
+CYCLE 0 fault_critical:2
+END
+# NOMINAL: fault_critical with cause MONITOR, inhibit 1
+CASE A-054 A
+CYCLE 1 fault_critical:2
+END
+# NOMINAL: fault_critical with cause LIVENESS, inhibit 0
+CASE A-055 A
+CYCLE 0 fault_critical:3
+END
+# NOMINAL: fault_critical with cause LIVENESS, inhibit 1
+CASE A-056 A
+CYCLE 1 fault_critical:3
+END
+# NOMINAL: fault_critical with cause WATCHDOG_RESET, inhibit 0
+CASE A-057 A
+CYCLE 0 fault_critical:4
+END
+# NOMINAL: fault_critical with cause WATCHDOG_RESET, inhibit 1
+CASE A-058 A
+CYCLE 1 fault_critical:4
+END
+# NOMINAL: fault_critical with cause UNDEFINED_5, inhibit 0
+CASE A-059 A
+CYCLE 0 fault_critical:5
+END
+# NOMINAL: fault_critical with cause UNDEFINED_5, inhibit 1
+CASE A-060 A
+CYCLE 1 fault_critical:5
+END
+# NOMINAL: fault_critical with cause UNDEFINED_99, inhibit 0
+CASE A-061 A
+CYCLE 0 fault_critical:99
+END
+# NOMINAL: fault_critical with cause UNDEFINED_99, inhibit 1
+CASE A-062 A
+CYCLE 1 fault_critical:99
+END
+# NOMINAL: fault_critical with cause UNDEFINED_255, inhibit 0
+CASE A-063 A
+CYCLE 0 fault_critical:255
+END
+# NOMINAL: fault_critical with cause UNDEFINED_255, inhibit 1
+CASE A-064 A
+CYCLE 1 fault_critical:255
+END
+# NOMINAL: fault_cleared with cause BOOT, inhibit 0
+CASE A-065 A
+CYCLE 0 fault_cleared:0
+END
+# NOMINAL: fault_cleared with cause BOOT, inhibit 1
+CASE A-066 A
+CYCLE 1 fault_cleared:0
+END
+# NOMINAL: fault_cleared with cause MONITOR, inhibit 0
+CASE A-067 A
+CYCLE 0 fault_cleared:2
+END
+# NOMINAL: fault_cleared with cause MONITOR, inhibit 1
+CASE A-068 A
+CYCLE 1 fault_cleared:2
+END
+# NOMINAL: fault_cleared with cause LIVENESS, inhibit 0
+CASE A-069 A
+CYCLE 0 fault_cleared:3
+END
+# NOMINAL: fault_cleared with cause LIVENESS, inhibit 1
+CASE A-070 A
+CYCLE 1 fault_cleared:3
+END
+# NOMINAL: fault_cleared with cause WATCHDOG_RESET, inhibit 0
+CASE A-071 A
+CYCLE 0 fault_cleared:4
+END
+# NOMINAL: fault_cleared with cause WATCHDOG_RESET, inhibit 1
+CASE A-072 A
+CYCLE 1 fault_cleared:4
+END
+# NOMINAL: fault_cleared with cause UNDEFINED_5, inhibit 0
+CASE A-073 A
+CYCLE 0 fault_cleared:5
+END
+# NOMINAL: fault_cleared with cause UNDEFINED_5, inhibit 1
+CASE A-074 A
+CYCLE 1 fault_cleared:5
+END
+# NOMINAL: fault_cleared with cause UNDEFINED_99, inhibit 0
+CASE A-075 A
+CYCLE 0 fault_cleared:99
+END
+# NOMINAL: fault_cleared with cause UNDEFINED_99, inhibit 1
+CASE A-076 A
+CYCLE 1 fault_cleared:99
+END
+# NOMINAL: fault_cleared with cause UNDEFINED_255, inhibit 0
+CASE A-077 A
+CYCLE 0 fault_cleared:255
+END
+# NOMINAL: fault_cleared with cause UNDEFINED_255, inhibit 1
+CASE A-078 A
+CYCLE 1 fault_cleared:255
+END
+# DEGRADED: fault_noncritical with cause BOOT, inhibit 0
+CASE A-079 A
+CYCLE 0 tc_mode_degraded
+CYCLE 0 fault_noncritical:0
+END
+# DEGRADED: fault_noncritical with cause BOOT, inhibit 1
+CASE A-080 A
+CYCLE 0 tc_mode_degraded
+CYCLE 1 fault_noncritical:0
+END
+# DEGRADED: fault_noncritical with cause MONITOR, inhibit 0
+CASE A-081 A
+CYCLE 0 tc_mode_degraded
+CYCLE 0 fault_noncritical:2
+END
+# DEGRADED: fault_noncritical with cause MONITOR, inhibit 1
+CASE A-082 A
+CYCLE 0 tc_mode_degraded
+CYCLE 1 fault_noncritical:2
+END
+# DEGRADED: fault_noncritical with cause LIVENESS, inhibit 0
+CASE A-083 A
+CYCLE 0 tc_mode_degraded
+CYCLE 0 fault_noncritical:3
+END
+# DEGRADED: fault_noncritical with cause LIVENESS, inhibit 1
+CASE A-084 A
+CYCLE 0 tc_mode_degraded
+CYCLE 1 fault_noncritical:3
+END
+# DEGRADED: fault_noncritical with cause WATCHDOG_RESET, inhibit 0
+CASE A-085 A
+CYCLE 0 tc_mode_degraded
+CYCLE 0 fault_noncritical:4
+END
+# DEGRADED: fault_noncritical with cause WATCHDOG_RESET, inhibit 1
+CASE A-086 A
+CYCLE 0 tc_mode_degraded
+CYCLE 1 fault_noncritical:4
+END
+# DEGRADED: fault_noncritical with cause UNDEFINED_5, inhibit 0
+CASE A-087 A
+CYCLE 0 tc_mode_degraded
+CYCLE 0 fault_noncritical:5
+END
+# DEGRADED: fault_noncritical with cause UNDEFINED_5, inhibit 1
+CASE A-088 A
+CYCLE 0 tc_mode_degraded
+CYCLE 1 fault_noncritical:5
+END
+# DEGRADED: fault_noncritical with cause UNDEFINED_99, inhibit 0
+CASE A-089 A
+CYCLE 0 tc_mode_degraded
+CYCLE 0 fault_noncritical:99
+END
+# DEGRADED: fault_noncritical with cause UNDEFINED_99, inhibit 1
+CASE A-090 A
+CYCLE 0 tc_mode_degraded
+CYCLE 1 fault_noncritical:99
+END
+# DEGRADED: fault_noncritical with cause UNDEFINED_255, inhibit 0
+CASE A-091 A
+CYCLE 0 tc_mode_degraded
+CYCLE 0 fault_noncritical:255
+END
+# DEGRADED: fault_noncritical with cause UNDEFINED_255, inhibit 1
+CASE A-092 A
+CYCLE 0 tc_mode_degraded
+CYCLE 1 fault_noncritical:255
+END
+# DEGRADED: fault_critical with cause BOOT, inhibit 0
+CASE A-093 A
+CYCLE 0 tc_mode_degraded
+CYCLE 0 fault_critical:0
+END
+# DEGRADED: fault_critical with cause BOOT, inhibit 1
+CASE A-094 A
+CYCLE 0 tc_mode_degraded
+CYCLE 1 fault_critical:0
+END
+# DEGRADED: fault_critical with cause MONITOR, inhibit 0
+CASE A-095 A
+CYCLE 0 tc_mode_degraded
+CYCLE 0 fault_critical:2
+END
+# DEGRADED: fault_critical with cause MONITOR, inhibit 1
+CASE A-096 A
+CYCLE 0 tc_mode_degraded
+CYCLE 1 fault_critical:2
+END
+# DEGRADED: fault_critical with cause LIVENESS, inhibit 0
+CASE A-097 A
+CYCLE 0 tc_mode_degraded
+CYCLE 0 fault_critical:3
+END
+# DEGRADED: fault_critical with cause LIVENESS, inhibit 1
+CASE A-098 A
+CYCLE 0 tc_mode_degraded
+CYCLE 1 fault_critical:3
+END
+# DEGRADED: fault_critical with cause WATCHDOG_RESET, inhibit 0
+CASE A-099 A
+CYCLE 0 tc_mode_degraded
+CYCLE 0 fault_critical:4
+END
+# DEGRADED: fault_critical with cause WATCHDOG_RESET, inhibit 1
+CASE A-100 A
+CYCLE 0 tc_mode_degraded
+CYCLE 1 fault_critical:4
+END
+# DEGRADED: fault_critical with cause UNDEFINED_5, inhibit 0
+CASE A-101 A
+CYCLE 0 tc_mode_degraded
+CYCLE 0 fault_critical:5
+END
+# DEGRADED: fault_critical with cause UNDEFINED_5, inhibit 1
+CASE A-102 A
+CYCLE 0 tc_mode_degraded
+CYCLE 1 fault_critical:5
+END
+# DEGRADED: fault_critical with cause UNDEFINED_99, inhibit 0
+CASE A-103 A
+CYCLE 0 tc_mode_degraded
+CYCLE 0 fault_critical:99
+END
+# DEGRADED: fault_critical with cause UNDEFINED_99, inhibit 1
+CASE A-104 A
+CYCLE 0 tc_mode_degraded
+CYCLE 1 fault_critical:99
+END
+# DEGRADED: fault_critical with cause UNDEFINED_255, inhibit 0
+CASE A-105 A
+CYCLE 0 tc_mode_degraded
+CYCLE 0 fault_critical:255
+END
+# DEGRADED: fault_critical with cause UNDEFINED_255, inhibit 1
+CASE A-106 A
+CYCLE 0 tc_mode_degraded
+CYCLE 1 fault_critical:255
+END
+# DEGRADED: fault_cleared with cause BOOT, inhibit 0
+CASE A-107 A
+CYCLE 0 tc_mode_degraded
+CYCLE 0 fault_cleared:0
+END
+# DEGRADED: fault_cleared with cause BOOT, inhibit 1
+CASE A-108 A
+CYCLE 0 tc_mode_degraded
+CYCLE 1 fault_cleared:0
+END
+# DEGRADED: fault_cleared with cause MONITOR, inhibit 0
+CASE A-109 A
+CYCLE 0 tc_mode_degraded
+CYCLE 0 fault_cleared:2
+END
+# DEGRADED: fault_cleared with cause MONITOR, inhibit 1
+CASE A-110 A
+CYCLE 0 tc_mode_degraded
+CYCLE 1 fault_cleared:2
+END
+# DEGRADED: fault_cleared with cause LIVENESS, inhibit 0
+CASE A-111 A
+CYCLE 0 tc_mode_degraded
+CYCLE 0 fault_cleared:3
+END
+# DEGRADED: fault_cleared with cause LIVENESS, inhibit 1
+CASE A-112 A
+CYCLE 0 tc_mode_degraded
+CYCLE 1 fault_cleared:3
+END
+# DEGRADED: fault_cleared with cause WATCHDOG_RESET, inhibit 0
+CASE A-113 A
+CYCLE 0 tc_mode_degraded
+CYCLE 0 fault_cleared:4
+END
+# DEGRADED: fault_cleared with cause WATCHDOG_RESET, inhibit 1
+CASE A-114 A
+CYCLE 0 tc_mode_degraded
+CYCLE 1 fault_cleared:4
+END
+# DEGRADED: fault_cleared with cause UNDEFINED_5, inhibit 0
+CASE A-115 A
+CYCLE 0 tc_mode_degraded
+CYCLE 0 fault_cleared:5
+END
+# DEGRADED: fault_cleared with cause UNDEFINED_5, inhibit 1
+CASE A-116 A
+CYCLE 0 tc_mode_degraded
+CYCLE 1 fault_cleared:5
+END
+# DEGRADED: fault_cleared with cause UNDEFINED_99, inhibit 0
+CASE A-117 A
+CYCLE 0 tc_mode_degraded
+CYCLE 0 fault_cleared:99
+END
+# DEGRADED: fault_cleared with cause UNDEFINED_99, inhibit 1
+CASE A-118 A
+CYCLE 0 tc_mode_degraded
+CYCLE 1 fault_cleared:99
+END
+# DEGRADED: fault_cleared with cause UNDEFINED_255, inhibit 0
+CASE A-119 A
+CYCLE 0 tc_mode_degraded
+CYCLE 0 fault_cleared:255
+END
+# DEGRADED: fault_cleared with cause UNDEFINED_255, inhibit 1
+CASE A-120 A
+CYCLE 0 tc_mode_degraded
+CYCLE 1 fault_cleared:255
+END
+# SAFE: fault_noncritical with cause BOOT, inhibit 0
+CASE A-121 A
+CYCLE 0 tc_mode_safe
+CYCLE 0 fault_noncritical:0
+END
+# SAFE: fault_noncritical with cause BOOT, inhibit 1
+CASE A-122 A
+CYCLE 0 tc_mode_safe
+CYCLE 1 fault_noncritical:0
+END
+# SAFE: fault_noncritical with cause MONITOR, inhibit 0
+CASE A-123 A
+CYCLE 0 tc_mode_safe
+CYCLE 0 fault_noncritical:2
+END
+# SAFE: fault_noncritical with cause MONITOR, inhibit 1
+CASE A-124 A
+CYCLE 0 tc_mode_safe
+CYCLE 1 fault_noncritical:2
+END
+# SAFE: fault_noncritical with cause LIVENESS, inhibit 0
+CASE A-125 A
+CYCLE 0 tc_mode_safe
+CYCLE 0 fault_noncritical:3
+END
+# SAFE: fault_noncritical with cause LIVENESS, inhibit 1
+CASE A-126 A
+CYCLE 0 tc_mode_safe
+CYCLE 1 fault_noncritical:3
+END
+# SAFE: fault_noncritical with cause WATCHDOG_RESET, inhibit 0
+CASE A-127 A
+CYCLE 0 tc_mode_safe
+CYCLE 0 fault_noncritical:4
+END
+# SAFE: fault_noncritical with cause WATCHDOG_RESET, inhibit 1
+CASE A-128 A
+CYCLE 0 tc_mode_safe
+CYCLE 1 fault_noncritical:4
+END
+# SAFE: fault_noncritical with cause UNDEFINED_5, inhibit 0
+CASE A-129 A
+CYCLE 0 tc_mode_safe
+CYCLE 0 fault_noncritical:5
+END
+# SAFE: fault_noncritical with cause UNDEFINED_5, inhibit 1
+CASE A-130 A
+CYCLE 0 tc_mode_safe
+CYCLE 1 fault_noncritical:5
+END
+# SAFE: fault_noncritical with cause UNDEFINED_99, inhibit 0
+CASE A-131 A
+CYCLE 0 tc_mode_safe
+CYCLE 0 fault_noncritical:99
+END
+# SAFE: fault_noncritical with cause UNDEFINED_99, inhibit 1
+CASE A-132 A
+CYCLE 0 tc_mode_safe
+CYCLE 1 fault_noncritical:99
+END
+# SAFE: fault_noncritical with cause UNDEFINED_255, inhibit 0
+CASE A-133 A
+CYCLE 0 tc_mode_safe
+CYCLE 0 fault_noncritical:255
+END
+# SAFE: fault_noncritical with cause UNDEFINED_255, inhibit 1
+CASE A-134 A
+CYCLE 0 tc_mode_safe
+CYCLE 1 fault_noncritical:255
+END
+# SAFE: fault_critical with cause BOOT, inhibit 0
+CASE A-135 A
+CYCLE 0 tc_mode_safe
+CYCLE 0 fault_critical:0
+END
+# SAFE: fault_critical with cause BOOT, inhibit 1
+CASE A-136 A
+CYCLE 0 tc_mode_safe
+CYCLE 1 fault_critical:0
+END
+# SAFE: fault_critical with cause MONITOR, inhibit 0
+CASE A-137 A
+CYCLE 0 tc_mode_safe
+CYCLE 0 fault_critical:2
+END
+# SAFE: fault_critical with cause MONITOR, inhibit 1
+CASE A-138 A
+CYCLE 0 tc_mode_safe
+CYCLE 1 fault_critical:2
+END
+# SAFE: fault_critical with cause LIVENESS, inhibit 0
+CASE A-139 A
+CYCLE 0 tc_mode_safe
+CYCLE 0 fault_critical:3
+END
+# SAFE: fault_critical with cause LIVENESS, inhibit 1
+CASE A-140 A
+CYCLE 0 tc_mode_safe
+CYCLE 1 fault_critical:3
+END
+# SAFE: fault_critical with cause WATCHDOG_RESET, inhibit 0
+CASE A-141 A
+CYCLE 0 tc_mode_safe
+CYCLE 0 fault_critical:4
+END
+# SAFE: fault_critical with cause WATCHDOG_RESET, inhibit 1
+CASE A-142 A
+CYCLE 0 tc_mode_safe
+CYCLE 1 fault_critical:4
+END
+# SAFE: fault_critical with cause UNDEFINED_5, inhibit 0
+CASE A-143 A
+CYCLE 0 tc_mode_safe
+CYCLE 0 fault_critical:5
+END
+# SAFE: fault_critical with cause UNDEFINED_5, inhibit 1
+CASE A-144 A
+CYCLE 0 tc_mode_safe
+CYCLE 1 fault_critical:5
+END
+# SAFE: fault_critical with cause UNDEFINED_99, inhibit 0
+CASE A-145 A
+CYCLE 0 tc_mode_safe
+CYCLE 0 fault_critical:99
+END
+# SAFE: fault_critical with cause UNDEFINED_99, inhibit 1
+CASE A-146 A
+CYCLE 0 tc_mode_safe
+CYCLE 1 fault_critical:99
+END
+# SAFE: fault_critical with cause UNDEFINED_255, inhibit 0
+CASE A-147 A
+CYCLE 0 tc_mode_safe
+CYCLE 0 fault_critical:255
+END
+# SAFE: fault_critical with cause UNDEFINED_255, inhibit 1
+CASE A-148 A
+CYCLE 0 tc_mode_safe
+CYCLE 1 fault_critical:255
+END
+# SAFE: fault_cleared with cause BOOT, inhibit 0
+CASE A-149 A
+CYCLE 0 tc_mode_safe
+CYCLE 0 fault_cleared:0
+END
+# SAFE: fault_cleared with cause BOOT, inhibit 1
+CASE A-150 A
+CYCLE 0 tc_mode_safe
+CYCLE 1 fault_cleared:0
+END
+# SAFE: fault_cleared with cause MONITOR, inhibit 0
+CASE A-151 A
+CYCLE 0 tc_mode_safe
+CYCLE 0 fault_cleared:2
+END
+# SAFE: fault_cleared with cause MONITOR, inhibit 1
+CASE A-152 A
+CYCLE 0 tc_mode_safe
+CYCLE 1 fault_cleared:2
+END
+# SAFE: fault_cleared with cause LIVENESS, inhibit 0
+CASE A-153 A
+CYCLE 0 tc_mode_safe
+CYCLE 0 fault_cleared:3
+END
+# SAFE: fault_cleared with cause LIVENESS, inhibit 1
+CASE A-154 A
+CYCLE 0 tc_mode_safe
+CYCLE 1 fault_cleared:3
+END
+# SAFE: fault_cleared with cause WATCHDOG_RESET, inhibit 0
+CASE A-155 A
+CYCLE 0 tc_mode_safe
+CYCLE 0 fault_cleared:4
+END
+# SAFE: fault_cleared with cause WATCHDOG_RESET, inhibit 1
+CASE A-156 A
+CYCLE 0 tc_mode_safe
+CYCLE 1 fault_cleared:4
+END
+# SAFE: fault_cleared with cause UNDEFINED_5, inhibit 0
+CASE A-157 A
+CYCLE 0 tc_mode_safe
+CYCLE 0 fault_cleared:5
+END
+# SAFE: fault_cleared with cause UNDEFINED_5, inhibit 1
+CASE A-158 A
+CYCLE 0 tc_mode_safe
+CYCLE 1 fault_cleared:5
+END
+# SAFE: fault_cleared with cause UNDEFINED_99, inhibit 0
+CASE A-159 A
+CYCLE 0 tc_mode_safe
+CYCLE 0 fault_cleared:99
+END
+# SAFE: fault_cleared with cause UNDEFINED_99, inhibit 1
+CASE A-160 A
+CYCLE 0 tc_mode_safe
+CYCLE 1 fault_cleared:99
+END
+# SAFE: fault_cleared with cause UNDEFINED_255, inhibit 0
+CASE A-161 A
+CYCLE 0 tc_mode_safe
+CYCLE 0 fault_cleared:255
+END
+# SAFE: fault_cleared with cause UNDEFINED_255, inhibit 1
+CASE A-162 A
+CYCLE 0 tc_mode_safe
+CYCLE 1 fault_cleared:255
+END
+# every transition in one run
+CASE A-163 A
+CYCLE 0 tc_mode_safe
+CYCLE 0 tc_mode_nominal
+CYCLE 0 fault_critical
+CYCLE 0 tc_mode_nominal
+CYCLE 0 tc_mode_degraded
+CYCLE 0 tc_mode_nominal
+CYCLE 0 fault_noncritical
+CYCLE 0 tc_mode_nominal
+CYCLE 1 fault_critical
+CYCLE 0 tc_mode_nominal
+CYCLE 1 fault_noncritical
+CYCLE 0 tc_mode_nominal
+CYCLE 0 tc_mode_degraded
+CYCLE 0 tc_mode_safe
+CYCLE 0 tc_mode_nominal
+CYCLE 0 tc_mode_degraded
+CYCLE 0 fault_critical
+CYCLE 0 tc_mode_nominal
+CYCLE 0 tc_mode_degraded
+CYCLE 0 tc_mode_nominal
+CYCLE 0 tc_mode_nominal
+CYCLE 0 tc_mode_degraded
+CYCLE 1 fault_critical
+CYCLE 0 tc_mode_nominal
+CYCLE 0 tc_mode_safe
+CYCLE 0 tc_mode_degraded
+CYCLE 0 tc_mode_nominal
+CYCLE 0 tc_mode_safe
+CYCLE 0 tc_mode_nominal
+CYCLE 0 tc_mode_nominal
+END

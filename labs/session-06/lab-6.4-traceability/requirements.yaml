@@ -1,0 +1,56 @@
+# Lab 6.4 - Mode management requirements.
+#
+# Derived from the Session 5 design note (session-05/docs/fdir-design.md,
+# Section 3) and the Lab 5.3 implementation, then sharpened by Lab 6.1.
+# `source` names where each one came from. `model` lists model elements in
+# addition to those that carry the requirement's ID in mode_machine.yaml.
+
+requirements:
+  - id: MM-010
+    text: SAFE and DEGRADED shall be exited only by ground telecommand.
+    source: S5 design note 3 ("Only the ground leaves SAFE or DEGRADED")
+  - id: MM-020
+    text: Entry to SAFE shall suspend the onboard command schedule; leaving SAFE shall not resume it.
+    source: S5 design note 3, schedule.h
+    model: [state:SAFE]
+  - id: MM-030
+    text: Entry to SAFE shall switch the payload off, reduce telemetry to essentials, keep monitoring at its tightened rate, command sun pointing and keep the receiver on.
+    source: S5 design note 3 (mode table)
+    model: [state:SAFE]
+  - id: MM-040
+    text: When FDIR actions are not inhibited, a confirmed critical fault shall command SAFE and a confirmed non critical fault shall command DEGRADED from any less severe mode.
+    source: S5 design note 1 (failure mode table)
+  - id: MM-050
+    text: No autonomous event shall lower the mode; a parameter returning inside its limits shall not cause recovery.
+    source: S5 design note 3 ("Autonomous requests only escalate")
+    model: [ignore:NOMINAL, ignore:DEGRADED, ignore:SAFE]
+  - id: MM-060
+    text: While FDIR actions are inhibited, an autonomous mode change shall be refused, and the refusal reported.
+    source: S5 design note 3 (FDIR inhibit)
+  - id: MM-070
+    text: The ground shall be able to command SAFE or DEGRADED from any less severe mode, and ground commands shall never be inhibited.
+    source: S5 design note 3
+  - id: MM-080
+    text: Every mode transition shall be reported, with its triggering cause and detail.
+    source: S5 design note 3 ("Every transition is reported")
+    model: [transition:T01, transition:T02, transition:T03, transition:T04, transition:T07, transition:T08, transition:T09, transition:T11, transition:T12]
+  - id: MM-090
+    text: The vehicle shall start in NOMINAL after a cold boot and in SAFE after a watchdog reset, with no transition report at boot.
+    source: S5 design note 4 (escalation level 3), fdir.c fdir_boot()
+    model: [boot_states]
+  - id: MM-100
+    text: In every mode, every event shall be either handled or explicitly ignored.
+    source: Lab 6.1 completeness check (new)
+    model: [ignore:NOMINAL, ignore:DEGRADED, ignore:SAFE]
+  - id: MM-110
+    text: At most one mode transition shall occur per evaluation cycle, selected deterministically by a unique priority.
+    source: Lab 6.1 semantics (new; the hand written version is order dependent, ambiguity A1)
+    model: [select:NOMINAL, select:DEGRADED, select:SAFE, semantics:consumption]
+  - id: MM-120
+    text: Only ground commands shall carry ground privilege; an event or state value outside the model shall be rejected or recovered from by entering SAFE.
+    source: Session 5 review (fail closed), Lab 6.1
+    model: [invalid_state_recovery]
+  - id: MM-130
+    text: A fault confirmed in the same cycle as a ground recovery command shall not be lost.
+    source: Lab 6.3 divergence D-04 (new)
+    model: [semantics:consumption]

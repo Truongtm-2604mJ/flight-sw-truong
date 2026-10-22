@@ -1,0 +1,227 @@
+818 warnings generated.
+lab-6.2-generation/generated/mode_sm.c:17:14: warning: no header providing "uint32_t" is directly included [misc-include-cleaner]
+   13 | 
+   14 | #define BIT(e) ((uint32_t)1u << (uint32_t)(e))
+   15 | 
+   16 | /* Event classes (semantics: unconsumed_one_shot, unconsumed_latched). */
+   17 | static const uint32_t ONE_SHOT = BIT(MODE_SM_EV_TC_MODE_NOMINAL) | BIT(MODE_SM_EV_TC_MODE_DEGRADED) | BIT(MODE_SM_EV_TC_MODE_SAFE) | BIT(MODE_SM_EV_FAULT_CLEARED);
+      |              ^
+lab-6.2-generation/generated/mode_sm.c:69:21: warning: integer literal has suffix 'u', which is not uppercase [readability-uppercase-literal-suffix]
+   69 |     r->transition = 1u;
+      |                     ^~
+      |                      U
+lab-6.2-generation/generated/mode_sm.c:82:21: warning: integer literal has suffix 'u', which is not uppercase [readability-uppercase-literal-suffix]
+   82 |     r->transition = 2u;
+      |                     ^~
+      |                      U
+lab-6.2-generation/generated/mode_sm.c:95:21: warning: integer literal has suffix 'u', which is not uppercase [readability-uppercase-literal-suffix]
+   95 |     r->transition = 3u;
+      |                     ^~
+      |                      U
+lab-6.2-generation/generated/mode_sm.c:108:21: warning: integer literal has suffix 'u', which is not uppercase [readability-uppercase-literal-suffix]
+  108 |     r->transition = 4u;
+      |                     ^~
+      |                      U
+lab-6.2-generation/generated/mode_sm.c:120:21: warning: integer literal has suffix 'u', which is not uppercase [readability-uppercase-literal-suffix]
+  120 |     r->transition = 5u;
+      |                     ^~
+      |                      U
+lab-6.2-generation/generated/mode_sm.c:132:21: warning: integer literal has suffix 'u', which is not uppercase [readability-uppercase-literal-suffix]
+  132 |     r->transition = 6u;
+      |                     ^~
+      |                      U
+lab-6.2-generation/generated/mode_sm.c:145:21: warning: integer literal has suffix 'u', which is not uppercase [readability-uppercase-literal-suffix]
+  145 |     r->transition = 7u;
+      |                     ^~
+      |                      U
+lab-6.2-generation/generated/mode_sm.c:158:21: warning: integer literal has suffix 'u', which is not uppercase [readability-uppercase-literal-suffix]
+  158 |     r->transition = 8u;
+      |                     ^~
+      |                      U
+lab-6.2-generation/generated/mode_sm.c:171:21: warning: integer literal has suffix 'u', which is not uppercase [readability-uppercase-literal-suffix]
+  171 |     r->transition = 9u;
+      |                     ^~
+      |                      U
+lab-6.2-generation/generated/mode_sm.c:183:21: warning: integer literal has suffix 'u', which is not uppercase [readability-uppercase-literal-suffix]
+  183 |     r->transition = 10u;
+      |                     ^ ~
+      |                       U
+lab-6.2-generation/generated/mode_sm.c:197:21: warning: integer literal has suffix 'u', which is not uppercase [readability-uppercase-literal-suffix]
+  197 |     r->transition = 11u;
+      |                     ^ ~
+      |                       U
+lab-6.2-generation/generated/mode_sm.c:211:21: warning: integer literal has suffix 'u', which is not uppercase [readability-uppercase-literal-suffix]
+  211 |     r->transition = 12u;
+      |                     ^ ~
+      |                       U
+lab-6.2-generation/generated/mode_sm.c:219:45: warning: integer literal has suffix 'u', which is not uppercase [readability-uppercase-literal-suffix]
+  219 |     static const mode_sm_payload_t none = { 0u, 0u };
+      |                                             ^~
+      |                                              U
+lab-6.2-generation/generated/mode_sm.c:219:49: warning: integer literal has suffix 'u', which is not uppercase [readability-uppercase-literal-suffix]
+  219 |     static const mode_sm_payload_t none = { 0u, 0u };
+      |                                                 ^~
+      |                                                  U
+lab-6.2-generation/generated/mode_sm.c:222:19: warning: integer literal has suffix 'u', which is not uppercase [readability-uppercase-literal-suffix]
+  222 |     sm->pending = 0u;
+      |                   ^~
+      |                    U
+lab-6.2-generation/generated/mode_sm.c:224:14: warning: integer literal has suffix 'u', which is not uppercase [readability-uppercase-literal-suffix]
+  224 |     for (i = 0u; i < (uint32_t)MODE_SM_EVENT_COUNT; i++) {
+      |              ^~
+      |               U
+lab-6.2-generation/generated/mode_sm.c:255:18: warning: function 'mode_sm_step' has cognitive complexity of 30 (threshold 25) [readability-function-cognitive-complexity]
+  255 | mode_sm_result_t mode_sm_step(mode_sm_t *sm, const mode_sm_inputs_t *in_now)
+      |                  ^
+lab-6.2-generation/generated/mode_sm.c:271:5: note: +1, including nesting penalty of 0, nesting level increased to 1
+  271 |     switch (start) {
+      |     ^
+lab-6.2-generation/generated/mode_sm.c:273:9: note: +2, including nesting penalty of 1, nesting level increased to 2
+  273 |         if ((pending & BIT(MODE_SM_EV_TC_MODE_SAFE)) != 0u) {   /* T01 */
+      |         ^
+lab-6.2-generation/generated/mode_sm.c:275:16: note: +1, nesting level increased to 2
+  275 |         } else if ((pending & BIT(MODE_SM_EV_FAULT_CRITICAL)) != 0u && (!in.fdir_inhibited)) {   /* T02 */
+      |                ^
+lab-6.2-generation/generated/mode_sm.c:275:69: note: +1
+  275 |         } else if ((pending & BIT(MODE_SM_EV_FAULT_CRITICAL)) != 0u && (!in.fdir_inhibited)) {   /* T02 */
+      |                                                                     ^
+lab-6.2-generation/generated/mode_sm.c:277:16: note: +1, nesting level increased to 2
+  277 |         } else if ((pending & BIT(MODE_SM_EV_TC_MODE_DEGRADED)) != 0u) {   /* T03 */
+      |                ^
+lab-6.2-generation/generated/mode_sm.c:279:16: note: +1, nesting level increased to 2
+  279 |         } else if ((pending & BIT(MODE_SM_EV_FAULT_NONCRITICAL)) != 0u && (!in.fdir_inhibited)) {   /* T04 */
+      |                ^
+lab-6.2-generation/generated/mode_sm.c:279:72: note: +1
+  279 |         } else if ((pending & BIT(MODE_SM_EV_FAULT_NONCRITICAL)) != 0u && (!in.fdir_inhibited)) {   /* T04 */
+      |                                                                        ^
+lab-6.2-generation/generated/mode_sm.c:281:16: note: +1, nesting level increased to 2
+  281 |         } else if ((pending & BIT(MODE_SM_EV_FAULT_CRITICAL)) != 0u && in.fdir_inhibited) {   /* T05 */
+      |                ^
+lab-6.2-generation/generated/mode_sm.c:281:69: note: +1
+  281 |         } else if ((pending & BIT(MODE_SM_EV_FAULT_CRITICAL)) != 0u && in.fdir_inhibited) {   /* T05 */
+      |                                                                     ^
+lab-6.2-generation/generated/mode_sm.c:283:16: note: +1, nesting level increased to 2
+  283 |         } else if ((pending & BIT(MODE_SM_EV_FAULT_NONCRITICAL)) != 0u && in.fdir_inhibited) {   /* T06 */
+      |                ^
+lab-6.2-generation/generated/mode_sm.c:283:72: note: +1
+  283 |         } else if ((pending & BIT(MODE_SM_EV_FAULT_NONCRITICAL)) != 0u && in.fdir_inhibited) {   /* T06 */
+      |                                                                        ^
+lab-6.2-generation/generated/mode_sm.c:285:11: note: +1, nesting level increased to 2
+  285 |         } else {
+      |           ^
+lab-6.2-generation/generated/mode_sm.c:290:9: note: +2, including nesting penalty of 1, nesting level increased to 2
+  290 |         if ((pending & BIT(MODE_SM_EV_TC_MODE_SAFE)) != 0u) {   /* T07 */
+      |         ^
+lab-6.2-generation/generated/mode_sm.c:292:16: note: +1, nesting level increased to 2
+  292 |         } else if ((pending & BIT(MODE_SM_EV_FAULT_CRITICAL)) != 0u && (!in.fdir_inhibited)) {   /* T08 */
+      |                ^
+lab-6.2-generation/generated/mode_sm.c:292:69: note: +1
+  292 |         } else if ((pending & BIT(MODE_SM_EV_FAULT_CRITICAL)) != 0u && (!in.fdir_inhibited)) {   /* T08 */
+      |                                                                     ^
+lab-6.2-generation/generated/mode_sm.c:294:16: note: +1, nesting level increased to 2
+  294 |         } else if ((pending & BIT(MODE_SM_EV_TC_MODE_NOMINAL)) != 0u) {   /* T09 */
+      |                ^
+lab-6.2-generation/generated/mode_sm.c:296:16: note: +1, nesting level increased to 2
+  296 |         } else if ((pending & BIT(MODE_SM_EV_FAULT_CRITICAL)) != 0u && in.fdir_inhibited) {   /* T10 */
+      |                ^
+lab-6.2-generation/generated/mode_sm.c:296:69: note: +1
+  296 |         } else if ((pending & BIT(MODE_SM_EV_FAULT_CRITICAL)) != 0u && in.fdir_inhibited) {   /* T10 */
+      |                                                                     ^
+lab-6.2-generation/generated/mode_sm.c:298:11: note: +1, nesting level increased to 2
+  298 |         } else {
+      |           ^
+lab-6.2-generation/generated/mode_sm.c:303:9: note: +2, including nesting penalty of 1, nesting level increased to 2
+  303 |         if ((pending & BIT(MODE_SM_EV_TC_MODE_DEGRADED)) != 0u) {   /* T11 */
+      |         ^
+lab-6.2-generation/generated/mode_sm.c:305:16: note: +1, nesting level increased to 2
+  305 |         } else if ((pending & BIT(MODE_SM_EV_TC_MODE_NOMINAL)) != 0u) {   /* T12 */
+      |                ^
+lab-6.2-generation/generated/mode_sm.c:307:11: note: +1, nesting level increased to 2
+  307 |         } else {
+      |           ^
+lab-6.2-generation/generated/mode_sm.c:322:5: note: +1, including nesting penalty of 0, nesting level increased to 1
+  322 |     if (r.kind != MODE_SM_STEP_IDLE) {
+      |     ^
+lab-6.2-generation/generated/mode_sm.c:332:5: note: +1, including nesting penalty of 0, nesting level increased to 1
+  332 |     if (r.kind == MODE_SM_STEP_IDLE) {
+      |     ^
+lab-6.2-generation/generated/mode_sm.c:337:5: note: +1, including nesting penalty of 0, nesting level increased to 1
+  337 |     for (e = 0u; e < (uint32_t)MODE_SM_EVENT_COUNT; e++) {
+      |     ^
+lab-6.2-generation/generated/mode_sm.c:338:9: note: +2, including nesting penalty of 1, nesting level increased to 2
+  338 |         if ((lost & BIT(e)) != 0u) {
+      |         ^
+lab-6.2-generation/generated/mode_sm.c:257:49: warning: integer literal has suffix 'u', which is not uppercase [readability-uppercase-literal-suffix]
+  257 |     static const mode_sm_payload_t recovery = { 0u, 0u };
+      |                                                 ^~
+      |                                                  U
+lab-6.2-generation/generated/mode_sm.c:257:53: warning: integer literal has suffix 'u', which is not uppercase [readability-uppercase-literal-suffix]
+  257 |     static const mode_sm_payload_t recovery = { 0u, 0u };
+      |                                                     ^~
+      |                                                      U
+lab-6.2-generation/generated/mode_sm.c:258:47: warning: integer literal has suffix 'u', which is not uppercase [readability-uppercase-literal-suffix]
+  258 |     mode_sm_result_t r = { MODE_SM_STEP_IDLE, 0u, MODE_SM_NOMINAL, MODE_SM_NOMINAL, MODE_SM_EV_TC_MODE_NOMINAL };
+      |                                               ^~
+      |                                                U
+lab-6.2-generation/generated/mode_sm.c:263:25: warning: integer literal has suffix 'u', which is not uppercase [readability-uppercase-literal-suffix]
+  263 |     uint32_t consumed = 0u;
+      |                         ^~
+      |                          U
+lab-6.2-generation/generated/mode_sm.c:273:57: warning: integer literal has suffix 'u', which is not uppercase [readability-uppercase-literal-suffix]
+  273 |         if ((pending & BIT(MODE_SM_EV_TC_MODE_SAFE)) != 0u) {   /* T01 */
+      |                                                         ^~
+      |                                                          U
+lab-6.2-generation/generated/mode_sm.c:275:66: warning: integer literal has suffix 'u', which is not uppercase [readability-uppercase-literal-suffix]
+  275 |         } else if ((pending & BIT(MODE_SM_EV_FAULT_CRITICAL)) != 0u && (!in.fdir_inhibited)) {   /* T02 */
+      |                                                                  ^~
+      |                                                                   U
+lab-6.2-generation/generated/mode_sm.c:277:68: warning: integer literal has suffix 'u', which is not uppercase [readability-uppercase-literal-suffix]
+  277 |         } else if ((pending & BIT(MODE_SM_EV_TC_MODE_DEGRADED)) != 0u) {   /* T03 */
+      |                                                                    ^~
+      |                                                                     U
+lab-6.2-generation/generated/mode_sm.c:279:69: warning: integer literal has suffix 'u', which is not uppercase [readability-uppercase-literal-suffix]
+  279 |         } else if ((pending & BIT(MODE_SM_EV_FAULT_NONCRITICAL)) != 0u && (!in.fdir_inhibited)) {   /* T04 */
+      |                                                                     ^~
+      |                                                                      U
+lab-6.2-generation/generated/mode_sm.c:281:66: warning: integer literal has suffix 'u', which is not uppercase [readability-uppercase-literal-suffix]
+  281 |         } else if ((pending & BIT(MODE_SM_EV_FAULT_CRITICAL)) != 0u && in.fdir_inhibited) {   /* T05 */
+      |                                                                  ^~
+      |                                                                   U
+lab-6.2-generation/generated/mode_sm.c:283:69: warning: integer literal has suffix 'u', which is not uppercase [readability-uppercase-literal-suffix]
+  283 |         } else if ((pending & BIT(MODE_SM_EV_FAULT_NONCRITICAL)) != 0u && in.fdir_inhibited) {   /* T06 */
+      |                                                                     ^~
+      |                                                                      U
+lab-6.2-generation/generated/mode_sm.c:290:57: warning: integer literal has suffix 'u', which is not uppercase [readability-uppercase-literal-suffix]
+  290 |         if ((pending & BIT(MODE_SM_EV_TC_MODE_SAFE)) != 0u) {   /* T07 */
+      |                                                         ^~
+      |                                                          U
+lab-6.2-generation/generated/mode_sm.c:292:66: warning: integer literal has suffix 'u', which is not uppercase [readability-uppercase-literal-suffix]
+  292 |         } else if ((pending & BIT(MODE_SM_EV_FAULT_CRITICAL)) != 0u && (!in.fdir_inhibited)) {   /* T08 */
+      |                                                                  ^~
+      |                                                                   U
+lab-6.2-generation/generated/mode_sm.c:294:67: warning: integer literal has suffix 'u', which is not uppercase [readability-uppercase-literal-suffix]
+  294 |         } else if ((pending & BIT(MODE_SM_EV_TC_MODE_NOMINAL)) != 0u) {   /* T09 */
+      |                                                                   ^~
+      |                                                                    U
+lab-6.2-generation/generated/mode_sm.c:296:66: warning: integer literal has suffix 'u', which is not uppercase [readability-uppercase-literal-suffix]
+  296 |         } else if ((pending & BIT(MODE_SM_EV_FAULT_CRITICAL)) != 0u && in.fdir_inhibited) {   /* T10 */
+      |                                                                  ^~
+      |                                                                   U
+lab-6.2-generation/generated/mode_sm.c:303:61: warning: integer literal has suffix 'u', which is not uppercase [readability-uppercase-literal-suffix]
+  303 |         if ((pending & BIT(MODE_SM_EV_TC_MODE_DEGRADED)) != 0u) {   /* T11 */
+      |                                                             ^~
+      |                                                              U
+lab-6.2-generation/generated/mode_sm.c:305:67: warning: integer literal has suffix 'u', which is not uppercase [readability-uppercase-literal-suffix]
+  305 |         } else if ((pending & BIT(MODE_SM_EV_TC_MODE_NOMINAL)) != 0u) {   /* T12 */
+      |                                                                   ^~
+      |                                                                    U
+lab-6.2-generation/generated/mode_sm.c:337:14: warning: integer literal has suffix 'u', which is not uppercase [readability-uppercase-literal-suffix]
+  337 |     for (e = 0u; e < (uint32_t)MODE_SM_EVENT_COUNT; e++) {
+      |              ^~
+      |               U
+lab-6.2-generation/generated/mode_sm.c:338:32: warning: integer literal has suffix 'u', which is not uppercase [readability-uppercase-literal-suffix]
+  338 |         if ((lost & BIT(e)) != 0u) {
+      |                                ^~
+      |                                 U
+Suppressed 777 warnings (777 in non-user code).
+Use -header-filter=.* to display errors from all non-system headers. Use -system-headers to display errors from system headers as well.

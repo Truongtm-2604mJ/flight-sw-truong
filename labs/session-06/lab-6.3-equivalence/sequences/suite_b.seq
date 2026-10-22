@@ -1,0 +1,1093 @@
+# Suite B: several events in one cycle (competing transitions).
+# NOMINAL: tc_mode_nominal then tc_mode_degraded, inhibit 0
+CASE B-001 B
+CYCLE 0 tc_mode_nominal,tc_mode_degraded
+END
+# NOMINAL: tc_mode_nominal then tc_mode_degraded, inhibit 1
+CASE B-002 B
+CYCLE 1 tc_mode_nominal,tc_mode_degraded
+END
+# NOMINAL: tc_mode_nominal then tc_mode_safe, inhibit 0
+CASE B-003 B
+CYCLE 0 tc_mode_nominal,tc_mode_safe
+END
+# NOMINAL: tc_mode_nominal then tc_mode_safe, inhibit 1
+CASE B-004 B
+CYCLE 1 tc_mode_nominal,tc_mode_safe
+END
+# NOMINAL: tc_mode_nominal then fault_noncritical, inhibit 0
+CASE B-005 B
+CYCLE 0 tc_mode_nominal,fault_noncritical
+END
+# NOMINAL: tc_mode_nominal then fault_noncritical, inhibit 1
+CASE B-006 B
+CYCLE 1 tc_mode_nominal,fault_noncritical
+END
+# NOMINAL: tc_mode_nominal then fault_critical, inhibit 0
+CASE B-007 B
+CYCLE 0 tc_mode_nominal,fault_critical
+END
+# NOMINAL: tc_mode_nominal then fault_critical, inhibit 1
+CASE B-008 B
+CYCLE 1 tc_mode_nominal,fault_critical
+END
+# NOMINAL: tc_mode_nominal then fault_cleared, inhibit 0
+CASE B-009 B
+CYCLE 0 tc_mode_nominal,fault_cleared
+END
+# NOMINAL: tc_mode_nominal then fault_cleared, inhibit 1
+CASE B-010 B
+CYCLE 1 tc_mode_nominal,fault_cleared
+END
+# NOMINAL: tc_mode_degraded then tc_mode_nominal, inhibit 0
+CASE B-011 B
+CYCLE 0 tc_mode_degraded,tc_mode_nominal
+END
+# NOMINAL: tc_mode_degraded then tc_mode_nominal, inhibit 1
+CASE B-012 B
+CYCLE 1 tc_mode_degraded,tc_mode_nominal
+END
+# NOMINAL: tc_mode_degraded then tc_mode_safe, inhibit 0
+CASE B-013 B
+CYCLE 0 tc_mode_degraded,tc_mode_safe
+END
+# NOMINAL: tc_mode_degraded then tc_mode_safe, inhibit 1
+CASE B-014 B
+CYCLE 1 tc_mode_degraded,tc_mode_safe
+END
+# NOMINAL: tc_mode_degraded then fault_noncritical, inhibit 0
+CASE B-015 B
+CYCLE 0 tc_mode_degraded,fault_noncritical
+END
+# NOMINAL: tc_mode_degraded then fault_noncritical, inhibit 1
+CASE B-016 B
+CYCLE 1 tc_mode_degraded,fault_noncritical
+END
+# NOMINAL: tc_mode_degraded then fault_critical, inhibit 0
+CASE B-017 B
+CYCLE 0 tc_mode_degraded,fault_critical
+END
+# NOMINAL: tc_mode_degraded then fault_critical, inhibit 1
+CASE B-018 B
+CYCLE 1 tc_mode_degraded,fault_critical
+END
+# NOMINAL: tc_mode_degraded then fault_cleared, inhibit 0
+CASE B-019 B
+CYCLE 0 tc_mode_degraded,fault_cleared
+END
+# NOMINAL: tc_mode_degraded then fault_cleared, inhibit 1
+CASE B-020 B
+CYCLE 1 tc_mode_degraded,fault_cleared
+END
+# NOMINAL: tc_mode_safe then tc_mode_nominal, inhibit 0
+CASE B-021 B
+CYCLE 0 tc_mode_safe,tc_mode_nominal
+END
+# NOMINAL: tc_mode_safe then tc_mode_nominal, inhibit 1
+CASE B-022 B
+CYCLE 1 tc_mode_safe,tc_mode_nominal
+END
+# NOMINAL: tc_mode_safe then tc_mode_degraded, inhibit 0
+CASE B-023 B
+CYCLE 0 tc_mode_safe,tc_mode_degraded
+END
+# NOMINAL: tc_mode_safe then tc_mode_degraded, inhibit 1
+CASE B-024 B
+CYCLE 1 tc_mode_safe,tc_mode_degraded
+END
+# NOMINAL: tc_mode_safe then fault_noncritical, inhibit 0
+CASE B-025 B
+CYCLE 0 tc_mode_safe,fault_noncritical
+END
+# NOMINAL: tc_mode_safe then fault_noncritical, inhibit 1
+CASE B-026 B
+CYCLE 1 tc_mode_safe,fault_noncritical
+END
+# NOMINAL: tc_mode_safe then fault_critical, inhibit 0
+CASE B-027 B
+CYCLE 0 tc_mode_safe,fault_critical
+END
+# NOMINAL: tc_mode_safe then fault_critical, inhibit 1
+CASE B-028 B
+CYCLE 1 tc_mode_safe,fault_critical
+END
+# NOMINAL: tc_mode_safe then fault_cleared, inhibit 0
+CASE B-029 B
+CYCLE 0 tc_mode_safe,fault_cleared
+END
+# NOMINAL: tc_mode_safe then fault_cleared, inhibit 1
+CASE B-030 B
+CYCLE 1 tc_mode_safe,fault_cleared
+END
+# NOMINAL: fault_noncritical then tc_mode_nominal, inhibit 0
+CASE B-031 B
+CYCLE 0 fault_noncritical,tc_mode_nominal
+END
+# NOMINAL: fault_noncritical then tc_mode_nominal, inhibit 1
+CASE B-032 B
+CYCLE 1 fault_noncritical,tc_mode_nominal
+END
+# NOMINAL: fault_noncritical then tc_mode_degraded, inhibit 0
+CASE B-033 B
+CYCLE 0 fault_noncritical,tc_mode_degraded
+END
+# NOMINAL: fault_noncritical then tc_mode_degraded, inhibit 1
+CASE B-034 B
+CYCLE 1 fault_noncritical,tc_mode_degraded
+END
+# NOMINAL: fault_noncritical then tc_mode_safe, inhibit 0
+CASE B-035 B
+CYCLE 0 fault_noncritical,tc_mode_safe
+END
+# NOMINAL: fault_noncritical then tc_mode_safe, inhibit 1
+CASE B-036 B
+CYCLE 1 fault_noncritical,tc_mode_safe
+END
+# NOMINAL: fault_noncritical then fault_critical, inhibit 0
+CASE B-037 B
+CYCLE 0 fault_noncritical,fault_critical
+END
+# NOMINAL: fault_noncritical then fault_critical, inhibit 1
+CASE B-038 B
+CYCLE 1 fault_noncritical,fault_critical
+END
+# NOMINAL: fault_noncritical then fault_cleared, inhibit 0
+CASE B-039 B
+CYCLE 0 fault_noncritical,fault_cleared
+END
+# NOMINAL: fault_noncritical then fault_cleared, inhibit 1
+CASE B-040 B
+CYCLE 1 fault_noncritical,fault_cleared
+END
+# NOMINAL: fault_critical then tc_mode_nominal, inhibit 0
+CASE B-041 B
+CYCLE 0 fault_critical,tc_mode_nominal
+END
+# NOMINAL: fault_critical then tc_mode_nominal, inhibit 1
+CASE B-042 B
+CYCLE 1 fault_critical,tc_mode_nominal
+END
+# NOMINAL: fault_critical then tc_mode_degraded, inhibit 0
+CASE B-043 B
+CYCLE 0 fault_critical,tc_mode_degraded
+END
+# NOMINAL: fault_critical then tc_mode_degraded, inhibit 1
+CASE B-044 B
+CYCLE 1 fault_critical,tc_mode_degraded
+END
+# NOMINAL: fault_critical then tc_mode_safe, inhibit 0
+CASE B-045 B
+CYCLE 0 fault_critical,tc_mode_safe
+END
+# NOMINAL: fault_critical then tc_mode_safe, inhibit 1
+CASE B-046 B
+CYCLE 1 fault_critical,tc_mode_safe
+END
+# NOMINAL: fault_critical then fault_noncritical, inhibit 0
+CASE B-047 B
+CYCLE 0 fault_critical,fault_noncritical
+END
+# NOMINAL: fault_critical then fault_noncritical, inhibit 1
+CASE B-048 B
+CYCLE 1 fault_critical,fault_noncritical
+END
+# NOMINAL: fault_critical then fault_cleared, inhibit 0
+CASE B-049 B
+CYCLE 0 fault_critical,fault_cleared
+END
+# NOMINAL: fault_critical then fault_cleared, inhibit 1
+CASE B-050 B
+CYCLE 1 fault_critical,fault_cleared
+END
+# NOMINAL: fault_cleared then tc_mode_nominal, inhibit 0
+CASE B-051 B
+CYCLE 0 fault_cleared,tc_mode_nominal
+END
+# NOMINAL: fault_cleared then tc_mode_nominal, inhibit 1
+CASE B-052 B
+CYCLE 1 fault_cleared,tc_mode_nominal
+END
+# NOMINAL: fault_cleared then tc_mode_degraded, inhibit 0
+CASE B-053 B
+CYCLE 0 fault_cleared,tc_mode_degraded
+END
+# NOMINAL: fault_cleared then tc_mode_degraded, inhibit 1
+CASE B-054 B
+CYCLE 1 fault_cleared,tc_mode_degraded
+END
+# NOMINAL: fault_cleared then tc_mode_safe, inhibit 0
+CASE B-055 B
+CYCLE 0 fault_cleared,tc_mode_safe
+END
+# NOMINAL: fault_cleared then tc_mode_safe, inhibit 1
+CASE B-056 B
+CYCLE 1 fault_cleared,tc_mode_safe
+END
+# NOMINAL: fault_cleared then fault_noncritical, inhibit 0
+CASE B-057 B
+CYCLE 0 fault_cleared,fault_noncritical
+END
+# NOMINAL: fault_cleared then fault_noncritical, inhibit 1
+CASE B-058 B
+CYCLE 1 fault_cleared,fault_noncritical
+END
+# NOMINAL: fault_cleared then fault_critical, inhibit 0
+CASE B-059 B
+CYCLE 0 fault_cleared,fault_critical
+END
+# NOMINAL: fault_cleared then fault_critical, inhibit 1
+CASE B-060 B
+CYCLE 1 fault_cleared,fault_critical
+END
+# NOMINAL: tc_mode_nominal then fault_noncritical then fault_critical
+CASE B-061 B
+CYCLE 0 tc_mode_nominal,fault_noncritical,fault_critical
+END
+# NOMINAL: tc_mode_nominal then fault_critical then fault_noncritical
+CASE B-062 B
+CYCLE 0 tc_mode_nominal,fault_critical,fault_noncritical
+END
+# NOMINAL: fault_noncritical then tc_mode_nominal then fault_critical
+CASE B-063 B
+CYCLE 0 fault_noncritical,tc_mode_nominal,fault_critical
+END
+# NOMINAL: fault_noncritical then fault_critical then tc_mode_nominal
+CASE B-064 B
+CYCLE 0 fault_noncritical,fault_critical,tc_mode_nominal
+END
+# NOMINAL: fault_critical then tc_mode_nominal then fault_noncritical
+CASE B-065 B
+CYCLE 0 fault_critical,tc_mode_nominal,fault_noncritical
+END
+# NOMINAL: fault_critical then fault_noncritical then tc_mode_nominal
+CASE B-066 B
+CYCLE 0 fault_critical,fault_noncritical,tc_mode_nominal
+END
+# NOMINAL: tc_mode_degraded then fault_noncritical then fault_critical
+CASE B-067 B
+CYCLE 0 tc_mode_degraded,fault_noncritical,fault_critical
+END
+# NOMINAL: tc_mode_degraded then fault_critical then fault_noncritical
+CASE B-068 B
+CYCLE 0 tc_mode_degraded,fault_critical,fault_noncritical
+END
+# NOMINAL: fault_noncritical then tc_mode_degraded then fault_critical
+CASE B-069 B
+CYCLE 0 fault_noncritical,tc_mode_degraded,fault_critical
+END
+# NOMINAL: fault_noncritical then fault_critical then tc_mode_degraded
+CASE B-070 B
+CYCLE 0 fault_noncritical,fault_critical,tc_mode_degraded
+END
+# NOMINAL: fault_critical then tc_mode_degraded then fault_noncritical
+CASE B-071 B
+CYCLE 0 fault_critical,tc_mode_degraded,fault_noncritical
+END
+# NOMINAL: fault_critical then fault_noncritical then tc_mode_degraded
+CASE B-072 B
+CYCLE 0 fault_critical,fault_noncritical,tc_mode_degraded
+END
+# NOMINAL: tc_mode_safe then fault_noncritical then fault_critical
+CASE B-073 B
+CYCLE 0 tc_mode_safe,fault_noncritical,fault_critical
+END
+# NOMINAL: tc_mode_safe then fault_critical then fault_noncritical
+CASE B-074 B
+CYCLE 0 tc_mode_safe,fault_critical,fault_noncritical
+END
+# NOMINAL: fault_noncritical then tc_mode_safe then fault_critical
+CASE B-075 B
+CYCLE 0 fault_noncritical,tc_mode_safe,fault_critical
+END
+# NOMINAL: fault_noncritical then fault_critical then tc_mode_safe
+CASE B-076 B
+CYCLE 0 fault_noncritical,fault_critical,tc_mode_safe
+END
+# NOMINAL: fault_critical then tc_mode_safe then fault_noncritical
+CASE B-077 B
+CYCLE 0 fault_critical,tc_mode_safe,fault_noncritical
+END
+# NOMINAL: fault_critical then fault_noncritical then tc_mode_safe
+CASE B-078 B
+CYCLE 0 fault_critical,fault_noncritical,tc_mode_safe
+END
+# DEGRADED: tc_mode_nominal then tc_mode_degraded, inhibit 0
+CASE B-079 B
+CYCLE 0 tc_mode_degraded
+CYCLE 0 tc_mode_nominal,tc_mode_degraded
+END
+# DEGRADED: tc_mode_nominal then tc_mode_degraded, inhibit 1
+CASE B-080 B
+CYCLE 0 tc_mode_degraded
+CYCLE 1 tc_mode_nominal,tc_mode_degraded
+END
+# DEGRADED: tc_mode_nominal then tc_mode_safe, inhibit 0
+CASE B-081 B
+CYCLE 0 tc_mode_degraded
+CYCLE 0 tc_mode_nominal,tc_mode_safe
+END
+# DEGRADED: tc_mode_nominal then tc_mode_safe, inhibit 1
+CASE B-082 B
+CYCLE 0 tc_mode_degraded
+CYCLE 1 tc_mode_nominal,tc_mode_safe
+END
+# DEGRADED: tc_mode_nominal then fault_noncritical, inhibit 0
+CASE B-083 B
+CYCLE 0 tc_mode_degraded
+CYCLE 0 tc_mode_nominal,fault_noncritical
+END
+# DEGRADED: tc_mode_nominal then fault_noncritical, inhibit 1
+CASE B-084 B
+CYCLE 0 tc_mode_degraded
+CYCLE 1 tc_mode_nominal,fault_noncritical
+END
+# DEGRADED: tc_mode_nominal then fault_critical, inhibit 0
+CASE B-085 B
+CYCLE 0 tc_mode_degraded
+CYCLE 0 tc_mode_nominal,fault_critical
+END
+# DEGRADED: tc_mode_nominal then fault_critical, inhibit 1
+CASE B-086 B
+CYCLE 0 tc_mode_degraded
+CYCLE 1 tc_mode_nominal,fault_critical
+END
+# DEGRADED: tc_mode_nominal then fault_cleared, inhibit 0
+CASE B-087 B
+CYCLE 0 tc_mode_degraded
+CYCLE 0 tc_mode_nominal,fault_cleared
+END
+# DEGRADED: tc_mode_nominal then fault_cleared, inhibit 1
+CASE B-088 B
+CYCLE 0 tc_mode_degraded
+CYCLE 1 tc_mode_nominal,fault_cleared
+END
+# DEGRADED: tc_mode_degraded then tc_mode_nominal, inhibit 0
+CASE B-089 B
+CYCLE 0 tc_mode_degraded
+CYCLE 0 tc_mode_degraded,tc_mode_nominal
+END
+# DEGRADED: tc_mode_degraded then tc_mode_nominal, inhibit 1
+CASE B-090 B
+CYCLE 0 tc_mode_degraded
+CYCLE 1 tc_mode_degraded,tc_mode_nominal
+END
+# DEGRADED: tc_mode_degraded then tc_mode_safe, inhibit 0
+CASE B-091 B
+CYCLE 0 tc_mode_degraded
+CYCLE 0 tc_mode_degraded,tc_mode_safe
+END
+# DEGRADED: tc_mode_degraded then tc_mode_safe, inhibit 1
+CASE B-092 B
+CYCLE 0 tc_mode_degraded
+CYCLE 1 tc_mode_degraded,tc_mode_safe
+END
+# DEGRADED: tc_mode_degraded then fault_noncritical, inhibit 0
+CASE B-093 B
+CYCLE 0 tc_mode_degraded
+CYCLE 0 tc_mode_degraded,fault_noncritical
+END
+# DEGRADED: tc_mode_degraded then fault_noncritical, inhibit 1
+CASE B-094 B
+CYCLE 0 tc_mode_degraded
+CYCLE 1 tc_mode_degraded,fault_noncritical
+END
+# DEGRADED: tc_mode_degraded then fault_critical, inhibit 0
+CASE B-095 B
+CYCLE 0 tc_mode_degraded
+CYCLE 0 tc_mode_degraded,fault_critical
+END
+# DEGRADED: tc_mode_degraded then fault_critical, inhibit 1
+CASE B-096 B
+CYCLE 0 tc_mode_degraded
+CYCLE 1 tc_mode_degraded,fault_critical
+END
+# DEGRADED: tc_mode_degraded then fault_cleared, inhibit 0
+CASE B-097 B
+CYCLE 0 tc_mode_degraded
+CYCLE 0 tc_mode_degraded,fault_cleared
+END
+# DEGRADED: tc_mode_degraded then fault_cleared, inhibit 1
+CASE B-098 B
+CYCLE 0 tc_mode_degraded
+CYCLE 1 tc_mode_degraded,fault_cleared
+END
+# DEGRADED: tc_mode_safe then tc_mode_nominal, inhibit 0
+CASE B-099 B
+CYCLE 0 tc_mode_degraded
+CYCLE 0 tc_mode_safe,tc_mode_nominal
+END
+# DEGRADED: tc_mode_safe then tc_mode_nominal, inhibit 1
+CASE B-100 B
+CYCLE 0 tc_mode_degraded
+CYCLE 1 tc_mode_safe,tc_mode_nominal
+END
+# DEGRADED: tc_mode_safe then tc_mode_degraded, inhibit 0
+CASE B-101 B
+CYCLE 0 tc_mode_degraded
+CYCLE 0 tc_mode_safe,tc_mode_degraded
+END
+# DEGRADED: tc_mode_safe then tc_mode_degraded, inhibit 1
+CASE B-102 B
+CYCLE 0 tc_mode_degraded
+CYCLE 1 tc_mode_safe,tc_mode_degraded
+END
+# DEGRADED: tc_mode_safe then fault_noncritical, inhibit 0
+CASE B-103 B
+CYCLE 0 tc_mode_degraded
+CYCLE 0 tc_mode_safe,fault_noncritical
+END
+# DEGRADED: tc_mode_safe then fault_noncritical, inhibit 1
+CASE B-104 B
+CYCLE 0 tc_mode_degraded
+CYCLE 1 tc_mode_safe,fault_noncritical
+END
+# DEGRADED: tc_mode_safe then fault_critical, inhibit 0
+CASE B-105 B
+CYCLE 0 tc_mode_degraded
+CYCLE 0 tc_mode_safe,fault_critical
+END
+# DEGRADED: tc_mode_safe then fault_critical, inhibit 1
+CASE B-106 B
+CYCLE 0 tc_mode_degraded
+CYCLE 1 tc_mode_safe,fault_critical
+END
+# DEGRADED: tc_mode_safe then fault_cleared, inhibit 0
+CASE B-107 B
+CYCLE 0 tc_mode_degraded
+CYCLE 0 tc_mode_safe,fault_cleared
+END
+# DEGRADED: tc_mode_safe then fault_cleared, inhibit 1
+CASE B-108 B
+CYCLE 0 tc_mode_degraded
+CYCLE 1 tc_mode_safe,fault_cleared
+END
+# DEGRADED: fault_noncritical then tc_mode_nominal, inhibit 0
+CASE B-109 B
+CYCLE 0 tc_mode_degraded
+CYCLE 0 fault_noncritical,tc_mode_nominal
+END
+# DEGRADED: fault_noncritical then tc_mode_nominal, inhibit 1
+CASE B-110 B
+CYCLE 0 tc_mode_degraded
+CYCLE 1 fault_noncritical,tc_mode_nominal
+END
+# DEGRADED: fault_noncritical then tc_mode_degraded, inhibit 0
+CASE B-111 B
+CYCLE 0 tc_mode_degraded
+CYCLE 0 fault_noncritical,tc_mode_degraded
+END
+# DEGRADED: fault_noncritical then tc_mode_degraded, inhibit 1
+CASE B-112 B
+CYCLE 0 tc_mode_degraded
+CYCLE 1 fault_noncritical,tc_mode_degraded
+END
+# DEGRADED: fault_noncritical then tc_mode_safe, inhibit 0
+CASE B-113 B
+CYCLE 0 tc_mode_degraded
+CYCLE 0 fault_noncritical,tc_mode_safe
+END
+# DEGRADED: fault_noncritical then tc_mode_safe, inhibit 1
+CASE B-114 B
+CYCLE 0 tc_mode_degraded
+CYCLE 1 fault_noncritical,tc_mode_safe
+END
+# DEGRADED: fault_noncritical then fault_critical, inhibit 0
+CASE B-115 B
+CYCLE 0 tc_mode_degraded
+CYCLE 0 fault_noncritical,fault_critical
+END
+# DEGRADED: fault_noncritical then fault_critical, inhibit 1
+CASE B-116 B
+CYCLE 0 tc_mode_degraded
+CYCLE 1 fault_noncritical,fault_critical
+END
+# DEGRADED: fault_noncritical then fault_cleared, inhibit 0
+CASE B-117 B
+CYCLE 0 tc_mode_degraded
+CYCLE 0 fault_noncritical,fault_cleared
+END
+# DEGRADED: fault_noncritical then fault_cleared, inhibit 1
+CASE B-118 B
+CYCLE 0 tc_mode_degraded
+CYCLE 1 fault_noncritical,fault_cleared
+END
+# DEGRADED: fault_critical then tc_mode_nominal, inhibit 0
+CASE B-119 B
+CYCLE 0 tc_mode_degraded
+CYCLE 0 fault_critical,tc_mode_nominal
+END
+# DEGRADED: fault_critical then tc_mode_nominal, inhibit 1
+CASE B-120 B
+CYCLE 0 tc_mode_degraded
+CYCLE 1 fault_critical,tc_mode_nominal
+END
+# DEGRADED: fault_critical then tc_mode_degraded, inhibit 0
+CASE B-121 B
+CYCLE 0 tc_mode_degraded
+CYCLE 0 fault_critical,tc_mode_degraded
+END
+# DEGRADED: fault_critical then tc_mode_degraded, inhibit 1
+CASE B-122 B
+CYCLE 0 tc_mode_degraded
+CYCLE 1 fault_critical,tc_mode_degraded
+END
+# DEGRADED: fault_critical then tc_mode_safe, inhibit 0
+CASE B-123 B
+CYCLE 0 tc_mode_degraded
+CYCLE 0 fault_critical,tc_mode_safe
+END
+# DEGRADED: fault_critical then tc_mode_safe, inhibit 1
+CASE B-124 B
+CYCLE 0 tc_mode_degraded
+CYCLE 1 fault_critical,tc_mode_safe
+END
+# DEGRADED: fault_critical then fault_noncritical, inhibit 0
+CASE B-125 B
+CYCLE 0 tc_mode_degraded
+CYCLE 0 fault_critical,fault_noncritical
+END
+# DEGRADED: fault_critical then fault_noncritical, inhibit 1
+CASE B-126 B
+CYCLE 0 tc_mode_degraded
+CYCLE 1 fault_critical,fault_noncritical
+END
+# DEGRADED: fault_critical then fault_cleared, inhibit 0
+CASE B-127 B
+CYCLE 0 tc_mode_degraded
+CYCLE 0 fault_critical,fault_cleared
+END
+# DEGRADED: fault_critical then fault_cleared, inhibit 1
+CASE B-128 B
+CYCLE 0 tc_mode_degraded
+CYCLE 1 fault_critical,fault_cleared
+END
+# DEGRADED: fault_cleared then tc_mode_nominal, inhibit 0
+CASE B-129 B
+CYCLE 0 tc_mode_degraded
+CYCLE 0 fault_cleared,tc_mode_nominal
+END
+# DEGRADED: fault_cleared then tc_mode_nominal, inhibit 1
+CASE B-130 B
+CYCLE 0 tc_mode_degraded
+CYCLE 1 fault_cleared,tc_mode_nominal
+END
+# DEGRADED: fault_cleared then tc_mode_degraded, inhibit 0
+CASE B-131 B
+CYCLE 0 tc_mode_degraded
+CYCLE 0 fault_cleared,tc_mode_degraded
+END
+# DEGRADED: fault_cleared then tc_mode_degraded, inhibit 1
+CASE B-132 B
+CYCLE 0 tc_mode_degraded
+CYCLE 1 fault_cleared,tc_mode_degraded
+END
+# DEGRADED: fault_cleared then tc_mode_safe, inhibit 0
+CASE B-133 B
+CYCLE 0 tc_mode_degraded
+CYCLE 0 fault_cleared,tc_mode_safe
+END
+# DEGRADED: fault_cleared then tc_mode_safe, inhibit 1
+CASE B-134 B
+CYCLE 0 tc_mode_degraded
+CYCLE 1 fault_cleared,tc_mode_safe
+END
+# DEGRADED: fault_cleared then fault_noncritical, inhibit 0
+CASE B-135 B
+CYCLE 0 tc_mode_degraded
+CYCLE 0 fault_cleared,fault_noncritical
+END
+# DEGRADED: fault_cleared then fault_noncritical, inhibit 1
+CASE B-136 B
+CYCLE 0 tc_mode_degraded
+CYCLE 1 fault_cleared,fault_noncritical
+END
+# DEGRADED: fault_cleared then fault_critical, inhibit 0
+CASE B-137 B
+CYCLE 0 tc_mode_degraded
+CYCLE 0 fault_cleared,fault_critical
+END
+# DEGRADED: fault_cleared then fault_critical, inhibit 1
+CASE B-138 B
+CYCLE 0 tc_mode_degraded
+CYCLE 1 fault_cleared,fault_critical
+END
+# DEGRADED: tc_mode_nominal then fault_noncritical then fault_critical
+CASE B-139 B
+CYCLE 0 tc_mode_degraded
+CYCLE 0 tc_mode_nominal,fault_noncritical,fault_critical
+END
+# DEGRADED: tc_mode_nominal then fault_critical then fault_noncritical
+CASE B-140 B
+CYCLE 0 tc_mode_degraded
+CYCLE 0 tc_mode_nominal,fault_critical,fault_noncritical
+END
+# DEGRADED: fault_noncritical then tc_mode_nominal then fault_critical
+CASE B-141 B
+CYCLE 0 tc_mode_degraded
+CYCLE 0 fault_noncritical,tc_mode_nominal,fault_critical
+END
+# DEGRADED: fault_noncritical then fault_critical then tc_mode_nominal
+CASE B-142 B
+CYCLE 0 tc_mode_degraded
+CYCLE 0 fault_noncritical,fault_critical,tc_mode_nominal
+END
+# DEGRADED: fault_critical then tc_mode_nominal then fault_noncritical
+CASE B-143 B
+CYCLE 0 tc_mode_degraded
+CYCLE 0 fault_critical,tc_mode_nominal,fault_noncritical
+END
+# DEGRADED: fault_critical then fault_noncritical then tc_mode_nominal
+CASE B-144 B
+CYCLE 0 tc_mode_degraded
+CYCLE 0 fault_critical,fault_noncritical,tc_mode_nominal
+END
+# DEGRADED: tc_mode_degraded then fault_noncritical then fault_critical
+CASE B-145 B
+CYCLE 0 tc_mode_degraded
+CYCLE 0 tc_mode_degraded,fault_noncritical,fault_critical
+END
+# DEGRADED: tc_mode_degraded then fault_critical then fault_noncritical
+CASE B-146 B
+CYCLE 0 tc_mode_degraded
+CYCLE 0 tc_mode_degraded,fault_critical,fault_noncritical
+END
+# DEGRADED: fault_noncritical then tc_mode_degraded then fault_critical
+CASE B-147 B
+CYCLE 0 tc_mode_degraded
+CYCLE 0 fault_noncritical,tc_mode_degraded,fault_critical
+END
+# DEGRADED: fault_noncritical then fault_critical then tc_mode_degraded
+CASE B-148 B
+CYCLE 0 tc_mode_degraded
+CYCLE 0 fault_noncritical,fault_critical,tc_mode_degraded
+END
+# DEGRADED: fault_critical then tc_mode_degraded then fault_noncritical
+CASE B-149 B
+CYCLE 0 tc_mode_degraded
+CYCLE 0 fault_critical,tc_mode_degraded,fault_noncritical
+END
+# DEGRADED: fault_critical then fault_noncritical then tc_mode_degraded
+CASE B-150 B
+CYCLE 0 tc_mode_degraded
+CYCLE 0 fault_critical,fault_noncritical,tc_mode_degraded
+END
+# DEGRADED: tc_mode_safe then fault_noncritical then fault_critical
+CASE B-151 B
+CYCLE 0 tc_mode_degraded
+CYCLE 0 tc_mode_safe,fault_noncritical,fault_critical
+END
+# DEGRADED: tc_mode_safe then fault_critical then fault_noncritical
+CASE B-152 B
+CYCLE 0 tc_mode_degraded
+CYCLE 0 tc_mode_safe,fault_critical,fault_noncritical
+END
+# DEGRADED: fault_noncritical then tc_mode_safe then fault_critical
+CASE B-153 B
+CYCLE 0 tc_mode_degraded
+CYCLE 0 fault_noncritical,tc_mode_safe,fault_critical
+END
+# DEGRADED: fault_noncritical then fault_critical then tc_mode_safe
+CASE B-154 B
+CYCLE 0 tc_mode_degraded
+CYCLE 0 fault_noncritical,fault_critical,tc_mode_safe
+END
+# DEGRADED: fault_critical then tc_mode_safe then fault_noncritical
+CASE B-155 B
+CYCLE 0 tc_mode_degraded
+CYCLE 0 fault_critical,tc_mode_safe,fault_noncritical
+END
+# DEGRADED: fault_critical then fault_noncritical then tc_mode_safe
+CASE B-156 B
+CYCLE 0 tc_mode_degraded
+CYCLE 0 fault_critical,fault_noncritical,tc_mode_safe
+END
+# SAFE: tc_mode_nominal then tc_mode_degraded, inhibit 0
+CASE B-157 B
+CYCLE 0 tc_mode_safe
+CYCLE 0 tc_mode_nominal,tc_mode_degraded
+END
+# SAFE: tc_mode_nominal then tc_mode_degraded, inhibit 1
+CASE B-158 B
+CYCLE 0 tc_mode_safe
+CYCLE 1 tc_mode_nominal,tc_mode_degraded
+END
+# SAFE: tc_mode_nominal then tc_mode_safe, inhibit 0
+CASE B-159 B
+CYCLE 0 tc_mode_safe
+CYCLE 0 tc_mode_nominal,tc_mode_safe
+END
+# SAFE: tc_mode_nominal then tc_mode_safe, inhibit 1
+CASE B-160 B
+CYCLE 0 tc_mode_safe
+CYCLE 1 tc_mode_nominal,tc_mode_safe
+END
+# SAFE: tc_mode_nominal then fault_noncritical, inhibit 0
+CASE B-161 B
+CYCLE 0 tc_mode_safe
+CYCLE 0 tc_mode_nominal,fault_noncritical
+END
+# SAFE: tc_mode_nominal then fault_noncritical, inhibit 1
+CASE B-162 B
+CYCLE 0 tc_mode_safe
+CYCLE 1 tc_mode_nominal,fault_noncritical
+END
+# SAFE: tc_mode_nominal then fault_critical, inhibit 0
+CASE B-163 B
+CYCLE 0 tc_mode_safe
+CYCLE 0 tc_mode_nominal,fault_critical
+END
+# SAFE: tc_mode_nominal then fault_critical, inhibit 1
+CASE B-164 B
+CYCLE 0 tc_mode_safe
+CYCLE 1 tc_mode_nominal,fault_critical
+END
+# SAFE: tc_mode_nominal then fault_cleared, inhibit 0
+CASE B-165 B
+CYCLE 0 tc_mode_safe
+CYCLE 0 tc_mode_nominal,fault_cleared
+END
+# SAFE: tc_mode_nominal then fault_cleared, inhibit 1
+CASE B-166 B
+CYCLE 0 tc_mode_safe
+CYCLE 1 tc_mode_nominal,fault_cleared
+END
+# SAFE: tc_mode_degraded then tc_mode_nominal, inhibit 0
+CASE B-167 B
+CYCLE 0 tc_mode_safe
+CYCLE 0 tc_mode_degraded,tc_mode_nominal
+END
+# SAFE: tc_mode_degraded then tc_mode_nominal, inhibit 1
+CASE B-168 B
+CYCLE 0 tc_mode_safe
+CYCLE 1 tc_mode_degraded,tc_mode_nominal
+END
+# SAFE: tc_mode_degraded then tc_mode_safe, inhibit 0
+CASE B-169 B
+CYCLE 0 tc_mode_safe
+CYCLE 0 tc_mode_degraded,tc_mode_safe
+END
+# SAFE: tc_mode_degraded then tc_mode_safe, inhibit 1
+CASE B-170 B
+CYCLE 0 tc_mode_safe
+CYCLE 1 tc_mode_degraded,tc_mode_safe
+END
+# SAFE: tc_mode_degraded then fault_noncritical, inhibit 0
+CASE B-171 B
+CYCLE 0 tc_mode_safe
+CYCLE 0 tc_mode_degraded,fault_noncritical
+END
+# SAFE: tc_mode_degraded then fault_noncritical, inhibit 1
+CASE B-172 B
+CYCLE 0 tc_mode_safe
+CYCLE 1 tc_mode_degraded,fault_noncritical
+END
+# SAFE: tc_mode_degraded then fault_critical, inhibit 0
+CASE B-173 B
+CYCLE 0 tc_mode_safe
+CYCLE 0 tc_mode_degraded,fault_critical
+END
+# SAFE: tc_mode_degraded then fault_critical, inhibit 1
+CASE B-174 B
+CYCLE 0 tc_mode_safe
+CYCLE 1 tc_mode_degraded,fault_critical
+END
+# SAFE: tc_mode_degraded then fault_cleared, inhibit 0
+CASE B-175 B
+CYCLE 0 tc_mode_safe
+CYCLE 0 tc_mode_degraded,fault_cleared
+END
+# SAFE: tc_mode_degraded then fault_cleared, inhibit 1
+CASE B-176 B
+CYCLE 0 tc_mode_safe
+CYCLE 1 tc_mode_degraded,fault_cleared
+END
+# SAFE: tc_mode_safe then tc_mode_nominal, inhibit 0
+CASE B-177 B
+CYCLE 0 tc_mode_safe
+CYCLE 0 tc_mode_safe,tc_mode_nominal
+END
+# SAFE: tc_mode_safe then tc_mode_nominal, inhibit 1
+CASE B-178 B
+CYCLE 0 tc_mode_safe
+CYCLE 1 tc_mode_safe,tc_mode_nominal
+END
+# SAFE: tc_mode_safe then tc_mode_degraded, inhibit 0
+CASE B-179 B
+CYCLE 0 tc_mode_safe
+CYCLE 0 tc_mode_safe,tc_mode_degraded
+END
+# SAFE: tc_mode_safe then tc_mode_degraded, inhibit 1
+CASE B-180 B
+CYCLE 0 tc_mode_safe
+CYCLE 1 tc_mode_safe,tc_mode_degraded
+END
+# SAFE: tc_mode_safe then fault_noncritical, inhibit 0
+CASE B-181 B
+CYCLE 0 tc_mode_safe
+CYCLE 0 tc_mode_safe,fault_noncritical
+END
+# SAFE: tc_mode_safe then fault_noncritical, inhibit 1
+CASE B-182 B
+CYCLE 0 tc_mode_safe
+CYCLE 1 tc_mode_safe,fault_noncritical
+END
+# SAFE: tc_mode_safe then fault_critical, inhibit 0
+CASE B-183 B
+CYCLE 0 tc_mode_safe
+CYCLE 0 tc_mode_safe,fault_critical
+END
+# SAFE: tc_mode_safe then fault_critical, inhibit 1
+CASE B-184 B
+CYCLE 0 tc_mode_safe
+CYCLE 1 tc_mode_safe,fault_critical
+END
+# SAFE: tc_mode_safe then fault_cleared, inhibit 0
+CASE B-185 B
+CYCLE 0 tc_mode_safe
+CYCLE 0 tc_mode_safe,fault_cleared
+END
+# SAFE: tc_mode_safe then fault_cleared, inhibit 1
+CASE B-186 B
+CYCLE 0 tc_mode_safe
+CYCLE 1 tc_mode_safe,fault_cleared
+END
+# SAFE: fault_noncritical then tc_mode_nominal, inhibit 0
+CASE B-187 B
+CYCLE 0 tc_mode_safe
+CYCLE 0 fault_noncritical,tc_mode_nominal
+END
+# SAFE: fault_noncritical then tc_mode_nominal, inhibit 1
+CASE B-188 B
+CYCLE 0 tc_mode_safe
+CYCLE 1 fault_noncritical,tc_mode_nominal
+END
+# SAFE: fault_noncritical then tc_mode_degraded, inhibit 0
+CASE B-189 B
+CYCLE 0 tc_mode_safe
+CYCLE 0 fault_noncritical,tc_mode_degraded
+END
+# SAFE: fault_noncritical then tc_mode_degraded, inhibit 1
+CASE B-190 B
+CYCLE 0 tc_mode_safe
+CYCLE 1 fault_noncritical,tc_mode_degraded
+END
+# SAFE: fault_noncritical then tc_mode_safe, inhibit 0
+CASE B-191 B
+CYCLE 0 tc_mode_safe
+CYCLE 0 fault_noncritical,tc_mode_safe
+END
+# SAFE: fault_noncritical then tc_mode_safe, inhibit 1
+CASE B-192 B
+CYCLE 0 tc_mode_safe
+CYCLE 1 fault_noncritical,tc_mode_safe
+END
+# SAFE: fault_noncritical then fault_critical, inhibit 0
+CASE B-193 B
+CYCLE 0 tc_mode_safe
+CYCLE 0 fault_noncritical,fault_critical
+END
+# SAFE: fault_noncritical then fault_critical, inhibit 1
+CASE B-194 B
+CYCLE 0 tc_mode_safe
+CYCLE 1 fault_noncritical,fault_critical
+END
+# SAFE: fault_noncritical then fault_cleared, inhibit 0
+CASE B-195 B
+CYCLE 0 tc_mode_safe
+CYCLE 0 fault_noncritical,fault_cleared
+END
+# SAFE: fault_noncritical then fault_cleared, inhibit 1
+CASE B-196 B
+CYCLE 0 tc_mode_safe
+CYCLE 1 fault_noncritical,fault_cleared
+END
+# SAFE: fault_critical then tc_mode_nominal, inhibit 0
+CASE B-197 B
+CYCLE 0 tc_mode_safe
+CYCLE 0 fault_critical,tc_mode_nominal
+END
+# SAFE: fault_critical then tc_mode_nominal, inhibit 1
+CASE B-198 B
+CYCLE 0 tc_mode_safe
+CYCLE 1 fault_critical,tc_mode_nominal
+END
+# SAFE: fault_critical then tc_mode_degraded, inhibit 0
+CASE B-199 B
+CYCLE 0 tc_mode_safe
+CYCLE 0 fault_critical,tc_mode_degraded
+END
+# SAFE: fault_critical then tc_mode_degraded, inhibit 1
+CASE B-200 B
+CYCLE 0 tc_mode_safe
+CYCLE 1 fault_critical,tc_mode_degraded
+END
+# SAFE: fault_critical then tc_mode_safe, inhibit 0
+CASE B-201 B
+CYCLE 0 tc_mode_safe
+CYCLE 0 fault_critical,tc_mode_safe
+END
+# SAFE: fault_critical then tc_mode_safe, inhibit 1
+CASE B-202 B
+CYCLE 0 tc_mode_safe
+CYCLE 1 fault_critical,tc_mode_safe
+END
+# SAFE: fault_critical then fault_noncritical, inhibit 0
+CASE B-203 B
+CYCLE 0 tc_mode_safe
+CYCLE 0 fault_critical,fault_noncritical
+END
+# SAFE: fault_critical then fault_noncritical, inhibit 1
+CASE B-204 B
+CYCLE 0 tc_mode_safe
+CYCLE 1 fault_critical,fault_noncritical
+END
+# SAFE: fault_critical then fault_cleared, inhibit 0
+CASE B-205 B
+CYCLE 0 tc_mode_safe
+CYCLE 0 fault_critical,fault_cleared
+END
+# SAFE: fault_critical then fault_cleared, inhibit 1
+CASE B-206 B
+CYCLE 0 tc_mode_safe
+CYCLE 1 fault_critical,fault_cleared
+END
+# SAFE: fault_cleared then tc_mode_nominal, inhibit 0
+CASE B-207 B
+CYCLE 0 tc_mode_safe
+CYCLE 0 fault_cleared,tc_mode_nominal
+END
+# SAFE: fault_cleared then tc_mode_nominal, inhibit 1
+CASE B-208 B
+CYCLE 0 tc_mode_safe
+CYCLE 1 fault_cleared,tc_mode_nominal
+END
+# SAFE: fault_cleared then tc_mode_degraded, inhibit 0
+CASE B-209 B
+CYCLE 0 tc_mode_safe
+CYCLE 0 fault_cleared,tc_mode_degraded
+END
+# SAFE: fault_cleared then tc_mode_degraded, inhibit 1
+CASE B-210 B
+CYCLE 0 tc_mode_safe
+CYCLE 1 fault_cleared,tc_mode_degraded
+END
+# SAFE: fault_cleared then tc_mode_safe, inhibit 0
+CASE B-211 B
+CYCLE 0 tc_mode_safe
+CYCLE 0 fault_cleared,tc_mode_safe
+END
+# SAFE: fault_cleared then tc_mode_safe, inhibit 1
+CASE B-212 B
+CYCLE 0 tc_mode_safe
+CYCLE 1 fault_cleared,tc_mode_safe
+END
+# SAFE: fault_cleared then fault_noncritical, inhibit 0
+CASE B-213 B
+CYCLE 0 tc_mode_safe
+CYCLE 0 fault_cleared,fault_noncritical
+END
+# SAFE: fault_cleared then fault_noncritical, inhibit 1
+CASE B-214 B
+CYCLE 0 tc_mode_safe
+CYCLE 1 fault_cleared,fault_noncritical
+END
+# SAFE: fault_cleared then fault_critical, inhibit 0
+CASE B-215 B
+CYCLE 0 tc_mode_safe
+CYCLE 0 fault_cleared,fault_critical
+END
+# SAFE: fault_cleared then fault_critical, inhibit 1
+CASE B-216 B
+CYCLE 0 tc_mode_safe
+CYCLE 1 fault_cleared,fault_critical
+END
+# SAFE: tc_mode_nominal then fault_noncritical then fault_critical
+CASE B-217 B
+CYCLE 0 tc_mode_safe
+CYCLE 0 tc_mode_nominal,fault_noncritical,fault_critical
+END
+# SAFE: tc_mode_nominal then fault_critical then fault_noncritical
+CASE B-218 B
+CYCLE 0 tc_mode_safe
+CYCLE 0 tc_mode_nominal,fault_critical,fault_noncritical
+END
+# SAFE: fault_noncritical then tc_mode_nominal then fault_critical
+CASE B-219 B
+CYCLE 0 tc_mode_safe
+CYCLE 0 fault_noncritical,tc_mode_nominal,fault_critical
+END
+# SAFE: fault_noncritical then fault_critical then tc_mode_nominal
+CASE B-220 B
+CYCLE 0 tc_mode_safe
+CYCLE 0 fault_noncritical,fault_critical,tc_mode_nominal
+END
+# SAFE: fault_critical then tc_mode_nominal then fault_noncritical
+CASE B-221 B
+CYCLE 0 tc_mode_safe
+CYCLE 0 fault_critical,tc_mode_nominal,fault_noncritical
+END
+# SAFE: fault_critical then fault_noncritical then tc_mode_nominal
+CASE B-222 B
+CYCLE 0 tc_mode_safe
+CYCLE 0 fault_critical,fault_noncritical,tc_mode_nominal
+END
+# SAFE: tc_mode_degraded then fault_noncritical then fault_critical
+CASE B-223 B
+CYCLE 0 tc_mode_safe
+CYCLE 0 tc_mode_degraded,fault_noncritical,fault_critical
+END
+# SAFE: tc_mode_degraded then fault_critical then fault_noncritical
+CASE B-224 B
+CYCLE 0 tc_mode_safe
+CYCLE 0 tc_mode_degraded,fault_critical,fault_noncritical
+END
+# SAFE: fault_noncritical then tc_mode_degraded then fault_critical
+CASE B-225 B
+CYCLE 0 tc_mode_safe
+CYCLE 0 fault_noncritical,tc_mode_degraded,fault_critical
+END
+# SAFE: fault_noncritical then fault_critical then tc_mode_degraded
+CASE B-226 B
+CYCLE 0 tc_mode_safe
+CYCLE 0 fault_noncritical,fault_critical,tc_mode_degraded
+END
+# SAFE: fault_critical then tc_mode_degraded then fault_noncritical
+CASE B-227 B
+CYCLE 0 tc_mode_safe
+CYCLE 0 fault_critical,tc_mode_degraded,fault_noncritical
+END
+# SAFE: fault_critical then fault_noncritical then tc_mode_degraded
+CASE B-228 B
+CYCLE 0 tc_mode_safe
+CYCLE 0 fault_critical,fault_noncritical,tc_mode_degraded
+END
+# SAFE: tc_mode_safe then fault_noncritical then fault_critical
+CASE B-229 B
+CYCLE 0 tc_mode_safe
+CYCLE 0 tc_mode_safe,fault_noncritical,fault_critical
+END
+# SAFE: tc_mode_safe then fault_critical then fault_noncritical
+CASE B-230 B
+CYCLE 0 tc_mode_safe
+CYCLE 0 tc_mode_safe,fault_critical,fault_noncritical
+END
+# SAFE: fault_noncritical then tc_mode_safe then fault_critical
+CASE B-231 B
+CYCLE 0 tc_mode_safe
+CYCLE 0 fault_noncritical,tc_mode_safe,fault_critical
+END
+# SAFE: fault_noncritical then fault_critical then tc_mode_safe
+CASE B-232 B
+CYCLE 0 tc_mode_safe
+CYCLE 0 fault_noncritical,fault_critical,tc_mode_safe
+END
+# SAFE: fault_critical then tc_mode_safe then fault_noncritical
+CASE B-233 B
+CYCLE 0 tc_mode_safe
+CYCLE 0 fault_critical,tc_mode_safe,fault_noncritical
+END
+# SAFE: fault_critical then fault_noncritical then tc_mode_safe
+CASE B-234 B
+CYCLE 0 tc_mode_safe
+CYCLE 0 fault_critical,fault_noncritical,tc_mode_safe
+END

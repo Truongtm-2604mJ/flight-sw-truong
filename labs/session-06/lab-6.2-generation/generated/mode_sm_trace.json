@@ -1,0 +1,644 @@
+{
+  "model": "mode_machine.yaml",
+  "model_sha256": "f82e7dfde38f18f475df59611e585b20e3c4466247d1732833060af4f2dd56bb",
+  "generator_sha256": "4e01934c54195d8ecf8660e6aafeb2bd7c644bfadfa0e7237c5db0c2597c9594",
+  "header": {
+    "state:NOMINAL": [
+      {
+        "symbol": "MODE_SM_NOMINAL",
+        "lines": [
+          23,
+          23
+        ]
+      }
+    ],
+    "state:DEGRADED": [
+      {
+        "symbol": "MODE_SM_DEGRADED",
+        "lines": [
+          24,
+          24
+        ]
+      }
+    ],
+    "state:SAFE": [
+      {
+        "symbol": "MODE_SM_SAFE",
+        "lines": [
+          25,
+          25
+        ]
+      }
+    ],
+    "event:tc_mode_nominal": [
+      {
+        "symbol": "MODE_SM_EV_TC_MODE_NOMINAL",
+        "lines": [
+          30,
+          30
+        ]
+      }
+    ],
+    "event:tc_mode_degraded": [
+      {
+        "symbol": "MODE_SM_EV_TC_MODE_DEGRADED",
+        "lines": [
+          31,
+          31
+        ]
+      }
+    ],
+    "event:tc_mode_safe": [
+      {
+        "symbol": "MODE_SM_EV_TC_MODE_SAFE",
+        "lines": [
+          32,
+          32
+        ]
+      }
+    ],
+    "event:fault_noncritical": [
+      {
+        "symbol": "MODE_SM_EV_FAULT_NONCRITICAL",
+        "lines": [
+          33,
+          33
+        ]
+      }
+    ],
+    "event:fault_critical": [
+      {
+        "symbol": "MODE_SM_EV_FAULT_CRITICAL",
+        "lines": [
+          34,
+          34
+        ]
+      }
+    ],
+    "event:fault_cleared": [
+      {
+        "symbol": "MODE_SM_EV_FAULT_CLEARED",
+        "lines": [
+          35,
+          35
+        ]
+      }
+    ]
+  },
+  "source": {
+    "semantics:unconsumed_one_shot": [
+      {
+        "symbol": "ONE_SHOT, LATCHED",
+        "lines": [
+          18,
+          20
+        ]
+      }
+    ],
+    "ignore:NOMINAL": [
+      {
+        "symbol": "IGNORED[MODE_SM_NOMINAL]",
+        "lines": [
+          24,
+          24
+        ]
+      }
+    ],
+    "ignore:DEGRADED": [
+      {
+        "symbol": "IGNORED[MODE_SM_DEGRADED]",
+        "lines": [
+          25,
+          25
+        ]
+      }
+    ],
+    "ignore:SAFE": [
+      {
+        "symbol": "IGNORED[MODE_SM_SAFE]",
+        "lines": [
+          26,
+          26
+        ]
+      }
+    ],
+    "entry:NOMINAL": [
+      {
+        "symbol": "enter_NOMINAL()",
+        "lines": [
+          29,
+          36
+        ]
+      }
+    ],
+    "entry:DEGRADED": [
+      {
+        "symbol": "enter_DEGRADED()",
+        "lines": [
+          37,
+          45
+        ]
+      }
+    ],
+    "entry:SAFE": [
+      {
+        "symbol": "enter_SAFE()",
+        "lines": [
+          46,
+          57
+        ]
+      }
+    ],
+    "exit:SAFE": [
+      {
+        "symbol": "exit_SAFE()",
+        "lines": [
+          58,
+          63
+        ]
+      }
+    ],
+    "transition:T01": [
+      {
+        "symbol": "fire_T01()",
+        "lines": [
+          64,
+          76
+        ]
+      }
+    ],
+    "transition:T02": [
+      {
+        "symbol": "fire_T02()",
+        "lines": [
+          77,
+          89
+        ]
+      }
+    ],
+    "transition:T03": [
+      {
+        "symbol": "fire_T03()",
+        "lines": [
+          90,
+          102
+        ]
+      }
+    ],
+    "transition:T04": [
+      {
+        "symbol": "fire_T04()",
+        "lines": [
+          103,
+          115
+        ]
+      }
+    ],
+    "transition:T05": [
+      {
+        "symbol": "fire_T05()",
+        "lines": [
+          116,
+          127
+        ]
+      }
+    ],
+    "transition:T06": [
+      {
+        "symbol": "fire_T06()",
+        "lines": [
+          128,
+          139
+        ]
+      }
+    ],
+    "transition:T07": [
+      {
+        "symbol": "fire_T07()",
+        "lines": [
+          140,
+          152
+        ]
+      }
+    ],
+    "transition:T08": [
+      {
+        "symbol": "fire_T08()",
+        "lines": [
+          153,
+          165
+        ]
+      }
+    ],
+    "transition:T09": [
+      {
+        "symbol": "fire_T09()",
+        "lines": [
+          166,
+          178
+        ]
+      }
+    ],
+    "transition:T10": [
+      {
+        "symbol": "fire_T10()",
+        "lines": [
+          179,
+          190
+        ]
+      }
+    ],
+    "transition:T11": [
+      {
+        "symbol": "fire_T11()",
+        "lines": [
+          191,
+          204
+        ]
+      }
+    ],
+    "transition:T12": [
+      {
+        "symbol": "fire_T12()",
+        "lines": [
+          205,
+          218
+        ]
+      }
+    ],
+    "select:T01": [
+      {
+        "symbol": "select_NOMINAL()",
+        "lines": [
+          223,
+          224
+        ]
+      }
+    ],
+    "select:T02": [
+      {
+        "symbol": "select_NOMINAL()",
+        "lines": [
+          225,
+          226
+        ]
+      }
+    ],
+    "select:T03": [
+      {
+        "symbol": "select_NOMINAL()",
+        "lines": [
+          227,
+          228
+        ]
+      }
+    ],
+    "select:T04": [
+      {
+        "symbol": "select_NOMINAL()",
+        "lines": [
+          229,
+          230
+        ]
+      }
+    ],
+    "select:T05": [
+      {
+        "symbol": "select_NOMINAL()",
+        "lines": [
+          231,
+          232
+        ]
+      }
+    ],
+    "select:T06": [
+      {
+        "symbol": "select_NOMINAL()",
+        "lines": [
+          233,
+          234
+        ]
+      }
+    ],
+    "select:NOMINAL": [
+      {
+        "symbol": "select_NOMINAL()",
+        "lines": [
+          219,
+          239
+        ]
+      }
+    ],
+    "select:T07": [
+      {
+        "symbol": "select_DEGRADED()",
+        "lines": [
+          244,
+          245
+        ]
+      }
+    ],
+    "select:T08": [
+      {
+        "symbol": "select_DEGRADED()",
+        "lines": [
+          246,
+          247
+        ]
+      }
+    ],
+    "select:T09": [
+      {
+        "symbol": "select_DEGRADED()",
+        "lines": [
+          248,
+          249
+        ]
+      }
+    ],
+    "select:T10": [
+      {
+        "symbol": "select_DEGRADED()",
+        "lines": [
+          250,
+          251
+        ]
+      }
+    ],
+    "select:DEGRADED": [
+      {
+        "symbol": "select_DEGRADED()",
+        "lines": [
+          240,
+          256
+        ]
+      }
+    ],
+    "select:T11": [
+      {
+        "symbol": "select_SAFE()",
+        "lines": [
+          262,
+          263
+        ]
+      }
+    ],
+    "select:T12": [
+      {
+        "symbol": "select_SAFE()",
+        "lines": [
+          264,
+          265
+        ]
+      }
+    ],
+    "select:SAFE": [
+      {
+        "symbol": "select_SAFE()",
+        "lines": [
+          257,
+          270
+        ]
+      }
+    ],
+    "boot_states": [
+      {
+        "symbol": "mode_sm_init()",
+        "lines": [
+          281,
+          291
+        ]
+      }
+    ],
+    "invalid_state_recovery": [
+      {
+        "symbol": "mode_sm_step() default",
+        "lines": [
+          335,
+          344
+        ]
+      }
+    ],
+    "semantics:consumption": [
+      {
+        "symbol": "mode_sm_step() consumption",
+        "lines": [
+          349,
+          367
+        ]
+      }
+    ],
+    "step": [
+      {
+        "symbol": "mode_sm_step()",
+        "lines": [
+          309,
+          367
+        ]
+      }
+    ]
+  },
+  "requirements": {
+    "MM-100": [
+      "state:NOMINAL",
+      "state:DEGRADED",
+      "state:SAFE"
+    ],
+    "MM-020": [
+      "state:SAFE"
+    ],
+    "MM-030": [
+      "state:SAFE"
+    ],
+    "MM-120": [
+      "event:tc_mode_nominal",
+      "event:tc_mode_degraded",
+      "event:tc_mode_safe"
+    ],
+    "MM-130": [
+      "event:fault_noncritical",
+      "event:fault_critical"
+    ],
+    "MM-050": [
+      "event:fault_cleared"
+    ],
+    "MM-070": [
+      "transition:T01",
+      "transition:T03",
+      "transition:T07"
+    ],
+    "MM-040": [
+      "transition:T02",
+      "transition:T04",
+      "transition:T08"
+    ],
+    "MM-060": [
+      "transition:T05",
+      "transition:T06",
+      "transition:T10"
+    ],
+    "MM-010": [
+      "transition:T09",
+      "transition:T11",
+      "transition:T12"
+    ]
+  },
+  "transitions": [
+    {
+      "number": 1,
+      "id": "T01",
+      "from": "NOMINAL",
+      "to": "SAFE",
+      "event": "tc_mode_safe",
+      "guard": "true",
+      "internal": false,
+      "priority": 1,
+      "req": [
+        "MM-070"
+      ]
+    },
+    {
+      "number": 2,
+      "id": "T02",
+      "from": "NOMINAL",
+      "to": "SAFE",
+      "event": "fault_critical",
+      "guard": "!fdir_inhibited",
+      "internal": false,
+      "priority": 2,
+      "req": [
+        "MM-040"
+      ]
+    },
+    {
+      "number": 3,
+      "id": "T03",
+      "from": "NOMINAL",
+      "to": "DEGRADED",
+      "event": "tc_mode_degraded",
+      "guard": "true",
+      "internal": false,
+      "priority": 3,
+      "req": [
+        "MM-070"
+      ]
+    },
+    {
+      "number": 4,
+      "id": "T04",
+      "from": "NOMINAL",
+      "to": "DEGRADED",
+      "event": "fault_noncritical",
+      "guard": "!fdir_inhibited",
+      "internal": false,
+      "priority": 4,
+      "req": [
+        "MM-040"
+      ]
+    },
+    {
+      "number": 5,
+      "id": "T05",
+      "from": "NOMINAL",
+      "to": "NOMINAL",
+      "event": "fault_critical",
+      "guard": "fdir_inhibited",
+      "internal": true,
+      "priority": 5,
+      "req": [
+        "MM-060"
+      ]
+    },
+    {
+      "number": 6,
+      "id": "T06",
+      "from": "NOMINAL",
+      "to": "NOMINAL",
+      "event": "fault_noncritical",
+      "guard": "fdir_inhibited",
+      "internal": true,
+      "priority": 6,
+      "req": [
+        "MM-060"
+      ]
+    },
+    {
+      "number": 7,
+      "id": "T07",
+      "from": "DEGRADED",
+      "to": "SAFE",
+      "event": "tc_mode_safe",
+      "guard": "true",
+      "internal": false,
+      "priority": 1,
+      "req": [
+        "MM-070"
+      ]
+    },
+    {
+      "number": 8,
+      "id": "T08",
+      "from": "DEGRADED",
+      "to": "SAFE",
+      "event": "fault_critical",
+      "guard": "!fdir_inhibited",
+      "internal": false,
+      "priority": 2,
+      "req": [
+        "MM-040"
+      ]
+    },
+    {
+      "number": 9,
+      "id": "T09",
+      "from": "DEGRADED",
+      "to": "NOMINAL",
+      "event": "tc_mode_nominal",
+      "guard": "true",
+      "internal": false,
+      "priority": 3,
+      "req": [
+        "MM-010"
+      ]
+    },
+    {
+      "number": 10,
+      "id": "T10",
+      "from": "DEGRADED",
+      "to": "DEGRADED",
+      "event": "fault_critical",
+      "guard": "fdir_inhibited",
+      "internal": true,
+      "priority": 4,
+      "req": [
+        "MM-060"
+      ]
+    },
+    {
+      "number": 11,
+      "id": "T11",
+      "from": "SAFE",
+      "to": "DEGRADED",
+      "event": "tc_mode_degraded",
+      "guard": "true",
+      "internal": false,
+      "priority": 1,
+      "req": [
+        "MM-010"
+      ]
+    },
+    {
+      "number": 12,
+      "id": "T12",
+      "from": "SAFE",
+      "to": "NOMINAL",
+      "event": "tc_mode_nominal",
+      "guard": "true",
+      "internal": false,
+      "priority": 2,
+      "req": [
+        "MM-010"
+      ]
+    }
+  ]
+}

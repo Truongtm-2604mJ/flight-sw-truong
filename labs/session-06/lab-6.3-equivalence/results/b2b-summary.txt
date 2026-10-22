@@ -1,0 +1,17 @@
+Back-to-back: hand written modes.c vs generated mode_sm.c
+
+suite_a.seq                                163 cases    336 cycles    300 events     0 divergences
+suite_b.seq                                234 cases    390 cycles    678 events    82 divergences
+soak_a.seq                                   1 cases   5000 cycles   4270 events     0 divergences
+soak_b.seq                                   1 cases   5000 cycles   7504 events   916 divergences
+
+10726 cycles compared, 998 divergences
+Max drain: 3 generated steps for one multi-event cycle
+
+By class:
+  intermediate transitions (hand)                 236
+  ground overrides same-cycle fault (hand)        105
+  fault lost to order (hand)                      158
+  conflicting ground commands                     365
+  same end state but different cause attribution   134
+  timing only (not a divergence)                  564

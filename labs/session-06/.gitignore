@@ -1,0 +1,9 @@
+cov/
+build/
+*.o
+*.host
+*.exe
+*.gcda
+*.gcno
+fdir_nv.bin
+__pycache__/
