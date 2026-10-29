@@ -136,7 +136,7 @@ $(OUT)/integration/int_tc_path.exe: $(INT_SRC) | $(OUT)/integration
 	    $(RTEMS_LDFLAGS) $(INT_LDWRAP)
 
 target: $(OUT)/integration/int_tc_path.exe
-	$(PYTHON) support/run_image.py --timeout 300 --log $(OUT)/integration/int_tc_path.sis.log \
+	$(PYTHON) support/run_image.py --pty --timeout 300 --log $(OUT)/integration/int_tc_path.sis.log \
 	    -- $(SIS) -leon3 -r $(OUT)/integration/int_tc_path.exe
 	$(MAKE) -C $(APP_DIR) rtems
 	$(PYTHON) validation/run_campaign.py --target sis --pty --nv-volatile \

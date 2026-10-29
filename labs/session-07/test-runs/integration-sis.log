@@ -1,0 +1,17 @@
+
+ SIS - SPARC/RISCV instruction simulator 2.30,  copyright Jiri Gaisler 2020
+ Bug-reports to jiri@gaisler.se
+
+ LEON3 emulation enabled, 1 cpus online, delta 50 clocks
+
+ Loaded build/integration/int_tc_path.exe, entry 0x40000000
+
+*** FATAL ***
+fatal source: 0 (INTERNAL_ERROR_CORE)
+fatal code: 38 (INTERNAL_ERROR_ILLEGAL_USE_OF_FLOATING_POINT_UNIT)
+RTEMS version: 6.0.0.cb1f47527d05d70056fc0da73d8295eb993ae949
+RTEMS tools: 13.3.0 20240521 (RTEMS 6, RSB 84b3f5660ebaa96e1e405ca12f67b538b48636d6-modified, Newlib 1b3dcfd)
+executing thread ID: 0x0a010001
+executing thread name: UI1 
+cpu 0 in error mode (tt = 0x80)
+   180856  40013f80:  91d02000   ta  0x0
