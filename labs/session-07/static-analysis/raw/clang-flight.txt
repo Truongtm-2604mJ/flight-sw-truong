@@ -1,0 +1,1147 @@
+### clang -std=c99 -O2 -Weverything -I../labs/session-05/host-sim -I../labs/session-04/lab-4.1-space-packet -I../labs/session-04/lab-4.2-pus-service17 -I../labs/session-05/lab-5.1-monitoring -I../labs/session-05/lab-5.2-liveness -I../labs/session-05/lab-5.3-safe-mode -I../labs/session-05/lab-5.4-fault-injection -I../labs/session-05/app -I../labs/session-06/app -I../labs/session-06/lab-6.2-generation/generated -c ../labs/session-04/lab-4.1-space-packet/sp.c -o /dev/null
+In file included from ../labs/session-04/lab-4.1-space-packet/sp.c:2:
+../labs/session-04/lab-4.1-space-packet/sp.h:39:15: warning: padding struct 'sp_primary_header_t' with 3 bytes to align 'type' [-Wpadded]
+   39 |     sp_type_t type;          /* 1 bit  */
+      |               ^
+../labs/session-04/lab-4.1-space-packet/sp.h:41:15: warning: padding struct 'sp_primary_header_t' with 1 byte to align 'apid' [-Wpadded]
+   41 |     uint16_t  apid;          /* 11 bits */
+      |               ^
+../labs/session-04/lab-4.1-space-packet/sp.h:43:15: warning: padding struct 'sp_primary_header_t' with 1 byte to align 'seq_count' [-Wpadded]
+   43 |     uint16_t  seq_count;     /* 14 bits */
+      |               ^
+../labs/session-04/lab-4.1-space-packet/sp.h:37:9: warning: padding size of 'sp_primary_header_t' with 2 bytes to alignment boundary [-Wpadded]
+   37 | typedef struct {
+      |         ^
+../labs/session-04/lab-4.1-space-packet/sp.c:42:5: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   42 |     out[1] = (uint8_t)(word & 0xFFu);
+      |     ^~~
+../labs/session-04/lab-4.1-space-packet/sp.c:46:5: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   46 |     out[2] = (uint8_t)(word >> 8);
+      |     ^~~
+../labs/session-04/lab-4.1-space-packet/sp.c:47:5: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   47 |     out[3] = (uint8_t)(word & 0xFFu);
+      |     ^~~
+../labs/session-04/lab-4.1-space-packet/sp.c:51:5: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   51 |     out[4] = (uint8_t)(length_field >> 8);
+      |     ^~~
+../labs/session-04/lab-4.1-space-packet/sp.c:52:5: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   52 |     out[5] = (uint8_t)(length_field & 0xFFu);
+      |     ^~~
+../labs/session-04/lab-4.1-space-packet/sp.c:54:13: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   54 |     memcpy(&out[SP_PRIMARY_HEADER_LEN], payload, payload_len);
+      |             ^~~
+../labs/session-04/lab-4.1-space-packet/sp.c:74:48: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   74 |     word = (uint16_t)(((uint16_t)in[0] << 8) | in[1]);
+      |                                                ^~
+../labs/session-04/lab-4.1-space-packet/sp.c:80:34: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   80 |     word = (uint16_t)(((uint16_t)in[2] << 8) | in[3]);
+      |                                  ^~
+../labs/session-04/lab-4.1-space-packet/sp.c:80:48: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   80 |     word = (uint16_t)(((uint16_t)in[2] << 8) | in[3]);
+      |                                                ^~
+../labs/session-04/lab-4.1-space-packet/sp.c:84:46: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   84 |     hdr->data_length = (uint16_t)(((uint16_t)in[4] << 8) | in[5]);
+      |                                              ^~
+../labs/session-04/lab-4.1-space-packet/sp.c:84:60: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   84 |     hdr->data_length = (uint16_t)(((uint16_t)in[4] << 8) | in[5]);
+      |                                                            ^~
+../labs/session-04/lab-4.1-space-packet/sp.c:97:21: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   97 |     *payload_out = &in[SP_PRIMARY_HEADER_LEN];
+      |                     ^~
+16 warnings generated.
+
+### clang -std=c99 -O2 -Weverything -I../labs/session-05/host-sim -I../labs/session-04/lab-4.1-space-packet -I../labs/session-04/lab-4.2-pus-service17 -I../labs/session-05/lab-5.1-monitoring -I../labs/session-05/lab-5.2-liveness -I../labs/session-05/lab-5.3-safe-mode -I../labs/session-05/lab-5.4-fault-injection -I../labs/session-05/app -I../labs/session-06/app -I../labs/session-06/lab-6.2-generation/generated -c ../labs/session-04/lab-4.2-pus-service17/crc16.c -o /dev/null
+../labs/session-04/lab-4.2-pus-service17/crc16.c:16:37: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   16 |         crc ^= (uint16_t)((uint16_t)data[i] << 8);
+      |                                     ^~~~
+1 warning generated.
+
+### clang -std=c99 -O2 -Weverything -I../labs/session-05/host-sim -I../labs/session-04/lab-4.1-space-packet -I../labs/session-04/lab-4.2-pus-service17 -I../labs/session-05/lab-5.1-monitoring -I../labs/session-05/lab-5.2-liveness -I../labs/session-05/lab-5.3-safe-mode -I../labs/session-05/lab-5.4-fault-injection -I../labs/session-05/app -I../labs/session-06/app -I../labs/session-06/lab-6.2-generation/generated -c ../labs/session-04/lab-4.2-pus-service17/pus.c -o /dev/null
+In file included from ../labs/session-04/lab-4.2-pus-service17/pus.c:2:
+In file included from ../labs/session-04/lab-4.2-pus-service17/pus.h:34:
+../labs/session-04/lab-4.1-space-packet/sp.h:39:15: warning: padding struct 'sp_primary_header_t' with 3 bytes to align 'type' [-Wpadded]
+   39 |     sp_type_t type;          /* 1 bit  */
+      |               ^
+../labs/session-04/lab-4.1-space-packet/sp.h:41:15: warning: padding struct 'sp_primary_header_t' with 1 byte to align 'apid' [-Wpadded]
+   41 |     uint16_t  apid;          /* 11 bits */
+      |               ^
+../labs/session-04/lab-4.1-space-packet/sp.h:43:15: warning: padding struct 'sp_primary_header_t' with 1 byte to align 'seq_count' [-Wpadded]
+   43 |     uint16_t  seq_count;     /* 14 bits */
+      |               ^
+../labs/session-04/lab-4.1-space-packet/sp.h:37:9: warning: padding size of 'sp_primary_header_t' with 2 bytes to alignment boundary [-Wpadded]
+   37 | typedef struct {
+      |         ^
+In file included from ../labs/session-04/lab-4.2-pus-service17/pus.c:2:
+../labs/session-04/lab-4.2-pus-service17/pus.h:63:9: warning: padding size of 'obt_t' with 2 bytes to alignment boundary [-Wpadded]
+   63 | typedef struct {
+      |         ^
+../labs/session-04/lab-4.2-pus-service17/pus.h:86:14: warning: padding struct 'pus_tc_t' with 1 byte to align 'source_id' [-Wpadded]
+   86 |     uint16_t source_id;
+      |              ^
+../labs/session-04/lab-4.2-pus-service17/pus.h:87:20: warning: padding struct 'pus_tc_t' with 6 bytes to align 'app_data' [-Wpadded]
+   87 |     const uint8_t *app_data;
+      |                    ^
+../labs/session-04/lab-4.2-pus-service17/pus.h:81:9: warning: padding size of 'pus_tc_t' with 4 bytes to alignment boundary [-Wpadded]
+   81 | typedef struct {
+      |         ^
+../labs/session-04/lab-4.2-pus-service17/pus.c:11:5: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   11 |     p[1] = (uint8_t)(v & 0xFFu);
+      |     ^
+../labs/session-04/lab-4.2-pus-service17/pus.c:17:5: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   17 |     p[1] = (uint8_t)((v >> 16) & 0xFFu);
+      |     ^
+../labs/session-04/lab-4.2-pus-service17/pus.c:18:5: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   18 |     p[2] = (uint8_t)((v >> 8) & 0xFFu);
+      |     ^
+../labs/session-04/lab-4.2-pus-service17/pus.c:19:5: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   19 |     p[3] = (uint8_t)(v & 0xFFu);
+      |     ^
+../labs/session-04/lab-4.2-pus-service17/pus.c:24:47: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   24 |     return (uint16_t)(((uint16_t)p[0] << 8) | p[1]);
+      |                                               ^
+../labs/session-04/lab-4.2-pus-service17/pus.c:49:5: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   49 |     field[field_len_without_crc]      = 0;
+      |     ^~~~~
+../labs/session-04/lab-4.2-pus-service17/pus.c:50:5: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   50 |     field[field_len_without_crc + 1u] = 0;
+      |     ^~~~~
+../labs/session-04/lab-4.2-pus-service17/pus.c:59:18: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   59 |     pus_put_u16(&out[(size_t)total - PUS_CRC_LEN], crc);
+      |                  ^~~
+../labs/session-04/lab-4.2-pus-service17/pus.c:80:5: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   80 |     field[1] = service;
+      |     ^~~~~
+../labs/session-04/lab-4.2-pus-service17/pus.c:81:5: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   81 |     field[2] = subtype;
+      |     ^~~~~
+../labs/session-04/lab-4.2-pus-service17/pus.c:82:18: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   82 |     pus_put_u16(&field[3], 0);              /* message type counter: unused */
+      |                  ^~~~~
+../labs/session-04/lab-4.2-pus-service17/pus.c:83:18: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   83 |     pus_put_u16(&field[5], dest_id);
+      |                  ^~~~~
+../labs/session-04/lab-4.2-pus-service17/pus.c:84:18: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   84 |     pus_put_u32(&field[7], time.coarse);
+      |                  ^~~~~
+../labs/session-04/lab-4.2-pus-service17/pus.c:85:18: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   85 |     pus_put_u16(&field[11], time.fine);
+      |                  ^~~~~
+../labs/session-04/lab-4.2-pus-service17/pus.c:87:17: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   87 |         memcpy(&field[PUS_TM_SEC_HDR_LEN], data, data_len);
+      |                 ^~~~~
+../labs/session-04/lab-4.2-pus-service17/pus.c:127:5: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  127 |     field[1] = service;
+      |     ^~~~~
+../labs/session-04/lab-4.2-pus-service17/pus.c:128:5: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  128 |     field[2] = subtype;
+      |     ^~~~~
+../labs/session-04/lab-4.2-pus-service17/pus.c:129:18: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  129 |     pus_put_u16(&field[3], source_id);
+      |                  ^~~~~
+../labs/session-04/lab-4.2-pus-service17/pus.c:131:17: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  131 |         memcpy(&field[PUS_TC_SEC_HDR_LEN], app_data, app_len);
+      |                 ^~~~~
+../labs/session-04/lab-4.2-pus-service17/pus.c:188:29: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  188 |     crc_recv = pus_get_u16(&frame[frame_len - PUS_CRC_LEN]);
+      |                             ^~~~~
+../labs/session-04/lab-4.2-pus-service17/pus.c:210:21: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  210 |     tc->service   = field[1];
+      |                     ^~~~~
+../labs/session-04/lab-4.2-pus-service17/pus.c:211:21: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  211 |     tc->subtype   = field[2];
+      |                     ^~~~~
+../labs/session-04/lab-4.2-pus-service17/pus.c:212:34: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  212 |     tc->source_id = pus_get_u16(&field[3]);
+      |                                  ^~~~~
+../labs/session-04/lab-4.2-pus-service17/pus.c:213:22: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  213 |     tc->app_data  = &field[PUS_TC_SEC_HDR_LEN];
+      |                      ^~~~~
+32 warnings generated.
+
+### clang -std=c99 -O2 -Weverything -I../labs/session-05/host-sim -I../labs/session-04/lab-4.1-space-packet -I../labs/session-04/lab-4.2-pus-service17 -I../labs/session-05/lab-5.1-monitoring -I../labs/session-05/lab-5.2-liveness -I../labs/session-05/lab-5.3-safe-mode -I../labs/session-05/lab-5.4-fault-injection -I../labs/session-05/app -I../labs/session-06/app -I../labs/session-06/lab-6.2-generation/generated -c ../labs/session-04/lab-4.2-pus-service17/tc_handler.c -o /dev/null
+In file included from ../labs/session-04/lab-4.2-pus-service17/tc_handler.c:2:
+In file included from ../labs/session-04/lab-4.2-pus-service17/tc_handler.h:19:
+In file included from ../labs/session-04/lab-4.2-pus-service17/pus.h:34:
+../labs/session-04/lab-4.1-space-packet/sp.h:39:15: warning: padding struct 'sp_primary_header_t' with 3 bytes to align 'type' [-Wpadded]
+   39 |     sp_type_t type;          /* 1 bit  */
+      |               ^
+../labs/session-04/lab-4.1-space-packet/sp.h:41:15: warning: padding struct 'sp_primary_header_t' with 1 byte to align 'apid' [-Wpadded]
+   41 |     uint16_t  apid;          /* 11 bits */
+      |               ^
+../labs/session-04/lab-4.1-space-packet/sp.h:43:15: warning: padding struct 'sp_primary_header_t' with 1 byte to align 'seq_count' [-Wpadded]
+   43 |     uint16_t  seq_count;     /* 14 bits */
+      |               ^
+../labs/session-04/lab-4.1-space-packet/sp.h:37:9: warning: padding size of 'sp_primary_header_t' with 2 bytes to alignment boundary [-Wpadded]
+   37 | typedef struct {
+      |         ^
+In file included from ../labs/session-04/lab-4.2-pus-service17/tc_handler.c:2:
+../labs/session-04/lab-4.2-pus-service17/tc_handler.h:57:17: warning: padding struct 'tc_service_t' with 7 bytes to align 'check' [-Wpadded]
+   57 |     tc_check_fn check;
+      |                 ^
+../labs/session-04/lab-4.2-pus-service17/tc_handler.h:64:18: warning: padding struct 'struct tc_ctx' with 4 bytes to align 'sink' [-Wpadded]
+   64 |     tm_sink_fn   sink;
+      |                  ^
+In file included from ../labs/session-04/lab-4.2-pus-service17/tc_handler.c:2:
+In file included from ../labs/session-04/lab-4.2-pus-service17/tc_handler.h:19:
+../labs/session-04/lab-4.2-pus-service17/pus.h:63:9: warning: padding size of 'obt_t' with 2 bytes to alignment boundary [-Wpadded]
+   63 | typedef struct {
+      |         ^
+../labs/session-04/lab-4.2-pus-service17/pus.h:86:14: warning: padding struct 'pus_tc_t' with 1 byte to align 'source_id' [-Wpadded]
+   86 |     uint16_t source_id;
+      |              ^
+../labs/session-04/lab-4.2-pus-service17/pus.h:87:20: warning: padding struct 'pus_tc_t' with 6 bytes to align 'app_data' [-Wpadded]
+   87 |     const uint8_t *app_data;
+      |                    ^
+../labs/session-04/lab-4.2-pus-service17/pus.h:81:9: warning: padding size of 'pus_tc_t' with 4 bytes to alignment boundary [-Wpadded]
+   81 | typedef struct {
+      |         ^
+../labs/session-04/lab-4.2-pus-service17/tc_handler.c:44:5: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   44 |     data[PUS_REQUEST_ID_LEN] = (uint8_t)code;
+      |     ^~~~
+../labs/session-04/lab-4.2-pus-service17/tc_handler.c:76:13: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   76 |         if (ctx->services[i].service == service) {
+      |             ^~~~~~~~~~~~~
+../labs/session-04/lab-4.2-pus-service17/tc_handler.c:80:5: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   80 |     ctx->services[ctx->service_count].service = service;
+      |     ^~~~~~~~~~~~~
+../labs/session-04/lab-4.2-pus-service17/tc_handler.c:81:5: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   81 |     ctx->services[ctx->service_count].check   = check;
+      |     ^~~~~~~~~~~~~
+../labs/session-04/lab-4.2-pus-service17/tc_handler.c:82:5: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   82 |     ctx->services[ctx->service_count].exec    = exec;
+      |     ^~~~~~~~~~~~~
+../labs/session-04/lab-4.2-pus-service17/tc_handler.c:83:5: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   83 |     ctx->services[ctx->service_count].arg     = arg;
+      |     ^~~~~~~~~~~~~
+../labs/session-04/lab-4.2-pus-service17/tc_handler.c:124:17: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  124 |             if (ctx->services[i].service == tc.service) {
+      |                 ^~~~~~~~~~~~~
+../labs/session-04/lab-4.2-pus-service17/tc_handler.c:125:24: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  125 |                 svc = &ctx->services[i];
+      |                        ^~~~~~~~~~~~~
+18 warnings generated.
+
+### clang -std=c99 -O2 -Weverything -I../labs/session-05/host-sim -I../labs/session-04/lab-4.1-space-packet -I../labs/session-04/lab-4.2-pus-service17 -I../labs/session-05/lab-5.1-monitoring -I../labs/session-05/lab-5.2-liveness -I../labs/session-05/lab-5.3-safe-mode -I../labs/session-05/lab-5.4-fault-injection -I../labs/session-05/app -I../labs/session-06/app -I../labs/session-06/lab-6.2-generation/generated -c ../labs/session-05/lab-5.1-monitoring/monitor.c -o /dev/null
+In file included from ../labs/session-05/lab-5.1-monitoring/monitor.c:2:
+../labs/session-05/lab-5.1-monitoring/monitor.h:57:17: warning: padding struct 'monitor_entry_t' with 2 bytes to align 'limit_high' [-Wpadded]
+   57 |     int32_t     limit_high;       /* alarm threshold                   */
+      |                 ^
+../labs/session-05/lab-5.1-monitoring/monitor.h:71:17: warning: padding struct 'monitor_entry_t' with 2 bytes to align 'filtered' [-Wpadded]
+   71 |     uint32_t    filtered;         /* violations rejected by persistence  */
+      |                 ^
+../labs/session-05/lab-5.1-monitoring/monitor.c:118:13: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  118 |         if (table[i].param_id == param_id) {
+      |             ^~~~~
+../labs/session-05/lab-5.1-monitoring/monitor.c:119:21: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  119 |             return &table[i];
+      |                     ^~~~~
+../labs/session-05/lab-5.1-monitoring/monitor.c:134:14: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  134 |         if (!table[i].enabled) {
+      |              ^~~~~
+../labs/session-05/lab-5.1-monitoring/monitor.c:137:21: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  137 |         value = get(table[i].param_id, ctx);
+      |                     ^~~~~
+../labs/session-05/lab-5.1-monitoring/monitor.c:138:26: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  138 |         tr = mon_update(&table[i], value);
+      |                          ^~~~~
+../labs/session-05/lab-5.1-monitoring/monitor.c:140:28: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  140 |             on_transition(&table[i], tr, value, ctx);
+      |                            ^~~~~
+8 warnings generated.
+
+### clang -std=c99 -O2 -Weverything -I../labs/session-05/host-sim -I../labs/session-04/lab-4.1-space-packet -I../labs/session-04/lab-4.2-pus-service17 -I../labs/session-05/lab-5.1-monitoring -I../labs/session-05/lab-5.2-liveness -I../labs/session-05/lab-5.3-safe-mode -I../labs/session-05/lab-5.4-fault-injection -I../labs/session-05/app -I../labs/session-06/app -I../labs/session-06/lab-6.2-generation/generated -c ../labs/session-05/lab-5.2-liveness/supervisor.c -o /dev/null
+In file included from ../labs/session-05/lab-5.2-liveness/supervisor.c:2:
+../labs/session-05/lab-5.2-liveness/supervisor.h:59:23: warning: padding struct 'sup_task_t' with 3 bytes to align 'os_id' [-Wpadded]
+   59 |     uint32_t          os_id;           /* for ops->restart (RTEMS id)    */
+      |                       ^
+../labs/session-05/lab-5.2-liveness/supervisor.h:66:23: warning: padding struct 'sup_task_t' with 2 bytes to align 'misses_total' [-Wpadded]
+   66 |     uint32_t          misses_total;
+      |                       ^
+../labs/session-05/lab-5.2-liveness/supervisor.h:83:22: warning: padding struct 'supervisor_t' with 7 bytes to align 'ops' [-Wpadded]
+   83 |     const sup_ops_t *ops;
+      |                      ^
+../labs/session-05/lab-5.2-liveness/supervisor.h:100:5: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  100 |     s->tasks[idx].heartbeat = s->tasks[idx].heartbeat + 1u;
+      |     ^~~~~~~~
+../labs/session-05/lab-5.2-liveness/supervisor.h:100:31: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  100 |     s->tasks[idx].heartbeat = s->tasks[idx].heartbeat + 1u;
+      |                               ^~~~~~~~
+../labs/session-05/lab-5.2-liveness/supervisor.c:29:10: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   29 |     t = &s->tasks[s->count];
+      |          ^~~~~~~~
+../labs/session-05/lab-5.2-liveness/supervisor.c:42:28: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   42 |     const sup_task_t *t = &s->tasks[idx];
+      |                            ^~~~~~~~
+../labs/session-05/lab-5.2-liveness/supervisor.c:50:33: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   50 |         if ((uint32_t)(now_ms - t->restart_ms[i]) < s->window_ms) {
+      |                                 ^~~~~~~~~~~~~
+../labs/session-05/lab-5.2-liveness/supervisor.c:69:26: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   69 |         sup_task_t *t = &s->tasks[i];
+      |                          ^~~~~~~~
+../labs/session-05/lab-5.2-liveness/supervisor.c:119:9: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  119 |         t->restart_ms[t->restart_next] = now_ms;
+      |         ^~~~~~~~~~~~~
+10 warnings generated.
+
+### clang -std=c99 -O2 -Weverything -I../labs/session-05/host-sim -I../labs/session-04/lab-4.1-space-packet -I../labs/session-04/lab-4.2-pus-service17 -I../labs/session-05/lab-5.1-monitoring -I../labs/session-05/lab-5.2-liveness -I../labs/session-05/lab-5.3-safe-mode -I../labs/session-05/lab-5.4-fault-injection -I../labs/session-05/app -I../labs/session-06/app -I../labs/session-06/lab-6.2-generation/generated -c ../labs/session-05/lab-5.2-liveness/watchdog.c -o /dev/null
+../labs/session-05/lab-5.2-liveness/watchdog.c:43:5: warning: default label in switch which covers all enumeration values [-Wcovered-switch-default]
+   43 |     default:
+      |     ^
+1 warning generated.
+
+### clang -std=c99 -O2 -Weverything -I../labs/session-05/host-sim -I../labs/session-04/lab-4.1-space-packet -I../labs/session-04/lab-4.2-pus-service17 -I../labs/session-05/lab-5.1-monitoring -I../labs/session-05/lab-5.2-liveness -I../labs/session-05/lab-5.3-safe-mode -I../labs/session-05/lab-5.4-fault-injection -I../labs/session-05/app -I../labs/session-06/app -I../labs/session-06/lab-6.2-generation/generated -c ../labs/session-05/lab-5.2-liveness/nvstate.c -o /dev/null
+../labs/session-05/lab-5.2-liveness/nvstate.c:11:5: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   11 |     p[1] = (uint8_t)(v & 0xFFu);
+      |     ^
+../labs/session-05/lab-5.2-liveness/nvstate.c:17:5: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   17 |     p[1] = (uint8_t)((v >> 16) & 0xFFu);
+      |     ^
+../labs/session-05/lab-5.2-liveness/nvstate.c:18:5: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   18 |     p[2] = (uint8_t)((v >> 8) & 0xFFu);
+      |     ^
+../labs/session-05/lab-5.2-liveness/nvstate.c:19:5: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   19 |     p[3] = (uint8_t)(v & 0xFFu);
+      |     ^
+../labs/session-05/lab-5.2-liveness/nvstate.c:24:47: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   24 |     return (uint16_t)(((uint16_t)p[0] << 8) | p[1]);
+      |                                               ^
+../labs/session-05/lab-5.2-liveness/nvstate.c:29:48: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   29 |     return ((uint32_t)p[0] << 24) | ((uint32_t)p[1] << 16) |
+      |                                                ^
+../labs/session-05/lab-5.2-liveness/nvstate.c:30:23: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   30 |            ((uint32_t)p[2] << 8) | (uint32_t)p[3];
+      |                       ^
+../labs/session-05/lab-5.2-liveness/nvstate.c:30:46: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   30 |            ((uint32_t)p[2] << 8) | (uint32_t)p[3];
+      |                                              ^
+../labs/session-05/lab-5.2-liveness/nvstate.c:49:12: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   49 |     put16(&image[4], NV_VERSION);
+      |            ^~~~~
+../labs/session-05/lab-5.2-liveness/nvstate.c:50:12: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   50 |     put16(&image[6], r->boot_count);
+      |            ^~~~~
+../labs/session-05/lab-5.2-liveness/nvstate.c:51:12: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   51 |     put16(&image[8], r->reset_count);
+      |            ^~~~~
+../labs/session-05/lab-5.2-liveness/nvstate.c:52:5: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   52 |     image[10] = r->pending_reset;
+      |     ^~~~~
+../labs/session-05/lab-5.2-liveness/nvstate.c:53:5: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   53 |     image[11] = r->last_reset_cause;
+      |     ^~~~~
+../labs/session-05/lab-5.2-liveness/nvstate.c:54:12: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   54 |     put16(&image[12], r->escalation_count);
+      |            ^~~~~
+../labs/session-05/lab-5.2-liveness/nvstate.c:55:5: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   55 |     image[14] = r->last_esc_task;
+      |     ^~~~~
+../labs/session-05/lab-5.2-liveness/nvstate.c:56:5: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   56 |     image[15] = r->last_esc_action;
+      |     ^~~~~
+../labs/session-05/lab-5.2-liveness/nvstate.c:57:12: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   57 |     put16(&image[16], r->last_esc_boot);
+      |            ^~~~~
+../labs/session-05/lab-5.2-liveness/nvstate.c:58:12: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   58 |     put32(&image[18], r->last_esc_uptime_s);
+      |            ^~~~~
+../labs/session-05/lab-5.2-liveness/nvstate.c:59:5: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   59 |     image[22] = r->last_safe_src;
+      |     ^~~~~
+../labs/session-05/lab-5.2-liveness/nvstate.c:60:5: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   60 |     image[23] = r->spare;
+      |     ^~~~~
+../labs/session-05/lab-5.2-liveness/nvstate.c:61:12: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   61 |     put16(&image[24], r->last_safe_detail);
+      |            ^~~~~
+../labs/session-05/lab-5.2-liveness/nvstate.c:62:12: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   62 |     put16(&image[26], crc16_ccitt(image, NV_IMAGE_LEN - 2u));
+      |            ^~~~~
+../labs/session-05/lab-5.2-liveness/nvstate.c:67:48: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   67 |     if (get32(&image[0]) != NV_MAGIC || get16(&image[4]) != NV_VERSION ||
+      |                                                ^~~~~
+../labs/session-05/lab-5.2-liveness/nvstate.c:68:57: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   68 |         crc16_ccitt(image, NV_IMAGE_LEN - 2u) != get16(&image[26])) {
+      |                                                         ^~~~~
+../labs/session-05/lab-5.2-liveness/nvstate.c:72:35: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   72 |     r->boot_count        = get16(&image[6]);
+      |                                   ^~~~~
+../labs/session-05/lab-5.2-liveness/nvstate.c:73:35: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   73 |     r->reset_count       = get16(&image[8]);
+      |                                   ^~~~~
+../labs/session-05/lab-5.2-liveness/nvstate.c:74:28: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   74 |     r->pending_reset     = image[10];
+      |                            ^~~~~
+../labs/session-05/lab-5.2-liveness/nvstate.c:75:28: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   75 |     r->last_reset_cause  = image[11];
+      |                            ^~~~~
+../labs/session-05/lab-5.2-liveness/nvstate.c:76:35: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   76 |     r->escalation_count  = get16(&image[12]);
+      |                                   ^~~~~
+../labs/session-05/lab-5.2-liveness/nvstate.c:77:28: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   77 |     r->last_esc_task     = image[14];
+      |                            ^~~~~
+../labs/session-05/lab-5.2-liveness/nvstate.c:78:28: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   78 |     r->last_esc_action   = image[15];
+      |                            ^~~~~
+../labs/session-05/lab-5.2-liveness/nvstate.c:79:35: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   79 |     r->last_esc_boot     = get16(&image[16]);
+      |                                   ^~~~~
+../labs/session-05/lab-5.2-liveness/nvstate.c:80:35: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   80 |     r->last_esc_uptime_s = get32(&image[18]);
+      |                                   ^~~~~
+../labs/session-05/lab-5.2-liveness/nvstate.c:81:28: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   81 |     r->last_safe_src     = image[22];
+      |                            ^~~~~
+../labs/session-05/lab-5.2-liveness/nvstate.c:82:28: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   82 |     r->spare             = image[23];
+      |                            ^~~~~
+../labs/session-05/lab-5.2-liveness/nvstate.c:83:35: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   83 |     r->last_safe_detail  = get16(&image[24]);
+      |                                   ^~~~~
+36 warnings generated.
+
+### clang -std=c99 -O2 -Weverything -I../labs/session-05/host-sim -I../labs/session-04/lab-4.1-space-packet -I../labs/session-04/lab-4.2-pus-service17 -I../labs/session-05/lab-5.1-monitoring -I../labs/session-05/lab-5.2-liveness -I../labs/session-05/lab-5.3-safe-mode -I../labs/session-05/lab-5.4-fault-injection -I../labs/session-05/app -I../labs/session-06/app -I../labs/session-06/lab-6.2-generation/generated -c ../labs/session-05/lab-5.3-safe-mode/schedule.c -o /dev/null
+In file included from ../labs/session-05/lab-5.3-safe-mode/schedule.c:2:
+../labs/session-05/lab-5.3-safe-mode/schedule.h:24:9: warning: padding size of 'sched_entry_t' with 1 byte to alignment boundary [-Wpadded]
+   24 | typedef struct {
+      |         ^
+../labs/session-05/lab-5.3-safe-mode/schedule.h:31:9: warning: padding size of 'sched_t' with 3 bytes to alignment boundary [-Wpadded]
+   31 | typedef struct {
+      |         ^
+../labs/session-05/lab-5.3-safe-mode/schedule.c:20:14: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   20 |         if (!s->e[i].used) {
+      |              ^~~~
+../labs/session-05/lab-5.3-safe-mode/schedule.c:21:13: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   21 |             s->e[i].used = 1u;
+      |             ^~~~
+../labs/session-05/lab-5.3-safe-mode/schedule.c:22:13: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   22 |             s->e[i].release_s = release_s;
+      |             ^~~~
+../labs/session-05/lab-5.3-safe-mode/schedule.c:23:13: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   23 |             s->e[i].len = (uint16_t)len;
+      |             ^~~~
+../labs/session-05/lab-5.3-safe-mode/schedule.c:24:20: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   24 |             memcpy(s->e[i].tc, tc, len);
+      |                    ^~~~
+../labs/session-05/lab-5.3-safe-mode/schedule.c:35:9: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   35 |         s->e[i].used = 0u;
+      |         ^~~~
+../labs/session-05/lab-5.3-safe-mode/schedule.c:48:14: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   48 |         n += s->e[i].used ? 1u : 0u;
+      |              ^~~~
+../labs/session-05/lab-5.3-safe-mode/schedule.c:61:17: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   61 |             if (s->e[i].used && s->e[i].release_s <= now_s &&
+      |                 ^~~~
+../labs/session-05/lab-5.3-safe-mode/schedule.c:61:33: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   61 |             if (s->e[i].used && s->e[i].release_s <= now_s &&
+      |                                 ^~~~
+../labs/session-05/lab-5.3-safe-mode/schedule.c:63:18: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   63 |                  s->e[i].release_s < s->e[best].release_s)) {
+      |                  ^~~~
+../labs/session-05/lab-5.3-safe-mode/schedule.c:63:38: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   63 |                  s->e[i].release_s < s->e[best].release_s)) {
+      |                                      ^~~~
+../labs/session-05/lab-5.3-safe-mode/schedule.c:73:31: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   73 |             sched_entry_t e = s->e[best];
+      |                               ^~~~
+../labs/session-05/lab-5.3-safe-mode/schedule.c:74:13: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   74 |             s->e[best].used = 0u;
+      |             ^~~~
+15 warnings generated.
+
+### clang -std=c99 -O2 -Weverything -I../labs/session-05/host-sim -I../labs/session-04/lab-4.1-space-packet -I../labs/session-04/lab-4.2-pus-service17 -I../labs/session-05/lab-5.1-monitoring -I../labs/session-05/lab-5.2-liveness -I../labs/session-05/lab-5.3-safe-mode -I../labs/session-05/lab-5.4-fault-injection -I../labs/session-05/app -I../labs/session-06/app -I../labs/session-06/lab-6.2-generation/generated -c ../labs/session-06/lab-6.2-generation/generated/mode_sm.c -o /dev/null
+In file included from ../labs/session-06/lab-6.2-generation/generated/mode_sm.c:14:
+../labs/session-06/lab-6.2-generation/generated/mode_sm.h:47:14: warning: padding struct 'mode_sm_payload_t' with 1 byte to align 'detail' [-Wpadded]
+   47 |     uint16_t detail;
+      |              ^
+../labs/session-06/lab-6.2-generation/generated/mode_sm.h:68:21: warning: padding struct 'mode_sm_result_t' with 3 bytes to align 'from' [-Wpadded]
+   68 |     mode_sm_state_t from;
+      |                     ^
+../labs/session-06/lab-6.2-generation/generated/mode_sm.c:69:39: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   69 |     const mode_sm_payload_t *cause = &sm->payload[MODE_SM_EV_TC_MODE_SAFE];
+      |                                       ^~~~~~~~~~~
+../labs/session-06/lab-6.2-generation/generated/mode_sm.c:82:39: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   82 |     const mode_sm_payload_t *cause = &sm->payload[MODE_SM_EV_FAULT_CRITICAL];
+      |                                       ^~~~~~~~~~~
+../labs/session-06/lab-6.2-generation/generated/mode_sm.c:95:39: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   95 |     const mode_sm_payload_t *cause = &sm->payload[MODE_SM_EV_TC_MODE_DEGRADED];
+      |                                       ^~~~~~~~~~~
+../labs/session-06/lab-6.2-generation/generated/mode_sm.c:108:39: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  108 |     const mode_sm_payload_t *cause = &sm->payload[MODE_SM_EV_FAULT_NONCRITICAL];
+      |                                       ^~~~~~~~~~~
+../labs/session-06/lab-6.2-generation/generated/mode_sm.c:121:39: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  121 |     const mode_sm_payload_t *cause = &sm->payload[MODE_SM_EV_FAULT_CRITICAL];
+      |                                       ^~~~~~~~~~~
+../labs/session-06/lab-6.2-generation/generated/mode_sm.c:133:39: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  133 |     const mode_sm_payload_t *cause = &sm->payload[MODE_SM_EV_FAULT_NONCRITICAL];
+      |                                       ^~~~~~~~~~~
+../labs/session-06/lab-6.2-generation/generated/mode_sm.c:145:39: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  145 |     const mode_sm_payload_t *cause = &sm->payload[MODE_SM_EV_TC_MODE_SAFE];
+      |                                       ^~~~~~~~~~~
+../labs/session-06/lab-6.2-generation/generated/mode_sm.c:158:39: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  158 |     const mode_sm_payload_t *cause = &sm->payload[MODE_SM_EV_FAULT_CRITICAL];
+      |                                       ^~~~~~~~~~~
+../labs/session-06/lab-6.2-generation/generated/mode_sm.c:171:39: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  171 |     const mode_sm_payload_t *cause = &sm->payload[MODE_SM_EV_TC_MODE_NOMINAL];
+      |                                       ^~~~~~~~~~~
+../labs/session-06/lab-6.2-generation/generated/mode_sm.c:184:39: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  184 |     const mode_sm_payload_t *cause = &sm->payload[MODE_SM_EV_FAULT_CRITICAL];
+      |                                       ^~~~~~~~~~~
+../labs/session-06/lab-6.2-generation/generated/mode_sm.c:196:39: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  196 |     const mode_sm_payload_t *cause = &sm->payload[MODE_SM_EV_TC_MODE_DEGRADED];
+      |                                       ^~~~~~~~~~~
+../labs/session-06/lab-6.2-generation/generated/mode_sm.c:210:39: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  210 |     const mode_sm_payload_t *cause = &sm->payload[MODE_SM_EV_TC_MODE_NOMINAL];
+      |                                       ^~~~~~~~~~~
+../labs/session-06/lab-6.2-generation/generated/mode_sm.c:281:9: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  281 |         sm->payload[i] = none;
+      |         ^~~~~~~~~~~
+../labs/session-06/lab-6.2-generation/generated/mode_sm.c:301:5: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  301 |     sm->payload[event] = cause;
+      |     ^~~~~~~~~~~
+../labs/session-06/lab-6.2-generation/generated/mode_sm.c:354:46: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  354 |     lost = pending & ONE_SHOT & ~consumed & ~IGNORED[start];
+      |                                              ^~~~~~~
+../labs/session-06/lab-6.2-generation/generated/mode_sm.c:365:41: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  365 |         consumed |= pending & LATCHED & IGNORED[start];
+      |                                         ^~~~~~~
+../labs/session-06/lab-6.2-generation/generated/mode_sm.c:371:63: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  371 |             mode_sm_on_discard(sm->user, (mode_sm_event_t)e, &sm->payload[e]);
+      |                                                               ^~~~~~~~~~~
+19 warnings generated.
+
+### clang -std=c99 -O2 -Weverything -I../labs/session-05/host-sim -I../labs/session-04/lab-4.1-space-packet -I../labs/session-04/lab-4.2-pus-service17 -I../labs/session-05/lab-5.1-monitoring -I../labs/session-05/lab-5.2-liveness -I../labs/session-05/lab-5.3-safe-mode -I../labs/session-05/lab-5.4-fault-injection -I../labs/session-05/app -I../labs/session-06/app -I../labs/session-06/lab-6.2-generation/generated -c ../labs/session-05/app/services.c -o /dev/null
+In file included from ../labs/session-05/app/services.c:20:
+In file included from ../labs/session-05/app/services.h:6:
+In file included from ../labs/session-04/lab-4.2-pus-service17/tc_handler.h:19:
+In file included from ../labs/session-04/lab-4.2-pus-service17/pus.h:34:
+../labs/session-04/lab-4.1-space-packet/sp.h:39:15: warning: padding struct 'sp_primary_header_t' with 3 bytes to align 'type' [-Wpadded]
+   39 |     sp_type_t type;          /* 1 bit  */
+      |               ^
+../labs/session-04/lab-4.1-space-packet/sp.h:41:15: warning: padding struct 'sp_primary_header_t' with 1 byte to align 'apid' [-Wpadded]
+   41 |     uint16_t  apid;          /* 11 bits */
+      |               ^
+../labs/session-04/lab-4.1-space-packet/sp.h:43:15: warning: padding struct 'sp_primary_header_t' with 1 byte to align 'seq_count' [-Wpadded]
+   43 |     uint16_t  seq_count;     /* 14 bits */
+      |               ^
+../labs/session-04/lab-4.1-space-packet/sp.h:37:9: warning: padding size of 'sp_primary_header_t' with 2 bytes to alignment boundary [-Wpadded]
+   37 | typedef struct {
+      |         ^
+In file included from ../labs/session-05/app/services.c:20:
+In file included from ../labs/session-05/app/services.h:6:
+../labs/session-04/lab-4.2-pus-service17/tc_handler.h:57:17: warning: padding struct 'tc_service_t' with 7 bytes to align 'check' [-Wpadded]
+   57 |     tc_check_fn check;
+      |                 ^
+In file included from ../labs/session-05/app/services.c:22:
+In file included from ../labs/session-05/app/fdir.h:21:
+../labs/session-05/lab-5.3-safe-mode/schedule.h:24:9: warning: padding size of 'sched_entry_t' with 1 byte to alignment boundary [-Wpadded]
+   24 | typedef struct {
+      |         ^
+In file included from ../labs/session-05/app/services.c:22:
+In file included from ../labs/session-05/app/fdir.h:22:
+../labs/session-05/lab-5.2-liveness/supervisor.h:59:23: warning: padding struct 'sup_task_t' with 3 bytes to align 'os_id' [-Wpadded]
+   59 |     uint32_t          os_id;           /* for ops->restart (RTEMS id)    */
+      |                       ^
+../labs/session-05/lab-5.2-liveness/supervisor.h:66:23: warning: padding struct 'sup_task_t' with 2 bytes to align 'misses_total' [-Wpadded]
+   66 |     uint32_t          misses_total;
+      |                       ^
+In file included from ../labs/session-05/app/services.c:22:
+In file included from ../labs/session-05/app/fdir.h:21:
+../labs/session-05/lab-5.3-safe-mode/schedule.h:31:9: warning: padding size of 'sched_t' with 3 bytes to alignment boundary [-Wpadded]
+   31 | typedef struct {
+      |         ^
+In file included from ../labs/session-05/app/services.c:20:
+In file included from ../labs/session-05/app/services.h:6:
+../labs/session-04/lab-4.2-pus-service17/tc_handler.h:64:18: warning: padding struct 'struct tc_ctx' with 4 bytes to align 'sink' [-Wpadded]
+   64 |     tm_sink_fn   sink;
+      |                  ^
+In file included from ../labs/session-05/app/services.c:22:
+In file included from ../labs/session-05/app/fdir.h:22:
+../labs/session-05/lab-5.2-liveness/supervisor.h:100:5: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  100 |     s->tasks[idx].heartbeat = s->tasks[idx].heartbeat + 1u;
+      |     ^~~~~~~~
+../labs/session-05/lab-5.2-liveness/supervisor.h:100:31: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  100 |     s->tasks[idx].heartbeat = s->tasks[idx].heartbeat + 1u;
+      |                               ^~~~~~~~
+../labs/session-05/app/services.c:29:48: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   29 |     return ((uint32_t)p[0] << 24) | ((uint32_t)p[1] << 16) |
+      |                                                ^
+../labs/session-05/app/services.c:30:23: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   30 |            ((uint32_t)p[2] << 8) | (uint32_t)p[3];
+      |                       ^
+../labs/session-05/app/services.c:30:46: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   30 |            ((uint32_t)p[2] << 8) | (uint32_t)p[3];
+      |                                              ^
+../labs/session-05/app/services.c:42:9: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   42 |         tc->app_data[1] > (uint8_t)MODE_SAFE) {
+      |         ^~~~~~~~~~~~
+../labs/session-05/app/services.c:51:38: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   51 |     (void)fdir_mode_request((vmode_t)tc->app_data[1], CAUSE_GROUND, 0);
+      |                                      ^~~~~~~~~~~~
+../labs/session-05/app/services.c:83:41: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   83 |         return sched_insert(s, get_u32(&tc->app_data[1]), &tc->app_data[5],
+      |                                         ^~~~~~~~~~~~
+../labs/session-05/app/services.c:83:60: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   83 |         return sched_insert(s, get_u32(&tc->app_data[1]), &tc->app_data[5],
+      |                                                            ^~~~~~~~~~~~
+../labs/session-05/app/services.c:106:44: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  106 |         if (!fdir_param_known(pus_get_u16(&tc->app_data[1u + 2u * i]))) {
+      |                                            ^~~~~~~~~~~~
+../labs/session-05/app/services.c:118:42: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  118 |         fdir_monitor_enable(pus_get_u16(&tc->app_data[1u + 2u * i]),
+      |                                          ^~~~~~~~~~~~
+In file included from ../labs/session-05/app/services.c:20:
+In file included from ../labs/session-05/app/services.h:6:
+In file included from ../labs/session-04/lab-4.2-pus-service17/tc_handler.h:19:
+../labs/session-04/lab-4.2-pus-service17/pus.h:86:14: warning: padding struct 'pus_tc_t' with 1 byte to align 'source_id' [-Wpadded]
+   86 |     uint16_t source_id;
+      |              ^
+../labs/session-04/lab-4.2-pus-service17/pus.h:87:20: warning: padding struct 'pus_tc_t' with 6 bytes to align 'app_data' [-Wpadded]
+   87 |     const uint8_t *app_data;
+      |                    ^
+../labs/session-04/lab-4.2-pus-service17/pus.h:81:9: warning: padding size of 'pus_tc_t' with 4 bytes to alignment boundary [-Wpadded]
+   81 | typedef struct {
+      |         ^
+24 warnings generated.
+
+### clang -std=c99 -O2 -Weverything -I../labs/session-05/host-sim -I../labs/session-04/lab-4.1-space-packet -I../labs/session-04/lab-4.2-pus-service17 -I../labs/session-05/lab-5.1-monitoring -I../labs/session-05/lab-5.2-liveness -I../labs/session-05/lab-5.3-safe-mode -I../labs/session-05/lab-5.4-fault-injection -I../labs/session-05/app -I../labs/session-06/app -I../labs/session-06/lab-6.2-generation/generated -c ../labs/session-05/app/tmtc5.c -o /dev/null
+In file included from ../labs/session-05/app/tmtc5.c:2:
+In file included from ../labs/session-05/app/tmtc5.h:16:
+In file included from ../labs/session-04/lab-4.2-pus-service17/tc_handler.h:19:
+In file included from ../labs/session-04/lab-4.2-pus-service17/pus.h:34:
+../labs/session-04/lab-4.1-space-packet/sp.h:39:15: warning: padding struct 'sp_primary_header_t' with 3 bytes to align 'type' [-Wpadded]
+   39 |     sp_type_t type;          /* 1 bit  */
+      |               ^
+../labs/session-04/lab-4.1-space-packet/sp.h:41:15: warning: padding struct 'sp_primary_header_t' with 1 byte to align 'apid' [-Wpadded]
+   41 |     uint16_t  apid;          /* 11 bits */
+      |               ^
+../labs/session-04/lab-4.1-space-packet/sp.h:43:15: warning: padding struct 'sp_primary_header_t' with 1 byte to align 'seq_count' [-Wpadded]
+   43 |     uint16_t  seq_count;     /* 14 bits */
+      |               ^
+../labs/session-04/lab-4.1-space-packet/sp.h:37:9: warning: padding size of 'sp_primary_header_t' with 2 bytes to alignment boundary [-Wpadded]
+   37 | typedef struct {
+      |         ^
+In file included from ../labs/session-05/app/tmtc5.c:2:
+In file included from ../labs/session-05/app/tmtc5.h:16:
+../labs/session-04/lab-4.2-pus-service17/tc_handler.h:57:17: warning: padding struct 'tc_service_t' with 7 bytes to align 'check' [-Wpadded]
+   57 |     tc_check_fn check;
+      |                 ^
+In file included from ../labs/session-05/app/tmtc5.c:2:
+In file included from ../labs/session-05/app/tmtc5.h:16:
+In file included from ../labs/session-04/lab-4.2-pus-service17/tc_handler.h:19:
+../labs/session-04/lab-4.2-pus-service17/pus.h:63:9: warning: padding size of 'obt_t' with 2 bytes to alignment boundary [-Wpadded]
+   63 | typedef struct {
+      |         ^
+In file included from ../labs/session-05/app/tmtc5.c:2:
+In file included from ../labs/session-05/app/tmtc5.h:16:
+../labs/session-04/lab-4.2-pus-service17/tc_handler.h:64:18: warning: padding struct 'struct tc_ctx' with 4 bytes to align 'sink' [-Wpadded]
+   64 |     tm_sink_fn   sink;
+      |                  ^
+../labs/session-05/app/tmtc5.c:83:1: warning: function 'tm_tx_task' could be declared with attribute 'noreturn' [-Wmissing-noreturn]
+   83 | {
+      | ^
+../labs/session-05/app/tmtc5.c:139:1: warning: function 'tc_rx_task' could be declared with attribute 'noreturn' [-Wmissing-noreturn]
+  139 | {
+      | ^
+../labs/session-05/app/tmtc5.c:34:9: warning: unsafe pointer arithmetic [-Wunsafe-buffer-usage]
+   34 |         buf += n;
+      |         ^~~
+../labs/session-05/app/tmtc5.c:96:9: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   96 |         line[n++] = 'T'; line[n++] = 'M'; line[n++] = ':';
+      |         ^~~~
+../labs/session-05/app/tmtc5.c:96:26: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   96 |         line[n++] = 'T'; line[n++] = 'M'; line[n++] = ':';
+      |                          ^~~~
+../labs/session-05/app/tmtc5.c:96:43: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   96 |         line[n++] = 'T'; line[n++] = 'M'; line[n++] = ':';
+      |                                           ^~~~
+../labs/session-05/app/tmtc5.c:98:13: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   98 |             line[n++] = HEX[packet[i] >> 4];
+      |             ^~~~
+../labs/session-05/app/tmtc5.c:98:25: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   98 |             line[n++] = HEX[packet[i] >> 4];
+      |                         ^~~
+../labs/session-05/app/tmtc5.c:98:29: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   98 |             line[n++] = HEX[packet[i] >> 4];
+      |                             ^~~~~~
+../labs/session-05/app/tmtc5.c:99:13: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   99 |             line[n++] = HEX[packet[i] & 0x0Fu];
+      |             ^~~~
+../labs/session-05/app/tmtc5.c:99:25: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   99 |             line[n++] = HEX[packet[i] & 0x0Fu];
+      |                         ^~~
+../labs/session-05/app/tmtc5.c:99:29: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   99 |             line[n++] = HEX[packet[i] & 0x0Fu];
+      |                             ^~~~~~
+../labs/session-05/app/tmtc5.c:101:9: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  101 |         line[n++] = '\n';
+      |         ^~~~
+../labs/session-05/app/tmtc5.c:113:39: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  113 |     if (len < 3u || line[0] != 'T' || line[1] != 'C' || line[2] != ':') {
+      |                                       ^~~~
+../labs/session-05/app/tmtc5.c:113:57: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  113 |     if (len < 3u || line[0] != 'T' || line[1] != 'C' || line[2] != ':') {
+      |                                                         ^~~~
+../labs/session-05/app/tmtc5.c:116:5: warning: unsafe pointer arithmetic [-Wunsafe-buffer-usage]
+  116 |     line += 3;
+      |     ^~~~
+../labs/session-05/app/tmtc5.c:125:28: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  125 |         int hi = hex_value(line[i]);
+      |                            ^~~~
+../labs/session-05/app/tmtc5.c:126:28: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  126 |         int lo = hex_value(line[i + 1u]);
+      |                            ^~~~
+../labs/session-05/app/tmtc5.c:133:9: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  133 |         frame[n++] = (uint8_t)((hi << 4) | lo);
+      |         ^~~~~
+../labs/session-05/app/tmtc5.c:163:22: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  163 |             char c = chunk[i];
+      |                      ^~~~~
+../labs/session-05/app/tmtc5.c:180:17: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  180 |                 line[line_len++] = c;
+      |                 ^~~~
+28 warnings generated.
+
+### clang -std=c99 -O2 -Weverything -I../labs/session-05/host-sim -I../labs/session-04/lab-4.1-space-packet -I../labs/session-04/lab-4.2-pus-service17 -I../labs/session-05/lab-5.1-monitoring -I../labs/session-05/lab-5.2-liveness -I../labs/session-05/lab-5.3-safe-mode -I../labs/session-05/lab-5.4-fault-injection -I../labs/session-05/app -I../labs/session-06/app -I../labs/session-06/lab-6.2-generation/generated -c ../labs/session-05/app/sensors5.c -o /dev/null
+
+### clang -std=c99 -O2 -Weverything -I../labs/session-05/host-sim -I../labs/session-04/lab-4.1-space-packet -I../labs/session-04/lab-4.2-pus-service17 -I../labs/session-05/lab-5.1-monitoring -I../labs/session-05/lab-5.2-liveness -I../labs/session-05/lab-5.3-safe-mode -I../labs/session-05/lab-5.4-fault-injection -I../labs/session-05/app -I../labs/session-06/app -I../labs/session-06/lab-6.2-generation/generated -c ../labs/session-06/app/fdir6.c -o /dev/null
+In file included from ../labs/session-06/app/fdir6.c:15:
+In file included from ../labs/session-05/app/fdir.h:21:
+../labs/session-05/lab-5.3-safe-mode/schedule.h:24:9: warning: padding size of 'sched_entry_t' with 1 byte to alignment boundary [-Wpadded]
+   24 | typedef struct {
+      |         ^
+In file included from ../labs/session-06/app/fdir6.c:15:
+In file included from ../labs/session-05/app/fdir.h:22:
+../labs/session-05/lab-5.2-liveness/supervisor.h:59:23: warning: padding struct 'sup_task_t' with 3 bytes to align 'os_id' [-Wpadded]
+   59 |     uint32_t          os_id;           /* for ops->restart (RTEMS id)    */
+      |                       ^
+../labs/session-05/lab-5.2-liveness/supervisor.h:66:23: warning: padding struct 'sup_task_t' with 2 bytes to align 'misses_total' [-Wpadded]
+   66 |     uint32_t          misses_total;
+      |                       ^
+In file included from ../labs/session-06/app/fdir6.c:21:
+../labs/session-06/lab-6.2-generation/generated/mode_sm.h:47:14: warning: padding struct 'mode_sm_payload_t' with 1 byte to align 'detail' [-Wpadded]
+   47 |     uint16_t detail;
+      |              ^
+In file included from ../labs/session-06/app/fdir6.c:25:
+In file included from ../labs/session-04/lab-4.2-pus-service17/pus.h:34:
+../labs/session-04/lab-4.1-space-packet/sp.h:39:15: warning: padding struct 'sp_primary_header_t' with 3 bytes to align 'type' [-Wpadded]
+   39 |     sp_type_t type;          /* 1 bit  */
+      |               ^
+../labs/session-04/lab-4.1-space-packet/sp.h:41:15: warning: padding struct 'sp_primary_header_t' with 1 byte to align 'apid' [-Wpadded]
+   41 |     uint16_t  apid;          /* 11 bits */
+      |               ^
+../labs/session-04/lab-4.1-space-packet/sp.h:43:15: warning: padding struct 'sp_primary_header_t' with 1 byte to align 'seq_count' [-Wpadded]
+   43 |     uint16_t  seq_count;     /* 14 bits */
+      |               ^
+../labs/session-04/lab-4.1-space-packet/sp.h:37:9: warning: padding size of 'sp_primary_header_t' with 2 bytes to alignment boundary [-Wpadded]
+   37 | typedef struct {
+      |         ^
+In file included from ../labs/session-06/app/fdir6.c:27:
+In file included from ../labs/session-05/app/tmtc5.h:16:
+../labs/session-04/lab-4.2-pus-service17/tc_handler.h:57:17: warning: padding struct 'tc_service_t' with 7 bytes to align 'check' [-Wpadded]
+   57 |     tc_check_fn check;
+      |                 ^
+In file included from ../labs/session-06/app/fdir6.c:23:
+../labs/session-05/lab-5.1-monitoring/monitor.h:57:17: warning: padding struct 'monitor_entry_t' with 2 bytes to align 'limit_high' [-Wpadded]
+   57 |     int32_t     limit_high;       /* alarm threshold                   */
+      |                 ^
+../labs/session-05/lab-5.1-monitoring/monitor.h:71:17: warning: padding struct 'monitor_entry_t' with 2 bytes to align 'filtered' [-Wpadded]
+   71 |     uint32_t    filtered;         /* violations rejected by persistence  */
+      |                 ^
+In file included from ../labs/session-06/app/fdir6.c:15:
+In file included from ../labs/session-05/app/fdir.h:21:
+../labs/session-05/lab-5.3-safe-mode/schedule.h:31:9: warning: padding size of 'sched_t' with 3 bytes to alignment boundary [-Wpadded]
+   31 | typedef struct {
+      |         ^
+../labs/session-06/app/fdir6.c:36:22: warning: padding struct 'struct (unnamed at ../labs/session-06/app/fdir6.c:34:8)' with 3 bytes to align 'until_ms' [-Wpadded]
+   36 |     uint32_t         until_ms;
+      |                      ^
+In file included from ../labs/session-06/app/fdir6.c:15:
+In file included from ../labs/session-05/app/fdir.h:22:
+../labs/session-05/lab-5.2-liveness/supervisor.h:83:22: warning: padding struct 'supervisor_t' with 7 bytes to align 'ops' [-Wpadded]
+   83 |     const sup_ops_t *ops;
+      |                      ^
+In file included from ../labs/session-06/app/fdir6.c:21:
+../labs/session-06/lab-6.2-generation/generated/mode_sm.h:68:21: warning: padding struct 'mode_sm_result_t' with 3 bytes to align 'from' [-Wpadded]
+   68 |     mode_sm_state_t from;
+      |                     ^
+../labs/session-06/app/fdir6.c:452:14: warning: padding struct 'struct (unnamed at ../labs/session-06/app/fdir6.c:450:14)' with 2 bytes to align 'on_high' [-Wpadded]
+  452 |     vmode_t  on_high;
+      |              ^
+In file included from ../labs/session-06/app/fdir6.c:25:
+../labs/session-04/lab-4.2-pus-service17/pus.h:63:9: warning: padding size of 'obt_t' with 2 bytes to alignment boundary [-Wpadded]
+   63 | typedef struct {
+      |         ^
+In file included from ../labs/session-06/app/fdir6.c:15:
+In file included from ../labs/session-05/app/fdir.h:22:
+../labs/session-05/lab-5.2-liveness/supervisor.h:100:5: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  100 |     s->tasks[idx].heartbeat = s->tasks[idx].heartbeat + 1u;
+      |     ^~~~~~~~
+../labs/session-05/lab-5.2-liveness/supervisor.h:100:31: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  100 |     s->tasks[idx].heartbeat = s->tasks[idx].heartbeat + 1u;
+      |                               ^~~~~~~~
+../labs/session-06/app/fdir6.c:157:5: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  157 |     aux[2] = kind;
+      |     ^~~
+../labs/session-06/app/fdir6.c:158:18: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  158 |     pus_put_u16(&aux[3], subject);
+      |                  ^~~
+../labs/session-06/app/fdir6.c:200:9: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  200 |         aux[2] = (uint8_t)sched_count(&g_sched);
+      |         ^~~
+../labs/session-06/app/fdir6.c:223:5: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  223 |     aux[2] = (uint8_t)from;
+      |     ^~~
+../labs/session-06/app/fdir6.c:224:5: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  224 |     aux[3] = (uint8_t)to;
+      |     ^~~
+../labs/session-06/app/fdir6.c:225:5: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  225 |     aux[4] = cause->src;
+      |     ^~~
+../labs/session-06/app/fdir6.c:226:18: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  226 |     pus_put_u16(&aux[5], cause->detail);
+      |                  ^~~
+../labs/session-06/app/fdir6.c:242:5: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  242 |     aux[2] = (uint8_t)event;
+      |     ^~~
+../labs/session-06/app/fdir6.c:243:5: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  243 |     aux[3] = cause->src;
+      |     ^~~
+../labs/session-06/app/fdir6.c:252:18: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  252 |     pus_put_u32(&aux[2], raw_state);
+      |                  ^~~
+../labs/session-06/app/fdir6.c:292:5: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  292 |     aux[2] = on ? 1u : 0u;
+      |     ^~~
+../labs/session-06/app/fdir6.c:293:18: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  293 |     pus_put_u16(&aux[3], duration_s);
+      |                  ^~~
+../labs/session-06/app/fdir6.c:294:5: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  294 |     aux[5] = (uint8_t)reason;
+      |     ^~~
+../labs/session-06/app/fdir6.c:376:5: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  376 |     aux[2] = (uint8_t)idx;
+      |     ^~~
+../labs/session-06/app/fdir6.c:377:5: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  377 |     aux[3] = sat8(value);
+      |     ^~~
+../labs/session-06/app/fdir6.c:469:13: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  469 |         if (g_mon[i].param_id == param_id) {
+      |             ^~~~~
+../labs/session-06/app/fdir6.c:470:13: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  470 |             mon_request[i] = enable ? 1u : 2u;
+      |             ^~~~~~~~~~~
+../labs/session-06/app/fdir6.c:478:12: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  478 |     return g_values[param_id - 1u];
+      |            ^~~~~~~~
+../labs/session-06/app/fdir6.c:493:18: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  493 |     pus_put_u16(&aux[2], e->param_id);
+      |                  ^~~
+../labs/session-06/app/fdir6.c:494:5: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  494 |     aux[4] = (uint8_t)e->state;
+      |     ^~~
+../labs/session-06/app/fdir6.c:495:5: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  495 |     aux[5] = (uint8_t)(tr == MON_RAISED_HIGH ? MON_SIDE_HIGH :
+      |     ^~~
+../labs/session-06/app/fdir6.c:497:18: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  497 |     pus_put_u32(&aux[6], (uint32_t)value);
+      |                  ^~~
+../labs/session-06/app/fdir6.c:498:18: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  498 |     pus_put_u32(&aux[10], (uint32_t)limit);
+      |                  ^~~
+../labs/session-06/app/fdir6.c:508:13: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  508 |         if (event_actions[i].param_id == e->param_id) {
+      |             ^~~~~~~~~~~~~
+../labs/session-06/app/fdir6.c:509:56: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  509 |             vmode_t target = (tr == MON_RAISED_HIGH) ? event_actions[i].on_high
+      |                                                        ^~~~~~~~~~~~~
+../labs/session-06/app/fdir6.c:510:56: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  510 |                                                      : event_actions[i].on_low;
+      |                                                        ^~~~~~~~~~~~~
+../labs/session-06/app/fdir6.c:548:13: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  548 |         if (g_mon[i].enabled) { en |= (uint8_t)(1u << i); }
+      |             ^~~~~
+../labs/session-06/app/fdir6.c:549:39: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  549 |         states |= (uint8_t)(((uint8_t)g_mon[i].state & 3u) << (2u * i));
+      |                                       ^~~~~
+../labs/session-06/app/fdir6.c:550:21: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  550 |         filtered += g_mon[i].filtered;
+      |                     ^~~~~
+../labs/session-06/app/fdir6.c:553:13: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  553 |         if (g_sup.tasks[i].status == SUP_TASK_FAILED) {
+      |             ^~~~~~~~~~~
+../labs/session-06/app/fdir6.c:559:18: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  559 |     pus_put_u16(&d[1], sat16((uint32_t)(g_values[0] < 0 ? 0 : g_values[0])));
+      |                  ^
+../labs/session-06/app/fdir6.c:560:14: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  560 |     put_i16(&d[3], g_values[1]);
+      |              ^
+../labs/session-06/app/fdir6.c:560:20: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  560 |     put_i16(&d[3], g_values[1]);
+      |                    ^~~~~~~~
+../labs/session-06/app/fdir6.c:561:14: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  561 |     put_i16(&d[5], g_values[2]);
+      |              ^
+../labs/session-06/app/fdir6.c:561:20: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  561 |     put_i16(&d[5], g_values[2]);
+      |                    ^~~~~~~~
+../labs/session-06/app/fdir6.c:563:5: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  563 |     d[7] = (uint8_t)mode;   /* SA-01: no cast of a call result */
+      |     ^
+../labs/session-06/app/fdir6.c:564:5: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  564 |     d[8] = g_last_src;
+      |     ^
+../labs/session-06/app/fdir6.c:565:18: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  565 |     pus_put_u16(&d[9], g_last_detail);
+      |                  ^
+../labs/session-06/app/fdir6.c:566:5: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  566 |     d[11] = status_byte();
+      |     ^
+../labs/session-06/app/fdir6.c:567:5: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  567 |     d[12] = en;
+      |     ^
+../labs/session-06/app/fdir6.c:568:5: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  568 |     d[13] = states;
+      |     ^
+../labs/session-06/app/fdir6.c:569:18: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  569 |     pus_put_u16(&d[14], sat16(filtered));
+      |                  ^
+../labs/session-06/app/fdir6.c:570:5: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  570 |     d[16] = g_sup.tasks[TASK_ACS].restarts_total;
+      |     ^
+../labs/session-06/app/fdir6.c:571:5: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  571 |     d[17] = g_sup.tasks[TASK_HK].restarts_total;
+      |     ^
+../labs/session-06/app/fdir6.c:571:13: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  571 |     d[17] = g_sup.tasks[TASK_HK].restarts_total;
+      |             ^~~~~~~~~~~
+../labs/session-06/app/fdir6.c:572:5: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  572 |     d[18] = g_sup.tasks[TASK_LOG].restarts_total;
+      |     ^
+../labs/session-06/app/fdir6.c:572:13: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  572 |     d[18] = g_sup.tasks[TASK_LOG].restarts_total;
+      |             ^~~~~~~~~~~
+../labs/session-06/app/fdir6.c:573:5: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  573 |     d[19] = failed;
+      |     ^
+../labs/session-06/app/fdir6.c:574:18: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  574 |     pus_put_u16(&d[20], g_nv.boot_count);
+      |                  ^
+../labs/session-06/app/fdir6.c:575:5: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  575 |     d[22] = g_nv.last_reset_cause;
+      |     ^
+../labs/session-06/app/fdir6.c:576:5: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  576 |     d[23] = sat8(g_nv.reset_count);
+      |     ^
+../labs/session-06/app/fdir6.c:577:5: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  577 |     d[24] = sat8(g_nv.escalation_count);
+      |     ^
+../labs/session-06/app/fdir6.c:578:18: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  578 |     pus_put_u16(&d[25], (uint16_t)tc->accepted);
+      |                  ^
+../labs/session-06/app/fdir6.c:579:18: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  579 |     pus_put_u16(&d[27], (uint16_t)tc->rejected);
+      |                  ^
+../labs/session-06/app/fdir6.c:580:18: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  580 |     pus_put_u16(&d[29], (uint16_t)tmtc_tm_dropped());
+      |                  ^
+../labs/session-06/app/fdir6.c:581:18: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  581 |     pus_put_u32(&d[31], t.coarse);
+      |                  ^
+../labs/session-06/app/fdir6.c:582:18: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  582 |     pus_put_u16(&d[35], inhibit_remaining_s(now_ms()));
+      |                  ^
+../labs/session-06/app/fdir6.c:592:18: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  592 |     pus_put_u16(&d[1], sat16((uint32_t)(g_values[0] < 0 ? 0 : g_values[0])));
+      |                  ^
+../labs/session-06/app/fdir6.c:593:14: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  593 |     put_i16(&d[3], g_values[1]);
+      |              ^
+../labs/session-06/app/fdir6.c:593:20: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  593 |     put_i16(&d[3], g_values[1]);
+      |                    ^~~~~~~~
+../labs/session-06/app/fdir6.c:595:5: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  595 |     d[5] = (uint8_t)mode;   /* SA-01 */
+      |     ^
+../labs/session-06/app/fdir6.c:596:5: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  596 |     d[6] = g_last_src;
+      |     ^
+../labs/session-06/app/fdir6.c:597:18: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  597 |     pus_put_u16(&d[7], g_last_detail);
+      |                  ^
+../labs/session-06/app/fdir6.c:598:5: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  598 |     d[9] = status_byte();
+      |     ^
+../labs/session-06/app/fdir6.c:599:18: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  599 |     pus_put_u16(&d[10], g_nv.boot_count);
+      |                  ^
+../labs/session-06/app/fdir6.c:600:5: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  600 |     d[12] = g_nv.last_reset_cause;
+      |     ^
+../labs/session-06/app/fdir6.c:601:18: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  601 |     pus_put_u32(&d[13], t.coarse);
+      |                  ^
+../labs/session-06/app/fdir6.c:619:21: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  619 |         uint8_t r = mon_request[i];
+      |                     ^~~~~~~~~~~
+../labs/session-06/app/fdir6.c:621:13: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  621 |             mon_request[i] = 0;
+      |             ^~~~~~~~~~~
+../labs/session-06/app/fdir6.c:622:30: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  622 |             mon_set_enabled(&g_mon[i], r == 1u);
+      |                              ^~~~~
+../labs/session-06/app/fdir6.c:630:22: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  630 |         pus_put_u32(&aux[2], g_wdg.since_kick_ms);
+      |                      ^~~
+../labs/session-06/app/fdir6.c:640:9: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  640 |         g_values[1] = FINJ_PARAM(PARAM_TBAT, v.tbat_cdeg);
+      |         ^~~~~~~~
+../labs/session-06/app/fdir6.c:641:9: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  641 |         g_values[2] = FINJ_PARAM(PARAM_TOBC, v.tobc_cdeg);
+      |         ^~~~~~~~
+../labs/session-06/app/fdir6.c:708:17: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  708 |     mon_define(&g_mon[1], PARAM_TBAT,     0,   200,  4300,  4500, 3, EVT_MON_TBAT, 2);
+      |                 ^~~~~
+../labs/session-06/app/fdir6.c:709:17: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  709 |     mon_define(&g_mon[2], PARAM_TOBC, -2000, -1500,  6500,  7000, 5, EVT_MON_TOBC, 2);
+      |                 ^~~~~
+../labs/session-06/app/fdir6.c:711:35: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  711 |         if (mon_check_definition(&g_mon[i]) != 0) {
+      |                                   ^~~~~
+../labs/session-06/app/fdir6.c:729:18: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  729 |     pus_put_u16(&aux[2], g_nv.boot_count);
+      |                  ^~~
+../labs/session-06/app/fdir6.c:730:5: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  730 |     aux[4] = g_nv.last_reset_cause;
+      |     ^~~
+../labs/session-06/app/fdir6.c:731:5: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  731 |     aux[5] = sat8(g_nv.reset_count);
+      |     ^~~
+../labs/session-06/app/fdir6.c:732:5: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  732 |     aux[6] = sat8(g_nv.escalation_count);
+      |     ^~~
+../labs/session-06/app/fdir6.c:733:5: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  733 |     aux[7] = g_nv.last_esc_task;
+      |     ^~~
+../labs/session-06/app/fdir6.c:734:5: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  734 |     aux[8] = (uint8_t)boot_mode;
+      |     ^~~
+../labs/session-06/app/fdir6.c:735:5: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  735 |     aux[9] = nv_valid ? 1u : 0u;
+      |     ^~~
+In file included from ../labs/session-06/app/fdir6.c:27:
+In file included from ../labs/session-05/app/tmtc5.h:16:
+../labs/session-04/lab-4.2-pus-service17/tc_handler.h:64:18: warning: padding struct 'struct tc_ctx' with 4 bytes to align 'sink' [-Wpadded]
+   64 |     tm_sink_fn   sink;
+      |                  ^
+103 warnings generated.
+
+### clang -std=c99 -O2 -Weverything -I../labs/session-05/host-sim -I../labs/session-04/lab-4.1-space-packet -I../labs/session-04/lab-4.2-pus-service17 -I../labs/session-05/lab-5.1-monitoring -I../labs/session-05/lab-5.2-liveness -I../labs/session-05/lab-5.3-safe-mode -I../labs/session-05/lab-5.4-fault-injection -I../labs/session-05/app -I../labs/session-06/app -I../labs/session-06/lab-6.2-generation/generated -c ../labs/session-05/lab-5.4-fault-injection/finj.c -o /dev/null
+
+### clang -std=c99 -O2 -Weverything -I../labs/session-05/host-sim -I../labs/session-04/lab-4.1-space-packet -I../labs/session-04/lab-4.2-pus-service17 -I../labs/session-05/lab-5.1-monitoring -I../labs/session-05/lab-5.2-liveness -I../labs/session-05/lab-5.3-safe-mode -I../labs/session-05/lab-5.4-fault-injection -I../labs/session-05/app -I../labs/session-06/app -I../labs/session-06/lab-6.2-generation/generated -c ../labs/session-05/app/lab5.c -o /dev/null
+In file included from ../labs/session-05/app/lab5.c:5:
+In file included from ../labs/session-05/app/fdir.h:21:
+../labs/session-05/lab-5.3-safe-mode/schedule.h:24:9: warning: padding size of 'sched_entry_t' with 1 byte to alignment boundary [-Wpadded]
+   24 | typedef struct {
+      |         ^
+In file included from ../labs/session-05/app/lab5.c:5:
+In file included from ../labs/session-05/app/fdir.h:22:
+../labs/session-05/lab-5.2-liveness/supervisor.h:59:23: warning: padding struct 'sup_task_t' with 3 bytes to align 'os_id' [-Wpadded]
+   59 |     uint32_t          os_id;           /* for ops->restart (RTEMS id)    */
+      |                       ^
+../labs/session-05/lab-5.2-liveness/supervisor.h:66:23: warning: padding struct 'sup_task_t' with 2 bytes to align 'misses_total' [-Wpadded]
+   66 |     uint32_t          misses_total;
+      |                       ^
+In file included from ../labs/session-05/app/lab5.c:8:
+In file included from ../labs/session-05/app/services.h:6:
+In file included from ../labs/session-04/lab-4.2-pus-service17/tc_handler.h:19:
+In file included from ../labs/session-04/lab-4.2-pus-service17/pus.h:34:
+../labs/session-04/lab-4.1-space-packet/sp.h:39:15: warning: padding struct 'sp_primary_header_t' with 3 bytes to align 'type' [-Wpadded]
+   39 |     sp_type_t type;          /* 1 bit  */
+      |               ^
+../labs/session-04/lab-4.1-space-packet/sp.h:41:15: warning: padding struct 'sp_primary_header_t' with 1 byte to align 'apid' [-Wpadded]
+   41 |     uint16_t  apid;          /* 11 bits */
+      |               ^
+../labs/session-04/lab-4.1-space-packet/sp.h:43:15: warning: padding struct 'sp_primary_header_t' with 1 byte to align 'seq_count' [-Wpadded]
+   43 |     uint16_t  seq_count;     /* 14 bits */
+      |               ^
+../labs/session-04/lab-4.1-space-packet/sp.h:37:9: warning: padding size of 'sp_primary_header_t' with 2 bytes to alignment boundary [-Wpadded]
+   37 | typedef struct {
+      |         ^
+In file included from ../labs/session-05/app/lab5.c:8:
+In file included from ../labs/session-05/app/services.h:6:
+../labs/session-04/lab-4.2-pus-service17/tc_handler.h:57:17: warning: padding struct 'tc_service_t' with 7 bytes to align 'check' [-Wpadded]
+   57 |     tc_check_fn check;
+      |                 ^
+../labs/session-05/app/lab5.c:124:1: warning: function 'acs_ctrl_task' could be declared with attribute 'noreturn' [-Wmissing-noreturn]
+  124 | {
+      | ^
+../labs/session-05/app/lab5.c:139:1: warning: function 'tm_hk_task' could be declared with attribute 'noreturn' [-Wmissing-noreturn]
+  139 | {
+      | ^
+../labs/session-05/app/lab5.c:155:1: warning: function 'pl_log_task' could be declared with attribute 'noreturn' [-Wmissing-noreturn]
+  155 | {
+      | ^
+../labs/session-05/app/lab5.c:179:1: warning: function 'supervisor_task' could be declared with attribute 'noreturn' [-Wmissing-noreturn]
+  179 | {
+      | ^
+../labs/session-05/app/lab5.c:197:1: warning: function 'sched_task' could be declared with attribute 'noreturn' [-Wmissing-noreturn]
+  197 | {
+      | ^
+In file included from ../labs/session-05/app/lab5.c:8:
+In file included from ../labs/session-05/app/services.h:6:
+../labs/session-04/lab-4.2-pus-service17/tc_handler.h:64:18: warning: padding struct 'struct tc_ctx' with 4 bytes to align 'sink' [-Wpadded]
+   64 |     tm_sink_fn   sink;
+      |                  ^
+../labs/session-05/app/lab5.c:46:9: warning: macro is not used [-Wunused-macros]
+   46 | #define CONFIGURE_APPLICATION_NEEDS_CONSOLE_DRIVER
+      |         ^
+../labs/session-05/app/lab5.c:67:9: warning: macro is not used [-Wunused-macros]
+   67 | #define CONFIGURE_INIT
+      |         ^
+../labs/session-05/app/lab5.c:63:9: warning: macro is not used [-Wunused-macros]
+   63 | #define CONFIGURE_INIT_TASK_ATTRIBUTES RTEMS_FLOATING_POINT
+      |         ^
+../labs/session-05/app/lab5.c:59:9: warning: macro is not used [-Wunused-macros]
+   59 | #define CONFIGURE_EXTRA_TASK_STACKS (5u * TASK_STACK)
+      |         ^
+../labs/session-05/app/lab5.c:50:9: warning: macro is not used [-Wunused-macros]
+   50 | #define CONFIGURE_MAXIMUM_TASKS            8
+      |         ^
+../labs/session-05/app/lab5.c:51:9: warning: macro is not used [-Wunused-macros]
+   51 | #define CONFIGURE_MAXIMUM_PERIODS          5
+      |         ^
+../labs/session-05/app/lab5.c:45:9: warning: macro is not used [-Wunused-macros]
+   45 | #define CONFIGURE_APPLICATION_NEEDS_CLOCK_DRIVER
+      |         ^
+../labs/session-05/app/lab5.c:52:9: warning: macro is not used [-Wunused-macros]
+   52 | #define CONFIGURE_MAXIMUM_SEMAPHORES       6
+      |         ^
+../labs/session-05/app/lab5.c:53:9: warning: macro is not used [-Wunused-macros]
+   53 | #define CONFIGURE_MAXIMUM_TIMERS           1
+      |         ^
+../labs/session-05/app/lab5.c:54:9: warning: macro is not used [-Wunused-macros]
+   54 | #define CONFIGURE_MAXIMUM_MESSAGE_QUEUES   1
+      |         ^
+../labs/session-05/app/lab5.c:55:9: warning: macro is not used [-Wunused-macros]
+   55 | #define CONFIGURE_MESSAGE_BUFFER_MEMORY \
+      |         ^
+../labs/session-05/app/lab5.c:64:9: warning: macro is not used [-Wunused-macros]
+   64 | #define CONFIGURE_INIT_TASK_STACK_SIZE (16 * 1024)
+      |         ^
+../labs/session-05/app/lab5.c:66:9: warning: macro is not used [-Wunused-macros]
+   66 | #define CONFIGURE_RTEMS_INIT_TASKS_TABLE
+      |         ^
+../labs/session-05/app/lab5.c:61:9: warning: macro is not used [-Wunused-macros]
+   61 | #define CONFIGURE_MICROSECONDS_PER_TICK 10000
+      |         ^
+In file included from ../labs/session-05/app/lab5.c:5:
+In file included from ../labs/session-05/app/fdir.h:22:
+../labs/session-05/lab-5.2-liveness/supervisor.h:100:5: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  100 |     s->tasks[idx].heartbeat = s->tasks[idx].heartbeat + 1u;
+      |     ^~~~~~~~
+../labs/session-05/lab-5.2-liveness/supervisor.h:100:31: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  100 |     s->tasks[idx].heartbeat = s->tasks[idx].heartbeat + 1u;
+      |                               ^~~~~~~~
+30 warnings generated.
+

@@ -2,9 +2,9 @@
  * GENERATED FILE - DO NOT EDIT.
  *
  * State machine implementation.
- * Model     : mode_machine.yaml ("vehicle_mode", version 2)
- * Model hash: sha256:f82e7dfde38f18f475df59611e585b20e3c4466247d1732833060af4f2dd56bb
- * Generator : modelgen.py 1.0, sha256:4e01934c54195d8ecf8660e6aafeb2bd7c644bfadfa0e7237c5db0c2597c9594
+ * Model     : mode_machine.yaml ("vehicle_mode", version 3)
+ * Model hash: sha256:46d8922ca14ac2917bc4bf7ba7d5c85a3dc0ad984d941a39f8f728d665cebf66
+ * Generator : modelgen.py 1.1, sha256:358817262c6f4d3c3635a50f045af71b94bbf802d79d4401d16e733e0dddbb3f
  *
  * Change the model or the generator and regenerate. `make check-generated`
  * fails if this file differs from a fresh generation.
@@ -18,6 +18,8 @@
 /* Event classes (semantics: unconsumed_one_shot, unconsumed_latched). */
 static const uint32_t ONE_SHOT = BIT(MODE_SM_EV_TC_MODE_NOMINAL) | BIT(MODE_SM_EV_TC_MODE_DEGRADED) | BIT(MODE_SM_EV_TC_MODE_SAFE) | BIT(MODE_SM_EV_FAULT_CLEARED);
 static const uint32_t LATCHED = BIT(MODE_SM_EV_FAULT_NONCRITICAL) | BIT(MODE_SM_EV_FAULT_CRITICAL);
+/* Ground commands (semantics: ignored_ground_command). */
+static const uint32_t GROUND = BIT(MODE_SM_EV_TC_MODE_NOMINAL) | BIT(MODE_SM_EV_TC_MODE_DEGRADED) | BIT(MODE_SM_EV_TC_MODE_SAFE);
 
 /* Events explicitly ignored, per state (completeness). */
 static const uint32_t IGNORED[MODE_SM_STATE_COUNT] = {
@@ -348,8 +350,14 @@ mode_sm_result_t mode_sm_step(mode_sm_t *sm, const mode_sm_inputs_t *in_now)
     }
     /* One shot events are consumed every cycle. Those neither taken
      * nor ignored in the start state were lost to a higher priority
-     * transition: reported. */
+     * transition: reported (semantics: unconsumed_one_shot). */
     lost = pending & ONE_SHOT & ~consumed & ~IGNORED[start];
+    /* semantics: ignored_ground_command = report_if_state_changed. A
+     * ground command for the start mode is already satisfied, unless an
+     * external transition left that mode in this cycle (D-05). */
+    if (r.kind == MODE_SM_STEP_TRANSITION) {
+        lost |= pending & GROUND & ~consumed;
+    }
     consumed |= pending & ONE_SHOT;
     /* Latched events ignored in the start state are dropped only if
      * nothing fired; otherwise they are re-evaluated in the new state. */

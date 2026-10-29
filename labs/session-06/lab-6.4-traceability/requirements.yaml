@@ -54,3 +54,11 @@ requirements:
     text: A fault confirmed in the same cycle as a ground recovery command shall not be lost.
     source: Lab 6.3 divergence D-04 (new)
     model: [semantics:consumption]
+  - id: MM-140
+    text: A ground mode command that is not applied shall be reported to the ground as discarded, naming the command. The only silent case is a command for the mode the vehicle is already in, and remains in, at the end of the cycle.
+    source: Session 6 review, divergence D-05 (model v3)
+    model: [semantics:ignored_ground_command, semantics:consumption]
+  - id: MM-150
+    text: A ground mode command shall take effect, and its mode transition shall be reported, no later than 3.0 s after its execution completion report TM(1,7).
+    source: Session 6 review, divergence D-07. Design constraint derived from the 2 s supervisor period (semantics.md, "Latency requirement")
+    model: [step]

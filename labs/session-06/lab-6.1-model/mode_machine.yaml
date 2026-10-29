@@ -10,7 +10,8 @@
 # which the generator checks it supports.
 
 model: vehicle_mode
-version: 2   # v2: SAFE entry tightens monitoring (divergence log, D-01)
+version: 3   # v2: SAFE entry tightens monitoring (D-01)
+             # v3: losing ground command always reported (D-05, MM-140)
 
 semantics:
   evaluation: cyclic                 # one step per supervisor period
@@ -20,6 +21,7 @@ semantics:
   self_transition_runs_entry: false  # no self transitions exist; internal ones never do
   unconsumed_one_shot: discard_and_report
   unconsumed_latched: retain_if_transition_fired
+  ignored_ground_command: report_if_state_changed  # D-05, MM-140
 
 initial: NOMINAL
 boot_states: [NOMINAL, SAFE]         # SAFE after a watchdog reset (MM-090)

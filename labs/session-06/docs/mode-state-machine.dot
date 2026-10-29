@@ -1,6 +1,6 @@
 digraph vehicle_mode {
   rankdir=LR; fontname="Helvetica"; bgcolor="white";
-  label="vehicle_mode v2 - one transition per 2 s cycle, lower priority number wins\nsolid = ground TC, dashed = autonomous fault, dotted = internal (refusal reported)";
+  label="vehicle_mode v3 - one transition per 2 s cycle, lower priority number wins; a losing ground command is reported (MM-140)\nsolid = ground TC, dashed = autonomous fault, dotted = internal (refusal reported)";
   labelloc=b; fontsize=11;
   node [shape=box, style="rounded,filled", fontname="Helvetica", fontsize=13, width=1.6, height=0.7];
   edge [fontname="Helvetica", fontsize=10];

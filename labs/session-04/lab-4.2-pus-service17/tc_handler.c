@@ -109,7 +109,6 @@ void tc_handle(tc_ctx_t *ctx, const uint8_t *frame, size_t frame_len)
     pus_tc_t tc;
     pus_fail_t code;
     const tc_service_t *svc = NULL;
-    size_t i;
 
     /* Checks 1 to 7: packet level. */
     code = pus_tc_validate(frame, frame_len, ctx->tm_src.apid, &tc);
@@ -120,6 +119,7 @@ void tc_handle(tc_ctx_t *ctx, const uint8_t *frame, size_t frame_len)
 
     /* Check 8: service implemented. */
     if (code == PUS_OK) {
+        size_t i;      /* SA-03: scope reduced (cppcheck variableScope) */
         for (i = 0; i < ctx->service_count; i++) {
             if (ctx->services[i].service == tc.service) {
                 svc = &ctx->services[i];
@@ -157,5 +157,7 @@ void tc_handle(tc_ctx_t *ctx, const uint8_t *frame, size_t frame_len)
         report_failure(ctx, &tc, PUS_TM_1_COMPLETE_FAIL, code);
     } else if (tc.ack_flags & PUS_ACK_COMPLETION) {
         report_success(ctx, &tc, PUS_TM_1_COMPLETE_OK);
+    } else {
+        /* success, completion report not requested (MISRA 15.7, SA-04) */
     }
 }

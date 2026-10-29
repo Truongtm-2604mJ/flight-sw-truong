@@ -162,8 +162,17 @@ static rtems_task tc_rx_task(rtems_task_argument arg)
         for (i = 0; i < got; i++) {
             char c = chunk[i];
             if (c == '\n' || c == '\r') {
-                if (!overflow && line_len > 0u) {
+                if (overflow) {
+                    /* NCR-02 (Session 7): a line too long for the buffer
+                     * was dropped without being counted. Count it like any
+                     * other undecodable line (requirement TMTC-030). */
+                    tmtc_lock();
+                    tc_count_link_error(&tc_ctx);
+                    tmtc_unlock();
+                } else if (line_len > 0u) {
                     process_line(line, line_len);
+                } else {
+                    /* empty line: ignored (MISRA 15.7, SA-04) */
                 }
                 line_len = 0;
                 overflow = 0;

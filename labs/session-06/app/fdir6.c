@@ -169,30 +169,30 @@ static vmode_t cur_mode(void)
     return (vmode_t)mode_sm_state(&g_sm);
 }
 
-void mode_sm_action_payload_enable(void *u, const mode_sm_payload_t *c)
-{ (void)u; (void)c; payload_on = 1u; }
-void mode_sm_action_payload_suspend(void *u, const mode_sm_payload_t *c)
-{ (void)u; (void)c; payload_on = 0u; }
-void mode_sm_action_payload_off(void *u, const mode_sm_payload_t *c)
-{ (void)u; (void)c; payload_on = 0u; }
-void mode_sm_action_hk_rate_normal(void *u, const mode_sm_payload_t *c)
-{ (void)u; (void)c; g_hk_rate = 0u; g_monitor_fast = 0u; }
-void mode_sm_action_hk_rate_high(void *u, const mode_sm_payload_t *c)
-{ (void)u; (void)c; g_hk_rate = 1u; }
-void mode_sm_action_hk_minimal(void *u, const mode_sm_payload_t *c)
-{ (void)u; (void)c; g_hk_rate = 2u; }
-void mode_sm_action_monitors_tighten(void *u, const mode_sm_payload_t *c)
-{ (void)u; (void)c; g_monitor_fast = 1u; }
-void mode_sm_action_sun_pointing(void *u, const mode_sm_payload_t *c)
-{ (void)u; (void)c; sun_pointing = 1u; }
-void mode_sm_action_sun_pointing_release(void *u, const mode_sm_payload_t *c)
-{ (void)u; (void)c; sun_pointing = 0u; }
-void mode_sm_action_rx_guarantee(void *u, const mode_sm_payload_t *c)
-{ (void)u; (void)c; /* FDIR never switches the receiver: nothing to do */ }
+void mode_sm_action_payload_enable(void *user, const mode_sm_payload_t *cause)
+{ (void)user; (void)cause; payload_on = 1u; }
+void mode_sm_action_payload_suspend(void *user, const mode_sm_payload_t *cause)
+{ (void)user; (void)cause; payload_on = 0u; }
+void mode_sm_action_payload_off(void *user, const mode_sm_payload_t *cause)
+{ (void)user; (void)cause; payload_on = 0u; }
+void mode_sm_action_hk_rate_normal(void *user, const mode_sm_payload_t *cause)
+{ (void)user; (void)cause; g_hk_rate = 0u; g_monitor_fast = 0u; }
+void mode_sm_action_hk_rate_high(void *user, const mode_sm_payload_t *cause)
+{ (void)user; (void)cause; g_hk_rate = 1u; }
+void mode_sm_action_hk_minimal(void *user, const mode_sm_payload_t *cause)
+{ (void)user; (void)cause; g_hk_rate = 2u; }
+void mode_sm_action_monitors_tighten(void *user, const mode_sm_payload_t *cause)
+{ (void)user; (void)cause; g_monitor_fast = 1u; }
+void mode_sm_action_sun_pointing(void *user, const mode_sm_payload_t *cause)
+{ (void)user; (void)cause; sun_pointing = 1u; }
+void mode_sm_action_sun_pointing_release(void *user, const mode_sm_payload_t *cause)
+{ (void)user; (void)cause; sun_pointing = 0u; }
+void mode_sm_action_rx_guarantee(void *user, const mode_sm_payload_t *cause)
+{ (void)user; (void)cause; /* FDIR never switches the receiver: nothing to do */ }
 
-void mode_sm_action_schedule_suspend(void *u, const mode_sm_payload_t *c)
+void mode_sm_action_schedule_suspend(void *user, const mode_sm_payload_t *cause)
 {
-    (void)u; (void)c;
+    (void)user; (void)cause;
     if (g_sched.enabled) {
         uint8_t aux[3];
         sched_set_enabled(&g_sched, 0);
@@ -202,54 +202,54 @@ void mode_sm_action_schedule_suspend(void *u, const mode_sm_payload_t *c)
     }
 }
 
-void mode_sm_action_report_action_inhibited(void *u, const mode_sm_payload_t *c)
+void mode_sm_action_report_action_inhibited(void *user, const mode_sm_payload_t *cause)
 {
-    (void)u;
+    (void)user;
     /* Same subject encoding as Session 5: parameter ID for a monitor,
      * 0x100 + task index for a liveness escalation. */
     evt_action_inhibited(INHIBITED_MODE,
-                         c->src == (uint8_t)CAUSE_LIVENESS
-                         ? (uint16_t)(0x100u + c->detail) : c->detail);
+                         cause->src == (uint8_t)CAUSE_LIVENESS
+                         ? (uint16_t)(0x100u + cause->detail) : cause->detail);
 }
 
-void mode_sm_on_transition(void *u, mode_sm_state_t from, mode_sm_state_t to,
-                           mode_sm_event_t event, const mode_sm_payload_t *c)
+void mode_sm_on_transition(void *user, mode_sm_state_t from, mode_sm_state_t to,
+                           mode_sm_event_t event, const mode_sm_payload_t *cause)
 {
     uint8_t aux[7];
-    (void)u; (void)event;
-    g_last_src    = c->src;
-    g_last_detail = c->detail;
+    (void)user; (void)event;
+    g_last_src    = cause->src;
+    g_last_detail = cause->detail;
     pus_put_u16(&aux[0], EVT_MODE_CHANGED);
     aux[2] = (uint8_t)from;
     aux[3] = (uint8_t)to;
-    aux[4] = c->src;
-    pus_put_u16(&aux[5], c->detail);
+    aux[4] = cause->src;
+    pus_put_u16(&aux[5], cause->detail);
     evt_emit(to == MODE_SM_SAFE ? 4u : (to == MODE_SM_DEGRADED ? 3u : 1u),
              aux, sizeof(aux));
 
     if (to == MODE_SM_SAFE) {
-        g_nv.last_safe_src    = c->src;
-        g_nv.last_safe_detail = c->detail;
+        g_nv.last_safe_src    = cause->src;
+        g_nv.last_safe_detail = cause->detail;
         nv_commit();
     }
 }
 
-void mode_sm_on_discard(void *u, mode_sm_event_t event, const mode_sm_payload_t *c)
+void mode_sm_on_discard(void *user, mode_sm_event_t event, const mode_sm_payload_t *cause)
 {
     uint8_t aux[4];
-    (void)u;
+    (void)user;
     pus_put_u16(&aux[0], EVT_MODE_CMD_DISCARDED);
     aux[2] = (uint8_t)event;
-    aux[3] = c->src;
+    aux[3] = cause->src;
     evt_emit(2, aux, sizeof(aux));
 }
 
-void mode_sm_on_invalid_state(void *u, uint32_t raw)
+void mode_sm_on_invalid_state(void *user, uint32_t raw_state)
 {
     uint8_t aux[6];
-    (void)u;
+    (void)user;
     pus_put_u16(&aux[0], EVT_MODE_INVALID);
-    pus_put_u32(&aux[2], raw);
+    pus_put_u32(&aux[2], raw_state);
     evt_emit(4, aux, sizeof(aux));
 }
 
@@ -431,6 +431,8 @@ static rtems_timer_service_routine wdg_isr(rtems_id id, void *arg)
         wdg_warning_pending = 1u;
     } else if (a == WDG_RESET) {
         rtems_fatal(RTEMS_FATAL_SOURCE_APPLICATION, FDIR_FATAL_WATCHDOG);
+    } else {
+        /* WDG_NONE: kicked in time, nothing to do (MISRA 15.7, SA-04) */
     }
     (void)rtems_timer_fire_after(id, WDG_TICK_TICKS, wdg_isr, arg);
 }
@@ -535,6 +537,7 @@ static void hk_emit(obt_t t, const uint8_t *data, size_t len)
 
 static void hk_full(obt_t t)
 {
+    vmode_t mode;
     uint8_t d[HK_SID1_LEN];
     uint8_t en = 0, states = 0, failed = 0;
     uint32_t filtered = 0;
@@ -556,7 +559,8 @@ static void hk_full(obt_t t)
     pus_put_u16(&d[1], sat16((uint32_t)(g_values[0] < 0 ? 0 : g_values[0])));
     put_i16(&d[3], g_values[1]);
     put_i16(&d[5], g_values[2]);
-    d[7] = (uint8_t)cur_mode();
+    mode = cur_mode();
+    d[7] = (uint8_t)mode;   /* SA-01: no cast of a call result */
     d[8] = g_last_src;
     pus_put_u16(&d[9], g_last_detail);
     d[11] = status_byte();
@@ -581,12 +585,14 @@ static void hk_full(obt_t t)
 
 static void hk_essential(obt_t t)
 {
+    vmode_t mode;
     uint8_t d[HK_SID2_LEN];
 
     d[0] = HK_SID_ESSENTIAL;
     pus_put_u16(&d[1], sat16((uint32_t)(g_values[0] < 0 ? 0 : g_values[0])));
     put_i16(&d[3], g_values[1]);
-    d[5] = (uint8_t)cur_mode();
+    mode = cur_mode();
+    d[5] = (uint8_t)mode;   /* SA-01 */
     d[6] = g_last_src;
     pus_put_u16(&d[7], g_last_detail);
     d[9] = status_byte();
@@ -640,6 +646,8 @@ void fdir_hk_cycle(void)
             hk_full(t);
         } else if ((cycle % 4u) == 0u) {
             hk_essential(t);
+        } else {
+            /* SAFE: essential HK every 4th cycle only (MISRA 15.7, SA-04) */
         }
     }
     cycle++;

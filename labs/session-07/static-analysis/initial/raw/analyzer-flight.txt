@@ -1,0 +1,130 @@
+### clang --analyze -Xclang -analyzer-output=text -Xclang -analyzer-checker=core,security,unix,deadcode,optin.portability -I../labs/session-05/host-sim -I../labs/session-04/lab-4.1-space-packet -I../labs/session-04/lab-4.2-pus-service17 -I../labs/session-05/lab-5.1-monitoring -I../labs/session-05/lab-5.2-liveness -I../labs/session-05/lab-5.3-safe-mode -I../labs/session-05/lab-5.4-fault-injection -I../labs/session-05/app -I../labs/session-06/app -I../labs/session-06/lab-6.2-generation/generated ../labs/session-04/lab-4.1-space-packet/sp.c -o /dev/null
+../labs/session-04/lab-4.1-space-packet/sp.c:54:5: warning: Call to function 'memcpy' is insecure as it does not provide security checks introduced in the C11 standard. Replace with analogous functions that support length arguments or provides boundary checks such as 'memcpy_s' in case of C11 [security.insecureAPI.DeprecatedOrUnsafeBufferHandling]
+   54 |     memcpy(&out[SP_PRIMARY_HEADER_LEN], payload, payload_len);
+      |     ^~~~~~
+../labs/session-04/lab-4.1-space-packet/sp.c:54:5: note: Call to function 'memcpy' is insecure as it does not provide security checks introduced in the C11 standard. Replace with analogous functions that support length arguments or provides boundary checks such as 'memcpy_s' in case of C11
+   54 |     memcpy(&out[SP_PRIMARY_HEADER_LEN], payload, payload_len);
+      |     ^~~~~~
+1 warning generated.
+
+### clang --analyze -Xclang -analyzer-output=text -Xclang -analyzer-checker=core,security,unix,deadcode,optin.portability -I../labs/session-05/host-sim -I../labs/session-04/lab-4.1-space-packet -I../labs/session-04/lab-4.2-pus-service17 -I../labs/session-05/lab-5.1-monitoring -I../labs/session-05/lab-5.2-liveness -I../labs/session-05/lab-5.3-safe-mode -I../labs/session-05/lab-5.4-fault-injection -I../labs/session-05/app -I../labs/session-06/app -I../labs/session-06/lab-6.2-generation/generated ../labs/session-04/lab-4.2-pus-service17/crc16.c -o /dev/null
+
+### clang --analyze -Xclang -analyzer-output=text -Xclang -analyzer-checker=core,security,unix,deadcode,optin.portability -I../labs/session-05/host-sim -I../labs/session-04/lab-4.1-space-packet -I../labs/session-04/lab-4.2-pus-service17 -I../labs/session-05/lab-5.1-monitoring -I../labs/session-05/lab-5.2-liveness -I../labs/session-05/lab-5.3-safe-mode -I../labs/session-05/lab-5.4-fault-injection -I../labs/session-05/app -I../labs/session-06/app -I../labs/session-06/lab-6.2-generation/generated ../labs/session-04/lab-4.2-pus-service17/pus.c -o /dev/null
+../labs/session-04/lab-4.2-pus-service17/pus.c:87:9: warning: Call to function 'memcpy' is insecure as it does not provide security checks introduced in the C11 standard. Replace with analogous functions that support length arguments or provides boundary checks such as 'memcpy_s' in case of C11 [security.insecureAPI.DeprecatedOrUnsafeBufferHandling]
+   87 |         memcpy(&field[PUS_TM_SEC_HDR_LEN], data, data_len);
+      |         ^~~~~~
+../labs/session-04/lab-4.2-pus-service17/pus.c:87:9: note: Call to function 'memcpy' is insecure as it does not provide security checks introduced in the C11 standard. Replace with analogous functions that support length arguments or provides boundary checks such as 'memcpy_s' in case of C11
+   87 |         memcpy(&field[PUS_TM_SEC_HDR_LEN], data, data_len);
+      |         ^~~~~~
+../labs/session-04/lab-4.2-pus-service17/pus.c:131:9: warning: Call to function 'memcpy' is insecure as it does not provide security checks introduced in the C11 standard. Replace with analogous functions that support length arguments or provides boundary checks such as 'memcpy_s' in case of C11 [security.insecureAPI.DeprecatedOrUnsafeBufferHandling]
+  131 |         memcpy(&field[PUS_TC_SEC_HDR_LEN], app_data, app_len);
+      |         ^~~~~~
+../labs/session-04/lab-4.2-pus-service17/pus.c:131:9: note: Call to function 'memcpy' is insecure as it does not provide security checks introduced in the C11 standard. Replace with analogous functions that support length arguments or provides boundary checks such as 'memcpy_s' in case of C11
+  131 |         memcpy(&field[PUS_TC_SEC_HDR_LEN], app_data, app_len);
+      |         ^~~~~~
+../labs/session-04/lab-4.2-pus-service17/pus.c:157:5: warning: Call to function 'memset' is insecure as it does not provide security checks introduced in the C11 standard. Replace with analogous functions that support length arguments or provides boundary checks such as 'memset_s' in case of C11 [security.insecureAPI.DeprecatedOrUnsafeBufferHandling]
+  157 |     memset(tc, 0, sizeof(*tc));
+      |     ^~~~~~
+../labs/session-04/lab-4.2-pus-service17/pus.c:157:5: note: Call to function 'memset' is insecure as it does not provide security checks introduced in the C11 standard. Replace with analogous functions that support length arguments or provides boundary checks such as 'memset_s' in case of C11
+  157 |     memset(tc, 0, sizeof(*tc));
+      |     ^~~~~~
+../labs/session-04/lab-4.2-pus-service17/pus.c:164:5: warning: Call to function 'memcpy' is insecure as it does not provide security checks introduced in the C11 standard. Replace with analogous functions that support length arguments or provides boundary checks such as 'memcpy_s' in case of C11 [security.insecureAPI.DeprecatedOrUnsafeBufferHandling]
+  164 |     memcpy(tc->request_id, frame, PUS_REQUEST_ID_LEN);
+      |     ^~~~~~
+../labs/session-04/lab-4.2-pus-service17/pus.c:164:5: note: Call to function 'memcpy' is insecure as it does not provide security checks introduced in the C11 standard. Replace with analogous functions that support length arguments or provides boundary checks such as 'memcpy_s' in case of C11
+  164 |     memcpy(tc->request_id, frame, PUS_REQUEST_ID_LEN);
+      |     ^~~~~~
+4 warnings generated.
+
+### clang --analyze -Xclang -analyzer-output=text -Xclang -analyzer-checker=core,security,unix,deadcode,optin.portability -I../labs/session-05/host-sim -I../labs/session-04/lab-4.1-space-packet -I../labs/session-04/lab-4.2-pus-service17 -I../labs/session-05/lab-5.1-monitoring -I../labs/session-05/lab-5.2-liveness -I../labs/session-05/lab-5.3-safe-mode -I../labs/session-05/lab-5.4-fault-injection -I../labs/session-05/app -I../labs/session-06/app -I../labs/session-06/lab-6.2-generation/generated ../labs/session-04/lab-4.2-pus-service17/tc_handler.c -o /dev/null
+../labs/session-04/lab-4.2-pus-service17/tc_handler.c:43:5: warning: Call to function 'memcpy' is insecure as it does not provide security checks introduced in the C11 standard. Replace with analogous functions that support length arguments or provides boundary checks such as 'memcpy_s' in case of C11 [security.insecureAPI.DeprecatedOrUnsafeBufferHandling]
+   43 |     memcpy(data, tc->request_id, PUS_REQUEST_ID_LEN);
+      |     ^~~~~~
+../labs/session-04/lab-4.2-pus-service17/tc_handler.c:43:5: note: Call to function 'memcpy' is insecure as it does not provide security checks introduced in the C11 standard. Replace with analogous functions that support length arguments or provides boundary checks such as 'memcpy_s' in case of C11
+   43 |     memcpy(data, tc->request_id, PUS_REQUEST_ID_LEN);
+      |     ^~~~~~
+../labs/session-04/lab-4.2-pus-service17/tc_handler.c:57:5: warning: Call to function 'memset' is insecure as it does not provide security checks introduced in the C11 standard. Replace with analogous functions that support length arguments or provides boundary checks such as 'memset_s' in case of C11 [security.insecureAPI.DeprecatedOrUnsafeBufferHandling]
+   57 |     memset(ctx, 0, sizeof(*ctx));
+      |     ^~~~~~
+../labs/session-04/lab-4.2-pus-service17/tc_handler.c:57:5: note: Call to function 'memset' is insecure as it does not provide security checks introduced in the C11 standard. Replace with analogous functions that support length arguments or provides boundary checks such as 'memset_s' in case of C11
+   57 |     memset(ctx, 0, sizeof(*ctx));
+      |     ^~~~~~
+2 warnings generated.
+
+### clang --analyze -Xclang -analyzer-output=text -Xclang -analyzer-checker=core,security,unix,deadcode,optin.portability -I../labs/session-05/host-sim -I../labs/session-04/lab-4.1-space-packet -I../labs/session-04/lab-4.2-pus-service17 -I../labs/session-05/lab-5.1-monitoring -I../labs/session-05/lab-5.2-liveness -I../labs/session-05/lab-5.3-safe-mode -I../labs/session-05/lab-5.4-fault-injection -I../labs/session-05/app -I../labs/session-06/app -I../labs/session-06/lab-6.2-generation/generated ../labs/session-05/lab-5.1-monitoring/monitor.c -o /dev/null
+../labs/session-05/lab-5.1-monitoring/monitor.c:11:5: warning: Call to function 'memset' is insecure as it does not provide security checks introduced in the C11 standard. Replace with analogous functions that support length arguments or provides boundary checks such as 'memset_s' in case of C11 [security.insecureAPI.DeprecatedOrUnsafeBufferHandling]
+   11 |     memset(e, 0, sizeof(*e));
+      |     ^~~~~~
+../labs/session-05/lab-5.1-monitoring/monitor.c:11:5: note: Call to function 'memset' is insecure as it does not provide security checks introduced in the C11 standard. Replace with analogous functions that support length arguments or provides boundary checks such as 'memset_s' in case of C11
+   11 |     memset(e, 0, sizeof(*e));
+      |     ^~~~~~
+1 warning generated.
+
+### clang --analyze -Xclang -analyzer-output=text -Xclang -analyzer-checker=core,security,unix,deadcode,optin.portability -I../labs/session-05/host-sim -I../labs/session-04/lab-4.1-space-packet -I../labs/session-04/lab-4.2-pus-service17 -I../labs/session-05/lab-5.1-monitoring -I../labs/session-05/lab-5.2-liveness -I../labs/session-05/lab-5.3-safe-mode -I../labs/session-05/lab-5.4-fault-injection -I../labs/session-05/app -I../labs/session-06/app -I../labs/session-06/lab-6.2-generation/generated ../labs/session-05/lab-5.2-liveness/supervisor.c -o /dev/null
+../labs/session-05/lab-5.2-liveness/supervisor.c:12:5: warning: Call to function 'memset' is insecure as it does not provide security checks introduced in the C11 standard. Replace with analogous functions that support length arguments or provides boundary checks such as 'memset_s' in case of C11 [security.insecureAPI.DeprecatedOrUnsafeBufferHandling]
+   12 |     memset(s, 0, sizeof(*s));
+      |     ^~~~~~
+../labs/session-05/lab-5.2-liveness/supervisor.c:12:5: note: Call to function 'memset' is insecure as it does not provide security checks introduced in the C11 standard. Replace with analogous functions that support length arguments or provides boundary checks such as 'memset_s' in case of C11
+   12 |     memset(s, 0, sizeof(*s));
+      |     ^~~~~~
+../labs/session-05/lab-5.2-liveness/supervisor.c:30:5: warning: Call to function 'memset' is insecure as it does not provide security checks introduced in the C11 standard. Replace with analogous functions that support length arguments or provides boundary checks such as 'memset_s' in case of C11 [security.insecureAPI.DeprecatedOrUnsafeBufferHandling]
+   30 |     memset(t, 0, sizeof(*t));
+      |     ^~~~~~
+../labs/session-05/lab-5.2-liveness/supervisor.c:30:5: note: Call to function 'memset' is insecure as it does not provide security checks introduced in the C11 standard. Replace with analogous functions that support length arguments or provides boundary checks such as 'memset_s' in case of C11
+   30 |     memset(t, 0, sizeof(*t));
+      |     ^~~~~~
+2 warnings generated.
+
+### clang --analyze -Xclang -analyzer-output=text -Xclang -analyzer-checker=core,security,unix,deadcode,optin.portability -I../labs/session-05/host-sim -I../labs/session-04/lab-4.1-space-packet -I../labs/session-04/lab-4.2-pus-service17 -I../labs/session-05/lab-5.1-monitoring -I../labs/session-05/lab-5.2-liveness -I../labs/session-05/lab-5.3-safe-mode -I../labs/session-05/lab-5.4-fault-injection -I../labs/session-05/app -I../labs/session-06/app -I../labs/session-06/lab-6.2-generation/generated ../labs/session-05/lab-5.2-liveness/watchdog.c -o /dev/null
+
+### clang --analyze -Xclang -analyzer-output=text -Xclang -analyzer-checker=core,security,unix,deadcode,optin.portability -I../labs/session-05/host-sim -I../labs/session-04/lab-4.1-space-packet -I../labs/session-04/lab-4.2-pus-service17 -I../labs/session-05/lab-5.1-monitoring -I../labs/session-05/lab-5.2-liveness -I../labs/session-05/lab-5.3-safe-mode -I../labs/session-05/lab-5.4-fault-injection -I../labs/session-05/app -I../labs/session-06/app -I../labs/session-06/lab-6.2-generation/generated ../labs/session-05/lab-5.2-liveness/nvstate.c -o /dev/null
+../labs/session-05/lab-5.2-liveness/nvstate.c:35:5: warning: Call to function 'memset' is insecure as it does not provide security checks introduced in the C11 standard. Replace with analogous functions that support length arguments or provides boundary checks such as 'memset_s' in case of C11 [security.insecureAPI.DeprecatedOrUnsafeBufferHandling]
+   35 |     memset(r, 0, sizeof(*r));
+      |     ^~~~~~
+../labs/session-05/lab-5.2-liveness/nvstate.c:35:5: note: Call to function 'memset' is insecure as it does not provide security checks introduced in the C11 standard. Replace with analogous functions that support length arguments or provides boundary checks such as 'memset_s' in case of C11
+   35 |     memset(r, 0, sizeof(*r));
+      |     ^~~~~~
+1 warning generated.
+
+### clang --analyze -Xclang -analyzer-output=text -Xclang -analyzer-checker=core,security,unix,deadcode,optin.portability -I../labs/session-05/host-sim -I../labs/session-04/lab-4.1-space-packet -I../labs/session-04/lab-4.2-pus-service17 -I../labs/session-05/lab-5.1-monitoring -I../labs/session-05/lab-5.2-liveness -I../labs/session-05/lab-5.3-safe-mode -I../labs/session-05/lab-5.4-fault-injection -I../labs/session-05/app -I../labs/session-06/app -I../labs/session-06/lab-6.2-generation/generated ../labs/session-05/lab-5.3-safe-mode/schedule.c -o /dev/null
+../labs/session-05/lab-5.3-safe-mode/schedule.c:8:5: warning: Call to function 'memset' is insecure as it does not provide security checks introduced in the C11 standard. Replace with analogous functions that support length arguments or provides boundary checks such as 'memset_s' in case of C11 [security.insecureAPI.DeprecatedOrUnsafeBufferHandling]
+    8 |     memset(s, 0, sizeof(*s));
+      |     ^~~~~~
+../labs/session-05/lab-5.3-safe-mode/schedule.c:8:5: note: Call to function 'memset' is insecure as it does not provide security checks introduced in the C11 standard. Replace with analogous functions that support length arguments or provides boundary checks such as 'memset_s' in case of C11
+    8 |     memset(s, 0, sizeof(*s));
+      |     ^~~~~~
+../labs/session-05/lab-5.3-safe-mode/schedule.c:24:13: warning: Call to function 'memcpy' is insecure as it does not provide security checks introduced in the C11 standard. Replace with analogous functions that support length arguments or provides boundary checks such as 'memcpy_s' in case of C11 [security.insecureAPI.DeprecatedOrUnsafeBufferHandling]
+   24 |             memcpy(s->e[i].tc, tc, len);
+      |             ^~~~~~
+../labs/session-05/lab-5.3-safe-mode/schedule.c:24:13: note: Call to function 'memcpy' is insecure as it does not provide security checks introduced in the C11 standard. Replace with analogous functions that support length arguments or provides boundary checks such as 'memcpy_s' in case of C11
+   24 |             memcpy(s->e[i].tc, tc, len);
+      |             ^~~~~~
+2 warnings generated.
+
+### clang --analyze -Xclang -analyzer-output=text -Xclang -analyzer-checker=core,security,unix,deadcode,optin.portability -I../labs/session-05/host-sim -I../labs/session-04/lab-4.1-space-packet -I../labs/session-04/lab-4.2-pus-service17 -I../labs/session-05/lab-5.1-monitoring -I../labs/session-05/lab-5.2-liveness -I../labs/session-05/lab-5.3-safe-mode -I../labs/session-05/lab-5.4-fault-injection -I../labs/session-05/app -I../labs/session-06/app -I../labs/session-06/lab-6.2-generation/generated ../labs/session-06/lab-6.2-generation/generated/mode_sm.c -o /dev/null
+
+### clang --analyze -Xclang -analyzer-output=text -Xclang -analyzer-checker=core,security,unix,deadcode,optin.portability -I../labs/session-05/host-sim -I../labs/session-04/lab-4.1-space-packet -I../labs/session-04/lab-4.2-pus-service17 -I../labs/session-05/lab-5.1-monitoring -I../labs/session-05/lab-5.2-liveness -I../labs/session-05/lab-5.3-safe-mode -I../labs/session-05/lab-5.4-fault-injection -I../labs/session-05/app -I../labs/session-06/app -I../labs/session-06/lab-6.2-generation/generated ../labs/session-05/app/services.c -o /dev/null
+
+### clang --analyze -Xclang -analyzer-output=text -Xclang -analyzer-checker=core,security,unix,deadcode,optin.portability -I../labs/session-05/host-sim -I../labs/session-04/lab-4.1-space-packet -I../labs/session-04/lab-4.2-pus-service17 -I../labs/session-05/lab-5.1-monitoring -I../labs/session-05/lab-5.2-liveness -I../labs/session-05/lab-5.3-safe-mode -I../labs/session-05/lab-5.4-fault-injection -I../labs/session-05/app -I../labs/session-06/app -I../labs/session-06/lab-6.2-generation/generated ../labs/session-05/app/tmtc5.c -o /dev/null
+
+### clang --analyze -Xclang -analyzer-output=text -Xclang -analyzer-checker=core,security,unix,deadcode,optin.portability -I../labs/session-05/host-sim -I../labs/session-04/lab-4.1-space-packet -I../labs/session-04/lab-4.2-pus-service17 -I../labs/session-05/lab-5.1-monitoring -I../labs/session-05/lab-5.2-liveness -I../labs/session-05/lab-5.3-safe-mode -I../labs/session-05/lab-5.4-fault-injection -I../labs/session-05/app -I../labs/session-06/app -I../labs/session-06/lab-6.2-generation/generated ../labs/session-05/app/sensors5.c -o /dev/null
+
+### clang --analyze -Xclang -analyzer-output=text -Xclang -analyzer-checker=core,security,unix,deadcode,optin.portability -I../labs/session-05/host-sim -I../labs/session-04/lab-4.1-space-packet -I../labs/session-04/lab-4.2-pus-service17 -I../labs/session-05/lab-5.1-monitoring -I../labs/session-05/lab-5.2-liveness -I../labs/session-05/lab-5.3-safe-mode -I../labs/session-05/lab-5.4-fault-injection -I../labs/session-05/app -I../labs/session-06/app -I../labs/session-06/lab-6.2-generation/generated ../labs/session-06/app/fdir6.c -o /dev/null
+../labs/session-06/app/fdir6.c:107:5: warning: Call to function 'memset' is insecure as it does not provide security checks introduced in the C11 standard. Replace with analogous functions that support length arguments or provides boundary checks such as 'memset_s' in case of C11 [security.insecureAPI.DeprecatedOrUnsafeBufferHandling]
+  107 |     memset(img, 0, NV_IMAGE_LEN);
+      |     ^~~~~~
+../labs/session-06/app/fdir6.c:107:5: note: Call to function 'memset' is insecure as it does not provide security checks introduced in the C11 standard. Replace with analogous functions that support length arguments or provides boundary checks such as 'memset_s' in case of C11
+  107 |     memset(img, 0, NV_IMAGE_LEN);
+      |     ^~~~~~
+../labs/session-06/app/fdir6.c:110:13: warning: Call to function 'memset' is insecure as it does not provide security checks introduced in the C11 standard. Replace with analogous functions that support length arguments or provides boundary checks such as 'memset_s' in case of C11 [security.insecureAPI.DeprecatedOrUnsafeBufferHandling]
+  110 |             memset(img, 0, NV_IMAGE_LEN);   /* short file: treat as blank */
+      |             ^~~~~~
+../labs/session-06/app/fdir6.c:110:13: note: Call to function 'memset' is insecure as it does not provide security checks introduced in the C11 standard. Replace with analogous functions that support length arguments or provides boundary checks such as 'memset_s' in case of C11
+  110 |             memset(img, 0, NV_IMAGE_LEN);   /* short file: treat as blank */
+      |             ^~~~~~
+2 warnings generated.
+
+### clang --analyze -Xclang -analyzer-output=text -Xclang -analyzer-checker=core,security,unix,deadcode,optin.portability -I../labs/session-05/host-sim -I../labs/session-04/lab-4.1-space-packet -I../labs/session-04/lab-4.2-pus-service17 -I../labs/session-05/lab-5.1-monitoring -I../labs/session-05/lab-5.2-liveness -I../labs/session-05/lab-5.3-safe-mode -I../labs/session-05/lab-5.4-fault-injection -I../labs/session-05/app -I../labs/session-06/app -I../labs/session-06/lab-6.2-generation/generated ../labs/session-05/lab-5.4-fault-injection/finj.c -o /dev/null
+
+### clang --analyze -Xclang -analyzer-output=text -Xclang -analyzer-checker=core,security,unix,deadcode,optin.portability -I../labs/session-05/host-sim -I../labs/session-04/lab-4.1-space-packet -I../labs/session-04/lab-4.2-pus-service17 -I../labs/session-05/lab-5.1-monitoring -I../labs/session-05/lab-5.2-liveness -I../labs/session-05/lab-5.3-safe-mode -I../labs/session-05/lab-5.4-fault-injection -I../labs/session-05/app -I../labs/session-06/app -I../labs/session-06/lab-6.2-generation/generated ../labs/session-05/app/lab5.c -o /dev/null
+

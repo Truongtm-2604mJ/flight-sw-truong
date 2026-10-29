@@ -1,0 +1,119 @@
+# Classification of every flight line not executed by any test level
+# (unit + integration + validation). Read by tests/support/coverage_report.py;
+# a line not covered by an entry is UNCLASSIFIED and fails the report.
+#
+# Classes (Lab 7.2):
+#   unreachable by construction   no input can reach it; argued
+#   defensive                     reachable only through a failure the test
+#                                 environment cannot produce (OS object creation,
+#                                 driver errors, memory corruption); argued
+#   not in the flight build       compiled only in test builds or only in the
+#                                 host simulation
+# The third class of the lab, "genuinely untested, now covered by a new test",
+# does not appear here: those lines are now covered. They are listed in
+# coverage.md under "Covered after the first analysis" (C-01 to C-04).
+
+justifications:
+  - id: J-01
+    file: labs/session-06/lab-6.2-generation/generated/mode_sm.c
+    lines: 377-400
+    class: not in the flight build
+    argument: mode_sm_state_name / mode_sm_event_name exist only with MODE_SM_WITH_NAMES, which only the unit test build defines, and no test prints names.
+  - id: J-02
+    file: labs/session-05/lab-5.4-fault-injection/finj.c
+    lines: 1-200
+    class: not in the flight build
+    argument: Fault injection is compiled only with FDIR_TEST_BUILD. VT-TMTC-070 shows it absent from the flight build. The lines not executed are the slot reuse when one parameter is injected twice without a clear, and the full injection table.
+  - id: J-03
+    file: labs/session-05/app/tmtc5.c
+    lines: 32, 52-53, 93, 151-152
+    class: defensive
+    argument: >-
+      Driver and OS failures: write() to the console failing (32), the TM queue
+      full (52-53, a packet dropped and counted), message queue receive failing
+      (93), read() failing (151-152). None can be produced without a fault in
+      the console driver or the RTEMS object. The queue is sized for the worst
+      burst (48 packets): VT-TMTC-050 shows the TM drop counter at 0 over 10
+      boots and 681 packets.
+  - id: J-04
+    file: labs/session-05/app/tmtc5.c
+    lines: 159
+    class: not in the flight build
+    argument: Host simulation only (#ifndef __rtems__). When the ground closes the link (EOF on stdin), the host process shuts down. The campaign stops the spacecraft with SIGKILL instead, so this line never runs; on RTEMS the branch above it waits and retries.
+  - id: J-05
+    file: labs/session-05/app/tmtc5.c
+    lines: 194-195
+    class: not in the flight build
+    argument: Turns off terminal echo when the console is a terminal (isatty). The host campaigns use pipes; the SIS runs, on a pseudo-terminal, execute it. It is environment-specific, not a behaviour of the flight software.
+  - id: J-06
+    file: labs/session-05/app/tmtc5.c
+    lines: 208, 214, 228, 238
+    class: defensive
+    argument: Return after an RTEMS object creation or task start failure at boot. RTEMS objects are statically configured (CONFIGURE_MAXIMUM_*, sized in lab5.c with margin); a failure means a configuration error, which the first boot of any build would show.
+  - id: J-07
+    file: labs/session-06/app/fdir6.c
+    lines: 695, 712, 721, 743
+    class: defensive
+    argument: >-
+      Boot failures: mutex creation (695), an invalid monitor definition (712:
+      the definitions are constants, checked by mon_check_definition, and
+      test_monitor covers the check), supervisor initialisation with invalid
+      constants (721), and mode machine initialisation with a non-boot state
+      (743: boot_mode is NOMINAL or SAFE by construction, and
+      test_boot_in_degraded_is_refused_and_enters_safe covers the refusal in
+      the module).
+  - id: J-08
+    file: labs/session-05/app/lab5.c
+    lines: 99, 223-224, 234-235, 269-270, 280-281, 301-302
+    class: defensive
+    argument: RTEMS rate monotonic period, task creation, task start, FDIR boot, TM/TC task start and supervised task registration failures at boot. Each prints the reason and shuts down. They are statically configured, as J-06.
+  - id: J-09
+    file: labs/session-05/app/lab5.c
+    lines: 323
+    class: unreachable by construction
+    argument: The closing brace of Init after rtems_task_exit(), which does not return (RUN_SECONDS is 0 in every build tested here). gcov attributes the function's return to this line.
+  - id: J-10
+    file: labs/session-05/app/services.c
+    lines: 202, 207
+    class: defensive
+    argument: services_register() failing because the handler's table is full. 5 services are registered against a table of TC_MAX_SERVICES = 8; the table-full path of tc_register_service itself is unit tested (test_s7_register_service_rejects_null_and_full_table).
+  - id: J-11
+    file: labs/session-06/app/fdir6.c
+    lines: 110
+    class: not in the flight build
+    argument: Host simulation NV file shorter than a record, treated as blank. On RTEMS the NV record is a RAM array. The decoding of a corrupted record, the flight-relevant part, is unit tested (test_nv_corruption_falls_back_to_cold_start).
+  - id: J-12
+    file: labs/session-06/app/fdir6.c
+    lines: 247-254
+    class: defensive
+    argument: The hook that reports an invalid mode state (event 0x0405). It is reached only if g_sm.state is corrupted in memory, which no ground command or test input can do. The generated recovery (enter SAFE, keep latched faults, call this hook) is tested at unit level (test_invalid_state_recovers_to_safe_keeping_latched_events, TC-FAIL-02). This function only formats the event.
+  - id: J-13
+    file: labs/session-06/app/fdir6.c
+    lines: 302
+    class: unreachable by construction
+    argument: fdir_set_inhibit() rejecting a duration outside 1..3600 s. Its only caller, TC(19,9), is rejected at acceptance for those values before execution (svc19_check; IT-12 and VT-TMTC-020 show TM(1,2) code 9 for 0 s). The check is kept as the function's own contract.
+
+# Lines that the first full analysis found not executed and that were
+# testable: each got a test (class 3 of the lab, "genuinely untested, now
+# covered by a new test"). The first analysis is kept in initial/coverage-initial.md.
+covered_after_analysis:
+  - id: C-01
+    where: pus.c 55, 120, 123; tc_handler.c 97
+    what: Packet build errors (output buffer too small, oversize application data, ack flags out of range) and their propagation through tc_emit_tm()
+    tests: unit test_s7_tm_build_rejects_too_small_output_buffer, test_s7_tc_build_rejects_oversize_data_and_bad_flags, test_s7_emit_tm_returns_the_build_error
+  - id: C-02
+    where: services.c 39, 66, 69-70, 80-81, 96, 99, 103, 107, 135, 141, 163, 169, 174-175 (135 after the second full run)
+    what: Every acceptance check of services 8, 11, 12, 19 and 200 that no test had sent a malformed command to, and the execution of TC(11,2) and TC(11,3)
+    tests: integration IT-12 (13 malformed telecommands, codes 8 and 9; schedule disable and reset)
+  - id: C-03
+    where: fdir6.c 372-373
+    what: A missed heartbeat while FDIR actions are inhibited, reported with ACTION INHIBITED (restart) and not restarted
+    tests: integration IT-13
+  - id: C-04
+    where: fdir6.c 554
+    what: The failed-task bit in full housekeeping. It is set only when a task has escalated while the vehicle still sends full HK, which happens only for PL_LOG (to DEGRADED). No system test had exercised the PL_LOG escalation, and the requirement did not mention it. FDIR-050 was refined and a validation test added.
+    tests: validation VT-FDIR-050b
+  - id: C-05
+    where: sensors5.c 26, 29
+    what: The sensor model's single sample glitches (every 137th and 211th sample). They were not reached because the first coverage run shortened the false positive run to 30 s; now it runs the full 300 s.
+    tests: validation VT-FDIR-070 (300 s)

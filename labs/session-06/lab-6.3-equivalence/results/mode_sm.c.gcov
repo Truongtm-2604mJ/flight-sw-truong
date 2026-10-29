@@ -6,9 +6,9 @@
         -:    2: * GENERATED FILE - DO NOT EDIT.
         -:    3: *
         -:    4: * State machine implementation.
-        -:    5: * Model     : mode_machine.yaml ("vehicle_mode", version 2)
-        -:    6: * Model hash: sha256:f82e7dfde38f18f475df59611e585b20e3c4466247d1732833060af4f2dd56bb
-        -:    7: * Generator : modelgen.py 1.0, sha256:4e01934c54195d8ecf8660e6aafeb2bd7c644bfadfa0e7237c5db0c2597c9594
+        -:    5: * Model     : mode_machine.yaml ("vehicle_mode", version 3)
+        -:    6: * Model hash: sha256:46d8922ca14ac2917bc4bf7ba7d5c85a3dc0ad984d941a39f8f728d665cebf66
+        -:    7: * Generator : modelgen.py 1.1, sha256:358817262c6f4d3c3635a50f045af71b94bbf802d79d4401d16e733e0dddbb3f
         -:    8: *
         -:    9: * Change the model or the generator and regenerate. `make check-generated`
         -:   10: * fails if this file differs from a fresh generation.
@@ -22,522 +22,532 @@
         -:   18:/* Event classes (semantics: unconsumed_one_shot, unconsumed_latched). */
         -:   19:static const uint32_t ONE_SHOT = BIT(MODE_SM_EV_TC_MODE_NOMINAL) | BIT(MODE_SM_EV_TC_MODE_DEGRADED) | BIT(MODE_SM_EV_TC_MODE_SAFE) | BIT(MODE_SM_EV_FAULT_CLEARED);
         -:   20:static const uint32_t LATCHED = BIT(MODE_SM_EV_FAULT_NONCRITICAL) | BIT(MODE_SM_EV_FAULT_CRITICAL);
-        -:   21:
-        -:   22:/* Events explicitly ignored, per state (completeness). */
-        -:   23:static const uint32_t IGNORED[MODE_SM_STATE_COUNT] = {
-        -:   24:    BIT(MODE_SM_EV_TC_MODE_NOMINAL) | BIT(MODE_SM_EV_FAULT_CLEARED),   /* NOMINAL */
-        -:   25:    BIT(MODE_SM_EV_TC_MODE_DEGRADED) | BIT(MODE_SM_EV_FAULT_NONCRITICAL) | BIT(MODE_SM_EV_FAULT_CLEARED),   /* DEGRADED */
-        -:   26:    BIT(MODE_SM_EV_TC_MODE_SAFE) | BIT(MODE_SM_EV_FAULT_CRITICAL) | BIT(MODE_SM_EV_FAULT_NONCRITICAL) | BIT(MODE_SM_EV_FAULT_CLEARED),   /* SAFE */
-        -:   27:};
-        -:   28:
-        -:   29:/* NOMINAL on_entry */
-function enter_NOMINAL called 1920 returned 100% blocks executed 100%
-     1920:   30:static void enter_NOMINAL(mode_sm_t *sm, const mode_sm_payload_t *cause)
-        -:   31:{
-     1920:   32:    sm->state = MODE_SM_NOMINAL;
-     1920:   33:    mode_sm_action_payload_enable(sm->user, cause);
-call    0 returned 1920
-     1920:   34:    mode_sm_action_hk_rate_normal(sm->user, cause);
-call    0 returned 1920
-     1920:   35:}
-        -:   36:
-        -:   37:/* DEGRADED on_entry */
-function enter_DEGRADED called 1879 returned 100% blocks executed 100%
-     1879:   38:static void enter_DEGRADED(mode_sm_t *sm, const mode_sm_payload_t *cause)
-        -:   39:{
-     1879:   40:    sm->state = MODE_SM_DEGRADED;
-     1879:   41:    mode_sm_action_payload_suspend(sm->user, cause);
-call    0 returned 1879
-     1879:   42:    mode_sm_action_hk_rate_high(sm->user, cause);
-call    0 returned 1879
-     1879:   43:    mode_sm_action_monitors_tighten(sm->user, cause);
-call    0 returned 1879
-     1879:   44:}
-        -:   45:
-        -:   46:/* SAFE on_entry */
-function enter_SAFE called 2155 returned 100% blocks executed 100%
-     2155:   47:static void enter_SAFE(mode_sm_t *sm, const mode_sm_payload_t *cause)
-        -:   48:{
-     2155:   49:    sm->state = MODE_SM_SAFE;
-     2155:   50:    mode_sm_action_payload_off(sm->user, cause);
-call    0 returned 2155
-     2155:   51:    mode_sm_action_schedule_suspend(sm->user, cause);
-call    0 returned 2155
-     2155:   52:    mode_sm_action_hk_minimal(sm->user, cause);
-call    0 returned 2155
-     2155:   53:    mode_sm_action_monitors_tighten(sm->user, cause);
-call    0 returned 2155
-     2155:   54:    mode_sm_action_sun_pointing(sm->user, cause);
-call    0 returned 2155
-     2155:   55:    mode_sm_action_rx_guarantee(sm->user, cause);
-call    0 returned 2155
-     2155:   56:}
-        -:   57:
-        -:   58:/* SAFE on_exit */
-function exit_SAFE called 1874 returned 100% blocks executed 100%
-     1874:   59:static void exit_SAFE(mode_sm_t *sm, const mode_sm_payload_t *cause)
-        -:   60:{
-     1874:   61:    mode_sm_action_sun_pointing_release(sm->user, cause);
-call    0 returned 1874
-     1874:   62:}
-        -:   63:
-        -:   64:/* T01: NOMINAL -> SAFE on tc_mode_safe [true], priority 1  MM-070 */
-function fire_T01 called 555 returned 100% blocks executed 100%
-      555:   65:static void fire_T01(mode_sm_t *sm, mode_sm_result_t *r)
-        -:   66:{
-      555:   67:    const mode_sm_payload_t *cause = &sm->payload[MODE_SM_EV_TC_MODE_SAFE];
-      555:   68:    enter_SAFE(sm, cause);
-call    0 returned 555
-      555:   69:    mode_sm_on_transition(sm->user, MODE_SM_NOMINAL, MODE_SM_SAFE, MODE_SM_EV_TC_MODE_SAFE, cause);
-call    0 returned 555
-      555:   70:    r->kind = MODE_SM_STEP_TRANSITION;
-      555:   71:    r->transition = 1U;
-      555:   72:    r->from = MODE_SM_NOMINAL;
-      555:   73:    r->to = MODE_SM_SAFE;
-      555:   74:    r->event = MODE_SM_EV_TC_MODE_SAFE;
-      555:   75:}
-        -:   76:
-        -:   77:/* T02: NOMINAL -> SAFE on fault_critical [!fdir_inhibited], priority 2  MM-040 */
-function fire_T02 called 384 returned 100% blocks executed 100%
-      384:   78:static void fire_T02(mode_sm_t *sm, mode_sm_result_t *r)
-        -:   79:{
-      384:   80:    const mode_sm_payload_t *cause = &sm->payload[MODE_SM_EV_FAULT_CRITICAL];
-      384:   81:    enter_SAFE(sm, cause);
-call    0 returned 384
-      384:   82:    mode_sm_on_transition(sm->user, MODE_SM_NOMINAL, MODE_SM_SAFE, MODE_SM_EV_FAULT_CRITICAL, cause);
-call    0 returned 384
-      384:   83:    r->kind = MODE_SM_STEP_TRANSITION;
-      384:   84:    r->transition = 2U;
-      384:   85:    r->from = MODE_SM_NOMINAL;
-      384:   86:    r->to = MODE_SM_SAFE;
-      384:   87:    r->event = MODE_SM_EV_FAULT_CRITICAL;
-      384:   88:}
-        -:   89:
-        -:   90:/* T03: NOMINAL -> DEGRADED on tc_mode_degraded [true], priority 3  MM-070 */
-function fire_T03 called 492 returned 100% blocks executed 100%
-      492:   91:static void fire_T03(mode_sm_t *sm, mode_sm_result_t *r)
-        -:   92:{
-      492:   93:    const mode_sm_payload_t *cause = &sm->payload[MODE_SM_EV_TC_MODE_DEGRADED];
-      492:   94:    enter_DEGRADED(sm, cause);
-call    0 returned 492
-      492:   95:    mode_sm_on_transition(sm->user, MODE_SM_NOMINAL, MODE_SM_DEGRADED, MODE_SM_EV_TC_MODE_DEGRADED, cause);
-call    0 returned 492
-      492:   96:    r->kind = MODE_SM_STEP_TRANSITION;
-      492:   97:    r->transition = 3U;
-      492:   98:    r->from = MODE_SM_NOMINAL;
-      492:   99:    r->to = MODE_SM_DEGRADED;
-      492:  100:    r->event = MODE_SM_EV_TC_MODE_DEGRADED;
-      492:  101:}
-        -:  102:
-        -:  103:/* T04: NOMINAL -> DEGRADED on fault_noncritical [!fdir_inhibited], priority 4  MM-040 */
-function fire_T04 called 375 returned 100% blocks executed 100%
-      375:  104:static void fire_T04(mode_sm_t *sm, mode_sm_result_t *r)
-        -:  105:{
-      375:  106:    const mode_sm_payload_t *cause = &sm->payload[MODE_SM_EV_FAULT_NONCRITICAL];
-      375:  107:    enter_DEGRADED(sm, cause);
-call    0 returned 375
-      375:  108:    mode_sm_on_transition(sm->user, MODE_SM_NOMINAL, MODE_SM_DEGRADED, MODE_SM_EV_FAULT_NONCRITICAL, cause);
-call    0 returned 375
-      375:  109:    r->kind = MODE_SM_STEP_TRANSITION;
-      375:  110:    r->transition = 4U;
-      375:  111:    r->from = MODE_SM_NOMINAL;
-      375:  112:    r->to = MODE_SM_DEGRADED;
-      375:  113:    r->event = MODE_SM_EV_FAULT_NONCRITICAL;
-      375:  114:}
-        -:  115:
-        -:  116:/* T05: NOMINAL (internal) on fault_critical [fdir_inhibited], priority 5  MM-060 */
-function fire_T05 called 126 returned 100% blocks executed 100%
-      126:  117:static void fire_T05(mode_sm_t *sm, mode_sm_result_t *r)
-        -:  118:{
-      126:  119:    const mode_sm_payload_t *cause = &sm->payload[MODE_SM_EV_FAULT_CRITICAL];
-      126:  120:    mode_sm_action_report_action_inhibited(sm->user, cause);
-call    0 returned 126
-      126:  121:    r->kind = MODE_SM_STEP_INTERNAL;
-      126:  122:    r->transition = 5U;
-      126:  123:    r->from = MODE_SM_NOMINAL;
-      126:  124:    r->to = MODE_SM_NOMINAL;
-      126:  125:    r->event = MODE_SM_EV_FAULT_CRITICAL;
-      126:  126:}
-        -:  127:
-        -:  128:/* T06: NOMINAL (internal) on fault_noncritical [fdir_inhibited], priority 6  MM-060 */
-function fire_T06 called 135 returned 100% blocks executed 100%
-      135:  129:static void fire_T06(mode_sm_t *sm, mode_sm_result_t *r)
-        -:  130:{
-      135:  131:    const mode_sm_payload_t *cause = &sm->payload[MODE_SM_EV_FAULT_NONCRITICAL];
-      135:  132:    mode_sm_action_report_action_inhibited(sm->user, cause);
-call    0 returned 135
-      135:  133:    r->kind = MODE_SM_STEP_INTERNAL;
-      135:  134:    r->transition = 6U;
-      135:  135:    r->from = MODE_SM_NOMINAL;
-      135:  136:    r->to = MODE_SM_NOMINAL;
-      135:  137:    r->event = MODE_SM_EV_FAULT_NONCRITICAL;
-      135:  138:}
-        -:  139:
-        -:  140:/* T07: DEGRADED -> SAFE on tc_mode_safe [true], priority 1  MM-070 */
-function fire_T07 called 614 returned 100% blocks executed 100%
-      614:  141:static void fire_T07(mode_sm_t *sm, mode_sm_result_t *r)
-        -:  142:{
-      614:  143:    const mode_sm_payload_t *cause = &sm->payload[MODE_SM_EV_TC_MODE_SAFE];
-      614:  144:    enter_SAFE(sm, cause);
-call    0 returned 614
-      614:  145:    mode_sm_on_transition(sm->user, MODE_SM_DEGRADED, MODE_SM_SAFE, MODE_SM_EV_TC_MODE_SAFE, cause);
-call    0 returned 614
-      614:  146:    r->kind = MODE_SM_STEP_TRANSITION;
-      614:  147:    r->transition = 7U;
-      614:  148:    r->from = MODE_SM_DEGRADED;
-      614:  149:    r->to = MODE_SM_SAFE;
-      614:  150:    r->event = MODE_SM_EV_TC_MODE_SAFE;
-      614:  151:}
-        -:  152:
-        -:  153:/* T08: DEGRADED -> SAFE on fault_critical [!fdir_inhibited], priority 2  MM-040 */
-function fire_T08 called 598 returned 100% blocks executed 100%
-      598:  154:static void fire_T08(mode_sm_t *sm, mode_sm_result_t *r)
-        -:  155:{
-      598:  156:    const mode_sm_payload_t *cause = &sm->payload[MODE_SM_EV_FAULT_CRITICAL];
-      598:  157:    enter_SAFE(sm, cause);
-call    0 returned 598
-      598:  158:    mode_sm_on_transition(sm->user, MODE_SM_DEGRADED, MODE_SM_SAFE, MODE_SM_EV_FAULT_CRITICAL, cause);
-call    0 returned 598
-      598:  159:    r->kind = MODE_SM_STEP_TRANSITION;
-      598:  160:    r->transition = 8U;
-      598:  161:    r->from = MODE_SM_DEGRADED;
-      598:  162:    r->to = MODE_SM_SAFE;
-      598:  163:    r->event = MODE_SM_EV_FAULT_CRITICAL;
-      598:  164:}
-        -:  165:
-        -:  166:/* T09: DEGRADED -> NOMINAL on tc_mode_nominal [true], priority 3  MM-010 */
-function fire_T09 called 509 returned 100% blocks executed 100%
-      509:  167:static void fire_T09(mode_sm_t *sm, mode_sm_result_t *r)
-        -:  168:{
-      509:  169:    const mode_sm_payload_t *cause = &sm->payload[MODE_SM_EV_TC_MODE_NOMINAL];
-      509:  170:    enter_NOMINAL(sm, cause);
-call    0 returned 509
-      509:  171:    mode_sm_on_transition(sm->user, MODE_SM_DEGRADED, MODE_SM_NOMINAL, MODE_SM_EV_TC_MODE_NOMINAL, cause);
-call    0 returned 509
-      509:  172:    r->kind = MODE_SM_STEP_TRANSITION;
-      509:  173:    r->transition = 9U;
-      509:  174:    r->from = MODE_SM_DEGRADED;
-      509:  175:    r->to = MODE_SM_NOMINAL;
-      509:  176:    r->event = MODE_SM_EV_TC_MODE_NOMINAL;
-      509:  177:}
-        -:  178:
-        -:  179:/* T10: DEGRADED (internal) on fault_critical [fdir_inhibited], priority 4  MM-060 */
-function fire_T10 called 158 returned 100% blocks executed 100%
-      158:  180:static void fire_T10(mode_sm_t *sm, mode_sm_result_t *r)
-        -:  181:{
-      158:  182:    const mode_sm_payload_t *cause = &sm->payload[MODE_SM_EV_FAULT_CRITICAL];
-      158:  183:    mode_sm_action_report_action_inhibited(sm->user, cause);
-call    0 returned 158
-      158:  184:    r->kind = MODE_SM_STEP_INTERNAL;
-      158:  185:    r->transition = 10U;
-      158:  186:    r->from = MODE_SM_DEGRADED;
-      158:  187:    r->to = MODE_SM_DEGRADED;
-      158:  188:    r->event = MODE_SM_EV_FAULT_CRITICAL;
-      158:  189:}
-        -:  190:
-        -:  191:/* T11: SAFE -> DEGRADED on tc_mode_degraded [true], priority 1  MM-010 */
-function fire_T11 called 1012 returned 100% blocks executed 100%
-     1012:  192:static void fire_T11(mode_sm_t *sm, mode_sm_result_t *r)
-        -:  193:{
-     1012:  194:    const mode_sm_payload_t *cause = &sm->payload[MODE_SM_EV_TC_MODE_DEGRADED];
-     1012:  195:    exit_SAFE(sm, cause);
-call    0 returned 1012
-     1012:  196:    enter_DEGRADED(sm, cause);
-call    0 returned 1012
-     1012:  197:    mode_sm_on_transition(sm->user, MODE_SM_SAFE, MODE_SM_DEGRADED, MODE_SM_EV_TC_MODE_DEGRADED, cause);
-call    0 returned 1012
-     1012:  198:    r->kind = MODE_SM_STEP_TRANSITION;
-     1012:  199:    r->transition = 11U;
-     1012:  200:    r->from = MODE_SM_SAFE;
-     1012:  201:    r->to = MODE_SM_DEGRADED;
-     1012:  202:    r->event = MODE_SM_EV_TC_MODE_DEGRADED;
-     1012:  203:}
-        -:  204:
-        -:  205:/* T12: SAFE -> NOMINAL on tc_mode_nominal [true], priority 2  MM-010 */
-function fire_T12 called 862 returned 100% blocks executed 100%
-      862:  206:static void fire_T12(mode_sm_t *sm, mode_sm_result_t *r)
-        -:  207:{
-      862:  208:    const mode_sm_payload_t *cause = &sm->payload[MODE_SM_EV_TC_MODE_NOMINAL];
-      862:  209:    exit_SAFE(sm, cause);
-call    0 returned 862
-      862:  210:    enter_NOMINAL(sm, cause);
-call    0 returned 862
-      862:  211:    mode_sm_on_transition(sm->user, MODE_SM_SAFE, MODE_SM_NOMINAL, MODE_SM_EV_TC_MODE_NOMINAL, cause);
-call    0 returned 862
-      862:  212:    r->kind = MODE_SM_STEP_TRANSITION;
-      862:  213:    r->transition = 12U;
-      862:  214:    r->from = MODE_SM_SAFE;
-      862:  215:    r->to = MODE_SM_NOMINAL;
-      862:  216:    r->event = MODE_SM_EV_TC_MODE_NOMINAL;
-      862:  217:}
-        -:  218:
-        -:  219:/* NOMINAL: outgoing transitions in priority order. */
-function select_NOMINAL called 2881 returned 100% blocks executed 100%
-     2881:  220:static void select_NOMINAL(mode_sm_t *sm, uint32_t pending,
-        -:  221:                        const mode_sm_inputs_t *in, mode_sm_result_t *r)
-        -:  222:{
-     2881:  223:    if ((pending & BIT(MODE_SM_EV_TC_MODE_SAFE)) != 0U) {   /* T01 */
-branch  0 taken 555 (fallthrough)
-branch  1 taken 2326
-      555:  224:        fire_T01(sm, r);
-call    0 returned 555
-     2326:  225:    } else if ((pending & BIT(MODE_SM_EV_FAULT_CRITICAL)) != 0U && (!in->fdir_inhibited)) {   /* T02 */
-branch  0 taken 517 (fallthrough)
-branch  1 taken 1809
-branch  2 taken 384 (fallthrough)
-branch  3 taken 133
-      384:  226:        fire_T02(sm, r);
-call    0 returned 384
-     1942:  227:    } else if ((pending & BIT(MODE_SM_EV_TC_MODE_DEGRADED)) != 0U) {   /* T03 */
-branch  0 taken 492 (fallthrough)
-branch  1 taken 1450
-      492:  228:        fire_T03(sm, r);
-call    0 returned 492
-     1450:  229:    } else if ((pending & BIT(MODE_SM_EV_FAULT_NONCRITICAL)) != 0U && (!in->fdir_inhibited)) {   /* T04 */
-branch  0 taken 526 (fallthrough)
-branch  1 taken 924
-branch  2 taken 375 (fallthrough)
-branch  3 taken 151
-      375:  230:        fire_T04(sm, r);
-call    0 returned 375
-     1075:  231:    } else if ((pending & BIT(MODE_SM_EV_FAULT_CRITICAL)) != 0U && in->fdir_inhibited) {   /* T05 */
-branch  0 taken 126 (fallthrough)
-branch  1 taken 949
-branch  2 taken 126 (fallthrough)
+        -:   21:/* Ground commands (semantics: ignored_ground_command). */
+        -:   22:static const uint32_t GROUND = BIT(MODE_SM_EV_TC_MODE_NOMINAL) | BIT(MODE_SM_EV_TC_MODE_DEGRADED) | BIT(MODE_SM_EV_TC_MODE_SAFE);
+        -:   23:
+        -:   24:/* Events explicitly ignored, per state (completeness). */
+        -:   25:static const uint32_t IGNORED[MODE_SM_STATE_COUNT] = {
+        -:   26:    BIT(MODE_SM_EV_TC_MODE_NOMINAL) | BIT(MODE_SM_EV_FAULT_CLEARED),   /* NOMINAL */
+        -:   27:    BIT(MODE_SM_EV_TC_MODE_DEGRADED) | BIT(MODE_SM_EV_FAULT_NONCRITICAL) | BIT(MODE_SM_EV_FAULT_CLEARED),   /* DEGRADED */
+        -:   28:    BIT(MODE_SM_EV_TC_MODE_SAFE) | BIT(MODE_SM_EV_FAULT_CRITICAL) | BIT(MODE_SM_EV_FAULT_NONCRITICAL) | BIT(MODE_SM_EV_FAULT_CLEARED),   /* SAFE */
+        -:   29:};
+        -:   30:
+        -:   31:/* NOMINAL on_entry */
+function enter_NOMINAL called 2088 returned 100% blocks executed 100%
+     2088:   32:static void enter_NOMINAL(mode_sm_t *sm, const mode_sm_payload_t *cause)
+        -:   33:{
+     2088:   34:    sm->state = MODE_SM_NOMINAL;
+     2088:   35:    mode_sm_action_payload_enable(sm->user, cause);
+call    0 returned 2088
+     2088:   36:    mode_sm_action_hk_rate_normal(sm->user, cause);
+call    0 returned 2088
+     2088:   37:}
+        -:   38:
+        -:   39:/* DEGRADED on_entry */
+function enter_DEGRADED called 1966 returned 100% blocks executed 100%
+     1966:   40:static void enter_DEGRADED(mode_sm_t *sm, const mode_sm_payload_t *cause)
+        -:   41:{
+     1966:   42:    sm->state = MODE_SM_DEGRADED;
+     1966:   43:    mode_sm_action_payload_suspend(sm->user, cause);
+call    0 returned 1966
+     1966:   44:    mode_sm_action_hk_rate_high(sm->user, cause);
+call    0 returned 1966
+     1966:   45:    mode_sm_action_monitors_tighten(sm->user, cause);
+call    0 returned 1966
+     1966:   46:}
+        -:   47:
+        -:   48:/* SAFE on_entry */
+function enter_SAFE called 2260 returned 100% blocks executed 100%
+     2260:   49:static void enter_SAFE(mode_sm_t *sm, const mode_sm_payload_t *cause)
+        -:   50:{
+     2260:   51:    sm->state = MODE_SM_SAFE;
+     2260:   52:    mode_sm_action_payload_off(sm->user, cause);
+call    0 returned 2260
+     2260:   53:    mode_sm_action_schedule_suspend(sm->user, cause);
+call    0 returned 2260
+     2260:   54:    mode_sm_action_hk_minimal(sm->user, cause);
+call    0 returned 2260
+     2260:   55:    mode_sm_action_monitors_tighten(sm->user, cause);
+call    0 returned 2260
+     2260:   56:    mode_sm_action_sun_pointing(sm->user, cause);
+call    0 returned 2260
+     2260:   57:    mode_sm_action_rx_guarantee(sm->user, cause);
+call    0 returned 2260
+     2260:   58:}
+        -:   59:
+        -:   60:/* SAFE on_exit */
+function exit_SAFE called 1914 returned 100% blocks executed 100%
+     1914:   61:static void exit_SAFE(mode_sm_t *sm, const mode_sm_payload_t *cause)
+        -:   62:{
+     1914:   63:    mode_sm_action_sun_pointing_release(sm->user, cause);
+call    0 returned 1914
+     1914:   64:}
+        -:   65:
+        -:   66:/* T01: NOMINAL -> SAFE on tc_mode_safe [true], priority 1  MM-070 */
+function fire_T01 called 628 returned 100% blocks executed 100%
+      628:   67:static void fire_T01(mode_sm_t *sm, mode_sm_result_t *r)
+        -:   68:{
+      628:   69:    const mode_sm_payload_t *cause = &sm->payload[MODE_SM_EV_TC_MODE_SAFE];
+      628:   70:    enter_SAFE(sm, cause);
+call    0 returned 628
+      628:   71:    mode_sm_on_transition(sm->user, MODE_SM_NOMINAL, MODE_SM_SAFE, MODE_SM_EV_TC_MODE_SAFE, cause);
+call    0 returned 628
+      628:   72:    r->kind = MODE_SM_STEP_TRANSITION;
+      628:   73:    r->transition = 1U;
+      628:   74:    r->from = MODE_SM_NOMINAL;
+      628:   75:    r->to = MODE_SM_SAFE;
+      628:   76:    r->event = MODE_SM_EV_TC_MODE_SAFE;
+      628:   77:}
+        -:   78:
+        -:   79:/* T02: NOMINAL -> SAFE on fault_critical [!fdir_inhibited], priority 2  MM-040 */
+function fire_T02 called 387 returned 100% blocks executed 100%
+      387:   80:static void fire_T02(mode_sm_t *sm, mode_sm_result_t *r)
+        -:   81:{
+      387:   82:    const mode_sm_payload_t *cause = &sm->payload[MODE_SM_EV_FAULT_CRITICAL];
+      387:   83:    enter_SAFE(sm, cause);
+call    0 returned 387
+      387:   84:    mode_sm_on_transition(sm->user, MODE_SM_NOMINAL, MODE_SM_SAFE, MODE_SM_EV_FAULT_CRITICAL, cause);
+call    0 returned 387
+      387:   85:    r->kind = MODE_SM_STEP_TRANSITION;
+      387:   86:    r->transition = 2U;
+      387:   87:    r->from = MODE_SM_NOMINAL;
+      387:   88:    r->to = MODE_SM_SAFE;
+      387:   89:    r->event = MODE_SM_EV_FAULT_CRITICAL;
+      387:   90:}
+        -:   91:
+        -:   92:/* T03: NOMINAL -> DEGRADED on tc_mode_degraded [true], priority 3  MM-070 */
+function fire_T03 called 552 returned 100% blocks executed 100%
+      552:   93:static void fire_T03(mode_sm_t *sm, mode_sm_result_t *r)
+        -:   94:{
+      552:   95:    const mode_sm_payload_t *cause = &sm->payload[MODE_SM_EV_TC_MODE_DEGRADED];
+      552:   96:    enter_DEGRADED(sm, cause);
+call    0 returned 552
+      552:   97:    mode_sm_on_transition(sm->user, MODE_SM_NOMINAL, MODE_SM_DEGRADED, MODE_SM_EV_TC_MODE_DEGRADED, cause);
+call    0 returned 552
+      552:   98:    r->kind = MODE_SM_STEP_TRANSITION;
+      552:   99:    r->transition = 3U;
+      552:  100:    r->from = MODE_SM_NOMINAL;
+      552:  101:    r->to = MODE_SM_DEGRADED;
+      552:  102:    r->event = MODE_SM_EV_TC_MODE_DEGRADED;
+      552:  103:}
+        -:  104:
+        -:  105:/* T04: NOMINAL -> DEGRADED on fault_noncritical [!fdir_inhibited], priority 4  MM-040 */
+function fire_T04 called 376 returned 100% blocks executed 100%
+      376:  106:static void fire_T04(mode_sm_t *sm, mode_sm_result_t *r)
+        -:  107:{
+      376:  108:    const mode_sm_payload_t *cause = &sm->payload[MODE_SM_EV_FAULT_NONCRITICAL];
+      376:  109:    enter_DEGRADED(sm, cause);
+call    0 returned 376
+      376:  110:    mode_sm_on_transition(sm->user, MODE_SM_NOMINAL, MODE_SM_DEGRADED, MODE_SM_EV_FAULT_NONCRITICAL, cause);
+call    0 returned 376
+      376:  111:    r->kind = MODE_SM_STEP_TRANSITION;
+      376:  112:    r->transition = 4U;
+      376:  113:    r->from = MODE_SM_NOMINAL;
+      376:  114:    r->to = MODE_SM_DEGRADED;
+      376:  115:    r->event = MODE_SM_EV_FAULT_NONCRITICAL;
+      376:  116:}
+        -:  117:
+        -:  118:/* T05: NOMINAL (internal) on fault_critical [fdir_inhibited], priority 5  MM-060 */
+function fire_T05 called 127 returned 100% blocks executed 100%
+      127:  119:static void fire_T05(mode_sm_t *sm, mode_sm_result_t *r)
+        -:  120:{
+      127:  121:    const mode_sm_payload_t *cause = &sm->payload[MODE_SM_EV_FAULT_CRITICAL];
+      127:  122:    mode_sm_action_report_action_inhibited(sm->user, cause);
+call    0 returned 127
+      127:  123:    r->kind = MODE_SM_STEP_INTERNAL;
+      127:  124:    r->transition = 5U;
+      127:  125:    r->from = MODE_SM_NOMINAL;
+      127:  126:    r->to = MODE_SM_NOMINAL;
+      127:  127:    r->event = MODE_SM_EV_FAULT_CRITICAL;
+      127:  128:}
+        -:  129:
+        -:  130:/* T06: NOMINAL (internal) on fault_noncritical [fdir_inhibited], priority 6  MM-060 */
+function fire_T06 called 136 returned 100% blocks executed 100%
+      136:  131:static void fire_T06(mode_sm_t *sm, mode_sm_result_t *r)
+        -:  132:{
+      136:  133:    const mode_sm_payload_t *cause = &sm->payload[MODE_SM_EV_FAULT_NONCRITICAL];
+      136:  134:    mode_sm_action_report_action_inhibited(sm->user, cause);
+call    0 returned 136
+      136:  135:    r->kind = MODE_SM_STEP_INTERNAL;
+      136:  136:    r->transition = 6U;
+      136:  137:    r->from = MODE_SM_NOMINAL;
+      136:  138:    r->to = MODE_SM_NOMINAL;
+      136:  139:    r->event = MODE_SM_EV_FAULT_NONCRITICAL;
+      136:  140:}
+        -:  141:
+        -:  142:/* T07: DEGRADED -> SAFE on tc_mode_safe [true], priority 1  MM-070 */
+function fire_T07 called 640 returned 100% blocks executed 100%
+      640:  143:static void fire_T07(mode_sm_t *sm, mode_sm_result_t *r)
+        -:  144:{
+      640:  145:    const mode_sm_payload_t *cause = &sm->payload[MODE_SM_EV_TC_MODE_SAFE];
+      640:  146:    enter_SAFE(sm, cause);
+call    0 returned 640
+      640:  147:    mode_sm_on_transition(sm->user, MODE_SM_DEGRADED, MODE_SM_SAFE, MODE_SM_EV_TC_MODE_SAFE, cause);
+call    0 returned 640
+      640:  148:    r->kind = MODE_SM_STEP_TRANSITION;
+      640:  149:    r->transition = 7U;
+      640:  150:    r->from = MODE_SM_DEGRADED;
+      640:  151:    r->to = MODE_SM_SAFE;
+      640:  152:    r->event = MODE_SM_EV_TC_MODE_SAFE;
+      640:  153:}
+        -:  154:
+        -:  155:/* T08: DEGRADED -> SAFE on fault_critical [!fdir_inhibited], priority 2  MM-040 */
+function fire_T08 called 601 returned 100% blocks executed 100%
+      601:  156:static void fire_T08(mode_sm_t *sm, mode_sm_result_t *r)
+        -:  157:{
+      601:  158:    const mode_sm_payload_t *cause = &sm->payload[MODE_SM_EV_FAULT_CRITICAL];
+      601:  159:    enter_SAFE(sm, cause);
+call    0 returned 601
+      601:  160:    mode_sm_on_transition(sm->user, MODE_SM_DEGRADED, MODE_SM_SAFE, MODE_SM_EV_FAULT_CRITICAL, cause);
+call    0 returned 601
+      601:  161:    r->kind = MODE_SM_STEP_TRANSITION;
+      601:  162:    r->transition = 8U;
+      601:  163:    r->from = MODE_SM_DEGRADED;
+      601:  164:    r->to = MODE_SM_SAFE;
+      601:  165:    r->event = MODE_SM_EV_FAULT_CRITICAL;
+      601:  166:}
+        -:  167:
+        -:  168:/* T09: DEGRADED -> NOMINAL on tc_mode_nominal [true], priority 3  MM-010 */
+function fire_T09 called 521 returned 100% blocks executed 100%
+      521:  169:static void fire_T09(mode_sm_t *sm, mode_sm_result_t *r)
+        -:  170:{
+      521:  171:    const mode_sm_payload_t *cause = &sm->payload[MODE_SM_EV_TC_MODE_NOMINAL];
+      521:  172:    enter_NOMINAL(sm, cause);
+call    0 returned 521
+      521:  173:    mode_sm_on_transition(sm->user, MODE_SM_DEGRADED, MODE_SM_NOMINAL, MODE_SM_EV_TC_MODE_NOMINAL, cause);
+call    0 returned 521
+      521:  174:    r->kind = MODE_SM_STEP_TRANSITION;
+      521:  175:    r->transition = 9U;
+      521:  176:    r->from = MODE_SM_DEGRADED;
+      521:  177:    r->to = MODE_SM_NOMINAL;
+      521:  178:    r->event = MODE_SM_EV_TC_MODE_NOMINAL;
+      521:  179:}
+        -:  180:
+        -:  181:/* T10: DEGRADED (internal) on fault_critical [fdir_inhibited], priority 4  MM-060 */
+function fire_T10 called 159 returned 100% blocks executed 100%
+      159:  182:static void fire_T10(mode_sm_t *sm, mode_sm_result_t *r)
+        -:  183:{
+      159:  184:    const mode_sm_payload_t *cause = &sm->payload[MODE_SM_EV_FAULT_CRITICAL];
+      159:  185:    mode_sm_action_report_action_inhibited(sm->user, cause);
+call    0 returned 159
+      159:  186:    r->kind = MODE_SM_STEP_INTERNAL;
+      159:  187:    r->transition = 10U;
+      159:  188:    r->from = MODE_SM_DEGRADED;
+      159:  189:    r->to = MODE_SM_DEGRADED;
+      159:  190:    r->event = MODE_SM_EV_FAULT_CRITICAL;
+      159:  191:}
+        -:  192:
+        -:  193:/* T11: SAFE -> DEGRADED on tc_mode_degraded [true], priority 1  MM-010 */
+function fire_T11 called 1038 returned 100% blocks executed 100%
+     1038:  194:static void fire_T11(mode_sm_t *sm, mode_sm_result_t *r)
+        -:  195:{
+     1038:  196:    const mode_sm_payload_t *cause = &sm->payload[MODE_SM_EV_TC_MODE_DEGRADED];
+     1038:  197:    exit_SAFE(sm, cause);
+call    0 returned 1038
+     1038:  198:    enter_DEGRADED(sm, cause);
+call    0 returned 1038
+     1038:  199:    mode_sm_on_transition(sm->user, MODE_SM_SAFE, MODE_SM_DEGRADED, MODE_SM_EV_TC_MODE_DEGRADED, cause);
+call    0 returned 1038
+     1038:  200:    r->kind = MODE_SM_STEP_TRANSITION;
+     1038:  201:    r->transition = 11U;
+     1038:  202:    r->from = MODE_SM_SAFE;
+     1038:  203:    r->to = MODE_SM_DEGRADED;
+     1038:  204:    r->event = MODE_SM_EV_TC_MODE_DEGRADED;
+     1038:  205:}
+        -:  206:
+        -:  207:/* T12: SAFE -> NOMINAL on tc_mode_nominal [true], priority 2  MM-010 */
+function fire_T12 called 876 returned 100% blocks executed 100%
+      876:  208:static void fire_T12(mode_sm_t *sm, mode_sm_result_t *r)
+        -:  209:{
+      876:  210:    const mode_sm_payload_t *cause = &sm->payload[MODE_SM_EV_TC_MODE_NOMINAL];
+      876:  211:    exit_SAFE(sm, cause);
+call    0 returned 876
+      876:  212:    enter_NOMINAL(sm, cause);
+call    0 returned 876
+      876:  213:    mode_sm_on_transition(sm->user, MODE_SM_SAFE, MODE_SM_NOMINAL, MODE_SM_EV_TC_MODE_NOMINAL, cause);
+call    0 returned 876
+      876:  214:    r->kind = MODE_SM_STEP_TRANSITION;
+      876:  215:    r->transition = 12U;
+      876:  216:    r->from = MODE_SM_SAFE;
+      876:  217:    r->to = MODE_SM_NOMINAL;
+      876:  218:    r->event = MODE_SM_EV_TC_MODE_NOMINAL;
+      876:  219:}
+        -:  220:
+        -:  221:/* NOMINAL: outgoing transitions in priority order. */
+function select_NOMINAL called 3023 returned 100% blocks executed 100%
+     3023:  222:static void select_NOMINAL(mode_sm_t *sm, uint32_t pending,
+        -:  223:                        const mode_sm_inputs_t *in, mode_sm_result_t *r)
+        -:  224:{
+     3023:  225:    if ((pending & BIT(MODE_SM_EV_TC_MODE_SAFE)) != 0U) {   /* T01 */
+branch  0 taken 628 (fallthrough)
+branch  1 taken 2395
+      628:  226:        fire_T01(sm, r);
+call    0 returned 628
+     2395:  227:    } else if ((pending & BIT(MODE_SM_EV_FAULT_CRITICAL)) != 0U && (!in->fdir_inhibited)) {   /* T02 */
+branch  0 taken 523 (fallthrough)
+branch  1 taken 1872
+branch  2 taken 387 (fallthrough)
+branch  3 taken 136
+      387:  228:        fire_T02(sm, r);
+call    0 returned 387
+     2008:  229:    } else if ((pending & BIT(MODE_SM_EV_TC_MODE_DEGRADED)) != 0U) {   /* T03 */
+branch  0 taken 552 (fallthrough)
+branch  1 taken 1456
+      552:  230:        fire_T03(sm, r);
+call    0 returned 552
+     1456:  231:    } else if ((pending & BIT(MODE_SM_EV_FAULT_NONCRITICAL)) != 0U && (!in->fdir_inhibited)) {   /* T04 */
+branch  0 taken 528 (fallthrough)
+branch  1 taken 928
+branch  2 taken 376 (fallthrough)
+branch  3 taken 152
+      376:  232:        fire_T04(sm, r);
+call    0 returned 376
+     1080:  233:    } else if ((pending & BIT(MODE_SM_EV_FAULT_CRITICAL)) != 0U && in->fdir_inhibited) {   /* T05 */
+branch  0 taken 127 (fallthrough)
+branch  1 taken 953
+branch  2 taken 127 (fallthrough)
 branch  3 taken 0
-      126:  232:        fire_T05(sm, r);
-call    0 returned 126
-      949:  233:    } else if ((pending & BIT(MODE_SM_EV_FAULT_NONCRITICAL)) != 0U && in->fdir_inhibited) {   /* T06 */
-branch  0 taken 135 (fallthrough)
-branch  1 taken 814
-branch  2 taken 135 (fallthrough)
+      127:  234:        fire_T05(sm, r);
+call    0 returned 127
+      953:  235:    } else if ((pending & BIT(MODE_SM_EV_FAULT_NONCRITICAL)) != 0U && in->fdir_inhibited) {   /* T06 */
+branch  0 taken 136 (fallthrough)
+branch  1 taken 817
+branch  2 taken 136 (fallthrough)
 branch  3 taken 0
-      135:  234:        fire_T06(sm, r);
-call    0 returned 135
-        -:  235:    } else {
-        -:  236:        /* nothing enabled */
-        -:  237:    }
-     2881:  238:}
-        -:  239:
-        -:  240:/* DEGRADED: outgoing transitions in priority order. */
-function select_DEGRADED called 3855 returned 100% blocks executed 100%
-     3855:  241:static void select_DEGRADED(mode_sm_t *sm, uint32_t pending,
-        -:  242:                        const mode_sm_inputs_t *in, mode_sm_result_t *r)
-        -:  243:{
-     3855:  244:    if ((pending & BIT(MODE_SM_EV_TC_MODE_SAFE)) != 0U) {   /* T07 */
-branch  0 taken 614 (fallthrough)
-branch  1 taken 3241
-      614:  245:        fire_T07(sm, r);
-call    0 returned 614
-     3241:  246:    } else if ((pending & BIT(MODE_SM_EV_FAULT_CRITICAL)) != 0U && (!in->fdir_inhibited)) {   /* T08 */
-branch  0 taken 771 (fallthrough)
-branch  1 taken 2470
-branch  2 taken 598 (fallthrough)
-branch  3 taken 173
-      598:  247:        fire_T08(sm, r);
-call    0 returned 598
-     2643:  248:    } else if ((pending & BIT(MODE_SM_EV_TC_MODE_NOMINAL)) != 0U) {   /* T09 */
-branch  0 taken 509 (fallthrough)
-branch  1 taken 2134
-      509:  249:        fire_T09(sm, r);
-call    0 returned 509
-     2134:  250:    } else if ((pending & BIT(MODE_SM_EV_FAULT_CRITICAL)) != 0U && in->fdir_inhibited) {   /* T10 */
-branch  0 taken 158 (fallthrough)
-branch  1 taken 1976
-branch  2 taken 158 (fallthrough)
+      136:  236:        fire_T06(sm, r);
+call    0 returned 136
+        -:  237:    } else {
+        -:  238:        /* nothing enabled */
+        -:  239:    }
+     3023:  240:}
+        -:  241:
+        -:  242:/* DEGRADED: outgoing transitions in priority order. */
+function select_DEGRADED called 3902 returned 100% blocks executed 100%
+     3902:  243:static void select_DEGRADED(mode_sm_t *sm, uint32_t pending,
+        -:  244:                        const mode_sm_inputs_t *in, mode_sm_result_t *r)
+        -:  245:{
+     3902:  246:    if ((pending & BIT(MODE_SM_EV_TC_MODE_SAFE)) != 0U) {   /* T07 */
+branch  0 taken 640 (fallthrough)
+branch  1 taken 3262
+      640:  247:        fire_T07(sm, r);
+call    0 returned 640
+     3262:  248:    } else if ((pending & BIT(MODE_SM_EV_FAULT_CRITICAL)) != 0U && (!in->fdir_inhibited)) {   /* T08 */
+branch  0 taken 777 (fallthrough)
+branch  1 taken 2485
+branch  2 taken 601 (fallthrough)
+branch  3 taken 176
+      601:  249:        fire_T08(sm, r);
+call    0 returned 601
+     2661:  250:    } else if ((pending & BIT(MODE_SM_EV_TC_MODE_NOMINAL)) != 0U) {   /* T09 */
+branch  0 taken 521 (fallthrough)
+branch  1 taken 2140
+      521:  251:        fire_T09(sm, r);
+call    0 returned 521
+     2140:  252:    } else if ((pending & BIT(MODE_SM_EV_FAULT_CRITICAL)) != 0U && in->fdir_inhibited) {   /* T10 */
+branch  0 taken 159 (fallthrough)
+branch  1 taken 1981
+branch  2 taken 159 (fallthrough)
 branch  3 taken 0
-      158:  251:        fire_T10(sm, r);
-call    0 returned 158
-        -:  252:    } else {
-        -:  253:        /* nothing enabled */
-        -:  254:    }
-     3855:  255:}
-        -:  256:
-        -:  257:/* SAFE: outgoing transitions in priority order. */
-function select_SAFE called 10134 returned 100% blocks executed 100%
-    10134:  258:static void select_SAFE(mode_sm_t *sm, uint32_t pending,
-        -:  259:                        const mode_sm_inputs_t *in, mode_sm_result_t *r)
-        -:  260:{
-        -:  261:    (void)in;
-    10134:  262:    if ((pending & BIT(MODE_SM_EV_TC_MODE_DEGRADED)) != 0U) {   /* T11 */
-branch  0 taken 1012 (fallthrough)
-branch  1 taken 9122
-     1012:  263:        fire_T11(sm, r);
-call    0 returned 1012
-     9122:  264:    } else if ((pending & BIT(MODE_SM_EV_TC_MODE_NOMINAL)) != 0U) {   /* T12 */
-branch  0 taken 862 (fallthrough)
-branch  1 taken 8260
-      862:  265:        fire_T12(sm, r);
-call    0 returned 862
-        -:  266:    } else {
-        -:  267:        /* nothing enabled */
-        -:  268:    }
-    10134:  269:}
-        -:  270:
-function mode_sm_init called 552 returned 100% blocks executed 100%
-      552:  271:int mode_sm_init(mode_sm_t *sm, mode_sm_state_t boot, void *user)
-        -:  272:{
-        -:  273:    static const mode_sm_payload_t none = { 0U, 0U };
-        -:  274:    uint32_t i;
-        -:  275:
-      552:  276:    sm->pending = 0U;
-      552:  277:    sm->user = user;
-     3864:  278:    for (i = 0U; i < (uint32_t)MODE_SM_EVENT_COUNT; i++) {
-branch  0 taken 3312
-branch  1 taken 552 (fallthrough)
-     3312:  279:        sm->payload[i] = none;
-        -:  280:    }
-      552:  281:    switch ((uint32_t)boot) {
-branch  0 taken 549
+      159:  253:        fire_T10(sm, r);
+call    0 returned 159
+        -:  254:    } else {
+        -:  255:        /* nothing enabled */
+        -:  256:    }
+     3902:  257:}
+        -:  258:
+        -:  259:/* SAFE: outgoing transitions in priority order. */
+function select_SAFE called 10181 returned 100% blocks executed 100%
+    10181:  260:static void select_SAFE(mode_sm_t *sm, uint32_t pending,
+        -:  261:                        const mode_sm_inputs_t *in, mode_sm_result_t *r)
+        -:  262:{
+        -:  263:    (void)in;
+    10181:  264:    if ((pending & BIT(MODE_SM_EV_TC_MODE_DEGRADED)) != 0U) {   /* T11 */
+branch  0 taken 1038 (fallthrough)
+branch  1 taken 9143
+     1038:  265:        fire_T11(sm, r);
+call    0 returned 1038
+     9143:  266:    } else if ((pending & BIT(MODE_SM_EV_TC_MODE_NOMINAL)) != 0U) {   /* T12 */
+branch  0 taken 876 (fallthrough)
+branch  1 taken 8267
+      876:  267:        fire_T12(sm, r);
+call    0 returned 876
+        -:  268:    } else {
+        -:  269:        /* nothing enabled */
+        -:  270:    }
+    10181:  271:}
+        -:  272:
+function mode_sm_init called 694 returned 100% blocks executed 100%
+      694:  273:int mode_sm_init(mode_sm_t *sm, mode_sm_state_t boot, void *user)
+        -:  274:{
+        -:  275:    static const mode_sm_payload_t none = { 0U, 0U };
+        -:  276:    uint32_t i;
+        -:  277:
+      694:  278:    sm->pending = 0U;
+      694:  279:    sm->user = user;
+     4858:  280:    for (i = 0U; i < (uint32_t)MODE_SM_EVENT_COUNT; i++) {
+branch  0 taken 4164
+branch  1 taken 694 (fallthrough)
+     4164:  281:        sm->payload[i] = none;
+        -:  282:    }
+      694:  283:    switch ((uint32_t)boot) {
+branch  0 taken 691
 branch  1 taken 1
 branch  2 taken 2
-      549:  282:    case (uint32_t)MODE_SM_NOMINAL:
-      549:  283:        enter_NOMINAL(sm, &none);
-call    0 returned 549
-      549:  284:        return 0;
-        1:  285:    case (uint32_t)MODE_SM_SAFE:
-        1:  286:        enter_SAFE(sm, &none);
+      691:  284:    case (uint32_t)MODE_SM_NOMINAL:
+      691:  285:        enter_NOMINAL(sm, &none);
+call    0 returned 691
+      691:  286:        return 0;
+        1:  287:    case (uint32_t)MODE_SM_SAFE:
+        1:  288:        enter_SAFE(sm, &none);
 call    0 returned 1
-        1:  287:        return 0;
-        2:  288:    default:
-        2:  289:        enter_SAFE(sm, &none);
+        1:  289:        return 0;
+        2:  290:    default:
+        2:  291:        enter_SAFE(sm, &none);
 call    0 returned 2
-        2:  290:        return -1;
-        -:  291:    }
-        -:  292:}
-        -:  293:
-function mode_sm_post called 17413 returned 100% blocks executed 100%
-    17413:  294:int mode_sm_post(mode_sm_t *sm, mode_sm_event_t event, mode_sm_payload_t cause)
-        -:  295:{
-    17413:  296:    if ((uint32_t)event >= (uint32_t)MODE_SM_EVENT_COUNT) {
+        2:  292:        return -1;
+        -:  293:    }
+        -:  294:}
+        -:  295:
+function mode_sm_post called 17824 returned 100% blocks executed 100%
+    17824:  296:int mode_sm_post(mode_sm_t *sm, mode_sm_event_t event, mode_sm_payload_t cause)
+        -:  297:{
+    17824:  298:    if ((uint32_t)event >= (uint32_t)MODE_SM_EVENT_COUNT) {
 branch  0 taken 2 (fallthrough)
-branch  1 taken 17411
-        2:  297:        return -1;
-        -:  298:    }
-    17411:  299:    sm->payload[event] = cause;
-    17411:  300:    sm->pending |= BIT(event);
-    17411:  301:    return 0;
-        -:  302:}
-        -:  303:
-function mode_sm_state called 300 returned 100% blocks executed 100%
-      300:  304:mode_sm_state_t mode_sm_state(const mode_sm_t *sm)
-        -:  305:{
-      300:  306:    return sm->state;
-        -:  307:}
-        -:  308:
-function mode_sm_step called 16871 returned 100% blocks executed 100%
-    16871:  309:mode_sm_result_t mode_sm_step(mode_sm_t *sm, const mode_sm_inputs_t *in_now)
-        -:  310:{
-        -:  311:    static const mode_sm_payload_t recovery = { 0U, 0U };
-    16871:  312:    mode_sm_result_t r = { MODE_SM_STEP_IDLE, 0U, MODE_SM_NOMINAL, MODE_SM_NOMINAL, MODE_SM_EV_TC_MODE_NOMINAL };
-        -:  313:    /* semantics: input_sampling = start_of_cycle */
-    16871:  314:    const uint32_t pending = sm->pending;
-    16871:  315:    const mode_sm_inputs_t in = *in_now;
-    16871:  316:    const uint32_t start = (uint32_t)sm->state;
-    16871:  317:    uint32_t consumed = 0U;
-        -:  318:    uint32_t lost;
-        -:  319:    uint32_t e;
-        -:  320:
-    16871:  321:    r.from = sm->state;
-    16871:  322:    r.to = sm->state;
-        -:  323:
-        -:  324:    /* semantics: one transition per cycle, lowest priority number wins */
-    16871:  325:    switch (start) {
-branch  0 taken 2881
-branch  1 taken 3855
-branch  2 taken 10134
+branch  1 taken 17822
+        2:  299:        return -1;
+        -:  300:    }
+    17822:  301:    sm->payload[event] = cause;
+    17822:  302:    sm->pending |= BIT(event);
+    17822:  303:    return 0;
+        -:  304:}
+        -:  305:
+function mode_sm_state called 671 returned 100% blocks executed 100%
+      671:  306:mode_sm_state_t mode_sm_state(const mode_sm_t *sm)
+        -:  307:{
+      671:  308:    return sm->state;
+        -:  309:}
+        -:  310:
+function mode_sm_step called 17107 returned 100% blocks executed 100%
+    17107:  311:mode_sm_result_t mode_sm_step(mode_sm_t *sm, const mode_sm_inputs_t *in_now)
+        -:  312:{
+        -:  313:    static const mode_sm_payload_t recovery = { 0U, 0U };
+    17107:  314:    mode_sm_result_t r = { MODE_SM_STEP_IDLE, 0U, MODE_SM_NOMINAL, MODE_SM_NOMINAL, MODE_SM_EV_TC_MODE_NOMINAL };
+        -:  315:    /* semantics: input_sampling = start_of_cycle */
+    17107:  316:    const uint32_t pending = sm->pending;
+    17107:  317:    const mode_sm_inputs_t in = *in_now;
+    17107:  318:    const uint32_t start = (uint32_t)sm->state;
+    17107:  319:    uint32_t consumed = 0U;
+        -:  320:    uint32_t lost;
+        -:  321:    uint32_t e;
+        -:  322:
+    17107:  323:    r.from = sm->state;
+    17107:  324:    r.to = sm->state;
+        -:  325:
+        -:  326:    /* semantics: one transition per cycle, lowest priority number wins */
+    17107:  327:    switch (start) {
+branch  0 taken 3023
+branch  1 taken 3902
+branch  2 taken 10181
 branch  3 taken 1
-     2881:  326:    case (uint32_t)MODE_SM_NOMINAL:
-     2881:  327:        select_NOMINAL(sm, pending, &in, &r);
-call    0 returned 2881
-     2881:  328:        break;
-     3855:  329:    case (uint32_t)MODE_SM_DEGRADED:
-     3855:  330:        select_DEGRADED(sm, pending, &in, &r);
-call    0 returned 3855
-     3855:  331:        break;
-    10134:  332:    case (uint32_t)MODE_SM_SAFE:
-    10134:  333:        select_SAFE(sm, pending, &in, &r);
-call    0 returned 10134
-    10134:  334:        break;
-        1:  335:    default:
-        -:  336:        /* State variable outside the model (memory corruption): recover
-        -:  337:         * to SAFE. Latched events are kept, one shot events dropped. */
-        1:  338:        mode_sm_on_invalid_state(sm->user, start);
+     3023:  328:    case (uint32_t)MODE_SM_NOMINAL:
+     3023:  329:        select_NOMINAL(sm, pending, &in, &r);
+call    0 returned 3023
+     3023:  330:        break;
+     3902:  331:    case (uint32_t)MODE_SM_DEGRADED:
+     3902:  332:        select_DEGRADED(sm, pending, &in, &r);
+call    0 returned 3902
+     3902:  333:        break;
+    10181:  334:    case (uint32_t)MODE_SM_SAFE:
+    10181:  335:        select_SAFE(sm, pending, &in, &r);
+call    0 returned 10181
+    10181:  336:        break;
+        1:  337:    default:
+        -:  338:        /* State variable outside the model (memory corruption): recover
+        -:  339:         * to SAFE. Latched events are kept, one shot events dropped. */
+        1:  340:        mode_sm_on_invalid_state(sm->user, start);
 call    0 returned 1
-        1:  339:        sm->pending &= LATCHED;
-        1:  340:        enter_SAFE(sm, &recovery);
+        1:  341:        sm->pending &= LATCHED;
+        1:  342:        enter_SAFE(sm, &recovery);
 call    0 returned 1
-        1:  341:        r.kind = MODE_SM_STEP_RECOVERED;
-        1:  342:        r.to = MODE_SM_SAFE;
-        1:  343:        return r;
-        -:  344:    }
-        -:  345:
-    16870:  346:    if (r.kind != MODE_SM_STEP_IDLE) {
-branch  0 taken 5820 (fallthrough)
-branch  1 taken 11050
-     5820:  347:        consumed = BIT(r.event);
-        -:  348:    }
-        -:  349:    /* One shot events are consumed every cycle. Those neither taken
-        -:  350:     * nor ignored in the start state were lost to a higher priority
-        -:  351:     * transition: reported. */
-    16870:  352:    lost = pending & ONE_SHOT & ~consumed & ~IGNORED[start];
-    16870:  353:    consumed |= pending & ONE_SHOT;
-        -:  354:    /* Latched events ignored in the start state are dropped only if
-        -:  355:     * nothing fired; otherwise they are re-evaluated in the new state. */
-    16870:  356:    if (r.kind == MODE_SM_STEP_IDLE) {
-branch  0 taken 11050 (fallthrough)
-branch  1 taken 5820
-    11050:  357:        consumed |= pending & LATCHED & IGNORED[start];
-        -:  358:    }
-    16870:  359:    sm->pending &= ~consumed;
-        -:  360:
-   118090:  361:    for (e = 0U; e < (uint32_t)MODE_SM_EVENT_COUNT; e++) {
-branch  0 taken 101220
-branch  1 taken 16870 (fallthrough)
-   101220:  362:        if ((lost & BIT(e)) != 0U) {
-branch  0 taken 393 (fallthrough)
-branch  1 taken 100827
-      393:  363:            mode_sm_on_discard(sm->user, (mode_sm_event_t)e, &sm->payload[e]);
-call    0 returned 393
-        -:  364:        }
-        -:  365:    }
-    16870:  366:    return r;
-        -:  367:}
+        1:  343:        r.kind = MODE_SM_STEP_RECOVERED;
+        1:  344:        r.to = MODE_SM_SAFE;
+        1:  345:        return r;
+        -:  346:    }
+        -:  347:
+    17106:  348:    if (r.kind != MODE_SM_STEP_IDLE) {
+branch  0 taken 6041 (fallthrough)
+branch  1 taken 11065
+     6041:  349:        consumed = BIT(r.event);
+        -:  350:    }
+        -:  351:    /* One shot events are consumed every cycle. Those neither taken
+        -:  352:     * nor ignored in the start state were lost to a higher priority
+        -:  353:     * transition: reported (semantics: unconsumed_one_shot). */
+    17106:  354:    lost = pending & ONE_SHOT & ~consumed & ~IGNORED[start];
+        -:  355:    /* semantics: ignored_ground_command = report_if_state_changed. A
+        -:  356:     * ground command for the start mode is already satisfied, unless an
+        -:  357:     * external transition left that mode in this cycle (D-05). */
+    17106:  358:    if (r.kind == MODE_SM_STEP_TRANSITION) {
+branch  0 taken 5619 (fallthrough)
+branch  1 taken 11487
+     5619:  359:        lost |= pending & GROUND & ~consumed;
+        -:  360:    }
+    17106:  361:    consumed |= pending & ONE_SHOT;
+        -:  362:    /* Latched events ignored in the start state are dropped only if
+        -:  363:     * nothing fired; otherwise they are re-evaluated in the new state. */
+    17106:  364:    if (r.kind == MODE_SM_STEP_IDLE) {
+branch  0 taken 11065 (fallthrough)
+branch  1 taken 6041
+    11065:  365:        consumed |= pending & LATCHED & IGNORED[start];
+        -:  366:    }
+    17106:  367:    sm->pending &= ~consumed;
         -:  368:
-        -:  369:#ifdef MODE_SM_WITH_NAMES
+   119742:  369:    for (e = 0U; e < (uint32_t)MODE_SM_EVENT_COUNT; e++) {
+branch  0 taken 102636
+branch  1 taken 17106 (fallthrough)
+   102636:  370:        if ((lost & BIT(e)) != 0U) {
+branch  0 taken 1116 (fallthrough)
+branch  1 taken 101520
+     1116:  371:            mode_sm_on_discard(sm->user, (mode_sm_event_t)e, &sm->payload[e]);
+call    0 returned 1116
+        -:  372:        }
+        -:  373:    }
+    17106:  374:    return r;
+        -:  375:}
+        -:  376:
+        -:  377:#ifdef MODE_SM_WITH_NAMES
 function mode_sm_state_name called 0 returned 0% blocks executed 0%
-    #####:  370:const char *mode_sm_state_name(mode_sm_state_t s)
-        -:  371:{
-    #####:  372:    switch ((uint32_t)s) {
+    #####:  378:const char *mode_sm_state_name(mode_sm_state_t s)
+        -:  379:{
+    #####:  380:    switch ((uint32_t)s) {
 branch  0 never executed
 branch  1 never executed
 branch  2 never executed
 branch  3 never executed
-    #####:  373:    case (uint32_t)MODE_SM_NOMINAL: return "NOMINAL";
-    #####:  374:    case (uint32_t)MODE_SM_DEGRADED: return "DEGRADED";
-    #####:  375:    case (uint32_t)MODE_SM_SAFE: return "SAFE";
-    #####:  376:    default: return "?";
-        -:  377:    }
-        -:  378:}
-        -:  379:
-function mode_sm_event_name called 49065 returned 100% blocks executed 89%
-    49065:  380:const char *mode_sm_event_name(mode_sm_event_t e)
-        -:  381:{
-    49065:  382:    switch ((uint32_t)e) {
-branch  0 taken 13835
-branch  1 taken 11514
-branch  2 taken 9118
+    #####:  381:    case (uint32_t)MODE_SM_NOMINAL: return "NOMINAL";
+    #####:  382:    case (uint32_t)MODE_SM_DEGRADED: return "DEGRADED";
+    #####:  383:    case (uint32_t)MODE_SM_SAFE: return "SAFE";
+    #####:  384:    default: return "?";
+        -:  385:    }
+        -:  386:}
+        -:  387:
+function mode_sm_event_name called 49502 returned 100% blocks executed 89%
+    49502:  388:const char *mode_sm_event_name(mode_sm_event_t e)
+        -:  389:{
+    49502:  390:    switch ((uint32_t)e) {
+branch  0 taken 13936
+branch  1 taken 11655
+branch  2 taken 9313
 branch  3 taken 7202
 branch  4 taken 4984
 branch  5 taken 2412
 branch  6 taken 0
-    13835:  383:    case (uint32_t)MODE_SM_EV_TC_MODE_NOMINAL: return "tc_mode_nominal";
-    11514:  384:    case (uint32_t)MODE_SM_EV_TC_MODE_DEGRADED: return "tc_mode_degraded";
-     9118:  385:    case (uint32_t)MODE_SM_EV_TC_MODE_SAFE: return "tc_mode_safe";
-     7202:  386:    case (uint32_t)MODE_SM_EV_FAULT_NONCRITICAL: return "fault_noncritical";
-     4984:  387:    case (uint32_t)MODE_SM_EV_FAULT_CRITICAL: return "fault_critical";
-     2412:  388:    case (uint32_t)MODE_SM_EV_FAULT_CLEARED: return "fault_cleared";
-    #####:  389:    default: return "?";
-        -:  390:    }
-        -:  391:}
-        -:  392:#endif
+    13936:  391:    case (uint32_t)MODE_SM_EV_TC_MODE_NOMINAL: return "tc_mode_nominal";
+    11655:  392:    case (uint32_t)MODE_SM_EV_TC_MODE_DEGRADED: return "tc_mode_degraded";
+     9313:  393:    case (uint32_t)MODE_SM_EV_TC_MODE_SAFE: return "tc_mode_safe";
+     7202:  394:    case (uint32_t)MODE_SM_EV_FAULT_NONCRITICAL: return "fault_noncritical";
+     4984:  395:    case (uint32_t)MODE_SM_EV_FAULT_CRITICAL: return "fault_critical";
+     2412:  396:    case (uint32_t)MODE_SM_EV_FAULT_CLEARED: return "fault_cleared";
+    #####:  397:    default: return "?";
+        -:  398:    }
+        -:  399:}
+        -:  400:#endif

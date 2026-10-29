@@ -15,10 +15,10 @@ Source: `results/divergences.csv` (1562 rows).
 
 | Start | Inhibit | Events in arrival order (event:cause) | Hand written | Generated |
 |---|---|---|---|---|
-| NOMINAL | 0 | tc_mode_degraded:1 tc_mode_nominal:1 | NOMINAL>DEGRADED(c1) DEGRADED>NOMINAL(c1) -> **NOMINAL** | NOMINAL>DEGRADED(c1) -> **DEGRADED** |
-| NOMINAL | 1 | tc_mode_degraded:1 tc_mode_nominal:1 | NOMINAL>DEGRADED(c1) DEGRADED>NOMINAL(c1) -> **NOMINAL** | NOMINAL>DEGRADED(c1) -> **DEGRADED** |
-| NOMINAL | 0 | tc_mode_safe:1 tc_mode_nominal:1 | NOMINAL>SAFE(c1) SAFE>NOMINAL(c1) -> **NOMINAL** | NOMINAL>SAFE(c1) -> **SAFE** |
-| NOMINAL | 1 | tc_mode_safe:1 tc_mode_nominal:1 | NOMINAL>SAFE(c1) SAFE>NOMINAL(c1) -> **NOMINAL** | NOMINAL>SAFE(c1) -> **SAFE** |
+| NOMINAL | 0 | tc_mode_degraded:1 tc_mode_nominal:1 | NOMINAL>DEGRADED(c1) DEGRADED>NOMINAL(c1) -> **NOMINAL** | NOMINAL>DEGRADED(c1) discard:tc_mode_nominal -> **DEGRADED** |
+| NOMINAL | 1 | tc_mode_degraded:1 tc_mode_nominal:1 | NOMINAL>DEGRADED(c1) DEGRADED>NOMINAL(c1) -> **NOMINAL** | NOMINAL>DEGRADED(c1) discard:tc_mode_nominal -> **DEGRADED** |
+| NOMINAL | 0 | tc_mode_safe:1 tc_mode_nominal:1 | NOMINAL>SAFE(c1) SAFE>NOMINAL(c1) -> **NOMINAL** | NOMINAL>SAFE(c1) discard:tc_mode_nominal -> **SAFE** |
+| NOMINAL | 1 | tc_mode_safe:1 tc_mode_nominal:1 | NOMINAL>SAFE(c1) SAFE>NOMINAL(c1) -> **NOMINAL** | NOMINAL>SAFE(c1) discard:tc_mode_nominal -> **SAFE** |
 | NOMINAL | 0 | tc_mode_safe:1 tc_mode_degraded:1 | NOMINAL>SAFE(c1) SAFE>DEGRADED(c1) -> **DEGRADED** | NOMINAL>SAFE(c1) discard:tc_mode_degraded -> **SAFE** |
 | NOMINAL | 1 | tc_mode_safe:1 tc_mode_degraded:1 | NOMINAL>SAFE(c1) SAFE>DEGRADED(c1) -> **DEGRADED** | NOMINAL>SAFE(c1) discard:tc_mode_degraded -> **SAFE** |
 | ... | | 12 more in the CSV | | |
@@ -39,12 +39,12 @@ Source: `results/divergences.csv` (1562 rows).
 
 | Start | Inhibit | Events in arrival order (event:cause) | Hand written | Generated |
 |---|---|---|---|---|
-| NOMINAL | 0 | fault_noncritical:2 tc_mode_nominal:1 | NOMINAL>DEGRADED(c2) DEGRADED>NOMINAL(c1) -> **NOMINAL** | NOMINAL>DEGRADED(c2) -> **DEGRADED** |
-| NOMINAL | 0 | fault_critical:2 tc_mode_nominal:1 | NOMINAL>SAFE(c2) SAFE>NOMINAL(c1) -> **NOMINAL** | NOMINAL>SAFE(c2) -> **SAFE** |
+| NOMINAL | 0 | fault_noncritical:2 tc_mode_nominal:1 | NOMINAL>DEGRADED(c2) DEGRADED>NOMINAL(c1) -> **NOMINAL** | NOMINAL>DEGRADED(c2) discard:tc_mode_nominal -> **DEGRADED** |
+| NOMINAL | 0 | fault_critical:2 tc_mode_nominal:1 | NOMINAL>SAFE(c2) SAFE>NOMINAL(c1) -> **NOMINAL** | NOMINAL>SAFE(c2) discard:tc_mode_nominal -> **SAFE** |
 | NOMINAL | 0 | fault_critical:2 tc_mode_degraded:1 | NOMINAL>SAFE(c2) SAFE>DEGRADED(c1) -> **DEGRADED** | NOMINAL>SAFE(c2) discard:tc_mode_degraded -> **SAFE** |
-| NOMINAL | 0 | fault_noncritical:2 fault_critical:2 tc_mode_nominal:1 | NOMINAL>DEGRADED(c2) DEGRADED>SAFE(c2) SAFE>NOMINAL(c1) -> **NOMINAL** | NOMINAL>SAFE(c2) -> **SAFE** |
-| NOMINAL | 0 | fault_critical:2 tc_mode_nominal:1 fault_noncritical:2 | NOMINAL>SAFE(c2) SAFE>NOMINAL(c1) NOMINAL>DEGRADED(c2) -> **DEGRADED** | NOMINAL>SAFE(c2) -> **SAFE** |
-| NOMINAL | 0 | fault_critical:2 fault_noncritical:2 tc_mode_nominal:1 | NOMINAL>SAFE(c2) SAFE>NOMINAL(c1) -> **NOMINAL** | NOMINAL>SAFE(c2) -> **SAFE** |
+| NOMINAL | 0 | fault_noncritical:2 fault_critical:2 tc_mode_nominal:1 | NOMINAL>DEGRADED(c2) DEGRADED>SAFE(c2) SAFE>NOMINAL(c1) -> **NOMINAL** | NOMINAL>SAFE(c2) discard:tc_mode_nominal -> **SAFE** |
+| NOMINAL | 0 | fault_critical:2 tc_mode_nominal:1 fault_noncritical:2 | NOMINAL>SAFE(c2) SAFE>NOMINAL(c1) NOMINAL>DEGRADED(c2) -> **DEGRADED** | NOMINAL>SAFE(c2) discard:tc_mode_nominal -> **SAFE** |
+| NOMINAL | 0 | fault_critical:2 fault_noncritical:2 tc_mode_nominal:1 | NOMINAL>SAFE(c2) SAFE>NOMINAL(c1) -> **NOMINAL** | NOMINAL>SAFE(c2) discard:tc_mode_nominal -> **SAFE** |
 | ... | | 11 more in the CSV | | |
 
 ## intermediate transitions (hand)
@@ -56,7 +56,7 @@ Source: `results/divergences.csv` (1562 rows).
 | NOMINAL | 0 | tc_mode_degraded:1 fault_critical:2 | NOMINAL>DEGRADED(c1) DEGRADED>SAFE(c2) -> **SAFE** | NOMINAL>SAFE(c2) discard:tc_mode_degraded -> **SAFE** |
 | NOMINAL | 0 | fault_noncritical:2 tc_mode_safe:1 | NOMINAL>DEGRADED(c2) DEGRADED>SAFE(c1) -> **SAFE** | NOMINAL>SAFE(c1) -> **SAFE** |
 | NOMINAL | 0 | fault_noncritical:2 fault_critical:2 | NOMINAL>DEGRADED(c2) DEGRADED>SAFE(c2) -> **SAFE** | NOMINAL>SAFE(c2) -> **SAFE** |
-| NOMINAL | 0 | tc_mode_nominal:1 fault_noncritical:2 fault_critical:2 | NOMINAL>DEGRADED(c2) DEGRADED>SAFE(c2) -> **SAFE** | NOMINAL>SAFE(c2) -> **SAFE** |
+| NOMINAL | 0 | tc_mode_nominal:1 fault_noncritical:2 fault_critical:2 | NOMINAL>DEGRADED(c2) DEGRADED>SAFE(c2) -> **SAFE** | NOMINAL>SAFE(c2) discard:tc_mode_nominal -> **SAFE** |
 | ... | | 15 more in the CSV | | |
 
 ## same end state but different cause attribution

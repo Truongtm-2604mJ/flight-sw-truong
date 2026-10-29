@@ -1,0 +1,225 @@
+{
+ "target": "host-sim",
+ "executed": "2026-10-26 10:16",
+ "minutes": 8.1,
+ "results": {
+  "VT-01": {
+   "reqs": [
+    "MM-090"
+   ],
+   "verdict": "PASS",
+   "actual": "boot report mode NOMINAL, last reset 0, NV valid 0; HK mode NOMINAL; 0 transition events"
+  },
+  "VT-TMTC-010a": {
+   "reqs": [
+    "TMTC-010"
+   ],
+   "verdict": "PASS",
+   "actual": "flags 1001: [(1, 1), (17, 2), (1, 7)], request ID echoed True; flags 0000: [(17, 2)]"
+  },
+  "VT-TMTC-020": {
+   "reqs": [
+    "TMTC-020",
+    "MM-120"
+   ],
+   "verdict": "PASS",
+   "actual": "codes [3, 5, 7, 8, 9, 9]; 0 executions; mode NOMINAL; TC rejected counter +6"
+  },
+  "VT-TMTC-030": {
+   "reqs": [
+    "TMTC-030"
+   ],
+   "verdict": "PASS",
+   "actual": "0 verification reports; TC rejected counter +4; alive True"
+  },
+  "VT-TMTC-060": {
+   "reqs": [
+    "TMTC-060"
+   ],
+   "verdict": "PASS",
+   "actual": "11 intervals, min 1.000 s, max 1.000 s"
+  },
+  "VT-TMTC-040": {
+   "reqs": [
+    "TMTC-040"
+   ],
+   "verdict": "FAIL",
+   "actual": "TM(1,7) at 0.002 s, transition report at 2.001 s (+1.999 s after TM(1,7)); first HK after TM(1,7): NOMINAL"
+  },
+  "VT-MM-150": {
+   "reqs": [
+    "MM-150"
+   ],
+   "verdict": "PASS",
+   "actual": "1.999 s"
+  },
+  "VT-MM-080": {
+   "reqs": [
+    "MM-080",
+    "MM-070"
+   ],
+   "verdict": "PASS",
+   "actual": "NOMINAL -> SAFE, cause GROUND"
+  },
+  "VT-MM-030": {
+   "reqs": [
+    "MM-030"
+   ],
+   "verdict": "PASS",
+   "actual": "HK SIDs after the transition [2]; status 0x18 (payload False, schedule False, sun True, RX True); mode SAFE"
+  },
+  "VT-TMTC-010b": {
+   "reqs": [
+    "TMTC-010"
+   ],
+   "verdict": "PASS",
+   "actual": "[(1, 1), (17, 2), (1, 7)]"
+  },
+  "VT-MM-020a": {
+   "reqs": [
+    "MM-020"
+   ],
+   "verdict": "PASS",
+   "actual": "scheduled command fired: False"
+  },
+  "VT-MM-010": {
+   "reqs": [
+    "MM-010",
+    "MM-050"
+   ],
+   "verdict": "PASS",
+   "actual": "4 monitor events, 0 transitions, mode SAFE"
+  },
+  "VT-MM-110": {
+   "reqs": [
+    "MM-110",
+    "MM-140"
+   ],
+   "verdict": "PASS",
+   "actual": "attempt 1: 1 transition SAFE -> DEGRADED, 1 discard report(s) naming event [0], mode DEGRADED"
+  },
+  "VT-MM-020b": {
+   "reqs": [
+    "MM-020"
+   ],
+   "verdict": "PASS",
+   "actual": "before enable: 0; after enable: 1"
+  },
+  "VT-FDIR-010": {
+   "reqs": [
+    "FDIR-010"
+   ],
+   "verdict": "PASS",
+   "actual": "0 events; mode NOMINAL; filtered +1"
+  },
+  "VT-FDIR-020": {
+   "reqs": [
+    "FDIR-020",
+    "MM-040"
+   ],
+   "verdict": "PASS",
+   "actual": "1 alarm event(s), first 2.999 s after TM(1,7); transitions [('NOMINAL', 'DEGRADED', 'MONITOR')]"
+  },
+  "VT-MM-050": {
+   "reqs": [
+    "MM-050"
+   ],
+   "verdict": "PASS",
+   "actual": "cleared event True; 0 transitions; mode DEGRADED"
+  },
+  "VT-OBS-01": {
+   "reqs": [],
+   "verdict": "OBSERVED",
+   "actual": "mode NOMINAL; T_BAT monitor ALARM; events after the command: [('0x401', None, 0)]"
+  },
+  "VT-FDIR-090": {
+   "reqs": [
+    "FDIR-090"
+   ],
+   "verdict": "PASS",
+   "actual": "T_BAT events while disabled: 0; alarms after enable: 1"
+  },
+  "VT-MM-060": {
+   "reqs": [
+    "MM-060",
+    "MM-070"
+   ],
+   "verdict": "PASS",
+   "actual": "alarm True; 1 refusal(s); mode after fault NOMINAL; ground DEGRADED applied True"
+  },
+  "VT-FDIR-080": {
+   "reqs": [
+    "FDIR-080"
+   ],
+   "verdict": "PASS",
+   "actual": "OFF after 5.499 s, reason 2; HK inhibited bit False"
+  },
+  "VT-FDIR-030": {
+   "reqs": [
+    "FDIR-030",
+    "MM-040"
+   ],
+   "verdict": "PASS",
+   "actual": "V_BUS alarm True; SAFE after 4.000 s, cause MONITOR"
+  },
+  "VT-FDIR-040": {
+   "reqs": [
+    "FDIR-040"
+   ],
+   "verdict": "PASS",
+   "actual": "missed 1, restarted 1 after 4.000 s; 0 transitions"
+  },
+  "VT-FDIR-050": {
+   "reqs": [
+    "FDIR-050",
+    "MM-040"
+   ],
+   "verdict": "PASS",
+   "actual": "3 restarts, escalation True, 0 restarts after it; transitions [('SAFE', 'LIVENESS')]"
+  },
+  "VT-FDIR-060": {
+   "reqs": [
+    "FDIR-060",
+    "MM-090"
+   ],
+   "verdict": "PASS",
+   "actual": "warning after 5.499 s, reset True; boot report last reset 1, mode SAFE; HK cause WATCHDOG_RESET; 0 transition reports at boot"
+  },
+  "VT-FDIR-070": {
+   "reqs": [
+    "FDIR-070"
+   ],
+   "verdict": "PASS",
+   "actual": "300 s observed; unexpected events []; mode NOMINAL"
+  },
+  "VT-TMTC-050": {
+   "reqs": [
+    "TMTC-050"
+   ],
+   "verdict": "PASS",
+   "actual": "646 packets in 9 boots; no gap, no rejection, no drop"
+  },
+  "VT-TMTC-070": {
+   "reqs": [
+    "TMTC-070"
+   ],
+   "verdict": "PASS",
+   "actual": "codes [7, 7, 7, 7, 7]; events []; mode NOMINAL, T_BAT 25.02 C"
+  },
+  "VT-MM-100": {
+   "reqs": [
+    "MM-100"
+   ],
+   "verdict": "PASS",
+   "actual": "0 unhandled pairs (completeness.md); generator tests pass True"
+  },
+  "VT-MM-130": {
+   "reqs": [
+    "MM-130"
+   ],
+   "verdict": "PASS",
+   "actual": "IT-10 PASS (int_tc_path.host.log)"
+  }
+ },
+ "note": "After the run, VT-TMTC-040 was relinked to TMTC-040 only (it had also listed MM-070, MM-080 and MM-150, which have their own tests from the same execution). No verdict changed."
+}

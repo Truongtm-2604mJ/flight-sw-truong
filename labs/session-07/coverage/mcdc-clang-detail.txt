@@ -1,0 +1,1963 @@
+labs/session-04/lab-4.1-space-packet/sp.c:
+    1|       |/* Lab 4.1 - CCSDS Space Packet encoder / decoder. See sp.h. */
+    2|       |#include "sp.h"
+    3|       |
+    4|       |#include <string.h>
+    5|       |
+    6|       |int sp_encode(const sp_primary_header_t *hdr,
+    7|       |              const uint8_t *payload, size_t payload_len,
+    8|       |              uint8_t *out, size_t out_cap)
+    9|    184|{
+   10|    184|    uint16_t word;
+   11|    184|    uint16_t length_field;
+   12|       |
+   13|    184|    if (hdr == NULL || payload == NULL || out == NULL) {
+  ------------------
+  |---> MC/DC Decision Region (13:9) to (13:54)
+  |
+  |  Number of Conditions: 3
+  |     Condition C1 --> (13:9)
+  |     Condition C2 --> (13:24)
+  |     Condition C3 --> (13:43)
+  |
+  |  Executed MC/DC Test Vectors:
+  |
+  |     C1, C2, C3    Result
+  |  1 { F,  F,  F  = F      }
+  |  2 { T,  -,  -  = T      }
+  |  3 { F,  F,  T  = T      }
+  |  4 { F,  T,  -  = T      }
+  |
+  |  C1-Pair: covered: (1,2)
+  |  C2-Pair: covered: (1,4)
+  |  C3-Pair: covered: (1,3)
+  |  MC/DC Coverage for Decision: 100.00%
+  |
+  ------------------
+   14|      3|        return SP_ERR_ARG;
+   15|      3|    }
+   16|       |
+   17|       |    /* Reject, do not mask: a silently truncated APID sends the packet
+   18|       |     * to the wrong application process. */
+   19|    181|    if (hdr->version != SP_VERSION ||
+   20|    181|        (hdr->type != SP_TM && hdr->type != SP_TC) ||
+   21|    181|        hdr->sec_hdr_flag > 1u ||
+   22|    181|        hdr->apid > SP_APID_MAX ||
+   23|    181|        hdr->seq_flags > 3u ||
+   24|    181|        hdr->seq_count > SP_SEQ_COUNT_MAX) {
+   25|      7|        return SP_ERR_FIELD;
+   26|      7|    }
+   27|       |
+   28|    174|    if (payload_len < SP_PAYLOAD_MIN || payload_len > SP_PAYLOAD_MAX) {
+  ------------------
+  |---> MC/DC Decision Region (28:9) to (28:69)
+  |
+  |  Number of Conditions: 2
+  |     Condition C1 --> (28:9)
+  |     Condition C2 --> (28:41)
+  |
+  |  Executed MC/DC Test Vectors:
+  |
+  |     C1, C2    Result
+  |  1 { F,  F  = F      }
+  |  2 { T,  -  = T      }
+  |  3 { F,  T  = T      }
+  |
+  |  C1-Pair: covered: (1,2)
+  |  C2-Pair: covered: (1,3)
+  |  MC/DC Coverage for Decision: 100.00%
+  |
+  ------------------
+   29|      2|        return SP_ERR_PAYLOAD;
+   30|      2|    }
+   31|       |
+   32|    172|    if (out_cap < SP_PRIMARY_HEADER_LEN + payload_len) {
+   33|      2|        return SP_ERR_CAPACITY;
+   34|      2|    }
+   35|       |
+   36|       |    /* Octets 0-1: version | type | secondary header flag | APID */
+   37|    170|    word = (uint16_t)(((uint16_t)hdr->version << 13) |
+   38|    170|                      ((uint16_t)hdr->type << 12) |
+   39|    170|                      ((uint16_t)hdr->sec_hdr_flag << 11) |
+   40|    170|                      hdr->apid);
+   41|    170|    out[0] = (uint8_t)(word >> 8);
+   42|    170|    out[1] = (uint8_t)(word & 0xFFu);
+   43|       |
+   44|       |    /* Octets 2-3: sequence flags | sequence count */
+   45|    170|    word = (uint16_t)(((uint16_t)hdr->seq_flags << 14) | hdr->seq_count);
+   46|    170|    out[2] = (uint8_t)(word >> 8);
+   47|    170|    out[3] = (uint8_t)(word & 0xFFu);
+   48|       |
+   49|       |    /* Octets 4-5: packet data length = octets in data field MINUS ONE */
+   50|    170|    length_field = (uint16_t)(payload_len - 1u);
+   51|    170|    out[4] = (uint8_t)(length_field >> 8);
+   52|    170|    out[5] = (uint8_t)(length_field & 0xFFu);
+   53|       |
+   54|    170|    memcpy(&out[SP_PRIMARY_HEADER_LEN], payload, payload_len);
+   55|       |
+   56|    170|    return (int)(SP_PRIMARY_HEADER_LEN + payload_len);
+   57|    172|}
+   58|       |
+   59|       |int sp_decode(const uint8_t *in, size_t in_len,
+   60|       |              sp_primary_header_t *hdr,
+   61|       |              const uint8_t **payload_out)
+   62|    151|{
+   63|    151|    uint16_t word;
+   64|    151|    size_t payload_len;
+   65|       |
+   66|    151|    if (in == NULL || hdr == NULL || payload_out == NULL) {
+  ------------------
+  |---> MC/DC Decision Region (66:9) to (66:57)
+  |
+  |  Number of Conditions: 3
+  |     Condition C1 --> (66:9)
+  |     Condition C2 --> (66:23)
+  |     Condition C3 --> (66:38)
+  |
+  |  Executed MC/DC Test Vectors:
+  |
+  |     C1, C2, C3    Result
+  |  1 { F,  F,  F  = F      }
+  |  2 { T,  -,  -  = T      }
+  |  3 { F,  F,  T  = T      }
+  |  4 { F,  T,  -  = T      }
+  |
+  |  C1-Pair: covered: (1,2)
+  |  C2-Pair: covered: (1,4)
+  |  C3-Pair: covered: (1,3)
+  |  MC/DC Coverage for Decision: 100.00%
+  |
+  ------------------
+   67|      3|        return SP_ERR_ARG;
+   68|      3|    }
+   69|       |
+   70|    148|    if (in_len < SP_PRIMARY_HEADER_LEN) {
+   71|      6|        return SP_ERR_TRUNCATED;
+   72|      6|    }
+   73|       |
+   74|    142|    word = (uint16_t)(((uint16_t)in[0] << 8) | in[1]);
+   75|    142|    hdr->version      = (uint8_t)((word >> 13) & 0x07u);
+   76|    142|    hdr->type         = ((word >> 12) & 0x01u) ? SP_TC : SP_TM;
+   77|    142|    hdr->sec_hdr_flag = (uint8_t)((word >> 11) & 0x01u);
+   78|    142|    hdr->apid         = (uint16_t)(word & 0x07FFu);
+   79|       |
+   80|    142|    word = (uint16_t)(((uint16_t)in[2] << 8) | in[3]);
+   81|    142|    hdr->seq_flags = (uint8_t)((word >> 14) & 0x03u);
+   82|    142|    hdr->seq_count = (uint16_t)(word & 0x3FFFu);
+   83|       |
+   84|    142|    hdr->data_length = (uint16_t)(((uint16_t)in[4] << 8) | in[5]);
+   85|       |
+   86|    142|    if (hdr->version != SP_VERSION) {
+   87|      5|        return SP_ERR_VERSION;
+   88|      5|    }
+   89|       |
+   90|       |    /* The check that matters on a real uplink: never trust the length
+   91|       |     * field further than the octets that actually arrived. */
+   92|    137|    payload_len = (size_t)hdr->data_length + 1u;
+   93|    137|    if (in_len - SP_PRIMARY_HEADER_LEN < payload_len) {
+   94|     18|        return SP_ERR_LENGTH;
+   95|     18|    }
+   96|       |
+   97|    119|    *payload_out = &in[SP_PRIMARY_HEADER_LEN];
+   98|    119|    return (int)payload_len;
+   99|    137|}
+
+labs/session-04/lab-4.2-pus-service17/crc16.c:
+    1|       |#include "crc16.h"
+    2|       |
+    3|       |/*
+    4|       | * Bitwise implementation: no table, constant memory, easy to review.
+    5|       | * Cost is 8 shift/XOR steps per octet, which is small against the
+    6|       | * housekeeping period (see docs/tmtc-design.md, timing section). A 256
+    7|       | * entry table is the standard optimisation if the budget ever needs it.
+    8|       | */
+    9|       |uint16_t crc16_ccitt(const uint8_t *data, size_t len)
+   10|    455|{
+   11|    455|    uint16_t crc = CRC16_INIT;
+   12|    455|    size_t i;
+   13|    455|    int bit;
+   14|       |
+   15|  10.1k|    for (i = 0; i < len; i++) {
+   16|  9.68k|        crc ^= (uint16_t)((uint16_t)data[i] << 8);
+   17|  87.1k|        for (bit = 0; bit < 8; bit++) {
+   18|  77.4k|            if (crc & 0x8000u) {
+   19|  39.6k|                crc = (uint16_t)((uint16_t)(crc << 1) ^ 0x1021u);
+   20|  39.6k|            } else {
+   21|  37.7k|                crc = (uint16_t)(crc << 1);
+   22|  37.7k|            }
+   23|  77.4k|        }
+   24|  9.68k|    }
+   25|    455|    return crc;
+   26|    455|}
+
+labs/session-04/lab-4.2-pus-service17/pus.c:
+    1|       |/* Lab 4.2 - PUS packet layer. See pus.h. */
+    2|       |#include "pus.h"
+    3|       |
+    4|       |#include <string.h>
+    5|       |
+    6|       |#include "crc16.h"
+    7|       |
+    8|       |void pus_put_u16(uint8_t *p, uint16_t v)
+    9|    611|{
+   10|    611|    p[0] = (uint8_t)(v >> 8);
+   11|    611|    p[1] = (uint8_t)(v & 0xFFu);
+   12|    611|}
+   13|       |
+   14|       |void pus_put_u32(uint8_t *p, uint32_t v)
+   15|    145|{
+   16|    145|    p[0] = (uint8_t)(v >> 24);
+   17|    145|    p[1] = (uint8_t)((v >> 16) & 0xFFu);
+   18|    145|    p[2] = (uint8_t)((v >> 8) & 0xFFu);
+   19|    145|    p[3] = (uint8_t)(v & 0xFFu);
+   20|    145|}
+   21|       |
+   22|       |uint16_t pus_get_u16(const uint8_t *p)
+   23|    119|{
+   24|    119|    return (uint16_t)(((uint16_t)p[0] << 8) | p[1]);
+   25|    119|}
+   26|       |
+   27|       |obt_t obt_from_ns(uint64_t ns_since_epoch)
+   28|      2|{
+   29|      2|    obt_t t;
+   30|      2|    uint64_t frac_ns = ns_since_epoch % 1000000000u;
+   31|       |
+   32|      2|    t.coarse = (uint32_t)(ns_since_epoch / 1000000000u);
+   33|      2|    t.fine   = (uint16_t)((frac_ns * 65536u) / 1000000000u);
+   34|      2|    return t;
+   35|      2|}
+   36|       |
+   37|       |/* Wrap a finished packet data field (without CRC) into a Space Packet
+   38|       | * and append the CRC over the whole packet. */
+   39|       |static int finish_packet(const sp_primary_header_t *hdr,
+   40|       |                         uint8_t *field, size_t field_len_without_crc,
+   41|       |                         uint8_t *out, size_t out_cap)
+   42|    158|{
+   43|    158|    int total;
+   44|    158|    uint16_t crc;
+   45|       |
+   46|       |    /* The CRC octets are part of the packet data field, so they must be
+   47|       |     * counted in the length field. Encode with placeholder zeros, then
+   48|       |     * overwrite them once the header octets exist. */
+   49|    158|    field[field_len_without_crc]      = 0;
+   50|    158|    field[field_len_without_crc + 1u] = 0;
+   51|       |
+   52|    158|    total = sp_encode(hdr, field, field_len_without_crc + PUS_CRC_LEN,
+   53|    158|                      out, out_cap);
+   54|    158|    if (total < 0) {
+   55|      1|        return total;
+   56|      1|    }
+   57|       |
+   58|    157|    crc = crc16_ccitt(out, (size_t)total - PUS_CRC_LEN);
+   59|    157|    pus_put_u16(&out[(size_t)total - PUS_CRC_LEN], crc);
+   60|    157|    return total;
+   61|    158|}
+   62|       |
+   63|       |int pus_tm_build(tm_source_t *src, uint8_t service, uint8_t subtype,
+   64|       |                 uint16_t dest_id, obt_t time,
+   65|       |                 const uint8_t *data, size_t data_len,
+   66|       |                 uint8_t *out, size_t out_cap)
+   67|    150|{
+   68|    150|    uint8_t field[PUS_TM_SEC_HDR_LEN + PUS_TM_MAX_DATA + PUS_CRC_LEN];
+   69|    150|    sp_primary_header_t hdr;
+   70|    150|    int total;
+   71|       |
+   72|    150|    if (src == NULL || out == NULL || (data == NULL && data_len > 0u)) {
+  ------------------
+  |---> MC/DC Decision Region (72:9) to (72:70)
+  |
+  |  Number of Conditions: 4
+  |     Condition C1 --> (72:9)
+  |     Condition C2 --> (72:24)
+  |     Condition C3 --> (72:40)
+  |     Condition C4 --> (72:56)
+  |
+  |  Executed MC/DC Test Vectors:
+  |
+  |     C1, C2, C3, C4    Result
+  |  1 { F,  F,  F,  -  = F      }
+  |  2 { T,  -,  -,  -  = T      }
+  |  3 { F,  F,  T,  F  = F      }
+  |  4 { F,  T,  -,  -  = T      }
+  |  5 { F,  F,  T,  T  = T      }
+  |
+  |  C1-Pair: covered: (1,2)
+  |  C2-Pair: covered: (1,4)
+  |  C3-Pair: covered: (1,5)
+  |  C4-Pair: covered: (3,5)
+  |  MC/DC Coverage for Decision: 100.00%
+  |
+  ------------------
+   73|      3|        return SP_ERR_ARG;
+   74|      3|    }
+   75|    147|    if (data_len > PUS_TM_MAX_DATA) {
+   76|      2|        return SP_ERR_PAYLOAD;
+   77|      2|    }
+   78|       |
+   79|    145|    field[0] = (uint8_t)(PUS_VERSION << 4); /* time reference status = 0 */
+   80|    145|    field[1] = service;
+   81|    145|    field[2] = subtype;
+   82|    145|    pus_put_u16(&field[3], 0);              /* message type counter: unused */
+   83|    145|    pus_put_u16(&field[5], dest_id);
+   84|    145|    pus_put_u32(&field[7], time.coarse);
+   85|    145|    pus_put_u16(&field[11], time.fine);
+   86|    145|    if (data_len > 0u) {
+   87|    136|        memcpy(&field[PUS_TM_SEC_HDR_LEN], data, data_len);
+   88|    136|    }
+   89|       |
+   90|    145|    hdr.version      = SP_VERSION;
+   91|    145|    hdr.type         = SP_TM;
+   92|    145|    hdr.sec_hdr_flag = 1;
+   93|    145|    hdr.apid         = src->apid;
+   94|    145|    hdr.seq_flags    = SP_SEQ_FLAGS_UNSEG;
+   95|    145|    hdr.seq_count    = src->seq_count;
+   96|    145|    hdr.data_length  = 0; /* derived by sp_encode */
+   97|       |
+   98|    145|    total = finish_packet(&hdr, field, PUS_TM_SEC_HDR_LEN + data_len,
+   99|    145|                          out, out_cap);
+  100|    145|    if (total > 0) {
+  101|       |        /* Count the packet as soon as it exists. If it is later dropped
+  102|       |         * (queue full), the ground sees a gap, which is the point. */
+  103|    144|        src->seq_count = (uint16_t)((src->seq_count + 1u) & SP_SEQ_COUNT_MAX);
+  104|    144|    }
+  105|    145|    return total;
+  106|    147|}
+  107|       |
+  108|       |int pus_tc_build(uint16_t apid, uint16_t seq_count, uint8_t ack_flags,
+  109|       |                 uint8_t service, uint8_t subtype, uint16_t source_id,
+  110|       |                 const uint8_t *app_data, size_t app_len,
+  111|       |                 uint8_t *out, size_t out_cap)
+  112|     17|{
+  113|     17|    uint8_t field[PUS_TC_SEC_HDR_LEN + PUS_TC_MAX_DATA + PUS_CRC_LEN];
+  114|     17|    sp_primary_header_t hdr;
+  115|       |
+  116|     17|    if (out == NULL || (app_data == NULL && app_len > 0u)) {
+  ------------------
+  |---> MC/DC Decision Region (116:9) to (116:58)
+  |
+  |  Number of Conditions: 3
+  |     Condition C1 --> (116:9)
+  |     Condition C2 --> (116:25)
+  |     Condition C3 --> (116:45)
+  |
+  |  Executed MC/DC Test Vectors:
+  |
+  |     C1, C2, C3    Result
+  |  1 { F,  F,  -  = F      }
+  |  2 { T,  -,  -  = T      }
+  |  3 { F,  T,  F  = F      }
+  |  4 { F,  T,  T  = T      }
+  |
+  |  C1-Pair: covered: (1,2)
+  |  C2-Pair: covered: (1,4)
+  |  C3-Pair: covered: (3,4)
+  |  MC/DC Coverage for Decision: 100.00%
+  |
+  ------------------
+  117|      2|        return SP_ERR_ARG;
+  118|      2|    }
+  119|     15|    if (app_len > PUS_TC_MAX_DATA) {
+  120|      1|        return SP_ERR_PAYLOAD;
+  121|      1|    }
+  122|     14|    if (ack_flags > 0x0Fu) {
+  123|      1|        return SP_ERR_FIELD;
+  124|      1|    }
+  125|       |
+  126|     13|    field[0] = (uint8_t)((PUS_VERSION << 4) | ack_flags);
+  127|     13|    field[1] = service;
+  128|     13|    field[2] = subtype;
+  129|     13|    pus_put_u16(&field[3], source_id);
+  130|     13|    if (app_len > 0u) {
+  131|      2|        memcpy(&field[PUS_TC_SEC_HDR_LEN], app_data, app_len);
+  132|      2|    }
+  133|       |
+  134|     13|    hdr.version      = SP_VERSION;
+  135|     13|    hdr.type         = SP_TC;
+  136|     13|    hdr.sec_hdr_flag = 1;
+  137|     13|    hdr.apid         = apid;
+  138|     13|    hdr.seq_flags    = SP_SEQ_FLAGS_UNSEG;
+  139|     13|    hdr.seq_count    = seq_count;
+  140|     13|    hdr.data_length  = 0;
+  141|       |
+  142|     13|    return finish_packet(&hdr, field, PUS_TC_SEC_HDR_LEN + app_len,
+  143|     13|                         out, out_cap);
+  144|     14|}
+  145|       |
+  146|       |pus_fail_t pus_tc_validate(const uint8_t *frame, size_t frame_len,
+  147|       |                           uint16_t expected_apid, pus_tc_t *tc)
+  148|    136|{
+  149|    136|    const uint8_t *field = NULL;
+  150|    136|    int field_len;
+  151|    136|    uint16_t crc_calc;
+  152|    136|    uint16_t crc_recv;
+  153|       |
+  154|    136|    if (frame == NULL || tc == NULL) {
+  ------------------
+  |---> MC/DC Decision Region (154:9) to (154:36)
+  |
+  |  Number of Conditions: 2
+  |     Condition C1 --> (154:9)
+  |     Condition C2 --> (154:26)
+  |
+  |  Executed MC/DC Test Vectors:
+  |
+  |     C1, C2    Result
+  |  1 { F,  F  = F      }
+  |  2 { T,  -  = T      }
+  |  3 { F,  T  = T      }
+  |
+  |  C1-Pair: covered: (1,2)
+  |  C2-Pair: covered: (1,3)
+  |  MC/DC Coverage for Decision: 100.00%
+  |
+  ------------------
+  155|      2|        return PUS_FAIL_NO_REPORT;
+  156|      2|    }
+  157|    134|    memset(tc, 0, sizeof(*tc));
+  158|       |
+  159|       |    /* Check 1: enough octets for a primary header. Below that there is
+  160|       |     * no request ID to report against, so the frame is only counted. */
+  161|    134|    if (frame_len < SP_PRIMARY_HEADER_LEN) {
+  162|      6|        return PUS_FAIL_NO_REPORT;
+  163|      6|    }
+  164|    128|    memcpy(tc->request_id, frame, PUS_REQUEST_ID_LEN);
+  165|       |
+  166|    128|    field_len = sp_decode(frame, frame_len, &tc->sp, &field);
+  167|       |
+  168|       |    /* Check 2: packet version number. */
+  169|    128|    if (field_len == SP_ERR_VERSION) {
+  170|      4|        return PUS_FAIL_SP_VERSION;
+  171|      4|    }
+  172|       |
+  173|       |    /* Check 3: length. The header must describe exactly the frame that
+  174|       |     * arrived (no missing octets, no trailing octets), the frame must be
+  175|       |     * long enough to hold a PUS header and CRC, and not longer than the
+  176|       |     * largest packet this software handles. This runs before the CRC
+  177|       |     * because the CRC position is derived from the length. */
+  178|    124|    if (field_len < 0 ||
+  179|    124|        (size_t)field_len + SP_PRIMARY_HEADER_LEN != frame_len ||
+  180|    124|        frame_len < PUS_TC_MIN_LEN ||
+  181|    124|        frame_len > PUS_MAX_PACKET) {
+  ------------------
+  |---> MC/DC Decision Region (178:9) to (181:35)
+  |
+  |  Number of Conditions: 4
+  |     Condition C1 --> (178:9)
+  |     Condition C2 --> (179:9)
+  |     Condition C3 --> (180:9)
+  |     Condition C4 --> (181:9)
+  |
+  |  Executed MC/DC Test Vectors:
+  |
+  |     C1, C2, C3, C4    Result
+  |  1 { F,  F,  F,  F  = F      }
+  |  2 { T,  -,  -,  -  = T      }
+  |  3 { F,  F,  F,  T  = T      }
+  |  4 { F,  F,  T,  -  = T      }
+  |  5 { F,  T,  -,  -  = T      }
+  |
+  |  C1-Pair: covered: (1,2)
+  |  C2-Pair: covered: (1,5)
+  |  C3-Pair: covered: (1,4)
+  |  C4-Pair: covered: (1,3)
+  |  MC/DC Coverage for Decision: 100.00%
+  |
+  ------------------
+  182|     20|        return PUS_FAIL_LENGTH;
+  183|     20|    }
+  184|       |
+  185|       |    /* Check 4: checksum over everything except the CRC itself. Nothing
+  186|       |     * inside the packet is interpreted before this passes. */
+  187|    104|    crc_calc = crc16_ccitt(frame, frame_len - PUS_CRC_LEN);
+  188|    104|    crc_recv = pus_get_u16(&frame[frame_len - PUS_CRC_LEN]);
+  189|    104|    if (crc_calc != crc_recv) {
+  190|     87|        return PUS_FAIL_CHECKSUM;
+  191|     87|    }
+  192|       |
+  193|       |    /* Check 5: it is an unsegmented telecommand with a secondary header. */
+  194|     17|    if (tc->sp.type != SP_TC || tc->sp.sec_hdr_flag != 1u ||
+  195|     17|        tc->sp.seq_flags != SP_SEQ_FLAGS_UNSEG) {
+  ------------------
+  |---> MC/DC Decision Region (194:9) to (195:47)
+  |
+  |  Number of Conditions: 3
+  |     Condition C1 --> (194:9)
+  |     Condition C2 --> (194:33)
+  |     Condition C3 --> (195:9)
+  |
+  |  Executed MC/DC Test Vectors:
+  |
+  |     C1, C2, C3    Result
+  |  1 { F,  F,  F  = F      }
+  |  2 { T,  -,  -  = T      }
+  |  3 { F,  F,  T  = T      }
+  |  4 { F,  T,  -  = T      }
+  |
+  |  C1-Pair: covered: (1,2)
+  |  C2-Pair: covered: (1,4)
+  |  C3-Pair: covered: (1,3)
+  |  MC/DC Coverage for Decision: 100.00%
+  |
+  ------------------
+  196|      3|        return PUS_FAIL_PACKET_HEADER;
+  197|      3|    }
+  198|       |
+  199|       |    /* Check 6: addressed to this application process. */
+  200|     14|    if (tc->sp.apid != expected_apid) {
+  201|      1|        return PUS_FAIL_APID;
+  202|      1|    }
+  203|       |
+  204|       |    /* Check 7: PUS version. */
+  205|     13|    if ((field[0] >> 4) != PUS_VERSION) {
+  206|      1|        return PUS_FAIL_PUS_VERSION;
+  207|      1|    }
+  208|       |
+  209|     12|    tc->ack_flags = (uint8_t)(field[0] & 0x0Fu);
+  210|     12|    tc->service   = field[1];
+  211|     12|    tc->subtype   = field[2];
+  212|     12|    tc->source_id = pus_get_u16(&field[3]);
+  213|     12|    tc->app_data  = &field[PUS_TC_SEC_HDR_LEN];
+  214|     12|    tc->app_len   = (size_t)field_len - PUS_TC_SEC_HDR_LEN - PUS_CRC_LEN;
+  215|       |
+  216|     12|    return PUS_OK;
+  217|     13|}
+
+labs/session-04/lab-4.2-pus-service17/tc_handler.c:
+    1|       |/* Lab 4.2 - Telecommand handler. See tc_handler.h. */
+    2|       |#include "tc_handler.h"
+    3|       |
+    4|       |#include <string.h>
+    5|       |
+    6|       |/* ---- Service 17: test ------------------------------------------------ */
+    7|       |
+    8|       |static pus_fail_t svc17_check(const pus_tc_t *tc, void *arg)
+    9|      8|{
+   10|      8|    (void)arg;
+   11|      8|    if (tc->subtype != PUS_TC_17_ARE_YOU_ALIVE) {
+   12|      1|        return PUS_FAIL_SUBTYPE;
+   13|      1|    }
+   14|      7|    if (tc->app_len != 0u) {
+   15|      1|        return PUS_FAIL_APP_DATA; /* TC(17,1) carries no data */
+   16|      1|    }
+   17|      6|    return PUS_OK;
+   18|      7|}
+   19|       |
+   20|       |static pus_fail_t svc17_exec(const pus_tc_t *tc, tc_ctx_t *ctx, void *arg)
+   21|      6|{
+   22|      6|    (void)arg;
+   23|      6|    if (tc_emit_tm(ctx, PUS_SVC_TEST, PUS_TM_17_ALIVE_REPORT,
+   24|      6|                   tc->source_id, NULL, 0) != 0) {
+   25|      1|        return PUS_FAIL_EXECUTION;
+   26|      1|    }
+   27|      5|    return PUS_OK;
+   28|      6|}
+   29|       |
+   30|       |/* ---- Service 1: request verification ---------------------------------- */
+   31|       |
+   32|       |static void report_success(tc_ctx_t *ctx, const pus_tc_t *tc, uint8_t subtype)
+   33|     11|{
+   34|     11|    (void)tc_emit_tm(ctx, PUS_SVC_VERIFICATION, subtype, tc->source_id,
+   35|     11|                     tc->request_id, PUS_REQUEST_ID_LEN);
+   36|     11|}
+   37|       |
+   38|       |static void report_failure(tc_ctx_t *ctx, const pus_tc_t *tc, uint8_t subtype,
+   39|       |                           pus_fail_t code)
+   40|    122|{
+   41|    122|    uint8_t data[PUS_REQUEST_ID_LEN + 1u];
+   42|       |
+   43|    122|    memcpy(data, tc->request_id, PUS_REQUEST_ID_LEN);
+   44|    122|    data[PUS_REQUEST_ID_LEN] = (uint8_t)code;
+   45|       |
+   46|       |    /* tc->source_id is 0 unless the packet passed every packet level
+   47|       |     * check, so a corrupted source ID is never used as a destination. */
+   48|    122|    (void)tc_emit_tm(ctx, PUS_SVC_VERIFICATION, subtype, tc->source_id,
+   49|    122|                     data, sizeof(data));
+   50|    122|}
+   51|       |
+   52|       |/* ---- Public API -------------------------------------------------------- */
+   53|       |
+   54|       |void tc_init(tc_ctx_t *ctx, uint16_t apid, tm_sink_fn sink, void *sink_arg,
+   55|       |             obt_now_fn now)
+   56|    132|{
+   57|    132|    memset(ctx, 0, sizeof(*ctx));
+   58|    132|    ctx->tm_src.apid = apid;
+   59|    132|    ctx->sink        = sink;
+   60|    132|    ctx->sink_arg    = sink_arg;
+   61|    132|    ctx->now         = now;
+   62|    132|    (void)tc_register_service(ctx, PUS_SVC_TEST, svc17_check, svc17_exec,
+   63|    132|                              NULL);
+   64|    132|}
+   65|       |
+   66|       |int tc_register_service(tc_ctx_t *ctx, uint8_t service, tc_check_fn check,
+   67|       |                        tc_exec_fn exec, void *arg)
+   68|    144|{
+   69|    144|    size_t i;
+   70|       |
+   71|    144|    if (check == NULL || exec == NULL ||
+   72|    144|        ctx->service_count >= TC_MAX_SERVICES) {
+  ------------------
+  |---> MC/DC Decision Region (71:9) to (72:46)
+  |
+  |  Number of Conditions: 3
+  |     Condition C1 --> (71:9)
+  |     Condition C2 --> (71:26)
+  |     Condition C3 --> (72:9)
+  |
+  |  Executed MC/DC Test Vectors:
+  |
+  |     C1, C2, C3    Result
+  |  1 { F,  F,  F  = F      }
+  |  2 { T,  -,  -  = T      }
+  |  3 { F,  F,  T  = T      }
+  |  4 { F,  T,  -  = T      }
+  |
+  |  C1-Pair: covered: (1,2)
+  |  C2-Pair: covered: (1,4)
+  |  C3-Pair: covered: (1,3)
+  |  MC/DC Coverage for Decision: 100.00%
+  |
+  ------------------
+   73|      3|        return -1;
+   74|      3|    }
+   75|    171|    for (i = 0; i < ctx->service_count; i++) {
+   76|     31|        if (ctx->services[i].service == service) {
+   77|      1|            return -1;
+   78|      1|        }
+   79|     31|    }
+   80|    140|    ctx->services[ctx->service_count].service = service;
+   81|    140|    ctx->services[ctx->service_count].check   = check;
+   82|    140|    ctx->services[ctx->service_count].exec    = exec;
+   83|    140|    ctx->services[ctx->service_count].arg     = arg;
+   84|    140|    ctx->service_count++;
+   85|    140|    return 0;
+   86|    141|}
+   87|       |
+   88|       |int tc_emit_tm(tc_ctx_t *ctx, uint8_t service, uint8_t subtype,
+   89|       |               uint16_t dest_id, const uint8_t *data, size_t data_len)
+   90|    140|{
+   91|    140|    uint8_t packet[PUS_MAX_PACKET];
+   92|    140|    int len;
+   93|       |
+   94|    140|    len = pus_tm_build(&ctx->tm_src, service, subtype, dest_id, ctx->now(),
+   95|    140|                       data, data_len, packet, sizeof(packet));
+   96|    140|    if (len < 0) {
+   97|      1|        return len;
+   98|      1|    }
+   99|    139|    return ctx->sink(packet, (size_t)len, ctx->sink_arg);
+  100|    140|}
+  101|       |
+  102|       |void tc_count_link_error(tc_ctx_t *ctx)
+  103|      0|{
+  104|      0|    ctx->rejected = ctx->rejected + 1u;
+  105|      0|}
+  106|       |
+  107|       |void tc_handle(tc_ctx_t *ctx, const uint8_t *frame, size_t frame_len)
+  108|    133|{
+  109|    133|    pus_tc_t tc;
+  110|    133|    pus_fail_t code;
+  111|    133|    const tc_service_t *svc = NULL;
+  112|       |
+  113|       |    /* Checks 1 to 7: packet level. */
+  114|    133|    code = pus_tc_validate(frame, frame_len, ctx->tm_src.apid, &tc);
+  115|    133|    if (code == PUS_FAIL_NO_REPORT) {
+  116|      6|        ctx->rejected = ctx->rejected + 1u;
+  117|      6|        return;
+  118|      6|    }
+  119|       |
+  120|       |    /* Check 8: service implemented. */
+  121|    127|    if (code == PUS_OK) {
+  122|     11|        size_t i;      /* SA-03: scope reduced (cppcheck variableScope) */
+  123|     14|        for (i = 0; i < ctx->service_count; i++) {
+  124|     12|            if (ctx->services[i].service == tc.service) {
+  125|      9|                svc = &ctx->services[i];
+  126|      9|                break;
+  127|      9|            }
+  128|     12|        }
+  129|     11|        if (svc == NULL) {
+  130|      2|            code = PUS_FAIL_SERVICE;
+  131|      2|        }
+  132|     11|    }
+  133|       |
+  134|       |    /* Checks 9 and 10: subtype and application data, by the service. */
+  135|    127|    if (code == PUS_OK) {
+  136|      9|        code = svc->check(&tc, svc->arg);
+  137|      9|    }
+  138|       |
+  139|       |    /* Failure reports are sent whatever the acknowledgement flags say. */
+  140|    127|    if (code != PUS_OK) {
+  141|    120|        ctx->rejected = ctx->rejected + 1u;
+  142|    120|        report_failure(ctx, &tc, PUS_TM_1_ACCEPT_FAIL, code);
+  143|    120|        return; /* never executed */
+  144|    120|    }
+  145|       |
+  146|      7|    ctx->accepted = ctx->accepted + 1u;
+  147|      7|    if (tc.ack_flags & PUS_ACK_ACCEPTANCE) {
+  148|      6|        report_success(ctx, &tc, PUS_TM_1_ACCEPT_OK);
+  149|      6|    }
+  150|      7|    if (tc.ack_flags & PUS_ACK_START) {
+  151|      1|        report_success(ctx, &tc, PUS_TM_1_START_OK);
+  152|      1|    }
+  153|       |
+  154|      7|    code = svc->exec(&tc, ctx, svc->arg);
+  155|       |
+  156|      7|    if (code != PUS_OK) {
+  157|      2|        report_failure(ctx, &tc, PUS_TM_1_COMPLETE_FAIL, code);
+  158|      5|    } else if (tc.ack_flags & PUS_ACK_COMPLETION) {
+  159|      4|        report_success(ctx, &tc, PUS_TM_1_COMPLETE_OK);
+  160|      4|    } else {
+  161|       |        /* success, completion report not requested (MISRA 15.7, SA-04) */
+  162|      1|    }
+  163|      7|}
+
+labs/session-05/lab-5.1-monitoring/monitor.c:
+    1|       |/* Lab 5.1 - Parameter monitoring. See monitor.h. */
+    2|       |#include "monitor.h"
+    3|       |
+    4|       |#include <string.h>
+    5|       |
+    6|       |void mon_define(monitor_entry_t *e, uint16_t param_id,
+    7|       |                int32_t limit_low, int32_t limit_low_clear,
+    8|       |                int32_t limit_high_clear, int32_t limit_high,
+    9|       |                uint16_t persistence, uint16_t event_id, uint8_t severity)
+   10|     26|{
+   11|     26|    memset(e, 0, sizeof(*e));
+   12|     26|    e->param_id         = param_id;
+   13|     26|    e->limit_low        = limit_low;
+   14|     26|    e->limit_low_clear  = limit_low_clear;
+   15|     26|    e->limit_high_clear = limit_high_clear;
+   16|     26|    e->limit_high       = limit_high;
+   17|     26|    e->persistence      = persistence;
+   18|     26|    e->event_id         = event_id;
+   19|     26|    e->severity         = severity;
+   20|     26|    e->state            = MON_OK;
+   21|     26|    e->side             = MON_SIDE_NONE;
+   22|     26|    e->enabled          = 1u;
+   23|     26|}
+   24|       |
+   25|       |int mon_check_definition(const monitor_entry_t *e)
+   26|      5|{
+   27|      5|    if (e->persistence < 1u ||
+   28|      5|        !(e->limit_low < e->limit_low_clear) ||
+   29|      5|        !(e->limit_low_clear <= e->limit_high_clear) ||
+   30|      5|        !(e->limit_high_clear < e->limit_high)) {
+  ------------------
+  |---> MC/DC Decision Region (27:9) to (30:47)
+  |
+  |  Number of Conditions: 4
+  |     Condition C1 --> (27:9)
+  |     Condition C2 --> (28:9)
+  |     Condition C3 --> (29:9)
+  |     Condition C4 --> (30:9)
+  |
+  |  Executed MC/DC Test Vectors:
+  |
+  |     C1, C2, C3, C4    Result
+  |  1 { F,  F,  F,  F  = F      }
+  |  2 { T,  -,  -,  -  = T      }
+  |  3 { F,  F,  F,  T  = T      }
+  |  4 { F,  F,  T,  -  = T      }
+  |  5 { F,  T,  -,  -  = T      }
+  |
+  |  C1-Pair: covered: (1,2)
+  |  C2-Pair: covered: (1,5)
+  |  C3-Pair: covered: (1,4)
+  |  C4-Pair: covered: (1,3)
+  |  MC/DC Coverage for Decision: 100.00%
+  |
+  ------------------
+   31|      4|        return -1;
+   32|      4|    }
+   33|      1|    return 0;
+   34|      5|}
+   35|       |
+   36|       |static void reset_runtime(monitor_entry_t *e)
+   37|      7|{
+   38|      7|    e->state           = MON_OK;
+   39|      7|    e->side            = MON_SIDE_NONE;
+   40|      7|    e->violation_count = 0;
+   41|      7|    e->clear_count     = 0;
+   42|      7|}
+   43|       |
+   44|       |mon_transition_t mon_update(monitor_entry_t *e, int32_t value)
+   45|  1.09k|{
+   46|  1.09k|    mon_side_t side;
+   47|       |
+   48|  1.09k|    if (!e->enabled) {
+   49|    100|        return MON_NO_CHANGE;
+   50|    100|    }
+   51|       |
+   52|    991|    if (e->state == MON_ALARM) {
+   53|       |        /* Only a sample inside BOTH clear thresholds counts towards
+   54|       |         * leaving the alarm; anything else restarts the count. */
+   55|    563|        if (value >= e->limit_low_clear && value <= e->limit_high_clear) {
+  ------------------
+  |---> MC/DC Decision Region (55:13) to (55:72)
+  |
+  |  Number of Conditions: 2
+  |     Condition C1 --> (55:13)
+  |     Condition C2 --> (55:44)
+  |
+  |  Executed MC/DC Test Vectors:
+  |
+  |     C1, C2    Result
+  |  1 { F,  -  = F      }
+  |  2 { T,  F  = F      }
+  |  3 { T,  T  = T      }
+  |
+  |  C1-Pair: covered: (1,3)
+  |  C2-Pair: covered: (2,3)
+  |  MC/DC Coverage for Decision: 100.00%
+  |
+  ------------------
+   56|    110|            e->clear_count++;
+   57|    110|            if (e->clear_count >= e->persistence) {
+   58|      3|                reset_runtime(e);
+   59|      3|                return MON_CLEARED;
+   60|      3|            }
+   61|    453|        } else {
+   62|    453|            e->clear_count = 0;
+   63|    453|        }
+   64|    560|        return MON_NO_CHANGE;
+   65|    563|    }
+   66|       |
+   67|       |    /* OK or WARN: look for a violation of either limit. */
+   68|    428|    if (value > e->limit_high) {
+   69|    241|        side = MON_SIDE_HIGH;
+   70|    241|    } else if (value < e->limit_low) {
+   71|      6|        side = MON_SIDE_LOW;
+   72|    181|    } else {
+   73|    181|        side = MON_SIDE_NONE;
+   74|    181|    }
+   75|       |
+   76|    428|    if (side == MON_SIDE_NONE) {
+   77|       |        /* Requirement 4: any in limit sample resets the counter. A run
+   78|       |         * of violations that ends here never became an alarm: count it,
+   79|       |         * so the rejection of transients is visible in telemetry. */
+   80|    181|        if (e->violation_count > 0u) {
+   81|    151|            e->filtered++;
+   82|    151|        }
+   83|    181|        e->violation_count = 0;
+   84|    181|        e->state = MON_OK;
+   85|    181|        e->side  = MON_SIDE_NONE;
+   86|    181|        return MON_NO_CHANGE;
+   87|    181|    }
+   88|       |
+   89|    247|    if (side != e->side && e->violation_count > 0u) {
+  ------------------
+  |---> MC/DC Decision Region (89:9) to (89:51)
+  |
+  |  Number of Conditions: 2
+  |     Condition C1 --> (89:9)
+  |     Condition C2 --> (89:28)
+  |
+  |  Executed MC/DC Test Vectors:
+  |
+  |     C1, C2    Result
+  |  1 { F,  -  = F      }
+  |  2 { T,  F  = F      }
+  |  3 { T,  T  = T      }
+  |
+  |  C1-Pair: covered: (1,3)
+  |  C2-Pair: covered: (2,3)
+  |  MC/DC Coverage for Decision: 100.00%
+  |
+  ------------------
+   90|       |        /* Jumped from one limit to the other: a new, separate run. */
+   91|      2|        e->filtered++;
+   92|      2|        e->violation_count = 0;
+   93|      2|    }
+   94|    247|    e->side = side;
+   95|    247|    e->violation_count++;
+   96|       |
+   97|    247|    if (e->violation_count >= e->persistence) {
+   98|     14|        e->state           = MON_ALARM;
+   99|     14|        e->violation_count = 0;
+  100|     14|        e->clear_count     = 0;
+  101|     14|        return (side == MON_SIDE_HIGH) ? MON_RAISED_HIGH : MON_RAISED_LOW;
+  102|     14|    }
+  103|       |
+  104|    233|    e->state = MON_WARN;
+  105|    233|    return MON_NO_CHANGE;
+  106|    247|}
+  107|       |
+  108|       |void mon_set_enabled(monitor_entry_t *e, int enabled)
+  109|      4|{
+  110|      4|    reset_runtime(e);
+  111|      4|    e->enabled = enabled ? 1u : 0u;
+  112|      4|}
+  113|       |
+  114|       |monitor_entry_t *mon_find(monitor_entry_t *table, size_t n, uint16_t param_id)
+  115|      2|{
+  116|      2|    size_t i;
+  117|      6|    for (i = 0; i < n; i++) {
+  118|      5|        if (table[i].param_id == param_id) {
+  119|      1|            return &table[i];
+  120|      1|        }
+  121|      5|    }
+  122|      1|    return NULL;
+  123|      2|}
+  124|       |
+  125|       |void mon_table_run(monitor_entry_t *table, size_t n, mon_get_fn get,
+  126|       |                   mon_transition_fn on_transition, void *ctx)
+  127|     17|{
+  128|     17|    size_t i;
+  129|       |
+  130|     64|    for (i = 0; i < n; i++) {
+  131|     47|        int32_t value;
+  132|     47|        mon_transition_t tr;
+  133|       |
+  134|     47|        if (!table[i].enabled) {
+  135|     10|            continue;
+  136|     10|        }
+  137|     37|        value = get(table[i].param_id, ctx);
+  138|     37|        tr = mon_update(&table[i], value);
+  139|     37|        if (tr != MON_NO_CHANGE && on_transition != NULL) {
+  ------------------
+  |---> MC/DC Decision Region (139:13) to (139:57)
+  |
+  |  Number of Conditions: 2
+  |     Condition C1 --> (139:13)
+  |     Condition C2 --> (139:36)
+  |
+  |  Executed MC/DC Test Vectors:
+  |
+  |     C1, C2    Result
+  |  1 { F,  -  = F      }
+  |  2 { T,  F  = F      }
+  |  3 { T,  T  = T      }
+  |
+  |  C1-Pair: covered: (1,3)
+  |  C2-Pair: covered: (2,3)
+  |  MC/DC Coverage for Decision: 100.00%
+  |
+  ------------------
+  140|      1|            on_transition(&table[i], tr, value, ctx);
+  141|      1|        }
+  142|     37|    }
+  143|     17|}
+
+labs/session-05/lab-5.2-liveness/nvstate.c:
+    1|       |/* Lab 5.2 - FDIR non volatile record. See nvstate.h. */
+    2|       |#include "nvstate.h"
+    3|       |
+    4|       |#include <string.h>
+    5|       |
+    6|       |#include "crc16.h"
+    7|       |
+    8|       |static void put16(uint8_t *p, uint16_t v)
+    9|     28|{
+   10|     28|    p[0] = (uint8_t)(v >> 8);
+   11|     28|    p[1] = (uint8_t)(v & 0xFFu);
+   12|     28|}
+   13|       |
+   14|       |static void put32(uint8_t *p, uint32_t v)
+   15|      8|{
+   16|      8|    p[0] = (uint8_t)(v >> 24);
+   17|      8|    p[1] = (uint8_t)((v >> 16) & 0xFFu);
+   18|      8|    p[2] = (uint8_t)((v >> 8) & 0xFFu);
+   19|      8|    p[3] = (uint8_t)(v & 0xFFu);
+   20|      8|}
+   21|       |
+   22|       |static uint16_t get16(const uint8_t *p)
+   23|    389|{
+   24|    389|    return (uint16_t)(((uint16_t)p[0] << 8) | p[1]);
+   25|    389|}
+   26|       |
+   27|       |static uint32_t get32(const uint8_t *p)
+   28|    232|{
+   29|    232|    return ((uint32_t)p[0] << 24) | ((uint32_t)p[1] << 16) |
+   30|    232|           ((uint32_t)p[2] << 8) | (uint32_t)p[3];
+   31|    232|}
+   32|       |
+   33|       |void nv_defaults(nv_record_t *r)
+   34|    228|{
+   35|    228|    memset(r, 0, sizeof(*r));
+   36|    228|    r->last_esc_task = 0xFFu;
+   37|    228|}
+   38|       |
+   39|       |/*
+   40|       | *  0  magic u32          4  version u16        6  boot_count u16
+   41|       | *  8  reset_count u16   10  pending u8        11  last_reset u8
+   42|       | * 12  esc_count u16     14  esc_task u8       15  esc_action u8
+   43|       | * 16  esc_boot u16      18  esc_uptime u32    22  safe_src u8
+   44|       | * 23  spare u8          24  safe_detail u16   26  crc u16
+   45|       | */
+   46|       |void nv_encode(const nv_record_t *r, uint8_t image[NV_IMAGE_LEN])
+   47|      4|{
+   48|      4|    put32(&image[0], NV_MAGIC);
+   49|      4|    put16(&image[4], NV_VERSION);
+   50|      4|    put16(&image[6], r->boot_count);
+   51|      4|    put16(&image[8], r->reset_count);
+   52|      4|    image[10] = r->pending_reset;
+   53|      4|    image[11] = r->last_reset_cause;
+   54|      4|    put16(&image[12], r->escalation_count);
+   55|      4|    image[14] = r->last_esc_task;
+   56|      4|    image[15] = r->last_esc_action;
+   57|      4|    put16(&image[16], r->last_esc_boot);
+   58|      4|    put32(&image[18], r->last_esc_uptime_s);
+   59|      4|    image[22] = r->last_safe_src;
+   60|      4|    image[23] = r->spare;
+   61|      4|    put16(&image[24], r->last_safe_detail);
+   62|      4|    put16(&image[26], crc16_ccitt(image, NV_IMAGE_LEN - 2u));
+   63|      4|}
+   64|       |
+   65|       |int nv_decode(const uint8_t image[NV_IMAGE_LEN], nv_record_t *r)
+   66|    229|{
+   67|    229|    if (get32(&image[0]) != NV_MAGIC || get16(&image[4]) != NV_VERSION ||
+   68|    229|        crc16_ccitt(image, NV_IMAGE_LEN - 2u) != get16(&image[26])) {
+  ------------------
+  |---> MC/DC Decision Region (67:9) to (68:67)
+  |
+  |  Number of Conditions: 3
+  |     Condition C1 --> (67:9)
+  |     Condition C2 --> (67:41)
+  |     Condition C3 --> (68:9)
+  |
+  |  Executed MC/DC Test Vectors:
+  |
+  |     C1, C2, C3    Result
+  |  1 { F,  F,  F  = F      }
+  |  2 { T,  -,  -  = T      }
+  |  3 { F,  F,  T  = T      }
+  |  4 { F,  T,  -  = T      }
+  |
+  |  C1-Pair: covered: (1,2)
+  |  C2-Pair: covered: (1,4)
+  |  C3-Pair: covered: (1,3)
+  |  MC/DC Coverage for Decision: 100.00%
+  |
+  ------------------
+   69|    226|        nv_defaults(r);
+   70|    226|        return -1;
+   71|    226|    }
+   72|      3|    r->boot_count        = get16(&image[6]);
+   73|      3|    r->reset_count       = get16(&image[8]);
+   74|      3|    r->pending_reset     = image[10];
+   75|      3|    r->last_reset_cause  = image[11];
+   76|      3|    r->escalation_count  = get16(&image[12]);
+   77|      3|    r->last_esc_task     = image[14];
+   78|      3|    r->last_esc_action   = image[15];
+   79|      3|    r->last_esc_boot     = get16(&image[16]);
+   80|      3|    r->last_esc_uptime_s = get32(&image[18]);
+   81|      3|    r->last_safe_src     = image[22];
+   82|      3|    r->spare             = image[23];
+   83|      3|    r->last_safe_detail  = get16(&image[24]);
+   84|      3|    return 0;
+   85|    229|}
+   86|       |
+   87|       |nv_reset_cause_t nv_boot(nv_record_t *r, const uint8_t image[NV_IMAGE_LEN],
+   88|       |                         int *was_valid)
+   89|      3|{
+   90|      3|    int valid = (nv_decode(image, r) == 0);
+   91|      3|    nv_reset_cause_t cause = NV_RESET_NONE;
+   92|       |
+   93|      3|    if (valid && r->pending_reset != NV_RESET_NONE) {
+  ------------------
+  |---> MC/DC Decision Region (93:9) to (93:51)
+  |
+  |  Number of Conditions: 2
+  |     Condition C1 --> (93:9)
+  |     Condition C2 --> (93:18)
+  |
+  |  Executed MC/DC Test Vectors:
+  |
+  |     C1, C2    Result
+  |  1 { F,  -  = F      }
+  |  2 { T,  F  = F      }
+  |  3 { T,  T  = T      }
+  |
+  |  C1-Pair: covered: (1,3)
+  |  C2-Pair: covered: (2,3)
+  |  MC/DC Coverage for Decision: 100.00%
+  |
+  ------------------
+   94|      1|        cause = (nv_reset_cause_t)r->pending_reset;
+   95|      1|        r->reset_count = (uint16_t)(r->reset_count + 1u);
+   96|      1|    }
+   97|      3|    r->last_reset_cause = (uint8_t)cause;
+   98|      3|    r->pending_reset    = NV_RESET_NONE;
+   99|      3|    r->boot_count       = (uint16_t)(r->boot_count + 1u);
+  100|      3|    if (was_valid != NULL) {
+  101|      3|        *was_valid = valid;
+  102|      3|    }
+  103|      3|    return cause;
+  104|      3|}
+
+labs/session-05/lab-5.2-liveness/supervisor.c:
+    1|       |/* Lab 5.2 - Task liveness supervision. See supervisor.h. */
+    2|       |#include "supervisor.h"
+    3|       |
+    4|       |#include <string.h>
+    5|       |
+    6|       |int sup_init(supervisor_t *s, uint32_t check_period_ms, uint32_t window_ms,
+    7|       |             uint8_t max_restarts, const sup_ops_t *ops, void *arg)
+    8|     16|{
+    9|     16|    if (max_restarts == 0u || max_restarts > SUP_MAX_RESTARTS) {
+  ------------------
+  |---> MC/DC Decision Region (9:9) to (9:62)
+  |
+  |  Number of Conditions: 2
+  |     Condition C1 --> (9:9)
+  |     Condition C2 --> (9:31)
+  |
+  |  Executed MC/DC Test Vectors:
+  |
+  |     C1, C2    Result
+  |  1 { F,  F  = F      }
+  |  2 { T,  -  = T      }
+  |  3 { F,  T  = T      }
+  |
+  |  C1-Pair: covered: (1,2)
+  |  C2-Pair: covered: (1,3)
+  |  MC/DC Coverage for Decision: 100.00%
+  |
+  ------------------
+   10|      2|        return -1;
+   11|      2|    }
+   12|     14|    memset(s, 0, sizeof(*s));
+   13|     14|    s->check_period_ms = check_period_ms;
+   14|     14|    s->window_ms       = window_ms;
+   15|     14|    s->max_restarts    = max_restarts;
+   16|     14|    s->ops             = ops;
+   17|     14|    s->arg             = arg;
+   18|     14|    return 0;
+   19|     16|}
+   20|       |
+   21|       |int sup_register(supervisor_t *s, const char *name, uint32_t period_ms,
+   22|       |                 uint32_t os_id, uint8_t escalation)
+   23|     41|{
+   24|     41|    sup_task_t *t;
+   25|       |
+   26|     41|    if (s->count >= SUP_MAX_TASKS || period_ms >= s->check_period_ms) {
+  ------------------
+  |---> MC/DC Decision Region (26:9) to (26:69)
+  |
+  |  Number of Conditions: 2
+  |     Condition C1 --> (26:9)
+  |     Condition C2 --> (26:38)
+  |
+  |  Executed MC/DC Test Vectors:
+  |
+  |     C1, C2    Result
+  |  1 { F,  F  = F      }
+  |  2 { T,  -  = T      }
+  |  3 { F,  T  = T      }
+  |
+  |  C1-Pair: covered: (1,2)
+  |  C2-Pair: covered: (1,3)
+  |  MC/DC Coverage for Decision: 100.00%
+  |
+  ------------------
+   27|      2|        return -1;
+   28|      2|    }
+   29|     39|    t = &s->tasks[s->count];
+   30|     39|    memset(t, 0, sizeof(*t));
+   31|     39|    t->name       = name;
+   32|     39|    t->period_ms  = period_ms;
+   33|     39|    t->os_id      = os_id;
+   34|     39|    t->escalation = escalation;
+   35|     39|    t->status     = SUP_TASK_OK;
+   36|     39|    return (int)s->count++;
+   37|     41|}
+   38|       |
+   39|       |uint8_t sup_restarts_in_window(const supervisor_t *s, size_t idx,
+   40|       |                               uint32_t now_ms)
+   41|     32|{
+   42|     32|    const sup_task_t *t = &s->tasks[idx];
+   43|     32|    uint8_t n = 0;
+   44|     32|    uint8_t i;
+   45|     32|    uint8_t recorded = (t->restarts_total < s->max_restarts)
+   46|     32|                       ? t->restarts_total : s->max_restarts;
+   47|       |
+   48|     83|    for (i = 0; i < recorded; i++) {
+   49|       |        /* Unsigned subtraction: correct across the 32 bit wrap. */
+   50|     51|        if ((uint32_t)(now_ms - t->restart_ms[i]) < s->window_ms) {
+   51|     33|            n++;
+   52|     33|        }
+   53|     51|    }
+   54|     32|    return n;
+   55|     32|}
+   56|       |
+   57|       |static void event(supervisor_t *s, uint16_t id, size_t idx, uint32_t value)
+   58|     68|{
+   59|     68|    if (s->ops->event != NULL) {
+   60|     68|        s->ops->event(s->arg, id, idx, value);
+   61|     68|    }
+   62|     68|}
+   63|       |
+   64|       |void sup_check(supervisor_t *s, uint32_t now_ms)
+   65|  2.41k|{
+   66|  2.41k|    size_t i;
+   67|       |
+   68|  9.64k|    for (i = 0; i < s->count; i++) {
+   69|  7.23k|        sup_task_t *t = &s->tasks[i];
+   70|  7.23k|        uint32_t hb = t->heartbeat;   /* one read of the task's word */
+   71|  7.23k|        uint8_t recent;
+   72|  7.23k|        int inhibited;
+   73|       |
+   74|  7.23k|        if (t->status == SUP_TASK_FAILED) {
+   75|     45|            continue;
+   76|     45|        }
+   77|       |
+   78|  7.18k|        if (hb != t->last_seen) {
+   79|  7.14k|            t->last_seen = hb;
+   80|  7.14k|            if (t->status == SUP_TASK_MISSING) {
+   81|      1|                t->status = SUP_TASK_OK;
+   82|      1|                event(s, SUP_EVT_TASK_RECOVERED, i, hb);
+   83|      1|            }
+   84|  7.14k|            continue;
+   85|  7.14k|        }
+   86|       |
+   87|       |        /* No heartbeat during a whole check interval. */
+   88|     44|        inhibited = (s->ops->actions_inhibited != NULL &&
+   89|     44|                     s->ops->actions_inhibited(s->arg));
+  ------------------
+  |---> MC/DC Decision Region (88:22) to (89:55)
+  |
+  |  Number of Conditions: 2
+  |     Condition C1 --> (88:22)
+  |     Condition C2 --> (89:22)
+  |
+  |  Executed MC/DC Test Vectors:
+  |
+  |     C1, C2    Result
+  |  1 { F,  -  = F      }
+  |  2 { T,  F  = F      }
+  |  3 { T,  T  = T      }
+  |
+  |  C1-Pair: covered: (1,3)
+  |  C2-Pair: covered: (2,3)
+  |  MC/DC Coverage for Decision: 100.00%
+  |
+  ------------------
+   90|       |
+   91|     44|        if (t->status == SUP_TASK_MISSING) {
+   92|     11|            if (inhibited) {
+   93|     10|                continue;   /* already reported once for this episode */
+   94|     10|            }
+   95|       |            /* Inhibit lifted while the task is still silent: act now,
+   96|       |             * without reporting the same miss a second time. */
+   97|     33|        } else {
+   98|     33|            t->misses_total++;
+   99|     33|            event(s, SUP_EVT_HEARTBEAT_MISSED, i, t->misses_total);
+  100|     33|            if (inhibited) {
+  101|      3|                t->status = SUP_TASK_MISSING;
+  102|      3|                event(s, SUP_EVT_ACTION_INHIBITED, i, 1u);
+  103|      3|                continue;
+  104|      3|            }
+  105|     33|        }
+  106|     31|        t->status = SUP_TASK_OK;
+  107|       |
+  108|     31|        recent = sup_restarts_in_window(s, i, now_ms);
+  109|     31|        if (recent >= s->max_restarts) {
+  110|       |            /* Bounded: do not restart again, escalate instead. */
+  111|      3|            t->status = SUP_TASK_FAILED;
+  112|      3|            event(s, SUP_EVT_TASK_ESCALATED, i, recent);
+  113|      3|            if (s->ops->escalate != NULL) {
+  114|      3|                s->ops->escalate(s->arg, i, t->escalation);
+  115|      3|            }
+  116|      3|            continue;
+  117|      3|        }
+  118|       |
+  119|     28|        t->restart_ms[t->restart_next] = now_ms;
+  120|     28|        t->restart_next = (uint8_t)((t->restart_next + 1u) % s->max_restarts);
+  121|     28|        if (t->restarts_total < 255u) {
+  122|     28|            t->restarts_total++;
+  123|     28|        }
+  124|     28|        if (s->ops->restart != NULL) {
+  125|     28|            (void)s->ops->restart(s->arg, i, t->os_id);
+  126|     28|        }
+  127|     28|        event(s, SUP_EVT_TASK_RESTARTED, i, (uint32_t)recent + 1u);
+  128|     28|    }
+  129|  2.41k|}
+
+labs/session-05/lab-5.2-liveness/watchdog.c:
+    1|       |/* Lab 5.2 - Watchdog model. See watchdog.h. */
+    2|       |#include "watchdog.h"
+    3|       |
+    4|       |void wdg_init(wdg_t *w, uint32_t timeout_ms, uint32_t grace_ms)
+    5|      3|{
+    6|      3|    w->timeout_ms       = timeout_ms;
+    7|      3|    w->grace_ms         = grace_ms;
+    8|      3|    w->since_kick_ms    = 0;
+    9|      3|    w->since_warning_ms = 0;
+   10|      3|    w->state            = WDG_RUNNING;
+   11|      3|}
+   12|       |
+   13|       |void wdg_kick(wdg_t *w)
+   14|    501|{
+   15|       |    /* A single aligned store. The tick runs in interrupt context and
+   16|       |     * cannot be preempted by this task, so no lock is needed. */
+   17|    501|    if (w->state == WDG_RUNNING) {
+   18|    500|        w->since_kick_ms = 0;
+   19|    500|    }
+   20|    501|}
+   21|       |
+   22|       |wdg_action_t wdg_tick(wdg_t *w, uint32_t elapsed_ms)
+   23|  10.1k|{
+   24|  10.1k|    switch (w->state) {
+   25|  10.1k|    case WDG_RUNNING:
+   26|  10.1k|        w->since_kick_ms = w->since_kick_ms + elapsed_ms;
+   27|  10.1k|        if (w->since_kick_ms >= w->timeout_ms) {
+   28|      2|            w->state = WDG_WARNED;
+   29|      2|            w->since_warning_ms = 0;
+   30|      2|            return WDG_EARLY_WARNING;
+   31|      2|        }
+   32|  10.0k|        return WDG_NONE;
+   33|       |
+   34|     20|    case WDG_WARNED:
+   35|     20|        w->since_warning_ms += elapsed_ms;
+   36|     20|        if (w->since_warning_ms >= w->grace_ms) {
+   37|      2|            w->state = WDG_EXPIRED;
+   38|      2|            return WDG_RESET;
+   39|      2|        }
+   40|     18|        return WDG_NONE;
+   41|       |
+   42|     50|    case WDG_EXPIRED:
+   43|     50|    default:
+   44|     50|        return WDG_NONE;
+   45|  10.1k|    }
+   46|  10.1k|}
+
+labs/session-05/lab-5.3-safe-mode/schedule.c:
+    1|       |/* Lab 5.3 - Onboard time based schedule. See schedule.h. */
+    2|       |#include "schedule.h"
+    3|       |
+    4|       |#include <string.h>
+    5|       |
+    6|       |void sched_init(sched_t *s)
+    7|      6|{
+    8|      6|    memset(s, 0, sizeof(*s));
+    9|      6|    s->enabled = 1u;
+   10|      6|}
+   11|       |
+   12|       |int sched_insert(sched_t *s, uint32_t release_s, const uint8_t *tc,
+   13|       |                 size_t len)
+   14|     21|{
+   15|     21|    size_t i;
+   16|     21|    if (tc == NULL || len == 0u || len > SCHED_MAX_TC) {
+  ------------------
+  |---> MC/DC Decision Region (16:9) to (16:54)
+  |
+  |  Number of Conditions: 3
+  |     Condition C1 --> (16:9)
+  |     Condition C2 --> (16:23)
+  |     Condition C3 --> (16:36)
+  |
+  |  Executed MC/DC Test Vectors:
+  |
+  |     C1, C2, C3    Result
+  |  1 { F,  F,  F  = F      }
+  |  2 { T,  -,  -  = T      }
+  |  3 { F,  F,  T  = T      }
+  |  4 { F,  T,  -  = T      }
+  |
+  |  C1-Pair: covered: (1,2)
+  |  C2-Pair: covered: (1,4)
+  |  C3-Pair: covered: (1,3)
+  |  MC/DC Coverage for Decision: 100.00%
+  |
+  ------------------
+   17|      3|        return -2;
+   18|      3|    }
+   19|     61|    for (i = 0; i < SCHED_MAX_ENTRIES; i++) {
+   20|     60|        if (!s->e[i].used) {
+   21|     17|            s->e[i].used = 1u;
+   22|     17|            s->e[i].release_s = release_s;
+   23|     17|            s->e[i].len = (uint16_t)len;
+   24|     17|            memcpy(s->e[i].tc, tc, len);
+   25|     17|            return 0;
+   26|     17|        }
+   27|     60|    }
+   28|      1|    return -1;
+   29|     18|}
+   30|       |
+   31|       |void sched_reset(sched_t *s)
+   32|      1|{
+   33|      1|    size_t i;
+   34|      9|    for (i = 0; i < SCHED_MAX_ENTRIES; i++) {
+   35|      8|        s->e[i].used = 0u;
+   36|      8|    }
+   37|      1|}
+   38|       |
+   39|       |void sched_set_enabled(sched_t *s, int enabled)
+   40|      3|{
+   41|      3|    s->enabled = enabled ? 1u : 0u;
+   42|      3|}
+   43|       |
+   44|       |size_t sched_count(const sched_t *s)
+   45|      5|{
+   46|      5|    size_t i, n = 0;
+   47|     45|    for (i = 0; i < SCHED_MAX_ENTRIES; i++) {
+   48|     40|        n += s->e[i].used ? 1u : 0u;
+   49|     40|    }
+   50|      5|    return n;
+   51|      5|}
+   52|       |
+   53|       |size_t sched_release_due(sched_t *s, uint32_t now_s, sched_release_fn fn,
+   54|       |                         void *arg)
+   55|      6|{
+   56|      6|    size_t released = 0;
+   57|       |
+   58|     13|    while (s->enabled) {
+   59|     11|        size_t i, best = SCHED_MAX_ENTRIES;
+   60|     99|        for (i = 0; i < SCHED_MAX_ENTRIES; i++) {
+   61|     88|            if (s->e[i].used && s->e[i].release_s <= now_s &&
+   62|     88|                (best == SCHED_MAX_ENTRIES ||
+   63|     12|                 s->e[i].release_s < s->e[best].release_s)) {
+  ------------------
+  |---> MC/DC Decision Region (61:17) to (63:59)
+  |
+  |  Number of Conditions: 4
+  |     Condition C1 --> (61:17)
+  |     Condition C2 --> (61:33)
+  |     Condition C3 --> (62:18)
+  |     Condition C4 --> (63:18)
+  |
+  |  Executed MC/DC Test Vectors:
+  |
+  |     C1, C2, C3, C4    Result
+  |  1 { F,  -,  -,  -  = F      }
+  |  2 { T,  F,  -,  -  = F      }
+  |  3 { T,  T,  F,  F  = F      }
+  |  4 { T,  T,  T,  -  = T      }
+  |  5 { T,  T,  F,  T  = T      }
+  |
+  |  C1-Pair: covered: (1,4)
+  |  C2-Pair: covered: (2,4)
+  |  C3-Pair: covered: (3,4)
+  |  C4-Pair: covered: (3,5)
+  |  MC/DC Coverage for Decision: 100.00%
+  |
+  ------------------
+   64|      8|                best = i;
+   65|      8|            }
+   66|     88|        }
+   67|     11|        if (best == SCHED_MAX_ENTRIES) {
+   68|      4|            break;
+   69|      4|        }
+   70|       |        /* Remove before releasing: a released command may itself touch
+   71|       |         * the schedule (disable it, insert a new activity). */
+   72|      7|        {
+   73|      7|            sched_entry_t e = s->e[best];
+   74|      7|            s->e[best].used = 0u;
+   75|      7|            fn(e.tc, e.len, arg);
+   76|      7|        }
+   77|      7|        released++;
+   78|      7|    }
+   79|      6|    return released;
+   80|      6|}
+
+labs/session-06/lab-6.2-generation/generated/mode_sm.c:
+    1|       |/*
+    2|       | * GENERATED FILE - DO NOT EDIT.
+    3|       | *
+    4|       | * State machine implementation.
+    5|       | * Model     : mode_machine.yaml ("vehicle_mode", version 3)
+    6|       | * Model hash: sha256:46d8922ca14ac2917bc4bf7ba7d5c85a3dc0ad984d941a39f8f728d665cebf66
+    7|       | * Generator : modelgen.py 1.1, sha256:358817262c6f4d3c3635a50f045af71b94bbf802d79d4401d16e733e0dddbb3f
+    8|       | *
+    9|       | * Change the model or the generator and regenerate. `make check-generated`
+   10|       | * fails if this file differs from a fresh generation.
+   11|       | */
+   12|       |#include <stdint.h>
+   13|       |
+   14|       |#include "mode_sm.h"
+   15|       |
+   16|    896|#define BIT(e) ((uint32_t)1U << (uint32_t)(e))
+   17|       |
+   18|       |/* Event classes (semantics: unconsumed_one_shot, unconsumed_latched). */
+   19|       |static const uint32_t ONE_SHOT = BIT(MODE_SM_EV_TC_MODE_NOMINAL) | BIT(MODE_SM_EV_TC_MODE_DEGRADED) | BIT(MODE_SM_EV_TC_MODE_SAFE) | BIT(MODE_SM_EV_FAULT_CLEARED);
+   20|       |static const uint32_t LATCHED = BIT(MODE_SM_EV_FAULT_NONCRITICAL) | BIT(MODE_SM_EV_FAULT_CRITICAL);
+   21|       |/* Ground commands (semantics: ignored_ground_command). */
+   22|       |static const uint32_t GROUND = BIT(MODE_SM_EV_TC_MODE_NOMINAL) | BIT(MODE_SM_EV_TC_MODE_DEGRADED) | BIT(MODE_SM_EV_TC_MODE_SAFE);
+   23|       |
+   24|       |/* Events explicitly ignored, per state (completeness). */
+   25|       |static const uint32_t IGNORED[MODE_SM_STATE_COUNT] = {
+   26|       |    BIT(MODE_SM_EV_TC_MODE_NOMINAL) | BIT(MODE_SM_EV_FAULT_CLEARED),   /* NOMINAL */
+   27|       |    BIT(MODE_SM_EV_TC_MODE_DEGRADED) | BIT(MODE_SM_EV_FAULT_NONCRITICAL) | BIT(MODE_SM_EV_FAULT_CLEARED),   /* DEGRADED */
+   28|       |    BIT(MODE_SM_EV_TC_MODE_SAFE) | BIT(MODE_SM_EV_FAULT_CRITICAL) | BIT(MODE_SM_EV_FAULT_NONCRITICAL) | BIT(MODE_SM_EV_FAULT_CLEARED),   /* SAFE */
+   29|       |};
+   30|       |
+   31|       |/* NOMINAL on_entry */
+   32|       |static void enter_NOMINAL(mode_sm_t *sm, const mode_sm_payload_t *cause)
+   33|     32|{
+   34|     32|    sm->state = MODE_SM_NOMINAL;
+   35|     32|    mode_sm_action_payload_enable(sm->user, cause);
+   36|     32|    mode_sm_action_hk_rate_normal(sm->user, cause);
+   37|     32|}
+   38|       |
+   39|       |/* DEGRADED on_entry */
+   40|       |static void enter_DEGRADED(mode_sm_t *sm, const mode_sm_payload_t *cause)
+   41|     12|{
+   42|     12|    sm->state = MODE_SM_DEGRADED;
+   43|     12|    mode_sm_action_payload_suspend(sm->user, cause);
+   44|     12|    mode_sm_action_hk_rate_high(sm->user, cause);
+   45|     12|    mode_sm_action_monitors_tighten(sm->user, cause);
+   46|     12|}
+   47|       |
+   48|       |/* SAFE on_entry */
+   49|       |static void enter_SAFE(mode_sm_t *sm, const mode_sm_payload_t *cause)
+   50|     13|{
+   51|     13|    sm->state = MODE_SM_SAFE;
+   52|     13|    mode_sm_action_payload_off(sm->user, cause);
+   53|     13|    mode_sm_action_schedule_suspend(sm->user, cause);
+   54|     13|    mode_sm_action_hk_minimal(sm->user, cause);
+   55|     13|    mode_sm_action_monitors_tighten(sm->user, cause);
+   56|     13|    mode_sm_action_sun_pointing(sm->user, cause);
+   57|     13|    mode_sm_action_rx_guarantee(sm->user, cause);
+   58|     13|}
+   59|       |
+   60|       |/* SAFE on_exit */
+   61|       |static void exit_SAFE(mode_sm_t *sm, const mode_sm_payload_t *cause)
+   62|      2|{
+   63|      2|    mode_sm_action_sun_pointing_release(sm->user, cause);
+   64|      2|}
+   65|       |
+   66|       |/* T01: NOMINAL -> SAFE on tc_mode_safe [true], priority 1  MM-070 */
+   67|       |static void fire_T01(mode_sm_t *sm, mode_sm_result_t *r)
+   68|      4|{
+   69|      4|    const mode_sm_payload_t *cause = &sm->payload[MODE_SM_EV_TC_MODE_SAFE];
+   70|      4|    enter_SAFE(sm, cause);
+   71|      4|    mode_sm_on_transition(sm->user, MODE_SM_NOMINAL, MODE_SM_SAFE, MODE_SM_EV_TC_MODE_SAFE, cause);
+   72|      4|    r->kind = MODE_SM_STEP_TRANSITION;
+   73|      4|    r->transition = 1U;
+   74|      4|    r->from = MODE_SM_NOMINAL;
+   75|      4|    r->to = MODE_SM_SAFE;
+   76|      4|    r->event = MODE_SM_EV_TC_MODE_SAFE;
+   77|      4|}
+   78|       |
+   79|       |/* T02: NOMINAL -> SAFE on fault_critical [!fdir_inhibited], priority 2  MM-040 */
+   80|       |static void fire_T02(mode_sm_t *sm, mode_sm_result_t *r)
+   81|      4|{
+   82|      4|    const mode_sm_payload_t *cause = &sm->payload[MODE_SM_EV_FAULT_CRITICAL];
+   83|      4|    enter_SAFE(sm, cause);
+   84|      4|    mode_sm_on_transition(sm->user, MODE_SM_NOMINAL, MODE_SM_SAFE, MODE_SM_EV_FAULT_CRITICAL, cause);
+   85|      4|    r->kind = MODE_SM_STEP_TRANSITION;
+   86|      4|    r->transition = 2U;
+   87|      4|    r->from = MODE_SM_NOMINAL;
+   88|      4|    r->to = MODE_SM_SAFE;
+   89|      4|    r->event = MODE_SM_EV_FAULT_CRITICAL;
+   90|      4|}
+   91|       |
+   92|       |/* T03: NOMINAL -> DEGRADED on tc_mode_degraded [true], priority 3  MM-070 */
+   93|       |static void fire_T03(mode_sm_t *sm, mode_sm_result_t *r)
+   94|      9|{
+   95|      9|    const mode_sm_payload_t *cause = &sm->payload[MODE_SM_EV_TC_MODE_DEGRADED];
+   96|      9|    enter_DEGRADED(sm, cause);
+   97|      9|    mode_sm_on_transition(sm->user, MODE_SM_NOMINAL, MODE_SM_DEGRADED, MODE_SM_EV_TC_MODE_DEGRADED, cause);
+   98|      9|    r->kind = MODE_SM_STEP_TRANSITION;
+   99|      9|    r->transition = 3U;
+  100|      9|    r->from = MODE_SM_NOMINAL;
+  101|      9|    r->to = MODE_SM_DEGRADED;
+  102|      9|    r->event = MODE_SM_EV_TC_MODE_DEGRADED;
+  103|      9|}
+  104|       |
+  105|       |/* T04: NOMINAL -> DEGRADED on fault_noncritical [!fdir_inhibited], priority 4  MM-040 */
+  106|       |static void fire_T04(mode_sm_t *sm, mode_sm_result_t *r)
+  107|      2|{
+  108|      2|    const mode_sm_payload_t *cause = &sm->payload[MODE_SM_EV_FAULT_NONCRITICAL];
+  109|      2|    enter_DEGRADED(sm, cause);
+  110|      2|    mode_sm_on_transition(sm->user, MODE_SM_NOMINAL, MODE_SM_DEGRADED, MODE_SM_EV_FAULT_NONCRITICAL, cause);
+  111|      2|    r->kind = MODE_SM_STEP_TRANSITION;
+  112|      2|    r->transition = 4U;
+  113|      2|    r->from = MODE_SM_NOMINAL;
+  114|      2|    r->to = MODE_SM_DEGRADED;
+  115|      2|    r->event = MODE_SM_EV_FAULT_NONCRITICAL;
+  116|      2|}
+  117|       |
+  118|       |/* T05: NOMINAL (internal) on fault_critical [fdir_inhibited], priority 5  MM-060 */
+  119|       |static void fire_T05(mode_sm_t *sm, mode_sm_result_t *r)
+  120|      4|{
+  121|      4|    const mode_sm_payload_t *cause = &sm->payload[MODE_SM_EV_FAULT_CRITICAL];
+  122|      4|    mode_sm_action_report_action_inhibited(sm->user, cause);
+  123|      4|    r->kind = MODE_SM_STEP_INTERNAL;
+  124|      4|    r->transition = 5U;
+  125|      4|    r->from = MODE_SM_NOMINAL;
+  126|      4|    r->to = MODE_SM_NOMINAL;
+  127|      4|    r->event = MODE_SM_EV_FAULT_CRITICAL;
+  128|      4|}
+  129|       |
+  130|       |/* T06: NOMINAL (internal) on fault_noncritical [fdir_inhibited], priority 6  MM-060 */
+  131|       |static void fire_T06(mode_sm_t *sm, mode_sm_result_t *r)
+  132|      1|{
+  133|      1|    const mode_sm_payload_t *cause = &sm->payload[MODE_SM_EV_FAULT_NONCRITICAL];
+  134|      1|    mode_sm_action_report_action_inhibited(sm->user, cause);
+  135|      1|    r->kind = MODE_SM_STEP_INTERNAL;
+  136|      1|    r->transition = 6U;
+  137|      1|    r->from = MODE_SM_NOMINAL;
+  138|      1|    r->to = MODE_SM_NOMINAL;
+  139|      1|    r->event = MODE_SM_EV_FAULT_NONCRITICAL;
+  140|      1|}
+  141|       |
+  142|       |/* T07: DEGRADED -> SAFE on tc_mode_safe [true], priority 1  MM-070 */
+  143|       |static void fire_T07(mode_sm_t *sm, mode_sm_result_t *r)
+  144|      1|{
+  145|      1|    const mode_sm_payload_t *cause = &sm->payload[MODE_SM_EV_TC_MODE_SAFE];
+  146|      1|    enter_SAFE(sm, cause);
+  147|      1|    mode_sm_on_transition(sm->user, MODE_SM_DEGRADED, MODE_SM_SAFE, MODE_SM_EV_TC_MODE_SAFE, cause);
+  148|      1|    r->kind = MODE_SM_STEP_TRANSITION;
+  149|      1|    r->transition = 7U;
+  150|      1|    r->from = MODE_SM_DEGRADED;
+  151|      1|    r->to = MODE_SM_SAFE;
+  152|      1|    r->event = MODE_SM_EV_TC_MODE_SAFE;
+  153|      1|}
+  154|       |
+  155|       |/* T08: DEGRADED -> SAFE on fault_critical [!fdir_inhibited], priority 2  MM-040 */
+  156|       |static void fire_T08(mode_sm_t *sm, mode_sm_result_t *r)
+  157|      1|{
+  158|      1|    const mode_sm_payload_t *cause = &sm->payload[MODE_SM_EV_FAULT_CRITICAL];
+  159|      1|    enter_SAFE(sm, cause);
+  160|      1|    mode_sm_on_transition(sm->user, MODE_SM_DEGRADED, MODE_SM_SAFE, MODE_SM_EV_FAULT_CRITICAL, cause);
+  161|      1|    r->kind = MODE_SM_STEP_TRANSITION;
+  162|      1|    r->transition = 8U;
+  163|      1|    r->from = MODE_SM_DEGRADED;
+  164|      1|    r->to = MODE_SM_SAFE;
+  165|      1|    r->event = MODE_SM_EV_FAULT_CRITICAL;
+  166|      1|}
+  167|       |
+  168|       |/* T09: DEGRADED -> NOMINAL on tc_mode_nominal [true], priority 3  MM-010 */
+  169|       |static void fire_T09(mode_sm_t *sm, mode_sm_result_t *r)
+  170|      3|{
+  171|      3|    const mode_sm_payload_t *cause = &sm->payload[MODE_SM_EV_TC_MODE_NOMINAL];
+  172|      3|    enter_NOMINAL(sm, cause);
+  173|      3|    mode_sm_on_transition(sm->user, MODE_SM_DEGRADED, MODE_SM_NOMINAL, MODE_SM_EV_TC_MODE_NOMINAL, cause);
+  174|      3|    r->kind = MODE_SM_STEP_TRANSITION;
+  175|      3|    r->transition = 9U;
+  176|      3|    r->from = MODE_SM_DEGRADED;
+  177|      3|    r->to = MODE_SM_NOMINAL;
+  178|      3|    r->event = MODE_SM_EV_TC_MODE_NOMINAL;
+  179|      3|}
+  180|       |
+  181|       |/* T10: DEGRADED (internal) on fault_critical [fdir_inhibited], priority 4  MM-060 */
+  182|       |static void fire_T10(mode_sm_t *sm, mode_sm_result_t *r)
+  183|      1|{
+  184|      1|    const mode_sm_payload_t *cause = &sm->payload[MODE_SM_EV_FAULT_CRITICAL];
+  185|      1|    mode_sm_action_report_action_inhibited(sm->user, cause);
+  186|      1|    r->kind = MODE_SM_STEP_INTERNAL;
+  187|      1|    r->transition = 10U;
+  188|      1|    r->from = MODE_SM_DEGRADED;
+  189|      1|    r->to = MODE_SM_DEGRADED;
+  190|      1|    r->event = MODE_SM_EV_FAULT_CRITICAL;
+  191|      1|}
+  192|       |
+  193|       |/* T11: SAFE -> DEGRADED on tc_mode_degraded [true], priority 1  MM-010 */
+  194|       |static void fire_T11(mode_sm_t *sm, mode_sm_result_t *r)
+  195|      1|{
+  196|      1|    const mode_sm_payload_t *cause = &sm->payload[MODE_SM_EV_TC_MODE_DEGRADED];
+  197|      1|    exit_SAFE(sm, cause);
+  198|      1|    enter_DEGRADED(sm, cause);
+  199|      1|    mode_sm_on_transition(sm->user, MODE_SM_SAFE, MODE_SM_DEGRADED, MODE_SM_EV_TC_MODE_DEGRADED, cause);
+  200|      1|    r->kind = MODE_SM_STEP_TRANSITION;
+  201|      1|    r->transition = 11U;
+  202|      1|    r->from = MODE_SM_SAFE;
+  203|      1|    r->to = MODE_SM_DEGRADED;
+  204|      1|    r->event = MODE_SM_EV_TC_MODE_DEGRADED;
+  205|      1|}
+  206|       |
+  207|       |/* T12: SAFE -> NOMINAL on tc_mode_nominal [true], priority 2  MM-010 */
+  208|       |static void fire_T12(mode_sm_t *sm, mode_sm_result_t *r)
+  209|      1|{
+  210|      1|    const mode_sm_payload_t *cause = &sm->payload[MODE_SM_EV_TC_MODE_NOMINAL];
+  211|      1|    exit_SAFE(sm, cause);
+  212|      1|    enter_NOMINAL(sm, cause);
+  213|      1|    mode_sm_on_transition(sm->user, MODE_SM_SAFE, MODE_SM_NOMINAL, MODE_SM_EV_TC_MODE_NOMINAL, cause);
+  214|      1|    r->kind = MODE_SM_STEP_TRANSITION;
+  215|      1|    r->transition = 12U;
+  216|      1|    r->from = MODE_SM_SAFE;
+  217|      1|    r->to = MODE_SM_NOMINAL;
+  218|      1|    r->event = MODE_SM_EV_TC_MODE_NOMINAL;
+  219|      1|}
+  220|       |
+  221|       |/* NOMINAL: outgoing transitions in priority order. */
+  222|       |static void select_NOMINAL(mode_sm_t *sm, uint32_t pending,
+  223|       |                        const mode_sm_inputs_t *in, mode_sm_result_t *r)
+  224|     30|{
+  225|     30|    if ((pending & BIT(MODE_SM_EV_TC_MODE_SAFE)) != 0U) {   /* T01 */
+  226|      4|        fire_T01(sm, r);
+  227|     26|    } else if ((pending & BIT(MODE_SM_EV_FAULT_CRITICAL)) != 0U && (!in->fdir_inhibited)) {   /* T02 */
+  ------------------
+  |---> MC/DC Decision Region (227:16) to (227:89)
+  |
+  |  Number of Conditions: 2
+  |     Condition C1 --> (227:16)
+  |     Condition C2 --> (227:68)
+  |
+  |  Executed MC/DC Test Vectors:
+  |
+  |     C1, C2    Result
+  |  1 { F,  -  = F      }
+  |  2 { T,  F  = F      }
+  |  3 { T,  T  = T      }
+  |
+  |  C1-Pair: covered: (1,3)
+  |  C2-Pair: covered: (2,3)
+  |  MC/DC Coverage for Decision: 100.00%
+  |
+  ------------------
+  228|      4|        fire_T02(sm, r);
+  229|     22|    } else if ((pending & BIT(MODE_SM_EV_TC_MODE_DEGRADED)) != 0U) {   /* T03 */
+  230|      9|        fire_T03(sm, r);
+  231|     13|    } else if ((pending & BIT(MODE_SM_EV_FAULT_NONCRITICAL)) != 0U && (!in->fdir_inhibited)) {   /* T04 */
+  ------------------
+  |---> MC/DC Decision Region (231:16) to (231:92)
+  |
+  |  Number of Conditions: 2
+  |     Condition C1 --> (231:16)
+  |     Condition C2 --> (231:71)
+  |
+  |  Executed MC/DC Test Vectors:
+  |
+  |     C1, C2    Result
+  |  1 { F,  -  = F      }
+  |  2 { T,  F  = F      }
+  |  3 { T,  T  = T      }
+  |
+  |  C1-Pair: covered: (1,3)
+  |  C2-Pair: covered: (2,3)
+  |  MC/DC Coverage for Decision: 100.00%
+  |
+  ------------------
+  232|      2|        fire_T04(sm, r);
+  233|     11|    } else if ((pending & BIT(MODE_SM_EV_FAULT_CRITICAL)) != 0U && in->fdir_inhibited) {   /* T05 */
+  ------------------
+  |---> MC/DC Decision Region (233:16) to (233:86)
+  |
+  |  Number of Conditions: 2
+  |     Condition C1 --> (233:16)
+  |     Condition C2 --> (233:68)
+  |
+  |  Executed MC/DC Test Vectors:
+  |
+  |     C1, C2    Result
+  |  1 { F,  -  = F      }
+  |  2 { T,  T  = T      }
+  |
+  |  C1-Pair: covered: (1,2)
+  |  C2-Pair: not covered
+  |  MC/DC Coverage for Decision: 50.00%
+  |
+  ------------------
+  234|      4|        fire_T05(sm, r);
+  235|      7|    } else if ((pending & BIT(MODE_SM_EV_FAULT_NONCRITICAL)) != 0U && in->fdir_inhibited) {   /* T06 */
+  ------------------
+  |---> MC/DC Decision Region (235:16) to (235:89)
+  |
+  |  Number of Conditions: 2
+  |     Condition C1 --> (235:16)
+  |     Condition C2 --> (235:71)
+  |
+  |  Executed MC/DC Test Vectors:
+  |
+  |     C1, C2    Result
+  |  1 { F,  -  = F      }
+  |  2 { T,  T  = T      }
+  |
+  |  C1-Pair: covered: (1,2)
+  |  C2-Pair: not covered
+  |  MC/DC Coverage for Decision: 50.00%
+  |
+  ------------------
+  236|      1|        fire_T06(sm, r);
+  237|      6|    } else {
+  238|       |        /* nothing enabled */
+  239|      6|    }
+  240|     30|}
+  241|       |
+  242|       |/* DEGRADED: outgoing transitions in priority order. */
+  243|       |static void select_DEGRADED(mode_sm_t *sm, uint32_t pending,
+  244|       |                        const mode_sm_inputs_t *in, mode_sm_result_t *r)
+  245|      8|{
+  246|      8|    if ((pending & BIT(MODE_SM_EV_TC_MODE_SAFE)) != 0U) {   /* T07 */
+  247|      1|        fire_T07(sm, r);
+  248|      7|    } else if ((pending & BIT(MODE_SM_EV_FAULT_CRITICAL)) != 0U && (!in->fdir_inhibited)) {   /* T08 */
+  ------------------
+  |---> MC/DC Decision Region (248:16) to (248:89)
+  |
+  |  Number of Conditions: 2
+  |     Condition C1 --> (248:16)
+  |     Condition C2 --> (248:68)
+  |
+  |  Executed MC/DC Test Vectors:
+  |
+  |     C1, C2    Result
+  |  1 { F,  -  = F      }
+  |  2 { T,  F  = F      }
+  |  3 { T,  T  = T      }
+  |
+  |  C1-Pair: covered: (1,3)
+  |  C2-Pair: covered: (2,3)
+  |  MC/DC Coverage for Decision: 100.00%
+  |
+  ------------------
+  249|      1|        fire_T08(sm, r);
+  250|      6|    } else if ((pending & BIT(MODE_SM_EV_TC_MODE_NOMINAL)) != 0U) {   /* T09 */
+  251|      3|        fire_T09(sm, r);
+  252|      3|    } else if ((pending & BIT(MODE_SM_EV_FAULT_CRITICAL)) != 0U && in->fdir_inhibited) {   /* T10 */
+  ------------------
+  |---> MC/DC Decision Region (252:16) to (252:86)
+  |
+  |  Number of Conditions: 2
+  |     Condition C1 --> (252:16)
+  |     Condition C2 --> (252:68)
+  |
+  |  Executed MC/DC Test Vectors:
+  |
+  |     C1, C2    Result
+  |  1 { F,  -  = F      }
+  |  2 { T,  T  = T      }
+  |
+  |  C1-Pair: covered: (1,2)
+  |  C2-Pair: not covered
+  |  MC/DC Coverage for Decision: 50.00%
+  |
+  ------------------
+  253|      1|        fire_T10(sm, r);
+  254|      2|    } else {
+  255|       |        /* nothing enabled */
+  256|      2|    }
+  257|      8|}
+  258|       |
+  259|       |/* SAFE: outgoing transitions in priority order. */
+  260|       |static void select_SAFE(mode_sm_t *sm, uint32_t pending,
+  261|       |                        const mode_sm_inputs_t *in, mode_sm_result_t *r)
+  262|     43|{
+  263|     43|    (void)in;
+  264|     43|    if ((pending & BIT(MODE_SM_EV_TC_MODE_DEGRADED)) != 0U) {   /* T11 */
+  265|      1|        fire_T11(sm, r);
+  266|     42|    } else if ((pending & BIT(MODE_SM_EV_TC_MODE_NOMINAL)) != 0U) {   /* T12 */
+  267|      1|        fire_T12(sm, r);
+  268|     41|    } else {
+  269|       |        /* nothing enabled */
+  270|     41|    }
+  271|     43|}
+  272|       |
+  273|       |int mode_sm_init(mode_sm_t *sm, mode_sm_state_t boot, void *user)
+  274|     30|{
+  275|     30|    static const mode_sm_payload_t none = { 0U, 0U };
+  276|     30|    uint32_t i;
+  277|       |
+  278|     30|    sm->pending = 0U;
+  279|     30|    sm->user = user;
+  280|    210|    for (i = 0U; i < (uint32_t)MODE_SM_EVENT_COUNT; i++) {
+  281|    180|        sm->payload[i] = none;
+  282|    180|    }
+  283|     30|    switch ((uint32_t)boot) {
+  284|     28|    case (uint32_t)MODE_SM_NOMINAL:
+  285|     28|        enter_NOMINAL(sm, &none);
+  286|     28|        return 0;
+  287|      1|    case (uint32_t)MODE_SM_SAFE:
+  288|      1|        enter_SAFE(sm, &none);
+  289|      1|        return 0;
+  290|      1|    default:
+  291|      1|        enter_SAFE(sm, &none);
+  292|      1|        return -1;
+  293|     30|    }
+  294|     30|}
+  295|       |
+  296|       |int mode_sm_post(mode_sm_t *sm, mode_sm_event_t event, mode_sm_payload_t cause)
+  297|    162|{
+  298|    162|    if ((uint32_t)event >= (uint32_t)MODE_SM_EVENT_COUNT) {
+  299|      2|        return -1;
+  300|      2|    }
+  301|    160|    sm->payload[event] = cause;
+  302|    160|    sm->pending |= BIT(event);
+  303|    160|    return 0;
+  304|    162|}
+  305|       |
+  306|       |mode_sm_state_t mode_sm_state(const mode_sm_t *sm)
+  307|     48|{
+  308|     48|    return sm->state;
+  309|     48|}
+  310|       |
+  311|       |mode_sm_result_t mode_sm_step(mode_sm_t *sm, const mode_sm_inputs_t *in_now)
+  312|     82|{
+  313|     82|    static const mode_sm_payload_t recovery = { 0U, 0U };
+  314|     82|    mode_sm_result_t r = { MODE_SM_STEP_IDLE, 0U, MODE_SM_NOMINAL, MODE_SM_NOMINAL, MODE_SM_EV_TC_MODE_NOMINAL };
+  315|       |    /* semantics: input_sampling = start_of_cycle */
+  316|     82|    const uint32_t pending = sm->pending;
+  317|     82|    const mode_sm_inputs_t in = *in_now;
+  318|     82|    const uint32_t start = (uint32_t)sm->state;
+  319|     82|    uint32_t consumed = 0U;
+  320|     82|    uint32_t lost;
+  321|     82|    uint32_t e;
+  322|       |
+  323|     82|    r.from = sm->state;
+  324|     82|    r.to = sm->state;
+  325|       |
+  326|       |    /* semantics: one transition per cycle, lowest priority number wins */
+  327|     82|    switch (start) {
+  328|     30|    case (uint32_t)MODE_SM_NOMINAL:
+  329|     30|        select_NOMINAL(sm, pending, &in, &r);
+  330|     30|        break;
+  331|      8|    case (uint32_t)MODE_SM_DEGRADED:
+  332|      8|        select_DEGRADED(sm, pending, &in, &r);
+  333|      8|        break;
+  334|     43|    case (uint32_t)MODE_SM_SAFE:
+  335|     43|        select_SAFE(sm, pending, &in, &r);
+  336|     43|        break;
+  337|      1|    default:
+  338|       |        /* State variable outside the model (memory corruption): recover
+  339|       |         * to SAFE. Latched events are kept, one shot events dropped. */
+  340|      1|        mode_sm_on_invalid_state(sm->user, start);
+  341|      1|        sm->pending &= LATCHED;
+  342|      1|        enter_SAFE(sm, &recovery);
+  343|      1|        r.kind = MODE_SM_STEP_RECOVERED;
+  344|      1|        r.to = MODE_SM_SAFE;
+  345|      1|        return r;
+  346|     82|    }
+  347|       |
+  348|     81|    if (r.kind != MODE_SM_STEP_IDLE) {
+  349|     32|        consumed = BIT(r.event);
+  350|     32|    }
+  351|       |    /* One shot events are consumed every cycle. Those neither taken
+  352|       |     * nor ignored in the start state were lost to a higher priority
+  353|       |     * transition: reported (semantics: unconsumed_one_shot). */
+  354|     81|    lost = pending & ONE_SHOT & ~consumed & ~IGNORED[start];
+  355|       |    /* semantics: ignored_ground_command = report_if_state_changed. A
+  356|       |     * ground command for the start mode is already satisfied, unless an
+  357|       |     * external transition left that mode in this cycle (D-05). */
+  358|     81|    if (r.kind == MODE_SM_STEP_TRANSITION) {
+  359|     26|        lost |= pending & GROUND & ~consumed;
+  360|     26|    }
+  361|     81|    consumed |= pending & ONE_SHOT;
+  362|       |    /* Latched events ignored in the start state are dropped only if
+  363|       |     * nothing fired; otherwise they are re-evaluated in the new state. */
+  364|     81|    if (r.kind == MODE_SM_STEP_IDLE) {
+  365|     49|        consumed |= pending & LATCHED & IGNORED[start];
+  366|     49|    }
+  367|     81|    sm->pending &= ~consumed;
+  368|       |
+  369|    567|    for (e = 0U; e < (uint32_t)MODE_SM_EVENT_COUNT; e++) {
+  370|    486|        if ((lost & BIT(e)) != 0U) {
+  371|      2|            mode_sm_on_discard(sm->user, (mode_sm_event_t)e, &sm->payload[e]);
+  372|      2|        }
+  373|    486|    }
+  374|     81|    return r;
+  375|     82|}
+  376|       |
+  377|       |#ifdef MODE_SM_WITH_NAMES
+  378|       |const char *mode_sm_state_name(mode_sm_state_t s)
+  379|      0|{
+  380|      0|    switch ((uint32_t)s) {
+  381|      0|    case (uint32_t)MODE_SM_NOMINAL: return "NOMINAL";
+  382|      0|    case (uint32_t)MODE_SM_DEGRADED: return "DEGRADED";
+  383|      0|    case (uint32_t)MODE_SM_SAFE: return "SAFE";
+  384|      0|    default: return "?";
+  385|      0|    }
+  386|      0|}
+  387|       |
+  388|       |const char *mode_sm_event_name(mode_sm_event_t e)
+  389|      0|{
+  390|      0|    switch ((uint32_t)e) {
+  391|      0|    case (uint32_t)MODE_SM_EV_TC_MODE_NOMINAL: return "tc_mode_nominal";
+  392|      0|    case (uint32_t)MODE_SM_EV_TC_MODE_DEGRADED: return "tc_mode_degraded";
+  393|      0|    case (uint32_t)MODE_SM_EV_TC_MODE_SAFE: return "tc_mode_safe";
+  394|      0|    case (uint32_t)MODE_SM_EV_FAULT_NONCRITICAL: return "fault_noncritical";
+  395|      0|    case (uint32_t)MODE_SM_EV_FAULT_CRITICAL: return "fault_critical";
+  396|      0|    case (uint32_t)MODE_SM_EV_FAULT_CLEARED: return "fault_cleared";
+  397|      0|    default: return "?";
+  398|      0|    }
+  399|      0|}
+  400|       |#endif
+

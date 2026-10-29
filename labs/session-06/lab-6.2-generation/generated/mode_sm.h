@@ -2,9 +2,9 @@
  * GENERATED FILE - DO NOT EDIT.
  *
  * Public interface of the state machine.
- * Model     : mode_machine.yaml ("vehicle_mode", version 2)
- * Model hash: sha256:f82e7dfde38f18f475df59611e585b20e3c4466247d1732833060af4f2dd56bb
- * Generator : modelgen.py 1.0, sha256:4e01934c54195d8ecf8660e6aafeb2bd7c644bfadfa0e7237c5db0c2597c9594
+ * Model     : mode_machine.yaml ("vehicle_mode", version 3)
+ * Model hash: sha256:46d8922ca14ac2917bc4bf7ba7d5c85a3dc0ad984d941a39f8f728d665cebf66
+ * Generator : modelgen.py 1.1, sha256:358817262c6f4d3c3635a50f045af71b94bbf802d79d4401d16e733e0dddbb3f
  *
  * Change the model or the generator and regenerate. `make check-generated`
  * fails if this file differs from a fresh generation.
@@ -16,8 +16,8 @@
 #include <stdint.h>
 
 #define MODE_SM_MODEL_NAME    "vehicle_mode"
-#define MODE_SM_MODEL_VERSION 2
-#define MODE_SM_MODEL_SHA256  "f82e7dfde38f18f475df59611e585b20e3c4466247d1732833060af4f2dd56bb"
+#define MODE_SM_MODEL_VERSION 3
+#define MODE_SM_MODEL_SHA256  "46d8922ca14ac2917bc4bf7ba7d5c85a3dc0ad984d941a39f8f728d665cebf66"
 
 typedef enum {
     MODE_SM_NOMINAL = 0,

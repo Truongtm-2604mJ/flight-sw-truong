@@ -1,0 +1,91 @@
+### gcc -std=c99 -O2 -fanalyzer -DFDIR_TEST_BUILD -I../labs/session-05/host-sim -I../labs/session-04/lab-4.1-space-packet -I../labs/session-04/lab-4.2-pus-service17 -I../labs/session-05/lab-5.1-monitoring -I../labs/session-05/lab-5.2-liveness -I../labs/session-05/lab-5.3-safe-mode -I../labs/session-05/lab-5.4-fault-injection -I../labs/session-05/app -I../labs/session-06/app -I../labs/session-06/lab-6.2-generation/generated -c ../labs/session-04/lab-4.1-space-packet/sp.c -o /dev/null
+
+### gcc -std=c99 -O2 -fanalyzer -DFDIR_TEST_BUILD -I../labs/session-05/host-sim -I../labs/session-04/lab-4.1-space-packet -I../labs/session-04/lab-4.2-pus-service17 -I../labs/session-05/lab-5.1-monitoring -I../labs/session-05/lab-5.2-liveness -I../labs/session-05/lab-5.3-safe-mode -I../labs/session-05/lab-5.4-fault-injection -I../labs/session-05/app -I../labs/session-06/app -I../labs/session-06/lab-6.2-generation/generated -c ../labs/session-04/lab-4.2-pus-service17/crc16.c -o /dev/null
+
+### gcc -std=c99 -O2 -fanalyzer -DFDIR_TEST_BUILD -I../labs/session-05/host-sim -I../labs/session-04/lab-4.1-space-packet -I../labs/session-04/lab-4.2-pus-service17 -I../labs/session-05/lab-5.1-monitoring -I../labs/session-05/lab-5.2-liveness -I../labs/session-05/lab-5.3-safe-mode -I../labs/session-05/lab-5.4-fault-injection -I../labs/session-05/app -I../labs/session-06/app -I../labs/session-06/lab-6.2-generation/generated -c ../labs/session-04/lab-4.2-pus-service17/pus.c -o /dev/null
+
+### gcc -std=c99 -O2 -fanalyzer -DFDIR_TEST_BUILD -I../labs/session-05/host-sim -I../labs/session-04/lab-4.1-space-packet -I../labs/session-04/lab-4.2-pus-service17 -I../labs/session-05/lab-5.1-monitoring -I../labs/session-05/lab-5.2-liveness -I../labs/session-05/lab-5.3-safe-mode -I../labs/session-05/lab-5.4-fault-injection -I../labs/session-05/app -I../labs/session-06/app -I../labs/session-06/lab-6.2-generation/generated -c ../labs/session-04/lab-4.2-pus-service17/tc_handler.c -o /dev/null
+
+### gcc -std=c99 -O2 -fanalyzer -DFDIR_TEST_BUILD -I../labs/session-05/host-sim -I../labs/session-04/lab-4.1-space-packet -I../labs/session-04/lab-4.2-pus-service17 -I../labs/session-05/lab-5.1-monitoring -I../labs/session-05/lab-5.2-liveness -I../labs/session-05/lab-5.3-safe-mode -I../labs/session-05/lab-5.4-fault-injection -I../labs/session-05/app -I../labs/session-06/app -I../labs/session-06/lab-6.2-generation/generated -c ../labs/session-05/lab-5.1-monitoring/monitor.c -o /dev/null
+
+### gcc -std=c99 -O2 -fanalyzer -DFDIR_TEST_BUILD -I../labs/session-05/host-sim -I../labs/session-04/lab-4.1-space-packet -I../labs/session-04/lab-4.2-pus-service17 -I../labs/session-05/lab-5.1-monitoring -I../labs/session-05/lab-5.2-liveness -I../labs/session-05/lab-5.3-safe-mode -I../labs/session-05/lab-5.4-fault-injection -I../labs/session-05/app -I../labs/session-06/app -I../labs/session-06/lab-6.2-generation/generated -c ../labs/session-05/lab-5.2-liveness/supervisor.c -o /dev/null
+
+### gcc -std=c99 -O2 -fanalyzer -DFDIR_TEST_BUILD -I../labs/session-05/host-sim -I../labs/session-04/lab-4.1-space-packet -I../labs/session-04/lab-4.2-pus-service17 -I../labs/session-05/lab-5.1-monitoring -I../labs/session-05/lab-5.2-liveness -I../labs/session-05/lab-5.3-safe-mode -I../labs/session-05/lab-5.4-fault-injection -I../labs/session-05/app -I../labs/session-06/app -I../labs/session-06/lab-6.2-generation/generated -c ../labs/session-05/lab-5.2-liveness/watchdog.c -o /dev/null
+
+### gcc -std=c99 -O2 -fanalyzer -DFDIR_TEST_BUILD -I../labs/session-05/host-sim -I../labs/session-04/lab-4.1-space-packet -I../labs/session-04/lab-4.2-pus-service17 -I../labs/session-05/lab-5.1-monitoring -I../labs/session-05/lab-5.2-liveness -I../labs/session-05/lab-5.3-safe-mode -I../labs/session-05/lab-5.4-fault-injection -I../labs/session-05/app -I../labs/session-06/app -I../labs/session-06/lab-6.2-generation/generated -c ../labs/session-05/lab-5.2-liveness/nvstate.c -o /dev/null
+
+### gcc -std=c99 -O2 -fanalyzer -DFDIR_TEST_BUILD -I../labs/session-05/host-sim -I../labs/session-04/lab-4.1-space-packet -I../labs/session-04/lab-4.2-pus-service17 -I../labs/session-05/lab-5.1-monitoring -I../labs/session-05/lab-5.2-liveness -I../labs/session-05/lab-5.3-safe-mode -I../labs/session-05/lab-5.4-fault-injection -I../labs/session-05/app -I../labs/session-06/app -I../labs/session-06/lab-6.2-generation/generated -c ../labs/session-05/lab-5.3-safe-mode/schedule.c -o /dev/null
+
+### gcc -std=c99 -O2 -fanalyzer -DFDIR_TEST_BUILD -I../labs/session-05/host-sim -I../labs/session-04/lab-4.1-space-packet -I../labs/session-04/lab-4.2-pus-service17 -I../labs/session-05/lab-5.1-monitoring -I../labs/session-05/lab-5.2-liveness -I../labs/session-05/lab-5.3-safe-mode -I../labs/session-05/lab-5.4-fault-injection -I../labs/session-05/app -I../labs/session-06/app -I../labs/session-06/lab-6.2-generation/generated -c ../labs/session-06/lab-6.2-generation/generated/mode_sm.c -o /dev/null
+
+### gcc -std=c99 -O2 -fanalyzer -DFDIR_TEST_BUILD -I../labs/session-05/host-sim -I../labs/session-04/lab-4.1-space-packet -I../labs/session-04/lab-4.2-pus-service17 -I../labs/session-05/lab-5.1-monitoring -I../labs/session-05/lab-5.2-liveness -I../labs/session-05/lab-5.3-safe-mode -I../labs/session-05/lab-5.4-fault-injection -I../labs/session-05/app -I../labs/session-06/app -I../labs/session-06/lab-6.2-generation/generated -c ../labs/session-05/app/services.c -o /dev/null
+
+### gcc -std=c99 -O2 -fanalyzer -DFDIR_TEST_BUILD -I../labs/session-05/host-sim -I../labs/session-04/lab-4.1-space-packet -I../labs/session-04/lab-4.2-pus-service17 -I../labs/session-05/lab-5.1-monitoring -I../labs/session-05/lab-5.2-liveness -I../labs/session-05/lab-5.3-safe-mode -I../labs/session-05/lab-5.4-fault-injection -I../labs/session-05/app -I../labs/session-06/app -I../labs/session-06/lab-6.2-generation/generated -c ../labs/session-05/app/tmtc5.c -o /dev/null
+../labs/session-05/app/tmtc5.c: In function ‘process_line’:
+../labs/session-05/app/tmtc5.c:113:43: warning: use of uninitialized value ‘line[1]’ [CWE-457] [-Wanalyzer-use-of-uninitialized-value]
+  113 |     if (len < 3u || line[0] != 'T' || line[1] != 'C' || line[2] != ':') {
+      |                                       ~~~~^~~
+  ‘tc_rx_task’: events 1-11
+    |
+    |  138 | static rtems_task tc_rx_task(rtems_task_argument arg)
+    |      |                   ^~~~~~~~~~
+    |      |                   |
+    |      |                   (1) entry to ‘tc_rx_task’
+    |......
+    |  141 |     char line[LINE_MAX_CHARS];
+    |      |          ~~~~      
+    |      |          |
+    |      |          (2) region created on stack here
+    |......
+    |  164 |             if (c == '\n' || c == '\r') {
+    |      |                ~   
+    |      |                |
+    |      |                (5) following ‘true’ branch...
+    |  165 |                 if (overflow) {
+    |      |                    ~
+    |      |                    |
+    |      |                    (6) ...to here
+    |      |                    (7) following ‘false’ branch (when ‘overflow == 0’)...
+    |......
+    |  172 |                 } else if (line_len > 0u) {
+    |      |                           ~
+    |      |                           |
+    |      |                           (8) ...to here
+    |      |                           (9) following ‘true’ branch (when ‘line_len != 0’)...
+    |  173 |                     process_line(line, line_len);
+    |      |                     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    |      |                     |
+    |      |                     (10) ...to here
+    |      |                     (11) calling ‘process_line’ from ‘tc_rx_task’
+    |......
+    |  179 |             } else if (line_len < sizeof(line)) {
+    |      |                       ~
+    |      |                       |
+    |      |                       (3) following ‘true’ branch (when ‘line_len <= 243’)...
+    |  180 |                 line[line_len++] = c;
+    |      |                      ~~~~~~~~~~
+    |      |                              |
+    |      |                              (4) ...to here
+    |
+    +--> ‘process_line’: events 12-15
+           |
+           |  108 | static void process_line(const char *line, size_t len)
+           |      |             ^~~~~~~~~~~~
+           |      |             |
+           |      |             (12) entry to ‘process_line’
+           |......
+           |  113 |     if (len < 3u || line[0] != 'T' || line[1] != 'C' || line[2] != ':') {
+           |      |        ~                              ~~~~~~~
+           |      |        |                                  |
+           |      |        |                                  (14) ...to here
+           |      |        (13) following ‘false’ branch...   (15) use of uninitialized value ‘line[1]’ here
+           |
+
+### gcc -std=c99 -O2 -fanalyzer -DFDIR_TEST_BUILD -I../labs/session-05/host-sim -I../labs/session-04/lab-4.1-space-packet -I../labs/session-04/lab-4.2-pus-service17 -I../labs/session-05/lab-5.1-monitoring -I../labs/session-05/lab-5.2-liveness -I../labs/session-05/lab-5.3-safe-mode -I../labs/session-05/lab-5.4-fault-injection -I../labs/session-05/app -I../labs/session-06/app -I../labs/session-06/lab-6.2-generation/generated -c ../labs/session-05/app/sensors5.c -o /dev/null
+
+### gcc -std=c99 -O2 -fanalyzer -DFDIR_TEST_BUILD -I../labs/session-05/host-sim -I../labs/session-04/lab-4.1-space-packet -I../labs/session-04/lab-4.2-pus-service17 -I../labs/session-05/lab-5.1-monitoring -I../labs/session-05/lab-5.2-liveness -I../labs/session-05/lab-5.3-safe-mode -I../labs/session-05/lab-5.4-fault-injection -I../labs/session-05/app -I../labs/session-06/app -I../labs/session-06/lab-6.2-generation/generated -c ../labs/session-06/app/fdir6.c -o /dev/null
+
+### gcc -std=c99 -O2 -fanalyzer -DFDIR_TEST_BUILD -I../labs/session-05/host-sim -I../labs/session-04/lab-4.1-space-packet -I../labs/session-04/lab-4.2-pus-service17 -I../labs/session-05/lab-5.1-monitoring -I../labs/session-05/lab-5.2-liveness -I../labs/session-05/lab-5.3-safe-mode -I../labs/session-05/lab-5.4-fault-injection -I../labs/session-05/app -I../labs/session-06/app -I../labs/session-06/lab-6.2-generation/generated -c ../labs/session-05/lab-5.4-fault-injection/finj.c -o /dev/null
+
+### gcc -std=c99 -O2 -fanalyzer -DFDIR_TEST_BUILD -I../labs/session-05/host-sim -I../labs/session-04/lab-4.1-space-packet -I../labs/session-04/lab-4.2-pus-service17 -I../labs/session-05/lab-5.1-monitoring -I../labs/session-05/lab-5.2-liveness -I../labs/session-05/lab-5.3-safe-mode -I../labs/session-05/lab-5.4-fault-injection -I../labs/session-05/app -I../labs/session-06/app -I../labs/session-06/lab-6.2-generation/generated -c ../labs/session-05/app/lab5.c -o /dev/null
+

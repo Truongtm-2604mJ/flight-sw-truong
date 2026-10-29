@@ -1,0 +1,948 @@
+[   0.000] # spacecraft started (child process on a pty: /home/truongtm/Work/01.Code/rtems/rtems/6/bin/sparc-rtems6-sis -leon3 -rt -r lab6-test.exe)
+[   0.001] # Row 1: T_BAT held at 48.00 C (limit 45.00 C)
+[   0.001] console  SIS - SPARC/RISCV instruction simulator 2.30,  copyright Jiri Gaisler 2020
+[   0.001] console  Bug-reports to jiri@gaisler.se
+[   0.001] console  LEON3 emulation enabled, 1 cpus online, delta 50 clocks
+[   0.001] console  Loaded lab6-test.exe, entry 0x40000000
+[   0.002] console  ============================================
+[   0.002] console  Session 5 - FDIR, TEST build (fault injection enabled)
+[   0.002] console  ============================================
+[   0.002] console  Supervisor: check 2000 ms, 3 restarts per 300 s, watchdog 5000 ms
+[   0.002] console  Mode manager: GENERATED from vehicle_mode v3 (model sha256 46d8922ca14ac291...)
+[   0.055] TM <- 0821C00000182005010000000000000000006305010001000000FF0000AEA3
+[   0.055]         APID 0x021 seq     0 t=    0.002s TM(5,1)  BOOT #1: last reset none (cold), resets 0, escalations 0, mode NOMINAL, NV blank
+[   0.055] TM <- 0820C00000332003190000000000000000057D016CFF09A00F4D000000000E07000000000000000001000000000000000000000000000000739B
+[   0.055]         APID 0x020 seq     0 t=    0.021s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 27903 Tbat 24.64 Tobc 39.17 mon OK/OK/OK en 0x7 filt 0 rst [0, 0, 0] fail 0x0 boot 1 up 0
+[   0.055] TC -> 1810C000000E29C80100010002000012C000000554  TC(200,1) inject T_BAT = 48.00 C, sustained
+[   0.188] TM <- 0810C0000012200101000000010000000030BE1810C000ABD7
+[   0.189]         APID 0x010 seq     0 t=    0.190s TM(1,1)  acceptance OK for request 1810C000
+[   0.193] TM <- 0810C0010012200107000000010000000030C31810C00074F3
+[   0.193]         APID 0x010 seq     1 t=    0.190s TM(1,7)  completion OK for request 1810C000
+[   0.193]   PASS  inject T_BAT = 48.00 C, sustained: accepted and completed
+[   1.073] TM <- 0820C001003320031900000000000000010524016DA712C00FB8000000000E07040000000000000001000000000100000000000000010000D91D
+[   1.073]         APID 0x020 seq     1 t=    1.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 28071 Tbat 48.00 Tobc 40.24 mon OK/WARN/OK en 0x7 filt 0 rst [0, 0, 0] fail 0x0 boot 1 up 1
+[   2.076] TM <- 0820C002003320031900000000000000020524016D6412C00F3D000000000E07040000000000000001000000000100000000000000020000E27E
+[   2.076]         APID 0x020 seq     2 t=    2.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 28004 Tbat 48.00 Tobc 39.01 mon OK/WARN/OK en 0x7 filt 0 rst [0, 0, 0] fail 0x0 boot 1 up 2
+[   3.080] TM <- 0821C001001C20050200000000000000030525022000020201000012C000001194BDED
+[   3.080]         APID 0x021 seq     1 t=    3.020s TM(5,2)  MONITOR T_BAT -> ALARM HIGH, value 48.00 C
+[   3.080] TM <- 0820C003003320031900000000000000030524016D6812C00F73000000000E07080000000000000001000000000100000000000000030000FE05
+[   3.080]         APID 0x020 seq     3 t=    3.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 28008 Tbat 48.00 Tobc 39.55 mon OK/ALARM/OK en 0x7 filt 0 rst [0, 0, 0] fail 0x0 boot 1 up 3
+[   4.022] TM <- 0821C00200152005030000000000000004000804010001020002FB35
+[   4.022]         APID 0x021 seq     2 t=    4.000s TM(5,3)  MODE NOMINAL -> DEGRADED, cause MONITOR 2
+[   4.070] TM <- 0820C004003320031900000000000000040524016D6F12C00F4F010200020C070800000000000000010000000001000000000000000400007FC9
+[   4.071]         APID 0x020 seq     4 t=    4.020s TM(3,25)  HK1 DEGRADED (MONITOR 2) st 0x0C Vbus 28015 Tbat 48.00 Tobc 39.19 mon OK/ALARM/OK en 0x7 filt 0 rst [0, 0, 0] fail 0x0 boot 1 up 4
+[   4.071]   PASS  alarm event raised for T_BAT
+[   4.071]   PASS  mode NOMINAL -> DEGRADED, cause MONITOR T_BAT
+[   4.071]   PASS  no other monitor raised
+[   4.071]   PASS  payload suspended in DEGRADED
+[   4.570] TM <- 0820C005003320031900000000000000048524016CFD12C00FD3010200020C07080000000000000001000000000100000000000000040000897B
+[   4.571]         APID 0x020 seq     5 t=    4.520s TM(3,25)  HK1 DEGRADED (MONITOR 2) st 0x0C Vbus 27901 Tbat 48.00 Tobc 40.51 mon OK/ALARM/OK en 0x7 filt 0 rst [0, 0, 0] fail 0x0 boot 1 up 4
+[   5.070] TM <- 0820C006003320031900000000000000050524016D3012C00F77010200020C070800000000000000010000000001000000000000000500004D4F
+[   5.070]         APID 0x020 seq     6 t=    5.020s TM(3,25)  HK1 DEGRADED (MONITOR 2) st 0x0C Vbus 27952 Tbat 48.00 Tobc 39.59 mon OK/ALARM/OK en 0x7 filt 0 rst [0, 0, 0] fail 0x0 boot 1 up 5
+[   5.540] TM <- 0820C007003320031900000000000000058524016D4B12C00FD8010200020C070800000000000000010000000001000000000000000500002F74
+[   5.540]         APID 0x020 seq     7 t=    5.520s TM(3,25)  HK1 DEGRADED (MONITOR 2) st 0x0C Vbus 27979 Tbat 48.00 Tobc 40.56 mon OK/ALARM/OK en 0x7 filt 0 rst [0, 0, 0] fail 0x0 boot 1 up 5
+[   6.070] TM <- 0820C008003320031900000000000000060524016DBC12C00F43010200020C07080000000000000001000000000100000000000000060000BD1D
+[   6.071]         APID 0x020 seq     8 t=    6.020s TM(3,25)  HK1 DEGRADED (MONITOR 2) st 0x0C Vbus 28092 Tbat 48.00 Tobc 39.07 mon OK/ALARM/OK en 0x7 filt 0 rst [0, 0, 0] fail 0x0 boot 1 up 6
+[   6.570] TM <- 0820C009003320031900000000000000068524016D4C12C00F7C010200020C07080000000000000001000000000100000000000000060000AC39
+[   6.570]         APID 0x020 seq     9 t=    6.520s TM(3,25)  HK1 DEGRADED (MONITOR 2) st 0x0C Vbus 27980 Tbat 48.00 Tobc 39.64 mon OK/ALARM/OK en 0x7 filt 0 rst [0, 0, 0] fail 0x0 boot 1 up 6
+[   7.070] TM <- 0820C00A003320031900000000000000070524016D3D12C00F51010200020C07080000000000000001000000000100000000000000070000FF3E
+[   7.071]         APID 0x020 seq    10 t=    7.020s TM(3,25)  HK1 DEGRADED (MONITOR 2) st 0x0C Vbus 27965 Tbat 48.00 Tobc 39.21 mon OK/ALARM/OK en 0x7 filt 0 rst [0, 0, 0] fail 0x0 boot 1 up 7
+[   7.547] TM <- 0820C00B003320031900000000000000078524016DA812C00FCE010200020C07080000000000000001000000000100000000000000070000873D
+[   7.547]         APID 0x020 seq    11 t=    7.520s TM(3,25)  HK1 DEGRADED (MONITOR 2) st 0x0C Vbus 28072 Tbat 48.00 Tobc 40.46 mon OK/ALARM/OK en 0x7 filt 0 rst [0, 0, 0] fail 0x0 boot 1 up 7
+[   8.070] TM <- 0820C00C003320031900000000000000080524016D0E12C00FF1010200020C0708000000000000000100000000010000000000000008000019EB
+[   8.070]         APID 0x020 seq    12 t=    8.020s TM(3,25)  HK1 DEGRADED (MONITOR 2) st 0x0C Vbus 27918 Tbat 48.00 Tobc 40.81 mon OK/ALARM/OK en 0x7 filt 0 rst [0, 0, 0] fail 0x0 boot 1 up 8
+[   8.570] TM <- 0820C00D003320031900000000000000088524016D6E12C01001010200020C070800000000000000010000000001000000000000000800002E3F
+[   8.571]         APID 0x020 seq    13 t=    8.520s TM(3,25)  HK1 DEGRADED (MONITOR 2) st 0x0C Vbus 28014 Tbat 48.00 Tobc 40.97 mon OK/ALARM/OK en 0x7 filt 0 rst [0, 0, 0] fail 0x0 boot 1 up 8
+[   9.070] TM <- 0820C00E003320031900000000000000090524016D6212C00F52010200020C070800000000000000010000000001000000000000000900004A25
+[   9.070]         APID 0x020 seq    14 t=    9.020s TM(3,25)  HK1 DEGRADED (MONITOR 2) st 0x0C Vbus 28002 Tbat 48.00 Tobc 39.22 mon OK/ALARM/OK en 0x7 filt 0 rst [0, 0, 0] fail 0x0 boot 1 up 9
+[   9.071]   PASS  no further T_BAT events while it stays high
+[   9.071] # ROW | Parameter above high limit, sustained (T_BAT 48 C) | yes | 2830 ms (alarm on the 3rd consecutive sample, 1 Hz in NOMINAL) | yes (T_BAT only) | DEGRADED, payload off
+[   9.071] # Row 2: one sample of T_BAT at 48.00 C
+[   9.071] # spacecraft started (child process on a pty: /home/truongtm/Work/01.Code/rtems/rtems/6/bin/sparc-rtems6-sis -leon3 -rt -r lab6-test.exe)
+[   9.072] console  SIS - SPARC/RISCV instruction simulator 2.30,  copyright Jiri Gaisler 2020
+[   9.072] console  Bug-reports to jiri@gaisler.se
+[   9.072] console  LEON3 emulation enabled, 1 cpus online, delta 50 clocks
+[   9.072] console  Loaded lab6-test.exe, entry 0x40000000
+[   9.073] console  ============================================
+[   9.073] console  Session 5 - FDIR, TEST build (fault injection enabled)
+[   9.073] console  ============================================
+[   9.073] console  Supervisor: check 2000 ms, 3 restarts per 300 s, watchdog 5000 ms
+[   9.073] console  Mode manager: GENERATED from vehicle_mode v3 (model sha256 46d8922ca14ac291...)
+[   9.127] TM <- 0821C00000182005010000000000000000006305010001000000FF0000AEA3
+[   9.127]         APID 0x021 seq     0 t=    0.002s TM(5,1)  BOOT #1: last reset none (cold), resets 0, escalations 0, mode NOMINAL, NV blank
+[   9.127] TM <- 0820C00000332003190000000000000000057D016CFF09A00F4D000000000E07000000000000000001000000000000000000000000000000739B
+[   9.127]         APID 0x020 seq     0 t=    0.021s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 27903 Tbat 24.64 Tobc 39.17 mon OK/OK/OK en 0x7 filt 0 rst [0, 0, 0] fail 0x0 boot 1 up 0
+[   9.127] TC -> 1810C001000E29C80100010002000012C00001BD51  TC(200,1) inject T_BAT = 48.00 C, one sample
+[   9.259] TM <- 0810C0000012200101000000010000000030BE1810C001BBF6
+[   9.259]         APID 0x010 seq     0 t=    0.190s TM(1,1)  acceptance OK for request 1810C001
+[   9.264] TM <- 0810C0010012200107000000010000000030C31810C00164D2
+[   9.264]         APID 0x010 seq     1 t=    0.190s TM(1,7)  completion OK for request 1810C001
+[   9.264]   PASS  inject T_BAT = 48.00 C, one sample: accepted and completed
+[  10.143] TM <- 0820C001003320031900000000000000010524016DA712C00FB8000000000E07040000000000000001000000000100000000000000010000D91D
+[  10.143]         APID 0x020 seq     1 t=    1.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 28071 Tbat 48.00 Tobc 40.24 mon OK/WARN/OK en 0x7 filt 0 rst [0, 0, 0] fail 0x0 boot 1 up 1
+[  11.151] TM <- 0820C002003320031900000000000000020524016D640A020F3D000000000E070000010000000000010000000001000000000000000200000FE5
+[  11.151]         APID 0x020 seq     2 t=    2.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 28004 Tbat 25.62 Tobc 39.01 mon OK/OK/OK en 0x7 filt 1 rst [0, 0, 0] fail 0x0 boot 1 up 2
+[  12.142] TM <- 0820C003003320031900000000000000030524016D680A130F73000000000E07000001000000000001000000000100000000000000030000B6BF
+[  12.142]         APID 0x020 seq     3 t=    3.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 28008 Tbat 25.79 Tobc 39.55 mon OK/OK/OK en 0x7 filt 1 rst [0, 0, 0] fail 0x0 boot 1 up 3
+[  13.139] TM <- 0820C004003320031900000000000000040524016D6F09FC0F4F000000000E07000001000000000001000000000100000000000000040000BA60
+[  13.139]         APID 0x020 seq     4 t=    4.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 28015 Tbat 25.56 Tobc 39.19 mon OK/OK/OK en 0x7 filt 1 rst [0, 0, 0] fail 0x0 boot 1 up 4
+[  14.142] TM <- 0820C005003320031900000000000000050524016CFD09C60FD3000000000E0700000100000000000100000000010000000000000005000022B1
+[  14.142]         APID 0x020 seq     5 t=    5.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 27901 Tbat 25.02 Tobc 40.51 mon OK/OK/OK en 0x7 filt 1 rst [0, 0, 0] fail 0x0 boot 1 up 5
+[  15.144] TM <- 0820C006003320031900000000000000060524016D300A1D0F77000000000E07000001000000000001000000000100000000000000060000D77A
+[  15.144]         APID 0x020 seq     6 t=    6.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 27952 Tbat 25.89 Tobc 39.59 mon OK/OK/OK en 0x7 filt 1 rst [0, 0, 0] fail 0x0 boot 1 up 6
+[  16.143] TM <- 0820C007003320031900000000000000070524016D4B09F30FD8000000000E070000010000000000010000000001000000000000000700008195
+[  16.143]         APID 0x020 seq     7 t=    7.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 27979 Tbat 25.47 Tobc 40.56 mon OK/OK/OK en 0x7 filt 1 rst [0, 0, 0] fail 0x0 boot 1 up 7
+[  17.142] TM <- 0820C008003320031900000000000000080524016DBC0A200F43000000000E07000001000000000001000000000100000000000000080000553B
+[  17.142]         APID 0x020 seq     8 t=    8.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 28092 Tbat 25.92 Tobc 39.07 mon OK/OK/OK en 0x7 filt 1 rst [0, 0, 0] fail 0x0 boot 1 up 8
+[  17.264]   PASS  no monitor event
+[  17.264]   PASS  filtered transient counter +1 (got 1)
+[  17.264]   PASS  still NOMINAL
+[  17.264] # ROW | Single out of limit spike (T_BAT 48 C, 1 sample) | filtered, no event | n/a | yes (counted on T_BAT) | no action, NOMINAL
+[  17.264] # Row 3: PL_LOG stops setting its heartbeat (once)
+[  17.265] # spacecraft started (child process on a pty: /home/truongtm/Work/01.Code/rtems/rtems/6/bin/sparc-rtems6-sis -leon3 -rt -r lab6-test.exe)
+[  17.265] console  SIS - SPARC/RISCV instruction simulator 2.30,  copyright Jiri Gaisler 2020
+[  17.265] console  Bug-reports to jiri@gaisler.se
+[  17.265] console  LEON3 emulation enabled, 1 cpus online, delta 50 clocks
+[  17.266] console  Loaded lab6-test.exe, entry 0x40000000
+[  17.267] console  ============================================
+[  17.267] console  Session 5 - FDIR, TEST build (fault injection enabled)
+[  17.268] console  ============================================
+[  17.268] console  Supervisor: check 2000 ms, 3 restarts per 300 s, watchdog 5000 ms
+[  17.269] console  Mode manager: GENERATED from vehicle_mode v3 (model sha256 46d8922ca14ac291...)
+[  17.327] TM <- 0821C00000182005010000000000000000006305010001000000FF0000AEA3
+[  17.327]         APID 0x021 seq     0 t=    0.002s TM(5,1)  BOOT #1: last reset none (cold), resets 0, escalations 0, mode NOMINAL, NV blank
+[  17.328] TM <- 0820C00000332003190000000000000000057D016CFF09A00F4D000000000E07000000000000000001000000000000000000000000000000739B
+[  17.328]         APID 0x020 seq     0 t=    0.021s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 27903 Tbat 24.64 Tobc 39.17 mon OK/OK/OK en 0x7 filt 0 rst [0, 0, 0] fail 0x0 boot 1 up 0
+[  17.328] TC -> 1810C002000829C80200010201FC25  TC(200,2) inject PL_LOG hang x1
+[  17.453] TM <- 0810C0000012200101000000010000000030B91810C002EC41
+[  17.453]         APID 0x010 seq     0 t=    0.190s TM(1,1)  acceptance OK for request 1810C002
+[  17.458] TM <- 0810C0010012200107000000010000000030BD1810C002869F
+[  17.458]         APID 0x010 seq     1 t=    0.190s TM(1,7)  completion OK for request 1810C002
+[  17.458]   PASS  inject PL_LOG hang x1: accepted and completed
+[  18.335] TM <- 0820C001003320031900000000000000010524016DA709FB0FB8000000000E070000000000000000010000000001000000000000000100000EF3
+[  18.335]         APID 0x020 seq     1 t=    1.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 28071 Tbat 25.55 Tobc 40.24 mon OK/OK/OK en 0x7 filt 0 rst [0, 0, 0] fail 0x0 boot 1 up 1
+[  19.335] TM <- 0820C002003320031900000000000000020524016D640A020F3D000000000E07000000000000000001000000000100000000000000020000623D
+[  19.335]         APID 0x020 seq     2 t=    2.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 28004 Tbat 25.62 Tobc 39.01 mon OK/OK/OK en 0x7 filt 0 rst [0, 0, 0] fail 0x0 boot 1 up 2
+[  20.335] TM <- 0820C003003320031900000000000000030524016D680A130F73000000000E07000000000000000001000000000100000000000000030000DB67
+[  20.335]         APID 0x020 seq     3 t=    3.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 28008 Tbat 25.79 Tobc 39.55 mon OK/OK/OK en 0x7 filt 0 rst [0, 0, 0] fail 0x0 boot 1 up 3
+[  21.400] TM <- 0821C00100122005020000000000000004000703010201E61D
+[  21.400]         APID 0x021 seq     1 t=    4.000s TM(5,2)  HEARTBEAT MISSED PL_LOG (miss #1)
+[  21.400] TM <- 0821C00200122005020000000000000004000D03020201A736
+[  21.400]         APID 0x021 seq     2 t=    4.000s TM(5,2)  TASK RESTARTED PL_LOG (1 in window)
+[  21.697] TM <- 0820C00400332003190000000000000004051D016D6F09FC0F4F000000000E0700000000000100000100000000010000000000000004000051A0
+[  21.697]         APID 0x020 seq     4 t=    4.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 28015 Tbat 25.56 Tobc 39.19 mon OK/OK/OK en 0x7 filt 0 rst [0, 0, 1] fail 0x0 boot 1 up 4
+[  22.338] TM <- 0820C005003320031900000000000000050524016CFD09C60FD3000000000E070000000000010000010000000001000000000000000500009176
+[  22.338]         APID 0x020 seq     5 t=    5.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 27901 Tbat 25.02 Tobc 40.51 mon OK/OK/OK en 0x7 filt 0 rst [0, 0, 1] fail 0x0 boot 1 up 5
+[  23.336] TM <- 0820C006003320031900000000000000060524016D300A1D0F77000000000E0700000000000100000100000000010000000000000006000064BD
+[  23.336]         APID 0x020 seq     6 t=    6.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 27952 Tbat 25.89 Tobc 39.59 mon OK/OK/OK en 0x7 filt 0 rst [0, 0, 1] fail 0x0 boot 1 up 6
+[  24.336] TM <- 0820C007003320031900000000000000070524016D4B09F30FD8000000000E070000000000010000010000000001000000000000000700003252
+[  24.336]         APID 0x020 seq     7 t=    7.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 27979 Tbat 25.47 Tobc 40.56 mon OK/OK/OK en 0x7 filt 0 rst [0, 0, 1] fail 0x0 boot 1 up 7
+[  25.350] TM <- 0820C008003320031900000000000000080524016DBC0A200F43000000000E07000000000001000001000000000100000000000000080000E6FC
+[  25.350]         APID 0x020 seq     8 t=    8.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 28092 Tbat 25.92 Tobc 39.07 mon OK/OK/OK en 0x7 filt 0 rst [0, 0, 1] fail 0x0 boot 1 up 8
+[  26.344] TM <- 0820C009003320031900000000000000090524016D4C0A3D0F7C000000000E07000000000001000001000000000100000000000000090000B15C
+[  26.344]         APID 0x020 seq     9 t=    9.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 27980 Tbat 26.21 Tobc 39.64 mon OK/OK/OK en 0x7 filt 0 rst [0, 0, 1] fail 0x0 boot 1 up 9
+[  27.343] TM <- 0820C00A0033200319000000000000000A0524016D3D0A490F51000000000E070000000000010000010000000001000000000000000A0000A76B
+[  27.343]         APID 0x020 seq    10 t=   10.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 27965 Tbat 26.33 Tobc 39.21 mon OK/OK/OK en 0x7 filt 0 rst [0, 0, 1] fail 0x0 boot 1 up 10
+[  28.338] TM <- 0820C00B0033200319000000000000000B0524016DA80A150FCE000000000E070000000000010000010000000001000000000000000B00007731
+[  28.338]         APID 0x020 seq    11 t=   11.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 28072 Tbat 25.81 Tobc 40.46 mon OK/OK/OK en 0x7 filt 0 rst [0, 0, 1] fail 0x0 boot 1 up 11
+[  29.344] TM <- 0820C00C0033200319000000000000000C0524016D0E0A300FF1000000000E070000000000010000010000000001000000000000000C000011AD
+[  29.344]         APID 0x020 seq    12 t=   12.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 27918 Tbat 26.08 Tobc 40.81 mon OK/OK/OK en 0x7 filt 0 rst [0, 0, 1] fail 0x0 boot 1 up 12
+[  29.400]   PASS  heartbeat miss detected
+[  29.400]   PASS  level 1: task restarted
+[  29.400]   PASS  isolated to PL_LOG
+[  29.400]   PASS  heartbeat back after the restart
+[  29.400]   PASS  1 restart, still NOMINAL
+[  29.400] # ROW | Task stops setting liveness flag (PL_LOG, once) | yes | 3810 ms | yes (PL_LOG only) | restarted, recovered, NOMINAL
+[  29.400] # Row 4: ACS_CTRL fails five times in a row
+[  29.401] # spacecraft started (child process on a pty: /home/truongtm/Work/01.Code/rtems/rtems/6/bin/sparc-rtems6-sis -leon3 -rt -r lab6-test.exe)
+[  29.401] console  SIS - SPARC/RISCV instruction simulator 2.30,  copyright Jiri Gaisler 2020
+[  29.401] console  Bug-reports to jiri@gaisler.se
+[  29.401] console  LEON3 emulation enabled, 1 cpus online, delta 50 clocks
+[  29.402] console  Loaded lab6-test.exe, entry 0x40000000
+[  29.402] console  ============================================
+[  29.403] console  Session 5 - FDIR, TEST build (fault injection enabled)
+[  29.403] console  ============================================
+[  29.403] console  Supervisor: check 2000 ms, 3 restarts per 300 s, watchdog 5000 ms
+[  29.403] console  Mode manager: GENERATED from vehicle_mode v3 (model sha256 46d8922ca14ac291...)
+[  29.459] TM <- 0821C00000182005010000000000000000006305010001000000FF0000AEA3
+[  29.459]         APID 0x021 seq     0 t=    0.002s TM(5,1)  BOOT #1: last reset none (cold), resets 0, escalations 0, mode NOMINAL, NV blank
+[  29.459] TM <- 0820C00000332003190000000000000000057D016CFF09A00F4D000000000E07000000000000000001000000000000000000000000000000739B
+[  29.459]         APID 0x020 seq     0 t=    0.021s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 27903 Tbat 24.64 Tobc 39.17 mon OK/OK/OK en 0x7 filt 0 rst [0, 0, 0] fail 0x0 boot 1 up 0
+[  29.459] TC -> 1810C003000829C80200010005B586  TC(200,2) inject ACS_CTRL hang x5
+[  29.589] TM <- 0810C0000012200101000000010000000030B91810C003FC60
+[  29.589]         APID 0x010 seq     0 t=    0.190s TM(1,1)  acceptance OK for request 1810C003
+[  29.594] TM <- 0810C0010012200107000000010000000030BD1810C00396BE
+[  29.594]         APID 0x010 seq     1 t=    0.190s TM(1,7)  completion OK for request 1810C003
+[  29.594]   PASS  inject ACS_CTRL hang x5: accepted and completed
+[  30.566] TM <- 0820C001003320031900000000000000010524016DA709FB0FB8000000000E070000000000000000010000000001000000000000000100000EF3
+[  30.567]         APID 0x020 seq     1 t=    1.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 28071 Tbat 25.55 Tobc 40.24 mon OK/OK/OK en 0x7 filt 0 rst [0, 0, 0] fail 0x0 boot 1 up 1
+[  31.567] TM <- 0820C002003320031900000000000000020524016D640A020F3D000000000E07000000000000000001000000000100000000000000020000623D
+[  31.567]         APID 0x020 seq     2 t=    2.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 28004 Tbat 25.62 Tobc 39.01 mon OK/OK/OK en 0x7 filt 0 rst [0, 0, 0] fail 0x0 boot 1 up 2
+[  32.567] TM <- 0820C003003320031900000000000000030524016D680A130F73000000000E07000000000000000001000000000100000000000000030000DB67
+[  32.567]         APID 0x020 seq     3 t=    3.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 28008 Tbat 25.79 Tobc 39.55 mon OK/OK/OK en 0x7 filt 0 rst [0, 0, 0] fail 0x0 boot 1 up 3
+[  33.394] TM <- 0821C00100122005020000000000000004000703010001807F
+[  33.394]         APID 0x021 seq     1 t=    4.000s TM(5,2)  HEARTBEAT MISSED ACS_CTRL (miss #1)
+[  33.403] TM <- 0821C00200122005020000000000000004000D03020001C154
+[  33.403]         APID 0x021 seq     2 t=    4.000s TM(5,2)  TASK RESTARTED ACS_CTRL (1 in window)
+[  33.567] TM <- 0820C004003320031900000000000000040524016D6F09FC0F4F000000000E07000000010000000001000000000100000000000000040000024E
+[  33.567]         APID 0x020 seq     4 t=    4.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 28015 Tbat 25.56 Tobc 39.19 mon OK/OK/OK en 0x7 filt 0 rst [1, 0, 0] fail 0x0 boot 1 up 4
+[  34.566] TM <- 0820C005003320031900000000000000050524016CFD09C60FD3000000000E070000000100000000010000000001000000000000000500009A9F
+[  34.566]         APID 0x020 seq     5 t=    5.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 27901 Tbat 25.02 Tobc 40.51 mon OK/OK/OK en 0x7 filt 0 rst [1, 0, 0] fail 0x0 boot 1 up 5
+[  35.394] TM <- 0821C00300122005020000000000000006000703010002BB99
+[  35.395]         APID 0x021 seq     3 t=    6.000s TM(5,2)  HEARTBEAT MISSED ACS_CTRL (miss #2)
+[  35.404] TM <- 0821C00400122005020000000000000006000D030200022C7E
+[  35.404]         APID 0x021 seq     4 t=    6.000s TM(5,2)  TASK RESTARTED ACS_CTRL (2 in window)
+[  35.567] TM <- 0820C006003320031900000000000000060524016D300A1D0F77000000000E07000000020000000001000000000100000000000000060000016F
+[  35.567]         APID 0x020 seq     6 t=    6.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 27952 Tbat 25.89 Tobc 39.59 mon OK/OK/OK en 0x7 filt 0 rst [2, 0, 0] fail 0x0 boot 1 up 6
+[  36.567] TM <- 0820C007003320031900000000000000070524016D4B09F30FD8000000000E070000000200000000010000000001000000000000000700005780
+[  36.567]         APID 0x020 seq     7 t=    7.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 27979 Tbat 25.47 Tobc 40.56 mon OK/OK/OK en 0x7 filt 0 rst [2, 0, 0] fail 0x0 boot 1 up 7
+[  37.394] TM <- 0821C00500122005020000000000000008000703010003249A
+[  37.394]         APID 0x021 seq     5 t=    8.000s TM(5,2)  HEARTBEAT MISSED ACS_CTRL (miss #3)
+[  37.404] TM <- 0821C00600122005020000000000000008000D0302000365B1
+[  37.404]         APID 0x021 seq     6 t=    8.000s TM(5,2)  TASK RESTARTED ACS_CTRL (3 in window)
+[  37.567] TM <- 0820C008003320031900000000000000080524016DBC0A200F43000000000E0700000003000000000100000000010000000000000008000056D8
+[  37.567]         APID 0x020 seq     8 t=    8.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 28092 Tbat 25.92 Tobc 39.07 mon OK/OK/OK en 0x7 filt 0 rst [3, 0, 0] fail 0x0 boot 1 up 8
+[  38.567] TM <- 0820C009003320031900000000000000090524016D4C0A3D0F7C000000000E070000000300000000010000000001000000000000000900000178
+[  38.567]         APID 0x020 seq     9 t=    9.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 27980 Tbat 26.21 Tobc 39.64 mon OK/OK/OK en 0x7 filt 0 rst [3, 0, 0] fail 0x0 boot 1 up 9
+[  39.395] TM <- 0821C0070012200502000000000000000A0007030100045FF8
+[  39.395]         APID 0x021 seq     7 t=   10.000s TM(5,2)  HEARTBEAT MISSED ACS_CTRL (miss #4)
+[  39.395] TM <- 0821C0080012200504000000000000000A000B03030003299F
+[  39.396]         APID 0x021 seq     8 t=   10.000s TM(5,4)  TASK ESCALATED ACS_CTRL after 3 restarts
+[  39.396] TM <- 0821C0090011200502000000000000000A0013040300847C
+[  39.396]         APID 0x021 seq     9 t=   10.000s TM(5,2)  SCHEDULE SUSPENDED (0 activities kept)
+[  39.404] TM <- 0821C00A0015200504000000000000000A0018040100020300009B35
+[  39.404]         APID 0x021 seq    10 t=   10.000s TM(5,4)  MODE NOMINAL -> SAFE, cause LIVENESS 0
+[  39.471] TM <- 0820C00A001F200319000000000000000A0524026D3D0A4902030000180001000000000A5ADA
+[  39.471]         APID 0x020 seq    10 t=   10.020s TM(3,25)  HK2 ESSENTIAL SAFE (LIVENESS) st 0x18 Vbus 27965 Tbat 26.33 boot 1 last reset none (cold) up 10
+[  41.471] TM <- 0820C00B001F200319000000000000000C0524026D620A5802030000180001000000000C62EC
+[  41.471]         APID 0x020 seq    11 t=   12.020s TM(3,25)  HK2 ESSENTIAL SAFE (LIVENESS) st 0x18 Vbus 28002 Tbat 26.48 boot 1 last reset none (cold) up 12
+[  43.404]   PASS  exactly 3 restarts (got 3)
+[  43.404]   PASS  escalated instead of a 4th restart
+[  43.404]   PASS  mode -> SAFE, cause LIVENESS ACS_CTRL
+[  43.404]   PASS  isolated to ACS_CTRL
+[  43.404] # ROW | Task fails repeatedly, five times (ACS_CTRL) | yes | first miss 3810 ms, escalation 9810 ms | yes (ACS_CTRL only) | 3 restarts, then SAFE
+[  43.404] # Row 5: telecommand with a corrupted checksum
+[  43.405] # spacecraft started (child process on a pty: /home/truongtm/Work/01.Code/rtems/rtems/6/bin/sparc-rtems6-sis -leon3 -rt -r lab6-test.exe)
+[  43.406] console  SIS - SPARC/RISCV instruction simulator 2.30,  copyright Jiri Gaisler 2020
+[  43.406] console  Bug-reports to jiri@gaisler.se
+[  43.406] console  LEON3 emulation enabled, 1 cpus online, delta 50 clocks
+[  43.406] console  Loaded lab6-test.exe, entry 0x40000000
+[  43.407] console  ============================================
+[  43.407] console  Session 5 - FDIR, TEST build (fault injection enabled)
+[  43.407] console  ============================================
+[  43.408] console  Supervisor: check 2000 ms, 3 restarts per 300 s, watchdog 5000 ms
+[  43.408] console  Mode manager: GENERATED from vehicle_mode v3 (model sha256 46d8922ca14ac291...)
+[  43.461] TM <- 0821C00000182005010000000000000000006305010001000000FF0000AEA3
+[  43.461]         APID 0x021 seq     0 t=    0.002s TM(5,1)  BOOT #1: last reset none (cold), resets 0, escalations 0, mode NOMINAL, NV blank
+[  43.461] TM <- 0820C00000332003190000000000000000057D016CFF09A00F4D000000000E07000000000000000001000000000000000000000000000000739B
+[  43.461]         APID 0x020 seq     0 t=    0.021s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 27903 Tbat 24.64 Tobc 39.17 mon OK/OK/OK en 0x7 filt 0 rst [0, 0, 0] fail 0x0 boot 1 up 0
+[  43.461] TC -> 1810C004000629110100013F06  TC(17,1) with the last CRC bit flipped
+[  43.593] TM <- 0810C0000013200102000000000000000030B61810C004031743
+[  43.593]         APID 0x010 seq     0 t=    0.190s TM(1,2)  acceptance FAILED for request 1810C004, failure code 3 (CHECKSUM)
+[  44.484] TM <- 0820C001003320031900000000000000010524016DA709FB0FB8000000000E070000000000000000010000000000000100000000000100003D99
+[  44.484]         APID 0x020 seq     1 t=    1.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 28071 Tbat 25.55 Tobc 40.24 mon OK/OK/OK en 0x7 filt 0 rst [0, 0, 0] fail 0x0 boot 1 up 1
+[  45.093]   PASS  TM(1,2) with failure code 3 CHECKSUM
+[  45.093]   PASS  not executed (no TM(17,2))
+[  45.093] # ROW | Corrupted telecommand checksum | yes | 132.2 ms ground round trip (before any onboard timestamp exists) | yes (code 3 CHECKSUM) | rejected, not executed
+[  45.093] # Row 6: the supervisor task hangs
+[  45.096] # spacecraft started (child process on a pty: /home/truongtm/Work/01.Code/rtems/rtems/6/bin/sparc-rtems6-sis -leon3 -rt -r lab6-test.exe)
+[  45.097] console  SIS - SPARC/RISCV instruction simulator 2.30,  copyright Jiri Gaisler 2020
+[  45.097] console  Bug-reports to jiri@gaisler.se
+[  45.097] console  LEON3 emulation enabled, 1 cpus online, delta 50 clocks
+[  45.098] console  Loaded lab6-test.exe, entry 0x40000000
+[  45.101] console  ============================================
+[  45.101] console  Session 5 - FDIR, TEST build (fault injection enabled)
+[  45.101] console  ============================================
+[  45.101] console  Supervisor: check 2000 ms, 3 restarts per 300 s, watchdog 5000 ms
+[  45.102] console  Mode manager: GENERATED from vehicle_mode v3 (model sha256 46d8922ca14ac291...)
+[  45.154] TM <- 0821C00000182005010000000000000000006305010001000000FF0000AEA3
+[  45.154]         APID 0x021 seq     0 t=    0.002s TM(5,1)  BOOT #1: last reset none (cold), resets 0, escalations 0, mode NOMINAL, NV blank
+[  45.154] TM <- 0820C00000332003190000000000000000057D016CFF09A00F4D000000000E07000000000000000001000000000000000000000000000000739B
+[  45.154]         APID 0x020 seq     0 t=    0.021s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 27903 Tbat 24.64 Tobc 39.17 mon OK/OK/OK en 0x7 filt 0 rst [0, 0, 0] fail 0x0 boot 1 up 0
+[  45.154] TC -> 1810C005000629C80300014DC0  TC(200,3) inject supervisor hang
+[  45.285] TM <- 0810C0000012200101000000010000000030B71810C005530E
+[  45.285]         APID 0x010 seq     0 t=    0.190s TM(1,1)  acceptance OK for request 1810C005
+[  45.285] TM <- 0810C0010012200107000000010000000030BB1810C0053BFD
+[  45.285]         APID 0x010 seq     1 t=    0.190s TM(1,7)  completion OK for request 1810C005
+[  45.285]   PASS  inject supervisor hang: accepted and completed
+[  46.176] TM <- 0820C001003320031900000000000000010524016DA709FB0FB8000000000E070000000000000000010000000001000000000000000100000EF3
+[  46.177]         APID 0x020 seq     1 t=    1.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 28071 Tbat 25.55 Tobc 40.24 mon OK/OK/OK en 0x7 filt 0 rst [0, 0, 0] fail 0x0 boot 1 up 1
+[  47.176] TM <- 0820C002003320031900000000000000020524016D640A020F3D000000000E07000000000000000001000000000100000000000000020000623D
+[  47.176]         APID 0x020 seq     2 t=    2.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 28004 Tbat 25.62 Tobc 39.01 mon OK/OK/OK en 0x7 filt 0 rst [0, 0, 0] fail 0x0 boot 1 up 2
+[  48.175] TM <- 0820C003003320031900000000000000030524016D680A130F73000000000E07000000000000000001000000000100000000000000030000DB67
+[  48.175]         APID 0x020 seq     3 t=    3.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 28008 Tbat 25.79 Tobc 39.55 mon OK/OK/OK en 0x7 filt 0 rst [0, 0, 0] fail 0x0 boot 1 up 3
+[  49.169] TM <- 0820C004003320031900000000000000040524016D6F09FC0F4F000000000E07000000000000000001000000000100000000000000040000D7B8
+[  49.169]         APID 0x020 seq     4 t=    4.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 28015 Tbat 25.56 Tobc 39.19 mon OK/OK/OK en 0x7 filt 0 rst [0, 0, 0] fail 0x0 boot 1 up 4
+[  50.176] TM <- 0821C0010014200504000000000000000505240502000013884C4C
+[  50.176]         APID 0x021 seq     1 t=    5.020s TM(5,4)  WATCHDOG EARLY WARNING (5000 ms since kick)
+[  50.282] TM <- 0820C005003320031900000000000000050529016CFD09C60FD3000000002E070000000000000000010000000001000000000000000500009376
+[  50.282]         APID 0x020 seq     5 t=    5.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x2E Vbus 27901 Tbat 25.02 Tobc 40.51 mon OK/OK/OK en 0x7 filt 0 rst [0, 0, 0] fail 0x0 boot 1 up 5
+[  51.089] console  *** FATAL ***
+[  51.089] console  fatal source: 4 (RTEMS_FATAL_SOURCE_APPLICATION)
+[  51.089] console  fatal code: 1464094535 (0x57444f47)
+[  51.089] console  RTEMS version: 6.0.0.cb1f47527d05d70056fc0da73d8295eb993ae949
+[  51.090] console  RTEMS tools: 13.3.0 20240521 (RTEMS 6, RSB 84b3f5660ebaa96e1e405ca12f67b538b48636d6-modified, Newlib 1b3dcfd)
+[  51.090] console  executing thread ID: 0x09010001
+[  51.090] console  executing thread name: IDLE
+[  51.090] console  cpu 0 in error mode (tt = 0x80)
+[  51.090] console  300077643  40013ca0:  91d02000   ta  0x0
+[  51.140]   PASS  watchdog early warning
+[  51.140]   PASS  processor reset after the warning
+[  51.141] # spacecraft started (child process on a pty: /home/truongtm/Work/01.Code/rtems/rtems/6/bin/sparc-rtems6-sis -leon3 -rt -r lab6-test.exe)
+[  51.141] console  SIS - SPARC/RISCV instruction simulator 2.30,  copyright Jiri Gaisler 2020
+[  51.141] console  Bug-reports to jiri@gaisler.se
+[  51.141] console  LEON3 emulation enabled, 1 cpus online, delta 50 clocks
+[  51.142] console  Loaded lab6-test.exe, entry 0x40000000
+[  51.145] console  ============================================
+[  51.145] console  Session 5 - FDIR, TEST build (fault injection enabled)
+[  51.145] console  ============================================
+[  51.145] console  Supervisor: check 2000 ms, 3 restarts per 300 s, watchdog 5000 ms
+[  51.145] console  Mode manager: GENERATED from vehicle_mode v3 (model sha256 46d8922ca14ac291...)
+[  51.209] TM <- 0821C00000182005010000000000000000006305010001000000FF0000AEA3
+[  51.209]         APID 0x021 seq     0 t=    0.002s TM(5,1)  BOOT #1: last reset none (cold), resets 0, escalations 0, mode NOMINAL, NV blank
+[  51.209] TM <- 0820C00000332003190000000000000000057D016CFF09A00F4D000000000E07000000000000000001000000000000000000000000000000739B
+[  51.209]         APID 0x020 seq     0 t=    0.021s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 27903 Tbat 24.64 Tobc 39.17 mon OK/OK/OK en 0x7 filt 0 rst [0, 0, 0] fail 0x0 boot 1 up 0
+[  52.213] TM <- 0820C001003320031900000000000000010524016DA709FB0FB8000000000E07000000000000000001000000000000000000000000010000D6BA
+[  52.214]         APID 0x020 seq     1 t=    1.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 28071 Tbat 25.55 Tobc 40.24 mon OK/OK/OK en 0x7 filt 0 rst [0, 0, 0] fail 0x0 boot 1 up 1
+[  53.219] TM <- 0820C002003320031900000000000000020524016D640A020F3D000000000E07000000000000000001000000000000000000000000020000BA74
+[  53.219]         APID 0x020 seq     2 t=    2.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 28004 Tbat 25.62 Tobc 39.01 mon OK/OK/OK en 0x7 filt 0 rst [0, 0, 0] fail 0x0 boot 1 up 2
+[  54.212] TM <- 0820C003003320031900000000000000030524016D680A130F73000000000E07000000000000000001000000000000000000000000030000032E
+[  54.212]         APID 0x020 seq     3 t=    3.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 28008 Tbat 25.79 Tobc 39.55 mon OK/OK/OK en 0x7 filt 0 rst [0, 0, 0] fail 0x0 boot 1 up 3
+[  55.212] TM <- 0820C004003320031900000000000000040524016D6F09FC0F4F000000000E070000000000000000010000000000000000000000000400000FF1
+[  55.212]         APID 0x020 seq     4 t=    4.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 28015 Tbat 25.56 Tobc 39.19 mon OK/OK/OK en 0x7 filt 0 rst [0, 0, 0] fail 0x0 boot 1 up 4
+[  56.212] TM <- 0820C005003320031900000000000000050524016CFD09C60FD3000000000E070000000000000000010000000000000000000000000500009720
+[  56.212]         APID 0x020 seq     5 t=    5.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 27901 Tbat 25.02 Tobc 40.51 mon OK/OK/OK en 0x7 filt 0 rst [0, 0, 0] fail 0x0 boot 1 up 5
+[  57.212] TM <- 0820C006003320031900000000000000060524016D300A1D0F77000000000E0700000000000000000100000000000000000000000006000062EB
+[  57.212]         APID 0x020 seq     6 t=    6.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 27952 Tbat 25.89 Tobc 39.59 mon OK/OK/OK en 0x7 filt 0 rst [0, 0, 0] fail 0x0 boot 1 up 6
+[  58.213] TM <- 0820C007003320031900000000000000070524016D4B09F30FD8000000000E070000000000000000010000000000000000000000000700003404
+[  58.213]         APID 0x020 seq     7 t=    7.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 27979 Tbat 25.47 Tobc 40.56 mon OK/OK/OK en 0x7 filt 0 rst [0, 0, 0] fail 0x0 boot 1 up 7
+[  59.212] TM <- 0820C008003320031900000000000000080524016DBC0A200F43000000000E07000000000000000001000000000000000000000000080000E0AA
+[  59.212]         APID 0x020 seq     8 t=    8.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 28092 Tbat 25.92 Tobc 39.07 mon OK/OK/OK en 0x7 filt 0 rst [0, 0, 0] fail 0x0 boot 1 up 8
+[  60.219] TM <- 0820C009003320031900000000000000090524016D4C0A3D0F7C000000000E07000000000000000001000000000000000000000000090000B70A
+[  60.219]         APID 0x020 seq     9 t=    9.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 27980 Tbat 26.21 Tobc 39.64 mon OK/OK/OK en 0x7 filt 0 rst [0, 0, 0] fail 0x0 boot 1 up 9
+[  61.209]   PASS  cold boot: NV not preserved by this target
+[  61.209] # ROW | Supervisor task hangs | yes | early warning 4830 ms; reset seen by the ground 964 ms after the warning event (grace 1000 ms from the onboard warning) | yes (watchdog, not a task) | reset; cause recorded before reset, NOT preserved (no persistent memory between SIS runs)
+[  61.209] # False positive run: 300.0 s of onboard time, no injection
+[  61.210] # spacecraft started (child process on a pty: /home/truongtm/Work/01.Code/rtems/rtems/6/bin/sparc-rtems6-sis -leon3 -rt -r lab6-test.exe)
+[  61.210] console  SIS - SPARC/RISCV instruction simulator 2.30,  copyright Jiri Gaisler 2020
+[  61.210] console  Bug-reports to jiri@gaisler.se
+[  61.210] console  LEON3 emulation enabled, 1 cpus online, delta 50 clocks
+[  61.210] console  Loaded lab6-test.exe, entry 0x40000000
+[  61.211] console  ============================================
+[  61.211] console  Session 5 - FDIR, TEST build (fault injection enabled)
+[  61.211] console  ============================================
+[  61.211] console  Supervisor: check 2000 ms, 3 restarts per 300 s, watchdog 5000 ms
+[  61.212] console  Mode manager: GENERATED from vehicle_mode v3 (model sha256 46d8922ca14ac291...)
+[  61.263] TM <- 0821C00000182005010000000000000000006305010001000000FF0000AEA3
+[  61.263]         APID 0x021 seq     0 t=    0.002s TM(5,1)  BOOT #1: last reset none (cold), resets 0, escalations 0, mode NOMINAL, NV blank
+[  61.263] TM <- 0820C00000332003190000000000000000057D016CFF09A00F4D000000000E07000000000000000001000000000000000000000000000000739B
+[  61.263]         APID 0x020 seq     0 t=    0.021s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 27903 Tbat 24.64 Tobc 39.17 mon OK/OK/OK en 0x7 filt 0 rst [0, 0, 0] fail 0x0 boot 1 up 0
+[  62.280] TM <- 0820C001003320031900000000000000010524016DA709FB0FB8000000000E07000000000000000001000000000000000000000000010000D6BA
+[  62.280]         APID 0x020 seq     1 t=    1.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 28071 Tbat 25.55 Tobc 40.24 mon OK/OK/OK en 0x7 filt 0 rst [0, 0, 0] fail 0x0 boot 1 up 1
+[  63.281] TM <- 0820C002003320031900000000000000020524016D640A020F3D000000000E07000000000000000001000000000000000000000000020000BA74
+[  63.281]         APID 0x020 seq     2 t=    2.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 28004 Tbat 25.62 Tobc 39.01 mon OK/OK/OK en 0x7 filt 0 rst [0, 0, 0] fail 0x0 boot 1 up 2
+[  64.281] TM <- 0820C003003320031900000000000000030524016D680A130F73000000000E07000000000000000001000000000000000000000000030000032E
+[  64.281]         APID 0x020 seq     3 t=    3.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 28008 Tbat 25.79 Tobc 39.55 mon OK/OK/OK en 0x7 filt 0 rst [0, 0, 0] fail 0x0 boot 1 up 3
+[  65.282] TM <- 0820C004003320031900000000000000040524016D6F09FC0F4F000000000E070000000000000000010000000000000000000000000400000FF1
+[  65.282]         APID 0x020 seq     4 t=    4.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 28015 Tbat 25.56 Tobc 39.19 mon OK/OK/OK en 0x7 filt 0 rst [0, 0, 0] fail 0x0 boot 1 up 4
+[  66.288] TM <- 0820C005003320031900000000000000050524016CFD09C60FD3000000000E070000000000000000010000000000000000000000000500009720
+[  66.288]         APID 0x020 seq     5 t=    5.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 27901 Tbat 25.02 Tobc 40.51 mon OK/OK/OK en 0x7 filt 0 rst [0, 0, 0] fail 0x0 boot 1 up 5
+[  67.280] TM <- 0820C006003320031900000000000000060524016D300A1D0F77000000000E0700000000000000000100000000000000000000000006000062EB
+[  67.280]         APID 0x020 seq     6 t=    6.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 27952 Tbat 25.89 Tobc 39.59 mon OK/OK/OK en 0x7 filt 0 rst [0, 0, 0] fail 0x0 boot 1 up 6
+[  68.280] TM <- 0820C007003320031900000000000000070524016D4B09F30FD8000000000E070000000000000000010000000000000000000000000700003404
+[  68.280]         APID 0x020 seq     7 t=    7.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 27979 Tbat 25.47 Tobc 40.56 mon OK/OK/OK en 0x7 filt 0 rst [0, 0, 0] fail 0x0 boot 1 up 7
+[  69.290] TM <- 0820C008003320031900000000000000080524016DBC0A200F43000000000E07000000000000000001000000000000000000000000080000E0AA
+[  69.290]         APID 0x020 seq     8 t=    8.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 28092 Tbat 25.92 Tobc 39.07 mon OK/OK/OK en 0x7 filt 0 rst [0, 0, 0] fail 0x0 boot 1 up 8
+[  70.287] TM <- 0820C009003320031900000000000000090524016D4C0A3D0F7C000000000E07000000000000000001000000000000000000000000090000B70A
+[  70.287]         APID 0x020 seq     9 t=    9.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 27980 Tbat 26.21 Tobc 39.64 mon OK/OK/OK en 0x7 filt 0 rst [0, 0, 0] fail 0x0 boot 1 up 9
+[  71.287] TM <- 0820C00A0033200319000000000000000A0524016D3D0A490F51000000000E070000000000000000010000000000000000000000000A0000A13D
+[  71.287]         APID 0x020 seq    10 t=   10.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 27965 Tbat 26.33 Tobc 39.21 mon OK/OK/OK en 0x7 filt 0 rst [0, 0, 0] fail 0x0 boot 1 up 10
+[  72.280] TM <- 0820C00B0033200319000000000000000B0524016DA80A150FCE000000000E070000000000000000010000000000000000000000000B00007167
+[  72.280]         APID 0x020 seq    11 t=   11.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 28072 Tbat 25.81 Tobc 40.46 mon OK/OK/OK en 0x7 filt 0 rst [0, 0, 0] fail 0x0 boot 1 up 11
+[  73.280] TM <- 0820C00C0033200319000000000000000C0524016D0E0A300FF1000000000E070000000000000000010000000000000000000000000C000017FB
+[  73.280]         APID 0x020 seq    12 t=   12.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 27918 Tbat 26.08 Tobc 40.81 mon OK/OK/OK en 0x7 filt 0 rst [0, 0, 0] fail 0x0 boot 1 up 12
+[  74.282] TM <- 0820C00D0033200319000000000000000D0524016D6E0A661001000000000E070000000000000000010000000000000000000000000D0000AD8B
+[  74.282]         APID 0x020 seq    13 t=   13.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 28014 Tbat 26.62 Tobc 40.97 mon OK/OK/OK en 0x7 filt 0 rst [0, 0, 0] fail 0x0 boot 1 up 13
+[  75.281] TM <- 0820C00E0033200319000000000000000E0524016D620A580F52000000000E070000000000000000010000000000000000000000000E0000CA5D
+[  75.281]         APID 0x020 seq    14 t=   14.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 28002 Tbat 26.48 Tobc 39.22 mon OK/OK/OK en 0x7 filt 0 rst [0, 0, 0] fail 0x0 boot 1 up 14
+[  76.284] TM <- 0820C00F0033200319000000000000000F0524016D510A7F0F9B000000000E070000000000000000010000000000000000000000000F00002430
+[  76.284]         APID 0x020 seq    15 t=   15.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 27985 Tbat 26.87 Tobc 39.95 mon OK/OK/OK en 0x7 filt 0 rst [0, 0, 0] fail 0x0 boot 1 up 15
+[  77.282] TM <- 0820C010003320031900000000000000100524016D430A440FC8000000000E07000000000000000001000000000000000000000000100000DD28
+[  77.283]         APID 0x020 seq    16 t=   16.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 27971 Tbat 26.28 Tobc 40.40 mon OK/OK/OK en 0x7 filt 0 rst [0, 0, 0] fail 0x0 boot 1 up 16
+[  78.289] TM <- 0820C011003320031900000000000000110524016D9B0A690FAF000000000E070000000000000000010000000000000000000000001100008D22
+[  78.289]         APID 0x020 seq    17 t=   17.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 28059 Tbat 26.65 Tobc 40.15 mon OK/OK/OK en 0x7 filt 0 rst [0, 0, 0] fail 0x0 boot 1 up 17
+[  79.280] TM <- 0820C012003320031900000000000000120524016D390A760FE2000000000E07000000000000000001000000000000000000000000120000D8F5
+[  79.280]         APID 0x020 seq    18 t=   18.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 27961 Tbat 26.78 Tobc 40.66 mon OK/OK/OK en 0x7 filt 0 rst [0, 0, 0] fail 0x0 boot 1 up 18
+[  80.286] TM <- 0820C013003320031900000000000000130524016D7E0A610FB2000000000E07000000000000000001000000000000000000000000130000D509
+[  80.286]         APID 0x020 seq    19 t=   19.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 28030 Tbat 26.57 Tobc 40.18 mon OK/OK/OK en 0x7 filt 0 rst [0, 0, 0] fail 0x0 boot 1 up 19
+[  81.281] TM <- 0820C014003320031900000000000000140524016D970A8E0F86000000000E07000000000000000001000000000000000000000000140000E2C4
+[  81.281]         APID 0x020 seq    20 t=   20.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 28055 Tbat 27.02 Tobc 39.74 mon OK/OK/OK en 0x7 filt 0 rst [0, 0, 0] fail 0x0 boot 1 up 20
+[  82.280] TM <- 0820C015003320031900000000000000150524016D810A650FF8000000000E070000000000000000010000000000000000000000001500004EA7
+[  82.280]         APID 0x020 seq    21 t=   21.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 28033 Tbat 26.61 Tobc 40.88 mon OK/OK/OK en 0x7 filt 0 rst [0, 0, 0] fail 0x0 boot 1 up 21
+[  83.285] TM <- 0820C016003320031900000000000000160524016DA40A9A0FB5000000000E07000000000000000001000000000000000000000000160000BEF9
+[  83.285]         APID 0x020 seq    22 t=   22.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 28068 Tbat 27.14 Tobc 40.21 mon OK/OK/OK en 0x7 filt 0 rst [0, 0, 0] fail 0x0 boot 1 up 22
+[  84.280] TM <- 0820C017003320031900000000000000170524016DC10ABA0FF3000000000E070000000000000000010000000000000000000000001700005961
+[  84.280]         APID 0x020 seq    23 t=   23.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 28097 Tbat 27.46 Tobc 40.83 mon OK/OK/OK en 0x7 filt 0 rst [0, 0, 0] fail 0x0 boot 1 up 23
+[  85.279] TM <- 0820C018003320031900000000000000180524016DB60A8F0FCC000000000E07000000000000000001000000000000000000000000180000567C
+[  85.279]         APID 0x020 seq    24 t=   24.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 28086 Tbat 27.03 Tobc 40.44 mon OK/OK/OK en 0x7 filt 0 rst [0, 0, 0] fail 0x0 boot 1 up 24
+[  86.286] TM <- 0820C019003320031900000000000000190524016D330ADC0FD5000000000E070000000000000000010000000000000000000000001900001295
+[  86.286]         APID 0x020 seq    25 t=   25.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 27955 Tbat 27.80 Tobc 40.53 mon OK/OK/OK en 0x7 filt 0 rst [0, 0, 0] fail 0x0 boot 1 up 25
+[  87.281] TM <- 0820C01A0033200319000000000000001A0524016D490AC10F7B000000000E070000000000000000010000000000000000000000001A000073E6
+[  87.281]         APID 0x020 seq    26 t=   26.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 27977 Tbat 27.53 Tobc 39.63 mon OK/OK/OK en 0x7 filt 0 rst [0, 0, 0] fail 0x0 boot 1 up 26
+[  88.281] TM <- 0820C01B0033200319000000000000001B0524016D4A0AEE0F42000000000E070000000000000000010000000000000000000000001B0000911F
+[  88.281]         APID 0x020 seq    27 t=   27.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 27978 Tbat 27.98 Tobc 39.06 mon OK/OK/OK en 0x7 filt 0 rst [0, 0, 0] fail 0x0 boot 1 up 27
+[  89.285] TM <- 0820C01C0033200319000000000000001C0524016D250ADF0F9D000000000E070000000000000000010000000000000000000000001C000075BD
+[  89.285]         APID 0x020 seq    28 t=   28.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 27941 Tbat 27.83 Tobc 39.97 mon OK/OK/OK en 0x7 filt 0 rst [0, 0, 0] fail 0x0 boot 1 up 28
+[  90.280] TM <- 0820C01D0033200319000000000000001D0524016D950AE80F6B000000000E070000000000000000010000000000000000000000001D0000FD2F
+[  90.280]         APID 0x020 seq    29 t=   29.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 28053 Tbat 27.92 Tobc 39.47 mon OK/OK/OK en 0x7 filt 0 rst [0, 0, 0] fail 0x0 boot 1 up 29
+[  91.282] TM <- 0820C01E0033200319000000000000001E0524016D3A0AD20FF2000000000E070000000000000000010000000000000000000000001E0000A011
+[  91.282]         APID 0x020 seq    30 t=   30.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 27962 Tbat 27.70 Tobc 40.82 mon OK/OK/OK en 0x7 filt 0 rst [0, 0, 0] fail 0x0 boot 1 up 30
+[  92.289] TM <- 0820C01F0033200319000000000000001F0524016D950AE80FBF000000000E070000000000000000010000000000000000000000001F00009863
+[  92.289]         APID 0x020 seq    31 t=   31.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 28053 Tbat 27.92 Tobc 40.31 mon OK/OK/OK en 0x7 filt 0 rst [0, 0, 0] fail 0x0 boot 1 up 31
+[  93.280] TM <- 0820C020003320031900000000000000200524016D890B240F7A000000000E0700000000000000000100000000000000000000000020000050C2
+[  93.280]         APID 0x020 seq    32 t=   32.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 28041 Tbat 28.52 Tobc 39.62 mon OK/OK/OK en 0x7 filt 0 rst [0, 0, 0] fail 0x0 boot 1 up 32
+[  94.284] TM <- 0820C021003320031900000000000000210524016D770B080F9D000000000E07000000000000000001000000000000000000000000210000C404
+[  94.284]         APID 0x020 seq    33 t=   33.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 28023 Tbat 28.24 Tobc 39.97 mon OK/OK/OK en 0x7 filt 0 rst [0, 0, 0] fail 0x0 boot 1 up 33
+[  95.281] TM <- 0820C022003320031900000000000000220524016D930B060FCA000000000E070000000000000000010000000000000000000000002200001227
+[  95.281]         APID 0x020 seq    34 t=   34.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 28051 Tbat 28.22 Tobc 40.42 mon OK/OK/OK en 0x7 filt 0 rst [0, 0, 0] fail 0x0 boot 1 up 34
+[  96.287] TM <- 0820C023003320031900000000000000230524016D200AF60F5C000000000E07000000000000000001000000000000000000000000230000C2CA
+[  96.287]         APID 0x020 seq    35 t=   35.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 27936 Tbat 28.06 Tobc 39.32 mon OK/OK/OK en 0x7 filt 0 rst [0, 0, 0] fail 0x0 boot 1 up 35
+[  97.281] TM <- 0820C024003320031900000000000000240524016D660B290F97000000000E07000000000000000001000000000000000000000000240000A6BD
+[  97.281]         APID 0x020 seq    36 t=   36.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 28006 Tbat 28.57 Tobc 39.91 mon OK/OK/OK en 0x7 filt 0 rst [0, 0, 0] fail 0x0 boot 1 up 36
+[  98.280] TM <- 0820C025003320031900000000000000250524016D1E0B530F73000000000E070000000000000000010000000000000000000000002500004D6C
+[  98.280]         APID 0x020 seq    37 t=   37.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 27934 Tbat 28.99 Tobc 39.55 mon OK/OK/OK en 0x7 filt 0 rst [0, 0, 0] fail 0x0 boot 1 up 37
+[  99.288] TM <- 0820C026003320031900000000000000260524016D520B110FA6000000000E07000000000000000001000000000000000000000000260000539F
+[  99.289]         APID 0x020 seq    38 t=   38.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 27986 Tbat 28.33 Tobc 40.06 mon OK/OK/OK en 0x7 filt 0 rst [0, 0, 0] fail 0x0 boot 1 up 38
+[ 100.287] TM <- 0820C027003320031900000000000000270524016D520B410F9E000000000E07000000000000000001000000000000000000000000270000AF5A
+[ 100.287]         APID 0x020 seq    39 t=   39.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 27986 Tbat 28.81 Tobc 39.98 mon OK/OK/OK en 0x7 filt 0 rst [0, 0, 0] fail 0x0 boot 1 up 39
+[ 101.279] TM <- 0820C028003320031900000000000000280524016DB10B790FE6000000000E0700000000000000000100000000000000000000000028000013E3
+[ 101.279]         APID 0x020 seq    40 t=   40.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 28081 Tbat 29.37 Tobc 40.70 mon OK/OK/OK en 0x7 filt 0 rst [0, 0, 0] fail 0x0 boot 1 up 40
+[ 102.282] TM <- 0820C029003320031900000000000000290524016D370B690F6B000000000E070000000000000000010000000000000000000000002900004CCC
+[ 102.282]         APID 0x020 seq    41 t=   41.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 27959 Tbat 29.21 Tobc 39.47 mon OK/OK/OK en 0x7 filt 0 rst [0, 0, 0] fail 0x0 boot 1 up 41
+[ 103.290] TM <- 0820C02A0033200319000000000000002A0524016D280B760F5A000000000E070000000000000000010000000000000000000000002A000040D9
+[ 103.290]         APID 0x020 seq    42 t=   42.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 27944 Tbat 29.34 Tobc 39.30 mon OK/OK/OK en 0x7 filt 0 rst [0, 0, 0] fail 0x0 boot 1 up 42
+[ 104.293] TM <- 0820C02B0033200319000000000000002B0524016DA20B4F0F8B000000000E070000000000000000010000000000000000000000002B00005413
+[ 104.293]         APID 0x020 seq    43 t=   43.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 28066 Tbat 28.95 Tobc 39.79 mon OK/OK/OK en 0x7 filt 0 rst [0, 0, 0] fail 0x0 boot 1 up 43
+[ 105.277] TM <- 0820C02C0033200319000000000000002C0524016D5B0BA70F85000000000E070000000000000000010000000000000000000000002C00007828
+[ 105.277]         APID 0x020 seq    44 t=   44.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 27995 Tbat 29.83 Tobc 39.73 mon OK/OK/OK en 0x7 filt 0 rst [0, 0, 0] fail 0x0 boot 1 up 44
+[ 106.284] TM <- 0820C02D0033200319000000000000002D0524016D440BA70FB4000000000E070000000000000000010000000000000000000000002D00003B36
+[ 106.284]         APID 0x020 seq    45 t=   45.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 27972 Tbat 29.83 Tobc 40.20 mon OK/OK/OK en 0x7 filt 0 rst [0, 0, 0] fail 0x0 boot 1 up 45
+[ 107.284] TM <- 0820C02E0033200319000000000000002E0524016D810B740FB8000000000E070000000000000000010000000000000000000000002E0000AE02
+[ 107.284]         APID 0x020 seq    46 t=   46.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 28033 Tbat 29.32 Tobc 40.24 mon OK/OK/OK en 0x7 filt 0 rst [0, 0, 0] fail 0x0 boot 1 up 46
+[ 108.284] TM <- 0820C02F0033200319000000000000002F0524016DB60B960FC9000000000E070000000000000000010000000000000000000000002F00004AB0
+[ 108.284]         APID 0x020 seq    47 t=   47.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 28086 Tbat 29.66 Tobc 40.41 mon OK/OK/OK en 0x7 filt 0 rst [0, 0, 0] fail 0x0 boot 1 up 47
+[ 109.283] TM <- 0820C030003320031900000000000000300524016D380BB70FF3000000000E070000000000000000010000000000000000000000003000002611
+[ 109.283]         APID 0x020 seq    48 t=   48.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 27960 Tbat 29.99 Tobc 40.83 mon OK/OK/OK en 0x7 filt 0 rst [0, 0, 0] fail 0x0 boot 1 up 48
+[ 110.282] TM <- 0820C031003320031900000000000000310524016DB80BAA0F85000000000E070000000000000000010000000000000000000000003100002AF7
+[ 110.282]         APID 0x020 seq    49 t=   49.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 28088 Tbat 29.86 Tobc 39.73 mon OK/OK/OK en 0x7 filt 0 rst [0, 0, 0] fail 0x0 boot 1 up 49
+[ 111.283] TM <- 0820C032003320031900000000000000320524016DA00BA40FD8000000000E07000000000000000001000000000000000000000000320000A207
+[ 111.283]         APID 0x020 seq    50 t=   50.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 28064 Tbat 29.80 Tobc 40.56 mon OK/OK/OK en 0x7 filt 0 rst [0, 0, 0] fail 0x0 boot 1 up 50
+[ 112.278] TM <- 0820C033003320031900000000000000330524016D4A0BC50F6F000000000E0700000000000000000100000000000000000000000033000083F0
+[ 112.278]         APID 0x020 seq    51 t=   51.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 27978 Tbat 30.13 Tobc 39.51 mon OK/OK/OK en 0x7 filt 0 rst [0, 0, 0] fail 0x0 boot 1 up 51
+[ 113.292] TM <- 0820C034003320031900000000000000340524016D9E0BB20F9F000000000E070000000000000000010000000000000000000000003400007C26
+[ 113.292]         APID 0x020 seq    52 t=   52.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 28062 Tbat 29.94 Tobc 39.99 mon OK/OK/OK en 0x7 filt 0 rst [0, 0, 0] fail 0x0 boot 1 up 52
+[ 114.281] TM <- 0820C035003320031900000000000000350524016D800BFD0FF3000000000E07000000000000000001000000000000000000000000350000DEC5
+[ 114.281]         APID 0x020 seq    53 t=   53.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 28032 Tbat 30.69 Tobc 40.83 mon OK/OK/OK en 0x7 filt 0 rst [0, 0, 0] fail 0x0 boot 1 up 53
+[ 115.278] TM <- 0820C036003320031900000000000000360524016D370BE50FF9000000000E07000000000000000001000000000000000000000000360000E6CE
+[ 115.278]         APID 0x020 seq    54 t=   54.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 27959 Tbat 30.45 Tobc 40.89 mon OK/OK/OK en 0x7 filt 0 rst [0, 0, 0] fail 0x0 boot 1 up 54
+[ 116.282] TM <- 0820C037003320031900000000000000370524016D2F0BBD0FB0000000000E070000000000000000010000000000000000000000003700009AF2
+[ 116.282]         APID 0x020 seq    55 t=   55.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 27951 Tbat 30.05 Tobc 40.16 mon OK/OK/OK en 0x7 filt 0 rst [0, 0, 0] fail 0x0 boot 1 up 55
+[ 117.282] TM <- 0820C038003320031900000000000000380524016D6E0C090F55000000000E07000000000000000001000000000000000000000000380000A049
+[ 117.282]         APID 0x020 seq    56 t=   56.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 28014 Tbat 30.81 Tobc 39.25 mon OK/OK/OK en 0x7 filt 0 rst [0, 0, 0] fail 0x0 boot 1 up 56
+[ 118.281] TM <- 0820C039003320031900000000000000390524016D6F0C260FFF000000000E0700000000000000000100000000000000000000000039000041BB
+[ 118.281]         APID 0x020 seq    57 t=   57.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 28015 Tbat 31.10 Tobc 40.95 mon OK/OK/OK en 0x7 filt 0 rst [0, 0, 0] fail 0x0 boot 1 up 57
+[ 119.282] TM <- 0820C03A0033200319000000000000003A0524016D520C060F52000000000E070000000000000000010000000000000000000000003A000098B2
+[ 119.282]         APID 0x020 seq    58 t=   58.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 27986 Tbat 30.78 Tobc 39.22 mon OK/OK/OK en 0x7 filt 0 rst [0, 0, 0] fail 0x0 boot 1 up 58
+[ 120.280] TM <- 0820C03B0033200319000000000000003B0524016D4C0C030F52000000000E070000000000000000010000000000000000000000003B00000CF6
+[ 120.280]         APID 0x020 seq    59 t=   59.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 27980 Tbat 30.75 Tobc 39.22 mon OK/OK/OK en 0x7 filt 0 rst [0, 0, 0] fail 0x0 boot 1 up 59
+[ 121.282] TM <- 0820C03C0033200319000000000000003C0524016D4A0BFB0F48000000000E070000000000000000010000000000000000000000003C000029D0
+[ 121.282]         APID 0x020 seq    60 t=   60.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 27978 Tbat 30.67 Tobc 39.12 mon OK/OK/OK en 0x7 filt 0 rst [0, 0, 0] fail 0x0 boot 1 up 60
+[ 122.289] TM <- 0820C03D0033200319000000000000003D0524016D970BF70FAF000000000E070000000000000000010000000000000000000000003D00008AF5
+[ 122.289]         APID 0x020 seq    61 t=   61.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 28055 Tbat 30.63 Tobc 40.15 mon OK/OK/OK en 0x7 filt 0 rst [0, 0, 0] fail 0x0 boot 1 up 61
+[ 123.283] TM <- 0820C03E0033200319000000000000003E0524016D020C560F72000000000E070000000000000000010000000000000000000000003E00007404
+[ 123.283]         APID 0x020 seq    62 t=   62.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 27906 Tbat 31.58 Tobc 39.54 mon OK/OK/OK en 0x7 filt 0 rst [0, 0, 0] fail 0x0 boot 1 up 62
+[ 124.285] TM <- 0820C03F0033200319000000000000003F0524016D2B0C240F4E000000000E070000000000000000010000000000000000000000003F00006BFC
+[ 124.286]         APID 0x020 seq    63 t=   63.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 27947 Tbat 31.08 Tobc 39.18 mon OK/OK/OK en 0x7 filt 0 rst [0, 0, 0] fail 0x0 boot 1 up 63
+[ 125.279] TM <- 0820C040003320031900000000000000400524016D680C510FB8000000000E070000000000000000010000000000000000000000004000003053
+[ 125.279]         APID 0x020 seq    64 t=   64.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 28008 Tbat 31.53 Tobc 40.24 mon OK/OK/OK en 0x7 filt 0 rst [0, 0, 0] fail 0x0 boot 1 up 64
+[ 126.281] TM <- 0820C041003320031900000000000000410524016D3A0C310F63000000000E070000000000000000010000000000000000000000004100004DE2
+[ 126.281]         APID 0x020 seq    65 t=   65.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 27962 Tbat 31.21 Tobc 39.39 mon OK/OK/OK en 0x7 filt 0 rst [0, 0, 0] fail 0x0 boot 1 up 65
+[ 127.283] TM <- 0820C042003320031900000000000000420524016DB00C4C0F58000000000E07000000000000000001000000000000000000000000420000C9A6
+[ 127.283]         APID 0x020 seq    66 t=   66.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 28080 Tbat 31.48 Tobc 39.28 mon OK/OK/OK en 0x7 filt 0 rst [0, 0, 0] fail 0x0 boot 1 up 66
+[ 128.286] TM <- 0820C043003320031900000000000000430524016D960C4A0F70000000000E07000000000000000001000000000000000000000000430000102A
+[ 128.286]         APID 0x020 seq    67 t=   67.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 28054 Tbat 31.46 Tobc 39.52 mon OK/OK/OK en 0x7 filt 0 rst [0, 0, 0] fail 0x0 boot 1 up 67
+[ 129.281] TM <- 0820C044003320031900000000000000440524016D040C4A0FE0000000000E07000000000000000001000000000000000000000000440000AD64
+[ 129.281]         APID 0x020 seq    68 t=   68.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 27908 Tbat 31.46 Tobc 40.64 mon OK/OK/OK en 0x7 filt 0 rst [0, 0, 0] fail 0x0 boot 1 up 68
+[ 130.280] TM <- 0820C045003320031900000000000000450524016D0D0C7C1004000000000E07000000000000000001000000000000000000000000450000B171
+[ 130.280]         APID 0x020 seq    69 t=   69.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 27917 Tbat 31.96 Tobc 41.00 mon OK/OK/OK en 0x7 filt 0 rst [0, 0, 0] fail 0x0 boot 1 up 69
+[ 131.282] TM <- 0820C046003320031900000000000000460524016D0D0CAB0F97000000000E070000000000000000010000000000000000000000004600005E50
+[ 131.282]         APID 0x020 seq    70 t=   70.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 27917 Tbat 32.43 Tobc 39.91 mon OK/OK/OK en 0x7 filt 0 rst [0, 0, 0] fail 0x0 boot 1 up 70
+[ 132.289] TM <- 0820C047003320031900000000000000470524016D540C6E0FB4000000000E07000000000000000001000000000000000000000000470000418F
+[ 132.290]         APID 0x020 seq    71 t=   71.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 27988 Tbat 31.82 Tobc 40.20 mon OK/OK/OK en 0x7 filt 0 rst [0, 0, 0] fail 0x0 boot 1 up 71
+[ 133.284] TM <- 0820C048003320031900000000000000480524016DB00C660F48000000000E070000000000000000010000000000000000000000004800000981
+[ 133.284]         APID 0x020 seq    72 t=   72.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 28080 Tbat 31.74 Tobc 39.12 mon OK/OK/OK en 0x7 filt 0 rst [0, 0, 0] fail 0x0 boot 1 up 72
+[ 134.304] TM <- 0820C049003320031900000000000000490524016DBD0C720F8E000000000E07000000000000000001000000000000000000000000490000506F
+[ 134.304]         APID 0x020 seq    73 t=   73.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 28093 Tbat 31.86 Tobc 39.82 mon OK/OK/OK en 0x7 filt 0 rst [0, 0, 0] fail 0x0 boot 1 up 73
+[ 135.283] TM <- 0820C04A0033200319000000000000004A0524016D9A0C850F54000000000E070000000000000000010000000000000000000000004A000095B8
+[ 135.284]         APID 0x020 seq    74 t=   74.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 28058 Tbat 32.05 Tobc 39.24 mon OK/OK/OK en 0x7 filt 0 rst [0, 0, 0] fail 0x0 boot 1 up 74
+[ 136.281] TM <- 0820C04B0033200319000000000000004B0524016D050C990FBE000000000E070000000000000000010000000000000000000000004B00004D64
+[ 136.281]         APID 0x020 seq    75 t=   75.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 27909 Tbat 32.25 Tobc 40.30 mon OK/OK/OK en 0x7 filt 0 rst [0, 0, 0] fail 0x0 boot 1 up 75
+[ 137.297] TM <- 0820C04C0033200319000000000000004C0524016DB30C8C0F50000000000E070000000000000000010000000000000000000000004C00008265
+[ 137.297]         APID 0x020 seq    76 t=   76.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 28083 Tbat 32.12 Tobc 39.20 mon OK/OK/OK en 0x7 filt 0 rst [0, 0, 0] fail 0x0 boot 1 up 76
+[ 138.280] TM <- 0820C04D0033200319000000000000004D0524016D340CC50F50000000000E070000000000000000010000000000000000000000004D0000ADAE
+[ 138.281]         APID 0x020 seq    77 t=   77.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 27956 Tbat 32.69 Tobc 39.20 mon OK/OK/OK en 0x7 filt 0 rst [0, 0, 0] fail 0x0 boot 1 up 77
+[ 139.283] TM <- 0820C04E0033200319000000000000004E0524016DBB0CBF0F7A000000000E070000000000000000010000000000000000000000004E0000BEEC
+[ 139.283]         APID 0x020 seq    78 t=   78.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 28091 Tbat 32.63 Tobc 39.62 mon OK/OK/OK en 0x7 filt 0 rst [0, 0, 0] fail 0x0 boot 1 up 78
+[ 140.284] TM <- 0820C04F0033200319000000000000004F0524016D1C0D040FD1000000000E070000000000000000010000000000000000000000004F000039E9
+[ 140.284]         APID 0x020 seq    79 t=   79.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 27932 Tbat 33.32 Tobc 40.49 mon OK/OK/OK en 0x7 filt 0 rst [0, 0, 0] fail 0x0 boot 1 up 79
+[ 141.294] TM <- 0820C050003320031900000000000000500524016D030CF10F54000000000E07000000000000000001000000000000000000000000500000ECFC
+[ 141.294]         APID 0x020 seq    80 t=   80.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 27907 Tbat 33.13 Tobc 39.24 mon OK/OK/OK en 0x7 filt 0 rst [0, 0, 0] fail 0x0 boot 1 up 80
+[ 142.284] TM <- 0820C051003320031900000000000000510524016DAA0CE80FDA000000000E07000000000000000001000000000000000000000000510000997C
+[ 142.284]         APID 0x020 seq    81 t=   81.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 28074 Tbat 33.04 Tobc 40.58 mon OK/OK/OK en 0x7 filt 0 rst [0, 0, 0] fail 0x0 boot 1 up 81
+[ 143.289] TM <- 0820C052003320031900000000000000520524016D770CC70FAC000000000E07000000000000000001000000000000000000000000520000684E
+[ 143.289]         APID 0x020 seq    82 t=   82.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 28023 Tbat 32.71 Tobc 40.12 mon OK/OK/OK en 0x7 filt 0 rst [0, 0, 0] fail 0x0 boot 1 up 82
+[ 144.282] TM <- 0820C053003320031900000000000000530524016D9E0D2A0FA6000000000E07000000000000000001000000000000000000000000530000AC9F
+[ 144.282]         APID 0x020 seq    83 t=   83.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 28062 Tbat 33.70 Tobc 40.06 mon OK/OK/OK en 0x7 filt 0 rst [0, 0, 0] fail 0x0 boot 1 up 83
+[ 145.282] TM <- 0820C054003320031900000000000000540524016D4E0D110FA4000000000E070000000000000000010000000000000000000000005400009FD2
+[ 145.282]         APID 0x020 seq    84 t=   84.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 27982 Tbat 33.45 Tobc 40.04 mon OK/OK/OK en 0x7 filt 0 rst [0, 0, 0] fail 0x0 boot 1 up 84
+[ 146.281] TM <- 0820C055003320031900000000000000550524016D7C0CE90F93000000000E07000000000000000001000000000000000000000000550000FF64
+[ 146.281]         APID 0x020 seq    85 t=   85.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 28028 Tbat 33.05 Tobc 39.87 mon OK/OK/OK en 0x7 filt 0 rst [0, 0, 0] fail 0x0 boot 1 up 85
+[ 147.283] TM <- 0820C056003320031900000000000000560524016DB70D4A0F64000000000E070000000000000000010000000000000000000000005600009EA4
+[ 147.283]         APID 0x020 seq    86 t=   86.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 28087 Tbat 34.02 Tobc 39.40 mon OK/OK/OK en 0x7 filt 0 rst [0, 0, 0] fail 0x0 boot 1 up 86
+[ 148.281] TM <- 0820C057003320031900000000000000570524016D700D180F7F000000000E07000000000000000001000000000000000000000000570000DBD0
+[ 148.281]         APID 0x020 seq    87 t=   87.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 28016 Tbat 33.52 Tobc 39.67 mon OK/OK/OK en 0x7 filt 0 rst [0, 0, 0] fail 0x0 boot 1 up 87
+[ 149.280] TM <- 0820C058003320031900000000000000580524016D640D320F66000000000E070000000000000000010000000000000000000000005800002498
+[ 149.280]         APID 0x020 seq    88 t=   88.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 28004 Tbat 33.78 Tobc 39.42 mon OK/OK/OK en 0x7 filt 0 rst [0, 0, 0] fail 0x0 boot 1 up 88
+[ 150.281] TM <- 0820C059003320031900000000000000590524016DB40D4E0F9D000000000E07000000000000000001000000000000000000000000590000A95D
+[ 150.281]         APID 0x020 seq    89 t=   89.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 28084 Tbat 34.06 Tobc 39.97 mon OK/OK/OK en 0x7 filt 0 rst [0, 0, 0] fail 0x0 boot 1 up 89
+[ 151.285] TM <- 0820C05A0033200319000000000000005A0524016CFC0D420FBE000000000E070000000000000000010000000000000000000000005A0000410B
+[ 151.285]         APID 0x020 seq    90 t=   90.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 27900 Tbat 33.94 Tobc 40.30 mon OK/OK/OK en 0x7 filt 0 rst [0, 0, 0] fail 0x0 boot 1 up 90
+[ 152.284] TM <- 0820C05B0033200319000000000000005B0524016D030D420F8B000000000E070000000000000000010000000000000000000000005B0000C676
+[ 152.285]         APID 0x020 seq    91 t=   91.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 27907 Tbat 33.94 Tobc 39.79 mon OK/OK/OK en 0x7 filt 0 rst [0, 0, 0] fail 0x0 boot 1 up 91
+[ 153.278] TM <- 0820C05C0033200319000000000000005C0524016CFE0D510F76000000000E070000000000000000010000000000000000000000005C00003393
+[ 153.278]         APID 0x020 seq    92 t=   92.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 27902 Tbat 34.09 Tobc 39.58 mon OK/OK/OK en 0x7 filt 0 rst [0, 0, 0] fail 0x0 boot 1 up 92
+[ 154.281] TM <- 0820C05D0033200319000000000000005D0524016D190D970F8C000000000E070000000000000000010000000000000000000000005D00000E89
+[ 154.281]         APID 0x020 seq    93 t=   93.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 27929 Tbat 34.79 Tobc 39.80 mon OK/OK/OK en 0x7 filt 0 rst [0, 0, 0] fail 0x0 boot 1 up 93
+[ 155.289] TM <- 0820C05E0033200319000000000000005E0524016D1D0D6E0F99000000000E070000000000000000010000000000000000000000005E00006E70
+[ 155.289]         APID 0x020 seq    94 t=   94.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 27933 Tbat 34.38 Tobc 39.93 mon OK/OK/OK en 0x7 filt 0 rst [0, 0, 0] fail 0x0 boot 1 up 94
+[ 156.291] TM <- 0820C05F0033200319000000000000005F0524016D0C0D620FBB000000000E070000000000000000010000000000000000000000005F0000BEAE
+[ 156.291]         APID 0x020 seq    95 t=   95.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 27916 Tbat 34.26 Tobc 40.27 mon OK/OK/OK en 0x7 filt 0 rst [0, 0, 0] fail 0x0 boot 1 up 95
+[ 157.289] TM <- 0820C060003320031900000000000000600524016D3E0DB10FE5000000000E070000000000000000010000000000000000000000006000009924
+[ 157.289]         APID 0x020 seq    96 t=   96.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 27966 Tbat 35.05 Tobc 40.69 mon OK/OK/OK en 0x7 filt 0 rst [0, 0, 0] fail 0x0 boot 1 up 96
+[ 158.281] TM <- 0820C061003320031900000000000000610524016D550DA20FC5000000000E070000000000000000010000000000000000000000006100001B11
+[ 158.281]         APID 0x020 seq    97 t=   97.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 27989 Tbat 34.90 Tobc 40.37 mon OK/OK/OK en 0x7 filt 0 rst [0, 0, 0] fail 0x0 boot 1 up 97
+[ 159.281] TM <- 0820C062003320031900000000000000620524016DBE0D850F91000000000E070000000000000000010000000000000000000000006200007921
+[ 159.281]         APID 0x020 seq    98 t=   98.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 28094 Tbat 34.61 Tobc 39.85 mon OK/OK/OK en 0x7 filt 0 rst [0, 0, 0] fail 0x0 boot 1 up 98
+[ 160.281] TM <- 0820C063003320031900000000000000630524016DA10DD20F9D000000000E07000000000000000001000000000000000000000000630000972A
+[ 160.281]         APID 0x020 seq    99 t=   99.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 28065 Tbat 35.38 Tobc 39.97 mon OK/OK/OK en 0x7 filt 0 rst [0, 0, 0] fail 0x0 boot 1 up 99
+[ 161.281] TM <- 0820C064003320031900000000000000640524016D380DBF0F88000000000E070000000000000000010000000000000000000000006400005E87
+[ 161.281]         APID 0x020 seq   100 t=  100.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 27960 Tbat 35.19 Tobc 39.76 mon OK/OK/OK en 0x7 filt 0 rst [0, 0, 0] fail 0x0 boot 1 up 100
+[ 162.282] TM <- 0820C065003320031900000000000000650524016D0B0DD00FE7000000000E070000000000000000010000000000000000000000006500000289
+[ 162.282]         APID 0x020 seq   101 t=  101.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 27915 Tbat 35.36 Tobc 40.71 mon OK/OK/OK en 0x7 filt 0 rst [0, 0, 0] fail 0x0 boot 1 up 101
+[ 163.282] TM <- 0820C066003320031900000000000000660524016D140DB50FCB000000000E0700000000000000000100000000000000000000000066000069A3
+[ 163.282]         APID 0x020 seq   102 t=  102.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 27924 Tbat 35.09 Tobc 40.43 mon OK/OK/OK en 0x7 filt 0 rst [0, 0, 0] fail 0x0 boot 1 up 102
+[ 164.280] TM <- 0820C067003320031900000000000000670524016D6C0DB10FB2000000000E07000000000000000001000000000000000000000000670000DEDC
+[ 164.281]         APID 0x020 seq   103 t=  103.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 28012 Tbat 35.05 Tobc 40.18 mon OK/OK/OK en 0x7 filt 0 rst [0, 0, 0] fail 0x0 boot 1 up 103
+[ 165.287] TM <- 0820C068003320031900000000000000680524016DAB0D5F0FD9000000000E07000000000000000001000000000000000000000000680000CD1E
+[ 165.287]         APID 0x020 seq   104 t=  104.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 28075 Tbat 34.23 Tobc 40.57 mon OK/OK/OK en 0x7 filt 0 rst [0, 0, 0] fail 0x0 boot 1 up 104
+[ 166.280] TM <- 0820C069003320031900000000000000690524016D630D5C0F5F000000000E07000000000000000001000000000000000000000000690000FE26
+[ 166.280]         APID 0x020 seq   105 t=  105.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 28003 Tbat 34.20 Tobc 39.35 mon OK/OK/OK en 0x7 filt 0 rst [0, 0, 0] fail 0x0 boot 1 up 105
+[ 167.283] TM <- 0820C06A0033200319000000000000006A0524016D780D610F77000000000E070000000000000000010000000000000000000000006A000010B2
+[ 167.283]         APID 0x020 seq   106 t=  106.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 28024 Tbat 34.25 Tobc 39.59 mon OK/OK/OK en 0x7 filt 0 rst [0, 0, 0] fail 0x0 boot 1 up 106
+[ 168.281] TM <- 0820C06B0033200319000000000000006B0524016DC40D490F9C000000000E070000000000000000010000000000000000000000006B00003A5E
+[ 168.281]         APID 0x020 seq   107 t=  107.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 28100 Tbat 34.01 Tobc 39.96 mon OK/OK/OK en 0x7 filt 0 rst [0, 0, 0] fail 0x0 boot 1 up 107
+[ 169.306] TM <- 0820C06C0033200319000000000000006C0524016DC20D6B0F46000000000E070000000000000000010000000000000000000000006C00009534
+[ 169.306]         APID 0x020 seq   108 t=  108.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 28098 Tbat 34.35 Tobc 39.10 mon OK/OK/OK en 0x7 filt 0 rst [0, 0, 0] fail 0x0 boot 1 up 108
+[ 170.284] TM <- 0820C06D0033200319000000000000006D0524016D350D380FCC000000000E070000000000000000010000000000000000000000006D0000A834
+[ 170.284]         APID 0x020 seq   109 t=  109.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 27957 Tbat 33.84 Tobc 40.44 mon OK/OK/OK en 0x7 filt 0 rst [0, 0, 0] fail 0x0 boot 1 up 109
+[ 171.284] TM <- 0820C06E0033200319000000000000006E0524016D160D430FB2000000000E070000000000000000010000000000000000000000006E0000ED37
+[ 171.284]         APID 0x020 seq   110 t=  110.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 27926 Tbat 33.95 Tobc 40.18 mon OK/OK/OK en 0x7 filt 0 rst [0, 0, 0] fail 0x0 boot 1 up 110
+[ 172.282] TM <- 0820C06F0033200319000000000000006F0524016D160D340FFD000000000E070000000000000000010000000000000000000000006F00009940
+[ 172.282]         APID 0x020 seq   111 t=  111.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 27926 Tbat 33.80 Tobc 40.93 mon OK/OK/OK en 0x7 filt 0 rst [0, 0, 0] fail 0x0 boot 1 up 111
+[ 173.278] TM <- 0820C070003320031900000000000000700524016D110D5B0FB2000000000E07000000000000000001000000000000000000000000700000FA47
+[ 173.278]         APID 0x020 seq   112 t=  112.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 27921 Tbat 34.19 Tobc 40.18 mon OK/OK/OK en 0x7 filt 0 rst [0, 0, 0] fail 0x0 boot 1 up 112
+[ 174.281] TM <- 0820C071003320031900000000000000710524016D280D200F62000000000E070000000000000000010000000000000000000000007100000969
+[ 174.281]         APID 0x020 seq   113 t=  113.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 27944 Tbat 33.60 Tobc 39.38 mon OK/OK/OK en 0x7 filt 0 rst [0, 0, 0] fail 0x0 boot 1 up 113
+[ 175.280] TM <- 0820C072003320031900000000000000720524016D760D3F0FB5000000000E070000000000000000010000000000000000000000007200004D56
+[ 175.280]         APID 0x020 seq   114 t=  114.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 28022 Tbat 33.91 Tobc 40.21 mon OK/OK/OK en 0x7 filt 0 rst [0, 0, 0] fail 0x0 boot 1 up 114
+[ 176.281] TM <- 0820C073003320031900000000000000730524016DBA0D360F4E000000000E070000000000000000010000000000000000000000007300004A8C
+[ 176.281]         APID 0x020 seq   115 t=  115.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 28090 Tbat 33.82 Tobc 39.18 mon OK/OK/OK en 0x7 filt 0 rst [0, 0, 0] fail 0x0 boot 1 up 115
+[ 177.288] TM <- 0820C074003320031900000000000000740524016D620D300FE4000000000E07000000000000000001000000000000000000000000740000FB87
+[ 177.288]         APID 0x020 seq   116 t=  116.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 28002 Tbat 33.76 Tobc 40.68 mon OK/OK/OK en 0x7 filt 0 rst [0, 0, 0] fail 0x0 boot 1 up 116
+[ 178.283] TM <- 0820C075003320031900000000000000750524016DBB0D210F9D000000000E070000000000000000010000000000000000000000007500005677
+[ 178.283]         APID 0x020 seq   117 t=  117.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 28091 Tbat 33.61 Tobc 39.97 mon OK/OK/OK en 0x7 filt 0 rst [0, 0, 0] fail 0x0 boot 1 up 117
+[ 179.282] TM <- 0820C076003320031900000000000000760524016D260CED0F46000000000E07000000000000000001000000000000000000000000760000A37E
+[ 179.282]         APID 0x020 seq   118 t=  118.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 27942 Tbat 33.09 Tobc 39.10 mon OK/OK/OK en 0x7 filt 0 rst [0, 0, 0] fail 0x0 boot 1 up 118
+[ 180.285] TM <- 0820C077003320031900000000000000770524016D670CE90F5C000000000E07000000000000000001000000000000000000000000770000956E
+[ 180.285]         APID 0x020 seq   119 t=  119.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 28007 Tbat 33.05 Tobc 39.32 mon OK/OK/OK en 0x7 filt 0 rst [0, 0, 0] fail 0x0 boot 1 up 119
+[ 181.284] TM <- 0820C078003320031900000000000000780524016DB30CF40F3C000000000E0700000000000000000100000000000000000000000078000049ED
+[ 181.284]         APID 0x020 seq   120 t=  120.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 28083 Tbat 33.16 Tobc 39.00 mon OK/OK/OK en 0x7 filt 0 rst [0, 0, 0] fail 0x0 boot 1 up 120
+[ 182.283] TM <- 0820C079003320031900000000000000790524016D140D010FA6000000000E07000000000000000001000000000000000000000000790000B5A7
+[ 182.283]         APID 0x020 seq   121 t=  121.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 27924 Tbat 33.29 Tobc 40.06 mon OK/OK/OK en 0x7 filt 0 rst [0, 0, 0] fail 0x0 boot 1 up 121
+[ 183.288] TM <- 0820C07A0033200319000000000000007A0524016DA90CEB0F59000000000E070000000000000000010000000000000000000000007A00001D6F
+[ 183.288]         APID 0x020 seq   122 t=  122.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 28073 Tbat 33.07 Tobc 39.29 mon OK/OK/OK en 0x7 filt 0 rst [0, 0, 0] fail 0x0 boot 1 up 122
+[ 184.279] TM <- 0820C07B0033200319000000000000007B0524016D8B0CCD0FF0000000000E070000000000000000010000000000000000000000007B0000530C
+[ 184.279]         APID 0x020 seq   123 t=  123.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 28043 Tbat 32.77 Tobc 40.80 mon OK/OK/OK en 0x7 filt 0 rst [0, 0, 0] fail 0x0 boot 1 up 123
+[ 185.281] TM <- 0820C07C0033200319000000000000007C0524016DA70CA70FDE000000000E070000000000000000010000000000000000000000007C00005F22
+[ 185.281]         APID 0x020 seq   124 t=  124.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 28071 Tbat 32.39 Tobc 40.62 mon OK/OK/OK en 0x7 filt 0 rst [0, 0, 0] fail 0x0 boot 1 up 124
+[ 186.281] TM <- 0820C07D0033200319000000000000007D0524016D340CAC0F8F000000000E070000000000000000010000000000000000000000007D0000F4E2
+[ 186.281]         APID 0x020 seq   125 t=  125.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 27956 Tbat 32.44 Tobc 39.83 mon OK/OK/OK en 0x7 filt 0 rst [0, 0, 0] fail 0x0 boot 1 up 125
+[ 187.277] TM <- 0820C07E0033200319000000000000007E0524016D5B0C950FA0000000000E070000000000000000010000000000000000000000007E000061EF
+[ 187.277]         APID 0x020 seq   126 t=  126.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 27995 Tbat 32.21 Tobc 40.00 mon OK/OK/OK en 0x7 filt 0 rst [0, 0, 0] fail 0x0 boot 1 up 126
+[ 188.280] TM <- 0820C07F0033200319000000000000007F0524016D0F0C9C0FB6000000000E070000000000000000010000000000000000000000007F00003209
+[ 188.280]         APID 0x020 seq   127 t=  127.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 27919 Tbat 32.28 Tobc 40.22 mon OK/OK/OK en 0x7 filt 0 rst [0, 0, 0] fail 0x0 boot 1 up 127
+[ 189.280] TM <- 0820C080003320031900000000000000800524016D750C850FD4000000000E0700000000000000000100000000000000000000000080000026F1
+[ 189.280]         APID 0x020 seq   128 t=  128.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 28021 Tbat 32.05 Tobc 40.52 mon OK/OK/OK en 0x7 filt 0 rst [0, 0, 0] fail 0x0 boot 1 up 128
+[ 190.281] TM <- 0820C081003320031900000000000000810524016D990C5A0FE4000000000E07000000000000000001000000000000000000000000810000E213
+[ 190.281]         APID 0x020 seq   129 t=  129.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 28057 Tbat 31.62 Tobc 40.68 mon OK/OK/OK en 0x7 filt 0 rst [0, 0, 0] fail 0x0 boot 1 up 129
+[ 191.280] TM <- 0820C082003320031900000000000000820524016D620C710F81000000000E070000000000000000010000000000000000000000008200008062
+[ 191.280]         APID 0x020 seq   130 t=  130.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 28002 Tbat 31.85 Tobc 39.69 mon OK/OK/OK en 0x7 filt 0 rst [0, 0, 0] fail 0x0 boot 1 up 130
+[ 192.280] TM <- 0820C083003320031900000000000000830524016DB40C9F0F5D000000000E0700000000000000000100000000000000000000000083000083E7
+[ 192.281]         APID 0x020 seq   131 t=  131.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 28084 Tbat 32.31 Tobc 39.33 mon OK/OK/OK en 0x7 filt 0 rst [0, 0, 0] fail 0x0 boot 1 up 131
+[ 193.281] TM <- 0820C084003320031900000000000000840524016D9C0C990FDB000000000E070000000000000000010000000000000000000000008400003AA4
+[ 193.281]         APID 0x020 seq   132 t=  132.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 28060 Tbat 32.25 Tobc 40.59 mon OK/OK/OK en 0x7 filt 0 rst [0, 0, 0] fail 0x0 boot 1 up 132
+[ 194.280] TM <- 0820C085003320031900000000000000850524016D480C5E0F3C000000000E07000000000000000001000000000000000000000000850000FA5D
+[ 194.280]         APID 0x020 seq   133 t=  133.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 27976 Tbat 31.66 Tobc 39.00 mon OK/OK/OK en 0x7 filt 0 rst [0, 0, 0] fail 0x0 boot 1 up 133
+[ 195.294] TM <- 0820C086003320031900000000000000860524016D670C2B0F69000000000E070000000000000000010000000000000000000000008600007C09
+[ 195.294]         APID 0x020 seq   134 t=  134.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 28007 Tbat 31.15 Tobc 39.45 mon OK/OK/OK en 0x7 filt 0 rst [0, 0, 0] fail 0x0 boot 1 up 134
+[ 196.280] TM <- 0820C087003320031900000000000000870524016D880C720FCB000000000E070000000000000000010000000000000000000000008700008855
+[ 196.280]         APID 0x020 seq   135 t=  135.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 28040 Tbat 31.86 Tobc 40.43 mon OK/OK/OK en 0x7 filt 0 rst [0, 0, 0] fail 0x0 boot 1 up 135
+[ 197.281] TM <- 0820C08800332003190000000000000088052401639C0C380F71000000000E070100000000000000010000000000000000000000008800005EE9
+[ 197.281]         APID 0x020 seq   136 t=  136.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 25500 Tbat 31.28 Tobc 39.53 mon WARN/OK/OK en 0x7 filt 0 rst [0, 0, 0] fail 0x0 boot 1 up 136
+[ 198.281] TM <- 0820C089003320031900000000000000890524016D5E0C340FA3000000000E070000010000000000010000000000000000000000008900000728
+[ 198.281]         APID 0x020 seq   137 t=  137.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 27998 Tbat 31.24 Tobc 40.03 mon OK/OK/OK en 0x7 filt 1 rst [0, 0, 0] fail 0x0 boot 1 up 137
+[ 199.281] TM <- 0820C08A0033200319000000000000008A0524016D940C060FF9000000000E070000010000000000010000000000000000000000008A0000C67E
+[ 199.281]         APID 0x020 seq   138 t=  138.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 28052 Tbat 30.78 Tobc 40.89 mon OK/OK/OK en 0x7 filt 1 rst [0, 0, 0] fail 0x0 boot 1 up 138
+[ 200.288] TM <- 0820C08B0033200319000000000000008B0524016D0F0C430F53000000000E070000010000000000010000000000000000000000008B00009067
+[ 200.288]         APID 0x020 seq   139 t=  139.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 27919 Tbat 31.39 Tobc 39.23 mon OK/OK/OK en 0x7 filt 1 rst [0, 0, 0] fail 0x0 boot 1 up 139
+[ 201.281] TM <- 0820C08C0033200319000000000000008C0524016D890C370FA8000000000E070000010000000000010000000000000000000000008C0000C9C6
+[ 201.281]         APID 0x020 seq   140 t=  140.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 28041 Tbat 31.27 Tobc 40.08 mon OK/OK/OK en 0x7 filt 1 rst [0, 0, 0] fail 0x0 boot 1 up 140
+[ 202.281] TM <- 0820C08D0033200319000000000000008D0524016D210C440FC7000000000E070000010000000000010000000000000000000000008D0000DFE4
+[ 202.281]         APID 0x020 seq   141 t=  141.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 27937 Tbat 31.40 Tobc 40.39 mon OK/OK/OK en 0x7 filt 1 rst [0, 0, 0] fail 0x0 boot 1 up 141
+[ 203.280] TM <- 0820C08E0033200319000000000000008E0524016D1C0C200F3F000000000E070000010000000000010000000000000000000000008E000019C8
+[ 203.280]         APID 0x020 seq   142 t=  142.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 27932 Tbat 31.04 Tobc 39.03 mon OK/OK/OK en 0x7 filt 1 rst [0, 0, 0] fail 0x0 boot 1 up 142
+[ 204.281] TM <- 0820C08F0033200319000000000000008F0524016D4F0C100FA5000000000E070000010000000000010000000000000000000000008F00002CED
+[ 204.281]         APID 0x020 seq   143 t=  143.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 27983 Tbat 30.88 Tobc 40.05 mon OK/OK/OK en 0x7 filt 1 rst [0, 0, 0] fail 0x0 boot 1 up 143
+[ 205.281] TM <- 0820C090003320031900000000000000900524016D010BFA0FCD000000000E070000010000000000010000000000000000000000009000008AB4
+[ 205.281]         APID 0x020 seq   144 t=  144.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 27905 Tbat 30.66 Tobc 40.45 mon OK/OK/OK en 0x7 filt 1 rst [0, 0, 0] fail 0x0 boot 1 up 144
+[ 206.281] TM <- 0820C091003320031900000000000000910524016CFC0C110FC5000000000E070000010000000000010000000000000000000000009100009022
+[ 206.281]         APID 0x020 seq   145 t=  145.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 27900 Tbat 30.89 Tobc 40.37 mon OK/OK/OK en 0x7 filt 1 rst [0, 0, 0] fail 0x0 boot 1 up 145
+[ 207.281] TM <- 0820C092003320031900000000000000920524016D050BFE0F56000000000E07000001000000000001000000000000000000000000920000410E
+[ 207.281]         APID 0x020 seq   146 t=  146.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 27909 Tbat 30.70 Tobc 39.26 mon OK/OK/OK en 0x7 filt 1 rst [0, 0, 0] fail 0x0 boot 1 up 146
+[ 208.283] TM <- 0820C093003320031900000000000000930524016DC10BF10FFB000000000E07000001000000000001000000000000000000000000930000BAF8
+[ 208.284]         APID 0x020 seq   147 t=  147.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 28097 Tbat 30.57 Tobc 40.91 mon OK/OK/OK en 0x7 filt 1 rst [0, 0, 0] fail 0x0 boot 1 up 147
+[ 209.281] TM <- 0820C094003320031900000000000000940524016D220BE00F8B000000000E07000001000000000001000000000000000000000000940000BEA7
+[ 209.281]         APID 0x020 seq   148 t=  148.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 27938 Tbat 30.40 Tobc 39.79 mon OK/OK/OK en 0x7 filt 1 rst [0, 0, 0] fail 0x0 boot 1 up 148
+[ 210.282] TM <- 0820C095003320031900000000000000950524016D9B0BAB0F8E000000000E0700000100000000000100000000000000000000000095000073D4
+[ 210.282]         APID 0x020 seq   149 t=  149.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 28059 Tbat 29.87 Tobc 39.82 mon OK/OK/OK en 0x7 filt 1 rst [0, 0, 0] fail 0x0 boot 1 up 149
+[ 211.279] TM <- 0820C096003320031900000000000000960524016D710BE70FB3000000000E07000001000000000001000000000000000000000000960000E2F5
+[ 211.279]         APID 0x020 seq   150 t=  150.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 28017 Tbat 30.47 Tobc 40.19 mon OK/OK/OK en 0x7 filt 1 rst [0, 0, 0] fail 0x0 boot 1 up 150
+[ 212.292] TM <- 0820C097003320031900000000000000970524016D310BD70FD7000000000E070000010000000000010000000000000000000000009700005E0A
+[ 212.292]         APID 0x020 seq   151 t=  151.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 27953 Tbat 30.31 Tobc 40.55 mon OK/OK/OK en 0x7 filt 1 rst [0, 0, 0] fail 0x0 boot 1 up 151
+[ 213.278] TM <- 0820C098003320031900000000000000980524016DB10BAD0FD5000000000E070000010000000000010000000000000000000000009800004D56
+[ 213.278]         APID 0x020 seq   152 t=  152.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 28081 Tbat 29.89 Tobc 40.53 mon OK/OK/OK en 0x7 filt 1 rst [0, 0, 0] fail 0x0 boot 1 up 152
+[ 214.286] TM <- 0820C099003320031900000000000000990524016D620B9B0FFD000000000E070000010000000000010000000000000000000000009900007C10
+[ 214.286]         APID 0x020 seq   153 t=  153.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 28002 Tbat 29.71 Tobc 40.93 mon OK/OK/OK en 0x7 filt 1 rst [0, 0, 0] fail 0x0 boot 1 up 153
+[ 215.279] TM <- 0820C09A0033200319000000000000009A0524016D590B5F0FCB000000000E070000010000000000010000000000000000000000009A0000108A
+[ 215.279]         APID 0x020 seq   154 t=  154.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 27993 Tbat 29.11 Tobc 40.43 mon OK/OK/OK en 0x7 filt 1 rst [0, 0, 0] fail 0x0 boot 1 up 154
+[ 216.285] TM <- 0820C09B0033200319000000000000009B0524016DBE0B840F60000000000E070000010000000000010000000000000000000000009B00009F63
+[ 216.285]         APID 0x020 seq   155 t=  155.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 28094 Tbat 29.48 Tobc 39.36 mon OK/OK/OK en 0x7 filt 1 rst [0, 0, 0] fail 0x0 boot 1 up 155
+[ 217.287] TM <- 0820C09C0033200319000000000000009C0524016D0B0B520FE4000000000E070000010000000000010000000000000000000000009C0000BEB5
+[ 217.287]         APID 0x020 seq   156 t=  156.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 27915 Tbat 28.98 Tobc 40.68 mon OK/OK/OK en 0x7 filt 1 rst [0, 0, 0] fail 0x0 boot 1 up 156
+[ 218.281] TM <- 0820C09D0033200319000000000000009D0524016D580B440FA4000000000E070000010000000000010000000000000000000000009D0000C26E
+[ 218.281]         APID 0x020 seq   157 t=  157.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 27992 Tbat 28.84 Tobc 40.04 mon OK/OK/OK en 0x7 filt 1 rst [0, 0, 0] fail 0x0 boot 1 up 157
+[ 219.277] TM <- 0820C09E0033200319000000000000009E0524016DBB0B450FA4000000000E070000010000000000010000000000000000000000009E0000E991
+[ 219.277]         APID 0x020 seq   158 t=  158.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 28091 Tbat 28.85 Tobc 40.04 mon OK/OK/OK en 0x7 filt 1 rst [0, 0, 0] fail 0x0 boot 1 up 158
+[ 220.284] TM <- 0820C09F0033200319000000000000009F0524016DA20B8A0F51000000000E070000010000000000010000000000000000000000009F00005804
+[ 220.284]         APID 0x020 seq   159 t=  159.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 28066 Tbat 29.54 Tobc 39.21 mon OK/OK/OK en 0x7 filt 1 rst [0, 0, 0] fail 0x0 boot 1 up 159
+[ 221.287] TM <- 0820C0A0003320031900000000000000A00524016D950B5F0F67000000000E07000001000000000001000000000000000000000000A00000E058
+[ 221.287]         APID 0x020 seq   160 t=  160.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 28053 Tbat 29.11 Tobc 39.43 mon OK/OK/OK en 0x7 filt 1 rst [0, 0, 0] fail 0x0 boot 1 up 160
+[ 222.282] TM <- 0820C0A1003320031900000000000000A10524016D800B540FFA000000000E07000001000000000001000000000000000000000000A100000E7F
+[ 222.282]         APID 0x020 seq   161 t=  161.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 28032 Tbat 29.00 Tobc 40.90 mon OK/OK/OK en 0x7 filt 1 rst [0, 0, 0] fail 0x0 boot 1 up 161
+[ 223.282] TM <- 0820C0A2003320031900000000000000A20524016D7C0B470FAF000000000E07000001000000000001000000000000000000000000A200002630
+[ 223.282]         APID 0x020 seq   162 t=  162.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 28028 Tbat 28.87 Tobc 40.15 mon OK/OK/OK en 0x7 filt 1 rst [0, 0, 0] fail 0x0 boot 1 up 162
+[ 224.281] TM <- 0820C0A3003320031900000000000000A30524016D970B500F52000000000E07000001000000000001000000000000000000000000A3000059FE
+[ 224.282]         APID 0x020 seq   163 t=  163.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 28055 Tbat 28.96 Tobc 39.22 mon OK/OK/OK en 0x7 filt 1 rst [0, 0, 0] fail 0x0 boot 1 up 163
+[ 225.279] TM <- 0820C0A4003320031900000000000000A40524016D350B050F66000000000E07000001000000000001000000000000000000000000A400008658
+[ 225.279]         APID 0x020 seq   164 t=  164.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 27957 Tbat 28.21 Tobc 39.42 mon OK/OK/OK en 0x7 filt 1 rst [0, 0, 0] fail 0x0 boot 1 up 164
+[ 226.281] TM <- 0820C0A5003320031900000000000000A50524016D0B0B130FDF000000000E07000001000000000001000000000000000000000000A50000D853
+[ 226.281]         APID 0x020 seq   165 t=  165.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 27915 Tbat 28.35 Tobc 40.63 mon OK/OK/OK en 0x7 filt 1 rst [0, 0, 0] fail 0x0 boot 1 up 165
+[ 227.285] TM <- 0820C0A6003320031900000000000000A60524016D410B070F5B000000000E07000001000000000001000000000000000000000000A60000D4AD
+[ 227.285]         APID 0x020 seq   166 t=  166.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 27969 Tbat 28.23 Tobc 39.31 mon OK/OK/OK en 0x7 filt 1 rst [0, 0, 0] fail 0x0 boot 1 up 166
+[ 228.284] TM <- 0820C0A7003320031900000000000000A70524016D3B0B340F7A000000000E07000001000000000001000000000000000000000000A700001582
+[ 228.284]         APID 0x020 seq   167 t=  167.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 27963 Tbat 28.68 Tobc 39.62 mon OK/OK/OK en 0x7 filt 1 rst [0, 0, 0] fail 0x0 boot 1 up 167
+[ 229.282] TM <- 0820C0A8003320031900000000000000A80524016DA20B070FCF000000000E07000001000000000001000000000000000000000000A80000A9B8
+[ 229.282]         APID 0x020 seq   168 t=  168.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 28066 Tbat 28.23 Tobc 40.47 mon OK/OK/OK en 0x7 filt 1 rst [0, 0, 0] fail 0x0 boot 1 up 168
+[ 230.284] TM <- 0820C0A9003320031900000000000000A90524016DB80B160F6E000000000E07000001000000000001000000000000000000000000A900009F49
+[ 230.284]         APID 0x020 seq   169 t=  169.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 28088 Tbat 28.38 Tobc 39.50 mon OK/OK/OK en 0x7 filt 1 rst [0, 0, 0] fail 0x0 boot 1 up 169
+[ 231.279] TM <- 0820C0AA003320031900000000000000AA0524016D9B0B1D0FF8000000000E07000001000000000001000000000000000000000000AA0000180D
+[ 231.279]         APID 0x020 seq   170 t=  170.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 28059 Tbat 28.45 Tobc 40.88 mon OK/OK/OK en 0x7 filt 1 rst [0, 0, 0] fail 0x0 boot 1 up 170
+[ 232.282] TM <- 0820C0AB003320031900000000000000AB0524016D030AEF0F86000000000E07000001000000000001000000000000000000000000AB000000DF
+[ 232.282]         APID 0x020 seq   171 t=  171.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 27907 Tbat 27.99 Tobc 39.74 mon OK/OK/OK en 0x7 filt 1 rst [0, 0, 0] fail 0x0 boot 1 up 171
+[ 233.281] TM <- 0820C0AC003320031900000000000000AC0524016D3B0AB90FAB000000000E07000001000000000001000000000000000000000000AC0000CDC6
+[ 233.282]         APID 0x020 seq   172 t=  172.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 27963 Tbat 27.45 Tobc 40.11 mon OK/OK/OK en 0x7 filt 1 rst [0, 0, 0] fail 0x0 boot 1 up 172
+[ 234.283] TM <- 0820C0AD003320031900000000000000AD0524016D8B0ACE0FA3000000000E07000001000000000001000000000000000000000000AD00001546
+[ 234.283]         APID 0x020 seq   173 t=  173.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 28043 Tbat 27.66 Tobc 40.03 mon OK/OK/OK en 0x7 filt 1 rst [0, 0, 0] fail 0x0 boot 1 up 173
+[ 235.292] TM <- 0820C0AE003320031900000000000000AE0524016DA10AF00F8E000000000E07000001000000000001000000000000000000000000AE0000B8D7
+[ 235.292]         APID 0x020 seq   174 t=  174.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 28065 Tbat 28.00 Tobc 39.82 mon OK/OK/OK en 0x7 filt 1 rst [0, 0, 0] fail 0x0 boot 1 up 174
+[ 236.284] TM <- 0820C0AF003320031900000000000000AF0524016D510ACA0FAC000000000E07000001000000000001000000000000000000000000AF0000030B
+[ 236.284]         APID 0x020 seq   175 t=  175.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 27985 Tbat 27.62 Tobc 40.12 mon OK/OK/OK en 0x7 filt 1 rst [0, 0, 0] fail 0x0 boot 1 up 175
+[ 237.281] TM <- 0820C0B0003320031900000000000000B00524016DC00AB60FDF000000000E07000001000000000001000000000000000000000000B00000FABA
+[ 237.281]         APID 0x020 seq   176 t=  176.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 28096 Tbat 27.42 Tobc 40.63 mon OK/OK/OK en 0x7 filt 1 rst [0, 0, 0] fail 0x0 boot 1 up 176
+[ 238.281] TM <- 0820C0B1003320031900000000000000B10524016D820AC10FFF000000000E07000001000000000001000000000000000000000000B10000FCFE
+[ 238.281]         APID 0x020 seq   177 t=  177.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 28034 Tbat 27.53 Tobc 40.95 mon OK/OK/OK en 0x7 filt 1 rst [0, 0, 0] fail 0x0 boot 1 up 177
+[ 239.283] TM <- 0820C0B2003320031900000000000000B20524016DA60A700F5E000000000E07000001000000000001000000000000000000000000B2000066A3
+[ 239.283]         APID 0x020 seq   178 t=  178.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 28070 Tbat 26.72 Tobc 39.34 mon OK/OK/OK en 0x7 filt 1 rst [0, 0, 0] fail 0x0 boot 1 up 178
+[ 240.281] TM <- 0820C0B3003320031900000000000000B30524016D2F0AC20FB0000000000E07000001000000000001000000000000000000000000B30000BACD
+[ 240.281]         APID 0x020 seq   179 t=  179.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 27951 Tbat 27.54 Tobc 40.16 mon OK/OK/OK en 0x7 filt 1 rst [0, 0, 0] fail 0x0 boot 1 up 179
+[ 241.280] TM <- 0820C0B4003320031900000000000000B40524016DA50A850FC4000000000E07000001000000000001000000000000000000000000B40000829C
+[ 241.280]         APID 0x020 seq   180 t=  180.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 28069 Tbat 26.93 Tobc 40.36 mon OK/OK/OK en 0x7 filt 1 rst [0, 0, 0] fail 0x0 boot 1 up 180
+[ 242.283] TM <- 0820C0B5003320031900000000000000B50524016D270A510FAA000000000E07000001000000000001000000000000000000000000B5000014FF
+[ 242.283]         APID 0x020 seq   181 t=  181.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 27943 Tbat 26.41 Tobc 40.10 mon OK/OK/OK en 0x7 filt 1 rst [0, 0, 0] fail 0x0 boot 1 up 181
+[ 243.280] TM <- 0820C0B6003320031900000000000000B60524016D850AA10F54000000000E07000001000000000001000000000000000000000000B60000E8F9
+[ 243.281]         APID 0x020 seq   182 t=  182.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 28037 Tbat 27.21 Tobc 39.24 mon OK/OK/OK en 0x7 filt 1 rst [0, 0, 0] fail 0x0 boot 1 up 182
+[ 244.288] TM <- 0820C0B7003320031900000000000000B70524016D7A0A670FFD000000000E07000001000000000001000000000000000000000000B70000997C
+[ 244.288]         APID 0x020 seq   183 t=  183.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 28026 Tbat 26.63 Tobc 40.93 mon OK/OK/OK en 0x7 filt 1 rst [0, 0, 0] fail 0x0 boot 1 up 183
+[ 245.279] TM <- 0820C0B8003320031900000000000000B80524016D260A7A0FD4000000000E07000001000000000001000000000000000000000000B80000F120
+[ 245.279]         APID 0x020 seq   184 t=  184.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 27942 Tbat 26.82 Tobc 40.52 mon OK/OK/OK en 0x7 filt 1 rst [0, 0, 0] fail 0x0 boot 1 up 184
+[ 246.291] TM <- 0820C0B9003320031900000000000000B90524016D850A600F76000000000E07000001000000000001000000000000000000000000B900002B5E
+[ 246.291]         APID 0x020 seq   185 t=  185.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 28037 Tbat 26.56 Tobc 39.58 mon OK/OK/OK en 0x7 filt 1 rst [0, 0, 0] fail 0x0 boot 1 up 185
+[ 247.282] TM <- 0820C0BA003320031900000000000000BA0524016D6B0A680F5A000000000E07000001000000000001000000000000000000000000BA0000AF08
+[ 247.282]         APID 0x020 seq   186 t=  186.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 28011 Tbat 26.64 Tobc 39.30 mon OK/OK/OK en 0x7 filt 1 rst [0, 0, 0] fail 0x0 boot 1 up 186
+[ 248.283] TM <- 0820C0BB003320031900000000000000BB0524016D800A290F5B000000000E07000001000000000001000000000000000000000000BB0000CCC4
+[ 248.283]         APID 0x020 seq   187 t=  187.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 28032 Tbat 26.01 Tobc 39.31 mon OK/OK/OK en 0x7 filt 1 rst [0, 0, 0] fail 0x0 boot 1 up 187
+[ 249.284] TM <- 0820C0BC003320031900000000000000BC0524016DC00A5F0F49000000000E07000001000000000001000000000000000000000000BC0000C4BC
+[ 249.284]         APID 0x020 seq   188 t=  188.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 28096 Tbat 26.55 Tobc 39.13 mon OK/OK/OK en 0x7 filt 1 rst [0, 0, 0] fail 0x0 boot 1 up 188
+[ 250.282] TM <- 0820C0BD003320031900000000000000BD0524016DA40A420FDE000000000E07000001000000000001000000000000000000000000BD00004A90
+[ 250.282]         APID 0x020 seq   189 t=  189.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 28068 Tbat 26.26 Tobc 40.62 mon OK/OK/OK en 0x7 filt 1 rst [0, 0, 0] fail 0x0 boot 1 up 189
+[ 251.278] TM <- 0820C0BE003320031900000000000000BE0524016D4B0A4B0F62000000000E07000001000000000001000000000000000000000000BE00006B14
+[ 251.278]         APID 0x020 seq   190 t=  190.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 27979 Tbat 26.35 Tobc 39.38 mon OK/OK/OK en 0x7 filt 1 rst [0, 0, 0] fail 0x0 boot 1 up 190
+[ 252.279] TM <- 0820C0BF003320031900000000000000BF0524016D4A0A1B0F71000000000E07000001000000000001000000000000000000000000BF00008442
+[ 252.279]         APID 0x020 seq   191 t=  191.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 27978 Tbat 25.87 Tobc 39.53 mon OK/OK/OK en 0x7 filt 1 rst [0, 0, 0] fail 0x0 boot 1 up 191
+[ 253.284] TM <- 0820C0C0003320031900000000000000C00524016DAD09E70F4B000000000E07000001000000000001000000000000000000000000C00000A2B8
+[ 253.284]         APID 0x020 seq   192 t=  192.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 28077 Tbat 25.35 Tobc 39.15 mon OK/OK/OK en 0x7 filt 1 rst [0, 0, 0] fail 0x0 boot 1 up 192
+[ 254.281] TM <- 0820C0C1003320031900000000000000C10524016D8609EF0F4B000000000E07000001000000000001000000000000000000000000C100005D0C
+[ 254.281]         APID 0x020 seq   193 t=  193.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 28038 Tbat 25.43 Tobc 39.15 mon OK/OK/OK en 0x7 filt 1 rst [0, 0, 0] fail 0x0 boot 1 up 193
+[ 255.279] TM <- 0820C0C2003320031900000000000000C20524016CFC0A2B0F92000000000E07000001000000000001000000000000000000000000C200005B56
+[ 255.280]         APID 0x020 seq   194 t=  194.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 27900 Tbat 26.03 Tobc 39.86 mon OK/OK/OK en 0x7 filt 1 rst [0, 0, 0] fail 0x0 boot 1 up 194
+[ 256.279] TM <- 0820C0C3003320031900000000000000C30524016D4409D40F8A000000000E07000001000000000001000000000000000000000000C300009CEC
+[ 256.279]         APID 0x020 seq   195 t=  195.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 27972 Tbat 25.16 Tobc 39.78 mon OK/OK/OK en 0x7 filt 1 rst [0, 0, 0] fail 0x0 boot 1 up 195
+[ 257.277] TM <- 0820C0C4003320031900000000000000C40524016DB40A120F8B000000000E07000001000000000001000000000000000000000000C400004A48
+[ 257.277]         APID 0x020 seq   196 t=  196.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 28084 Tbat 25.78 Tobc 39.79 mon OK/OK/OK en 0x7 filt 1 rst [0, 0, 0] fail 0x0 boot 1 up 196
+[ 258.281] TM <- 0820C0C5003320031900000000000000C50524016D3D09D50FD1000000000E07000001000000000001000000000000000000000000C50000AE32
+[ 258.281]         APID 0x020 seq   197 t=  197.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 27965 Tbat 25.17 Tobc 40.49 mon OK/OK/OK en 0x7 filt 1 rst [0, 0, 0] fail 0x0 boot 1 up 197
+[ 259.288] TM <- 0820C0C6003320031900000000000000C60524016D7B09BD1004000000000E07000001000000000001000000000000000000000000C600005B49
+[ 259.288]         APID 0x020 seq   198 t=  198.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 28027 Tbat 24.93 Tobc 41.00 mon OK/OK/OK en 0x7 filt 1 rst [0, 0, 0] fail 0x0 boot 1 up 198
+[ 260.283] TM <- 0820C0C7003320031900000000000000C70524016D7109BF0FAB000000000E07000001000000000001000000000000000000000000C7000031BE
+[ 260.283]         APID 0x020 seq   199 t=  199.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 28017 Tbat 24.95 Tobc 40.11 mon OK/OK/OK en 0x7 filt 1 rst [0, 0, 0] fail 0x0 boot 1 up 199
+[ 261.289] TM <- 0820C0C8003320031900000000000000C80524016D5309E40F87000000000E07000001000000000001000000000000000000000000C800008131
+[ 261.289]         APID 0x020 seq   200 t=  200.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 27987 Tbat 25.32 Tobc 39.75 mon OK/OK/OK en 0x7 filt 1 rst [0, 0, 0] fail 0x0 boot 1 up 200
+[ 262.280] TM <- 0820C0C9003320031900000000000000C90524016D2709BC0FB1000000000E07000001000000000001000000000000000000000000C9000080DE
+[ 262.280]         APID 0x020 seq   201 t=  201.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 27943 Tbat 24.92 Tobc 40.17 mon OK/OK/OK en 0x7 filt 1 rst [0, 0, 0] fail 0x0 boot 1 up 201
+[ 263.278] TM <- 0820C0CA003320031900000000000000CA0524016DB409D80F45000000000E07000001000000000001000000000000000000000000CA00009F10
+[ 263.278]         APID 0x020 seq   202 t=  202.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 28084 Tbat 25.20 Tobc 39.09 mon OK/OK/OK en 0x7 filt 1 rst [0, 0, 0] fail 0x0 boot 1 up 202
+[ 264.284] TM <- 0820C0CB003320031900000000000000CB0524016D8C09D90F72000000000E07000001000000000001000000000000000000000000CB000047C1
+[ 264.284]         APID 0x020 seq   203 t=  203.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 28044 Tbat 25.21 Tobc 39.54 mon OK/OK/OK en 0x7 filt 1 rst [0, 0, 0] fail 0x0 boot 1 up 203
+[ 265.278] TM <- 0820C0CC003320031900000000000000CC0524016D360A010FB8000000000E07000001000000000001000000000000000000000000CC000077EF
+[ 265.278]         APID 0x020 seq   204 t=  204.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 27958 Tbat 25.61 Tobc 40.24 mon OK/OK/OK en 0x7 filt 1 rst [0, 0, 0] fail 0x0 boot 1 up 204
+[ 266.276] TM <- 0820C0CD003320031900000000000000CD0524016D6F0A140FEA000000000E07000001000000000001000000000000000000000000CD0000253B
+[ 266.276]         APID 0x020 seq   205 t=  205.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 28015 Tbat 25.80 Tobc 40.74 mon OK/OK/OK en 0x7 filt 1 rst [0, 0, 0] fail 0x0 boot 1 up 205
+[ 267.276] TM <- 0820C0CE003320031900000000000000CE0524016D1C09FD0F3C000000000E07000001000000000001000000000000000000000000CE0000C2B4
+[ 267.276]         APID 0x020 seq   206 t=  206.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 27932 Tbat 25.57 Tobc 39.00 mon OK/OK/OK en 0x7 filt 1 rst [0, 0, 0] fail 0x0 boot 1 up 206
+[ 268.283] TM <- 0820C0CF003320031900000000000000CF0524016D010A150F44000000000E07000001000000000001000000000000000000000000CF0000E8DD
+[ 268.283]         APID 0x020 seq   207 t=  207.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 27905 Tbat 25.81 Tobc 39.08 mon OK/OK/OK en 0x7 filt 1 rst [0, 0, 0] fail 0x0 boot 1 up 207
+[ 269.280] TM <- 0820C0D0003320031900000000000000D00524016D000A1E0F62000000000E07000001000000000001000000000000000000000000D00000E272
+[ 269.280]         APID 0x020 seq   208 t=  208.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 27904 Tbat 25.90 Tobc 39.38 mon OK/OK/OK en 0x7 filt 1 rst [0, 0, 0] fail 0x0 boot 1 up 208
+[ 270.281] TM <- 0820C0D1003320031900000000000000D10524016D0B0A090F94000000000E07000001000000000001000000000000000000000000D10000DBEE
+[ 270.281]         APID 0x020 seq   209 t=  209.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 27915 Tbat 25.69 Tobc 39.88 mon OK/OK/OK en 0x7 filt 1 rst [0, 0, 0] fail 0x0 boot 1 up 209
+[ 271.281] TM <- 0820C0D2003320031900000000000000D20524016D4F11F80F9D000000000E07040001000000000001000000000000000000000000D200000B0E
+[ 271.281]         APID 0x020 seq   210 t=  210.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 27983 Tbat 46.00 Tobc 39.97 mon OK/WARN/OK en 0x7 filt 1 rst [0, 0, 0] fail 0x0 boot 1 up 210
+[ 272.281] TM <- 0820C0D3003320031900000000000000D30524016D2C0A630FD6000000000E07000002000000000001000000000000000000000000D30000AE8E
+[ 272.281]         APID 0x020 seq   211 t=  211.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 27948 Tbat 26.59 Tobc 40.54 mon OK/OK/OK en 0x7 filt 2 rst [0, 0, 0] fail 0x0 boot 1 up 211
+[ 273.281] TM <- 0820C0D4003320031900000000000000D40524016D3C0A410FB1000000000E07000002000000000001000000000000000000000000D400007FE5
+[ 273.281]         APID 0x020 seq   212 t=  212.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 27964 Tbat 26.25 Tobc 40.17 mon OK/OK/OK en 0x7 filt 2 rst [0, 0, 0] fail 0x0 boot 1 up 212
+[ 274.281] TM <- 0820C0D5003320031900000000000000D50524016D350A4D0FA0000000000E07000002000000000001000000000000000000000000D500009394
+[ 274.281]         APID 0x020 seq   213 t=  213.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 27957 Tbat 26.37 Tobc 40.00 mon OK/OK/OK en 0x7 filt 2 rst [0, 0, 0] fail 0x0 boot 1 up 213
+[ 275.281] TM <- 0820C0D6003320031900000000000000D60524016DC20A800F6E000000000E07000002000000000001000000000000000000000000D600002CE6
+[ 275.281]         APID 0x020 seq   214 t=  214.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 28098 Tbat 26.88 Tobc 39.50 mon OK/OK/OK en 0x7 filt 2 rst [0, 0, 0] fail 0x0 boot 1 up 214
+[ 276.281] TM <- 0820C0D7003320031900000000000000D70524016D040A880F76000000000E07000002000000000001000000000000000000000000D7000096C9
+[ 276.281]         APID 0x020 seq   215 t=  215.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 27908 Tbat 26.96 Tobc 39.58 mon OK/OK/OK en 0x7 filt 2 rst [0, 0, 0] fail 0x0 boot 1 up 215
+[ 277.280] TM <- 0820C0D8003320031900000000000000D80524016D540A340F73000000000E07000002000000000001000000000000000000000000D8000067FF
+[ 277.280]         APID 0x020 seq   216 t=  216.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 27988 Tbat 26.12 Tobc 39.55 mon OK/OK/OK en 0x7 filt 2 rst [0, 0, 0] fail 0x0 boot 1 up 216
+[ 278.284] TM <- 0820C0D9003320031900000000000000D90524016D930A7D0FD1000000000E07000002000000000001000000000000000000000000D90000E18C
+[ 278.284]         APID 0x020 seq   217 t=  217.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 28051 Tbat 26.85 Tobc 40.49 mon OK/OK/OK en 0x7 filt 2 rst [0, 0, 0] fail 0x0 boot 1 up 217
+[ 279.281] TM <- 0820C0DA003320031900000000000000DA0524016D7E0AA80F49000000000E07000002000000000001000000000000000000000000DA00001129
+[ 279.281]         APID 0x020 seq   218 t=  218.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 28030 Tbat 27.28 Tobc 39.13 mon OK/OK/OK en 0x7 filt 2 rst [0, 0, 0] fail 0x0 boot 1 up 218
+[ 280.278] TM <- 0820C0DB003320031900000000000000DB0524016D780A5E0F5E000000000E07000002000000000001000000000000000000000000DB0000A00A
+[ 280.278]         APID 0x020 seq   219 t=  219.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 28024 Tbat 26.54 Tobc 39.34 mon OK/OK/OK en 0x7 filt 2 rst [0, 0, 0] fail 0x0 boot 1 up 219
+[ 281.281] TM <- 0820C0DC003320031900000000000000DC0524016D360AA20FCE000000000E07000002000000000001000000000000000000000000DC00002009
+[ 281.281]         APID 0x020 seq   220 t=  220.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 27958 Tbat 27.22 Tobc 40.46 mon OK/OK/OK en 0x7 filt 2 rst [0, 0, 0] fail 0x0 boot 1 up 220
+[ 282.288] TM <- 0820C0DD003320031900000000000000DD0524016D750AC30F9E000000000E07000002000000000001000000000000000000000000DD00003BF2
+[ 282.288]         APID 0x020 seq   221 t=  221.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 28021 Tbat 27.55 Tobc 39.98 mon OK/OK/OK en 0x7 filt 2 rst [0, 0, 0] fail 0x0 boot 1 up 221
+[ 283.287] TM <- 0820C0DE003320031900000000000000DE0524016DAB0A810F61000000000E07000002000000000001000000000000000000000000DE00009EC2
+[ 283.287]         APID 0x020 seq   222 t=  222.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 28075 Tbat 26.89 Tobc 39.37 mon OK/OK/OK en 0x7 filt 2 rst [0, 0, 0] fail 0x0 boot 1 up 222
+[ 284.286] TM <- 0820C0DF003320031900000000000000DF0524016D610ABC1000000000000E07000002000000000001000000000000000000000000DF0000EB2D
+[ 284.286]         APID 0x020 seq   223 t=  223.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 28001 Tbat 27.48 Tobc 40.96 mon OK/OK/OK en 0x7 filt 2 rst [0, 0, 0] fail 0x0 boot 1 up 223
+[ 285.287] TM <- 0820C0E0003320031900000000000000E00524016DB00AE20F69000000000E07000002000000000001000000000000000000000000E000006CE4
+[ 285.287]         APID 0x020 seq   224 t=  224.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 28080 Tbat 27.86 Tobc 39.45 mon OK/OK/OK en 0x7 filt 2 rst [0, 0, 0] fail 0x0 boot 1 up 224
+[ 286.286] TM <- 0820C0E1003320031900000000000000E10524016DAC0AB80FFA000000000E07000002000000000001000000000000000000000000E100007B71
+[ 286.287]         APID 0x020 seq   225 t=  225.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 28076 Tbat 27.44 Tobc 40.90 mon OK/OK/OK en 0x7 filt 2 rst [0, 0, 0] fail 0x0 boot 1 up 225
+[ 287.289] TM <- 0820C0E2003320031900000000000000E20524016D970AF60F56000000000E07000002000000000001000000000000000000000000E200008690
+[ 287.289]         APID 0x020 seq   226 t=  226.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 28055 Tbat 28.06 Tobc 39.26 mon OK/OK/OK en 0x7 filt 2 rst [0, 0, 0] fail 0x0 boot 1 up 226
+[ 288.279] TM <- 0820C0E3003320031900000000000000E30524016D9B0B040FBB000000000E07000002000000000001000000000000000000000000E3000050F0
+[ 288.279]         APID 0x020 seq   227 t=  227.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 28059 Tbat 28.20 Tobc 40.27 mon OK/OK/OK en 0x7 filt 2 rst [0, 0, 0] fail 0x0 boot 1 up 227
+[ 289.288] TM <- 0820C0E4003320031900000000000000E40524016DBE0ACD0FA0000000000E07000002000000000001000000000000000000000000E4000065B5
+[ 289.288]         APID 0x020 seq   228 t=  228.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 28094 Tbat 27.65 Tobc 40.00 mon OK/OK/OK en 0x7 filt 2 rst [0, 0, 0] fail 0x0 boot 1 up 228
+[ 290.285] TM <- 0820C0E5003320031900000000000000E50524016DBD0B100F90000000000E07000002000000000001000000000000000000000000E50000EF4E
+[ 290.285]         APID 0x020 seq   229 t=  229.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 28093 Tbat 28.32 Tobc 39.84 mon OK/OK/OK en 0x7 filt 2 rst [0, 0, 0] fail 0x0 boot 1 up 229
+[ 291.281] TM <- 0820C0E6003320031900000000000000E60524016D570AE40F9A000000000E07000002000000000001000000000000000000000000E60000D160
+[ 291.281]         APID 0x020 seq   230 t=  230.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 27991 Tbat 27.88 Tobc 39.94 mon OK/OK/OK en 0x7 filt 2 rst [0, 0, 0] fail 0x0 boot 1 up 230
+[ 292.281] TM <- 0820C0E7003320031900000000000000E70524016D360AF00F95000000000E07000002000000000001000000000000000000000000E7000069C3
+[ 292.281]         APID 0x020 seq   231 t=  231.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 27958 Tbat 28.00 Tobc 39.89 mon OK/OK/OK en 0x7 filt 2 rst [0, 0, 0] fail 0x0 boot 1 up 231
+[ 293.281] TM <- 0820C0E8003320031900000000000000E80524016D1F0B030FB3000000000E07000002000000000001000000000000000000000000E8000089B4
+[ 293.281]         APID 0x020 seq   232 t=  232.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 27935 Tbat 28.19 Tobc 40.19 mon OK/OK/OK en 0x7 filt 2 rst [0, 0, 0] fail 0x0 boot 1 up 232
+[ 294.287] TM <- 0820C0E9003320031900000000000000E90524016D010ADE0FAB000000000E07000002000000000001000000000000000000000000E90000042E
+[ 294.287]         APID 0x020 seq   233 t=  233.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 27905 Tbat 27.82 Tobc 40.11 mon OK/OK/OK en 0x7 filt 2 rst [0, 0, 0] fail 0x0 boot 1 up 233
+[ 295.281] TM <- 0820C0EA003320031900000000000000EA0524016D8E0B060FC4000000000E07000002000000000001000000000000000000000000EA0000F7CC
+[ 295.281]         APID 0x020 seq   234 t=  234.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 28046 Tbat 28.22 Tobc 40.36 mon OK/OK/OK en 0x7 filt 2 rst [0, 0, 0] fail 0x0 boot 1 up 234
+[ 296.281] TM <- 0820C0EB003320031900000000000000EB0524016D0C0B0F0F84000000000E07000002000000000001000000000000000000000000EB0000CE87
+[ 296.281]         APID 0x020 seq   235 t=  235.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 27916 Tbat 28.31 Tobc 39.72 mon OK/OK/OK en 0x7 filt 2 rst [0, 0, 0] fail 0x0 boot 1 up 235
+[ 297.281] TM <- 0820C0EC003320031900000000000000EC0524016D4A0B180FBB000000000E07000002000000000001000000000000000000000000EC0000B31E
+[ 297.281]         APID 0x020 seq   236 t=  236.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 27978 Tbat 28.40 Tobc 40.27 mon OK/OK/OK en 0x7 filt 2 rst [0, 0, 0] fail 0x0 boot 1 up 236
+[ 298.281] TM <- 0820C0ED003320031900000000000000ED0524016D3A0B100FA8000000000E07000002000000000001000000000000000000000000ED00005032
+[ 298.281]         APID 0x020 seq   237 t=  237.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 27962 Tbat 28.32 Tobc 40.08 mon OK/OK/OK en 0x7 filt 2 rst [0, 0, 0] fail 0x0 boot 1 up 237
+[ 299.281] TM <- 0820C0EE003320031900000000000000EE0524016D040B160F69000000000E07000002000000000001000000000000000000000000EE0000F504
+[ 299.281]         APID 0x020 seq   238 t=  238.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 27908 Tbat 28.38 Tobc 39.45 mon OK/OK/OK en 0x7 filt 2 rst [0, 0, 0] fail 0x0 boot 1 up 238
+[ 300.279] TM <- 0820C0EF003320031900000000000000EF0524016D9D0B1B0F3E000000000E07000002000000000001000000000000000000000000EF0000915B
+[ 300.279]         APID 0x020 seq   239 t=  239.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 28061 Tbat 28.43 Tobc 39.02 mon OK/OK/OK en 0x7 filt 2 rst [0, 0, 0] fail 0x0 boot 1 up 239
+[ 301.281] TM <- 0820C0F0003320031900000000000000F00524016DC10B350F92000000000E07000002000000000001000000000000000000000000F000001653
+[ 301.281]         APID 0x020 seq   240 t=  240.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 28097 Tbat 28.69 Tobc 39.86 mon OK/OK/OK en 0x7 filt 2 rst [0, 0, 0] fail 0x0 boot 1 up 240
+[ 302.281] TM <- 0820C0F1003320031900000000000000F10524016D6D0B520F55000000000E07000002000000000001000000000000000000000000F100001D21
+[ 302.281]         APID 0x020 seq   241 t=  241.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 28013 Tbat 28.98 Tobc 39.25 mon OK/OK/OK en 0x7 filt 2 rst [0, 0, 0] fail 0x0 boot 1 up 241
+[ 303.279] TM <- 0820C0F2003320031900000000000000F20524016D770B510FBE000000000E07000002000000000001000000000000000000000000F2000073AF
+[ 303.279]         APID 0x020 seq   242 t=  242.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 28023 Tbat 28.97 Tobc 40.30 mon OK/OK/OK en 0x7 filt 2 rst [0, 0, 0] fail 0x0 boot 1 up 242
+[ 304.284] TM <- 0820C0F3003320031900000000000000F30524016D830B690FD7000000000E07000002000000000001000000000000000000000000F3000062C8
+[ 304.284]         APID 0x020 seq   243 t=  243.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 28035 Tbat 29.21 Tobc 40.55 mon OK/OK/OK en 0x7 filt 2 rst [0, 0, 0] fail 0x0 boot 1 up 243
+[ 305.281] TM <- 0820C0F4003320031900000000000000F40524016D530B6C0FCA000000000E07000002000000000001000000000000000000000000F400004EFA
+[ 305.281]         APID 0x020 seq   244 t=  244.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 27987 Tbat 29.24 Tobc 40.42 mon OK/OK/OK en 0x7 filt 2 rst [0, 0, 0] fail 0x0 boot 1 up 244
+[ 306.283] TM <- 0820C0F5003320031900000000000000F50524016DA00BAC0FF7000000000E07000002000000000001000000000000000000000000F50000F137
+[ 306.283]         APID 0x020 seq   245 t=  245.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 28064 Tbat 29.88 Tobc 40.87 mon OK/OK/OK en 0x7 filt 2 rst [0, 0, 0] fail 0x0 boot 1 up 245
+[ 307.283] TM <- 0820C0F6003320031900000000000000F60524016D120BC00FEF000000000E07000002000000000001000000000000000000000000F60000DC7C
+[ 307.283]         APID 0x020 seq   246 t=  246.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 27922 Tbat 30.08 Tobc 40.79 mon OK/OK/OK en 0x7 filt 2 rst [0, 0, 0] fail 0x0 boot 1 up 246
+[ 308.281] TM <- 0820C0F7003320031900000000000000F70524016D8E0BBD0F7C000000000E07000002000000000001000000000000000000000000F700007FBE
+[ 308.281]         APID 0x020 seq   247 t=  247.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 28046 Tbat 30.05 Tobc 39.64 mon OK/OK/OK en 0x7 filt 2 rst [0, 0, 0] fail 0x0 boot 1 up 247
+[ 309.290] TM <- 0820C0F8003320031900000000000000F80524016DBB0BA00FAB000000000E07000002000000000001000000000000000000000000F80000237B
+[ 309.290]         APID 0x020 seq   248 t=  248.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 28091 Tbat 29.76 Tobc 40.11 mon OK/OK/OK en 0x7 filt 2 rst [0, 0, 0] fail 0x0 boot 1 up 248
+[ 310.280] TM <- 0820C0F9003320031900000000000000F90524016D2E0BA30F44000000000E07000002000000000001000000000000000000000000F900004912
+[ 310.280]         APID 0x020 seq   249 t=  249.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 27950 Tbat 29.79 Tobc 39.08 mon OK/OK/OK en 0x7 filt 2 rst [0, 0, 0] fail 0x0 boot 1 up 249
+[ 311.281] TM <- 0820C0FA003320031900000000000000FA0524016D740BDE0FDE000000000E07000002000000000001000000000000000000000000FA00006992
+[ 311.282]         APID 0x020 seq   250 t=  250.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 28020 Tbat 30.38 Tobc 40.62 mon OK/OK/OK en 0x7 filt 2 rst [0, 0, 0] fail 0x0 boot 1 up 250
+[ 312.283] TM <- 0820C0FB003320031900000000000000FB0524016DBE0BBC0FF3000000000E07000002000000000001000000000000000000000000FB00009B88
+[ 312.283]         APID 0x020 seq   251 t=  251.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 28094 Tbat 30.04 Tobc 40.83 mon OK/OK/OK en 0x7 filt 2 rst [0, 0, 0] fail 0x0 boot 1 up 251
+[ 313.292] TM <- 0820C0FC003320031900000000000000FC0524016DA20BEE0FAD000000000E07000002000000000001000000000000000000000000FC000052C9
+[ 313.292]         APID 0x020 seq   252 t=  252.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 28066 Tbat 30.54 Tobc 40.13 mon OK/OK/OK en 0x7 filt 2 rst [0, 0, 0] fail 0x0 boot 1 up 252
+[ 314.280] TM <- 0820C0FD003320031900000000000000FD0524016D860BB20FF1000000000E07000002000000000001000000000000000000000000FD00007D14
+[ 314.280]         APID 0x020 seq   253 t=  253.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 28038 Tbat 29.94 Tobc 40.81 mon OK/OK/OK en 0x7 filt 2 rst [0, 0, 0] fail 0x0 boot 1 up 253
+[ 315.286] TM <- 0820C0FE003320031900000000000000FE0524016D250BDD0FB1000000000E07000002000000000001000000000000000000000000FE00006EAC
+[ 315.286]         APID 0x020 seq   254 t=  254.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 27941 Tbat 30.37 Tobc 40.17 mon OK/OK/OK en 0x7 filt 2 rst [0, 0, 0] fail 0x0 boot 1 up 254
+[ 316.291] TM <- 0820C0FF003320031900000000000000FF0524016D760BC70F58000000000E07000002000000000001000000000000000000000000FF00007F57
+[ 316.291]         APID 0x020 seq   255 t=  255.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 28022 Tbat 30.15 Tobc 39.28 mon OK/OK/OK en 0x7 filt 2 rst [0, 0, 0] fail 0x0 boot 1 up 255
+[ 317.281] TM <- 0820C100003320031900000000000001000524016D520C020FBE000000000E070000020000000000010000000000000000000000010000003F46
+[ 317.281]         APID 0x020 seq   256 t=  256.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 27986 Tbat 30.74 Tobc 40.30 mon OK/OK/OK en 0x7 filt 2 rst [0, 0, 0] fail 0x0 boot 1 up 256
+[ 318.281] TM <- 0820C101003320031900000000000001010524016D980C070FF9000000000E07000002000000000001000000000000000000000001010000E274
+[ 318.281]         APID 0x020 seq   257 t=  257.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 28056 Tbat 30.79 Tobc 40.89 mon OK/OK/OK en 0x7 filt 2 rst [0, 0, 0] fail 0x0 boot 1 up 257
+[ 319.298] TM <- 0820C102003320031900000000000001020524016D7F0C120FC7000000000E070000020000000000010000000000000000000000010200008F75
+[ 319.298]         APID 0x020 seq   258 t=  258.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 28031 Tbat 30.90 Tobc 40.39 mon OK/OK/OK en 0x7 filt 2 rst [0, 0, 0] fail 0x0 boot 1 up 258
+[ 320.284] TM <- 0820C103003320031900000000000001030524016D2E0C300FC8000000000E07000002000000000001000000000000000000000001030000FA9F
+[ 320.284]         APID 0x020 seq   259 t=  259.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 27950 Tbat 31.20 Tobc 40.40 mon OK/OK/OK en 0x7 filt 2 rst [0, 0, 0] fail 0x0 boot 1 up 259
+[ 321.290] TM <- 0820C104003320031900000000000001040524016D120BFC0F92000000000E070000020000000000010000000000000000000000010400004089
+[ 321.290]         APID 0x020 seq   260 t=  260.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 27922 Tbat 30.68 Tobc 39.86 mon OK/OK/OK en 0x7 filt 2 rst [0, 0, 0] fail 0x0 boot 1 up 260
+[ 322.282] TM <- 0820C105003320031900000000000001050524016DBC0C100FBD000000000E070000020000000000010000000000000000000000010500004B34
+[ 322.282]         APID 0x020 seq   261 t=  261.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 28092 Tbat 30.88 Tobc 40.29 mon OK/OK/OK en 0x7 filt 2 rst [0, 0, 0] fail 0x0 boot 1 up 261
+[ 323.288] TM <- 0820C106003320031900000000000001060524016DA90C4F0FBC000000000E070000020000000000010000000000000000000000010600004729
+[ 323.288]         APID 0x020 seq   262 t=  262.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 28073 Tbat 31.51 Tobc 40.28 mon OK/OK/OK en 0x7 filt 2 rst [0, 0, 0] fail 0x0 boot 1 up 262
+[ 324.282] TM <- 0820C107003320031900000000000001070524016DC00C5A0F47000000000E070000020000000000010000000000000000000000010700007531
+[ 324.282]         APID 0x020 seq   263 t=  263.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 28096 Tbat 31.62 Tobc 39.11 mon OK/OK/OK en 0x7 filt 2 rst [0, 0, 0] fail 0x0 boot 1 up 263
+[ 325.284] TM <- 0820C108003320031900000000000001080524016D9C0C560FB7000000000E07000002000000000001000000000000000000000001080000A2E6
+[ 325.284]         APID 0x020 seq   264 t=  264.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 28060 Tbat 31.58 Tobc 40.23 mon OK/OK/OK en 0x7 filt 2 rst [0, 0, 0] fail 0x0 boot 1 up 264
+[ 326.289] TM <- 0820C109003320031900000000000001090524016D8A0C630FEE000000000E07000002000000000001000000000000000000000001090000980D
+[ 326.289]         APID 0x020 seq   265 t=  265.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 28042 Tbat 31.71 Tobc 40.78 mon OK/OK/OK en 0x7 filt 2 rst [0, 0, 0] fail 0x0 boot 1 up 265
+[ 327.286] TM <- 0820C10A0033200319000000000000010A0524016D650C520F63000000000E070000020000000000010000000000000000000000010A00005834
+[ 327.286]         APID 0x020 seq   266 t=  266.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 28005 Tbat 31.54 Tobc 39.39 mon OK/OK/OK en 0x7 filt 2 rst [0, 0, 0] fail 0x0 boot 1 up 266
+[ 328.282] TM <- 0820C10B0033200319000000000000010B0524016D2C0C7B0FB5000000000E070000020000000000010000000000000000000000010B0000F13D
+[ 328.282]         APID 0x020 seq   267 t=  267.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 27948 Tbat 31.95 Tobc 40.21 mon OK/OK/OK en 0x7 filt 2 rst [0, 0, 0] fail 0x0 boot 1 up 267
+[ 329.282] TM <- 0820C10C0033200319000000000000010C0524016D960C920F69000000000E070000020000000000010000000000000000000000010C00006AD4
+[ 329.282]         APID 0x020 seq   268 t=  268.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 28054 Tbat 32.18 Tobc 39.45 mon OK/OK/OK en 0x7 filt 2 rst [0, 0, 0] fail 0x0 boot 1 up 268
+[ 330.280] TM <- 0820C10D0033200319000000000000010D0524016D420C9C0F8F000000000E070000020000000000010000000000000000000000010D000022BF
+[ 330.280]         APID 0x020 seq   269 t=  269.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 27970 Tbat 32.28 Tobc 39.83 mon OK/OK/OK en 0x7 filt 2 rst [0, 0, 0] fail 0x0 boot 1 up 269
+[ 331.281] TM <- 0820C10E0033200319000000000000010E0524016D5C0CA30FD9000000000E070000020000000000010000000000000000000000010E000033C2
+[ 331.281]         APID 0x020 seq   270 t=  270.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 27996 Tbat 32.35 Tobc 40.57 mon OK/OK/OK en 0x7 filt 2 rst [0, 0, 0] fail 0x0 boot 1 up 270
+[ 332.281] TM <- 0820C10F0033200319000000000000010F0524016D0D0CB00F5B000000000E070000020000000000010000000000000000000000010F0000A50C
+[ 332.281]         APID 0x020 seq   271 t=  271.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 27917 Tbat 32.48 Tobc 39.31 mon OK/OK/OK en 0x7 filt 2 rst [0, 0, 0] fail 0x0 boot 1 up 271
+[ 333.284] TM <- 0820C110003320031900000000000001100524016D3C0C7D0FE5000000000E070000020000000000010000000000000000000000011000005C46
+[ 333.284]         APID 0x020 seq   272 t=  272.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 27964 Tbat 31.97 Tobc 40.69 mon OK/OK/OK en 0x7 filt 2 rst [0, 0, 0] fail 0x0 boot 1 up 272
+[ 334.288] TM <- 0820C11100332003190000000000000111052401639C0C730FCF000000000E07010002000000000001000000000000000000000001110000E35E
+[ 334.288]         APID 0x020 seq   273 t=  273.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 25500 Tbat 31.87 Tobc 40.47 mon WARN/OK/OK en 0x7 filt 2 rst [0, 0, 0] fail 0x0 boot 1 up 273
+[ 335.290] TM <- 0820C112003320031900000000000001120524016CFD0C9B0F3E000000000E070000030000000000010000000000000000000000011200006306
+[ 335.290]         APID 0x020 seq   274 t=  274.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 27901 Tbat 32.27 Tobc 39.02 mon OK/OK/OK en 0x7 filt 3 rst [0, 0, 0] fail 0x0 boot 1 up 274
+[ 336.279] TM <- 0820C113003320031900000000000001130524016D350CC40F7C000000000E07000003000000000001000000000000000000000001130000D5E4
+[ 336.279]         APID 0x020 seq   275 t=  275.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 27957 Tbat 32.68 Tobc 39.64 mon OK/OK/OK en 0x7 filt 3 rst [0, 0, 0] fail 0x0 boot 1 up 275
+[ 337.278] TM <- 0820C114003320031900000000000001140524016D750CBC0F47000000000E070000030000000000010000000000000000000000011400009786
+[ 337.278]         APID 0x020 seq   276 t=  276.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 28021 Tbat 32.60 Tobc 39.11 mon OK/OK/OK en 0x7 filt 3 rst [0, 0, 0] fail 0x0 boot 1 up 276
+[ 338.283] TM <- 0820C115003320031900000000000001150524016D8E0CED0FCA000000000E07000003000000000001000000000000000000000001150000BE9D
+[ 338.283]         APID 0x020 seq   277 t=  277.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 28046 Tbat 33.09 Tobc 40.42 mon OK/OK/OK en 0x7 filt 3 rst [0, 0, 0] fail 0x0 boot 1 up 277
+[ 339.282] TM <- 0820C116003320031900000000000001160524016D810D000F61000000000E07000003000000000001000000000000000000000001160000047D
+[ 339.282]         APID 0x020 seq   278 t=  278.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 28033 Tbat 33.28 Tobc 39.37 mon OK/OK/OK en 0x7 filt 3 rst [0, 0, 0] fail 0x0 boot 1 up 278
+[ 340.281] TM <- 0820C117003320031900000000000001170524016D5E0CF70F9D000000000E07000003000000000001000000000000000000000001170000CD63
+[ 340.281]         APID 0x020 seq   279 t=  279.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 27998 Tbat 33.19 Tobc 39.97 mon OK/OK/OK en 0x7 filt 3 rst [0, 0, 0] fail 0x0 boot 1 up 279
+[ 341.286] TM <- 0820C118003320031900000000000001180524016DB00CE40FF4000000000E070000030000000000010000000000000000000000011800006FD1
+[ 341.286]         APID 0x020 seq   280 t=  280.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 28080 Tbat 33.00 Tobc 40.84 mon OK/OK/OK en 0x7 filt 3 rst [0, 0, 0] fail 0x0 boot 1 up 280
+[ 342.294] TM <- 0820C119003320031900000000000001190524016DC10CE10FC6000000000E07000003000000000001000000000000000000000001190000165B
+[ 342.294]         APID 0x020 seq   281 t=  281.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 28097 Tbat 32.97 Tobc 40.38 mon OK/OK/OK en 0x7 filt 3 rst [0, 0, 0] fail 0x0 boot 1 up 281
+[ 343.282] TM <- 0820C11A0033200319000000000000011A0524016DC00CF20FC1000000000E070000030000000000010000000000000000000000011A0000CBE7
+[ 343.282]         APID 0x020 seq   282 t=  282.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 28096 Tbat 33.14 Tobc 40.33 mon OK/OK/OK en 0x7 filt 3 rst [0, 0, 0] fail 0x0 boot 1 up 282
+[ 344.283] TM <- 0820C11B0033200319000000000000011B0524016DAD0D210FAD000000000E070000030000000000010000000000000000000000011B00008500
+[ 344.283]         APID 0x020 seq   283 t=  283.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 28077 Tbat 33.61 Tobc 40.13 mon OK/OK/OK en 0x7 filt 3 rst [0, 0, 0] fail 0x0 boot 1 up 283
+[ 345.281] TM <- 0820C11C0033200319000000000000011C0524016DAF0CF80FFD000000000E070000030000000000010000000000000000000000011C0000C3DC
+[ 345.281]         APID 0x020 seq   284 t=  284.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 28079 Tbat 33.20 Tobc 40.93 mon OK/OK/OK en 0x7 filt 3 rst [0, 0, 0] fail 0x0 boot 1 up 284
+[ 346.298] TM <- 0820C11D0033200319000000000000011D0524016D0B0CF70FBF000000000E070000030000000000010000000000000000000000011D00008FFC
+[ 346.298]         APID 0x020 seq   285 t=  285.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 27915 Tbat 33.19 Tobc 40.31 mon OK/OK/OK en 0x7 filt 3 rst [0, 0, 0] fail 0x0 boot 1 up 285
+[ 347.284] TM <- 0820C11E0033200319000000000000011E0524016D6A0D2D0FEA000000000E070000030000000000010000000000000000000000011E00005000
+[ 347.284]         APID 0x020 seq   286 t=  286.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 28010 Tbat 33.73 Tobc 40.74 mon OK/OK/OK en 0x7 filt 3 rst [0, 0, 0] fail 0x0 boot 1 up 286
+[ 348.283] TM <- 0820C11F0033200319000000000000011F0524016DA60D5B0FAE000000000E070000030000000000010000000000000000000000011F00004DEB
+[ 348.283]         APID 0x020 seq   287 t=  287.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 28070 Tbat 34.19 Tobc 40.14 mon OK/OK/OK en 0x7 filt 3 rst [0, 0, 0] fail 0x0 boot 1 up 287
+[ 349.282] TM <- 0820C120003320031900000000000001200524016D070D0F0F6F000000000E07000003000000000001000000000000000000000001200000FF26
+[ 349.282]         APID 0x020 seq   288 t=  288.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 27911 Tbat 33.43 Tobc 39.51 mon OK/OK/OK en 0x7 filt 3 rst [0, 0, 0] fail 0x0 boot 1 up 288
+[ 350.286] TM <- 0820C121003320031900000000000001210524016D2C0D0F0F47000000000E07000003000000000001000000000000000000000001210000D80A
+[ 350.286]         APID 0x020 seq   289 t=  289.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 27948 Tbat 33.43 Tobc 39.11 mon OK/OK/OK en 0x7 filt 3 rst [0, 0, 0] fail 0x0 boot 1 up 289
+[ 351.285] TM <- 0820C122003320031900000000000001220524016DA20D780FD6000000000E07000003000000000001000000000000000000000001220000236A
+[ 351.285]         APID 0x020 seq   290 t=  290.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 28066 Tbat 34.48 Tobc 40.54 mon OK/OK/OK en 0x7 filt 3 rst [0, 0, 0] fail 0x0 boot 1 up 290
+[ 352.282] TM <- 0820C123003320031900000000000001230524016D0F0D6C0F3E000000000E070000030000000000010000000000000000000000012300002371
+[ 352.282]         APID 0x020 seq   291 t=  291.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 27919 Tbat 34.36 Tobc 39.02 mon OK/OK/OK en 0x7 filt 3 rst [0, 0, 0] fail 0x0 boot 1 up 291
+[ 353.285] TM <- 0820C124003320031900000000000001240524016D2A0D6E0F98000000000E07000003000000000001000000000000000000000001240000A83B
+[ 353.285]         APID 0x020 seq   292 t=  292.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 27946 Tbat 34.38 Tobc 39.92 mon OK/OK/OK en 0x7 filt 3 rst [0, 0, 0] fail 0x0 boot 1 up 292
+[ 354.284] TM <- 0820C125003320031900000000000001250524016DBC0D410F80000000000E07000003000000000001000000000000000000000001250000673D
+[ 354.284]         APID 0x020 seq   293 t=  293.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 28092 Tbat 33.93 Tobc 39.68 mon OK/OK/OK en 0x7 filt 3 rst [0, 0, 0] fail 0x0 boot 1 up 293
+[ 355.289] TM <- 0820C126003320031900000000000001260524016D030D680FD2000000000E07000003000000000001000000000000000000000001260000F26C
+[ 355.289]         APID 0x020 seq   294 t=  294.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 27907 Tbat 34.32 Tobc 40.50 mon OK/OK/OK en 0x7 filt 3 rst [0, 0, 0] fail 0x0 boot 1 up 294
+[ 356.288] TM <- 0820C127003320031900000000000001270524016D8B0D750F5A000000000E07000003000000000001000000000000000000000001270000C452
+[ 356.288]         APID 0x020 seq   295 t=  295.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 28043 Tbat 34.45 Tobc 39.30 mon OK/OK/OK en 0x7 filt 3 rst [0, 0, 0] fail 0x0 boot 1 up 295
+[ 357.283] TM <- 0820C128003320031900000000000001280524016DB30DAA0FD4000000000E07000003000000000001000000000000000000000001280000963A
+[ 357.283]         APID 0x020 seq   296 t=  296.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 28083 Tbat 34.98 Tobc 40.52 mon OK/OK/OK en 0x7 filt 3 rst [0, 0, 0] fail 0x0 boot 1 up 296
+[ 358.303] TM <- 0820C129003320031900000000000001290524016D910D6C0FDB000000000E070000030000000000010000000000000000000000012900003BCC
+[ 358.303]         APID 0x020 seq   297 t=  297.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 28049 Tbat 34.36 Tobc 40.59 mon OK/OK/OK en 0x7 filt 3 rst [0, 0, 0] fail 0x0 boot 1 up 297
+[ 359.287] TM <- 0820C12A0033200319000000000000012A0524016CFE0D740FB5000000000E070000030000000000010000000000000000000000012A0000A3A4
+[ 359.287]         APID 0x020 seq   298 t=  298.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 27902 Tbat 34.44 Tobc 40.21 mon OK/OK/OK en 0x7 filt 3 rst [0, 0, 0] fail 0x0 boot 1 up 298
+[ 360.282] TM <- 0820C12B0033200319000000000000012B0524016D6E0DD10F7E000000000E070000030000000000010000000000000000000000012B0000B7A3
+[ 360.282]         APID 0x020 seq   299 t=  299.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 28014 Tbat 35.37 Tobc 39.66 mon OK/OK/OK en 0x7 filt 3 rst [0, 0, 0] fail 0x0 boot 1 up 299
+[ 361.286] TM <- 0820C12C0033200319000000000000012C0524016D910D850F97000000000E070000030000000000010000000000000000000000012C00002C65
+[ 361.286]         APID 0x020 seq   300 t=  300.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 28049 Tbat 34.61 Tobc 39.91 mon OK/OK/OK en 0x7 filt 3 rst [0, 0, 0] fail 0x0 boot 1 up 300
+[ 362.284] TM <- 0820C12D0033200319000000000000012D0524016D040DA70FCE000000000E070000030000000000010000000000000000000000012D0000EEDE
+[ 362.284]         APID 0x020 seq   301 t=  301.020s TM(3,25)  HK1 NOMINAL (BOOT 0) st 0x0E Vbus 27908 Tbat 34.95 Tobc 40.46 mon OK/OK/OK en 0x7 filt 3 rst [0, 0, 0] fail 0x0 boot 1 up 301
+[ 362.284]   PASS  observed 301 s of onboard time
+[ 362.284]   PASS  zero detections (0 events)
+[ 362.284]   PASS  still NOMINAL, no restart
+[ 362.284]   PASS  3 natural transients filtered (at least 3 expected)
+[ 362.284]   PASS  every TM line passed the ground CRC check
+[ 362.284] # results written to ../lab-6.2-generation/logs/campaign-sis-generated.md
+[ 362.284] # result: 32 passed, 0 failed

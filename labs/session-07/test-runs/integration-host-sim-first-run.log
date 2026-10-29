@@ -1,0 +1,18 @@
+*** HOST SIMULATION (POSIX shim, not RTEMS), speedup x1 ***
+
+Integration suite: telecommand path (host simulation)
+Mode manager: GENERATED from vehicle_mode v3 (model sha256 46d8922ca14ac291...)
+IT-01  TC(17,1): TM(1,1), TM(17,2), TM(1,7), CRC, sequence            PASS
+    expectation failed, line 222: is_report(0, 2) && cap[0].data[4] == PUS_FAIL_CHECKSUM
+IT-02  corrupted CRC: TM(1,2) code 3, not executed, counted           FAIL
+IT-03  unknown service: TM(1,2) code 7                                PASS
+    expectation failed, line 238: cap_n == 1u && is_report(0, 2) && cap[0].data[4] == PUS_FAIL_APID
+IT-04  wrong APID: TM(1,2) code 5                                     FAIL
+IT-05  TC(8,1) invalid mode: TM(1,2) code 9, no change                PASS
+IT-06  TC(8,1) SAFE: reports, mode event at next cycle                PASS
+IT-07  two conflicting TC(8,1): one applied, other reported           PASS
+    expectation failed, line 287: is_report(1, 7)
+IT-08  TC(19,9): autonomous refused + reported, ground not            FAIL
+IT-09  TC(11,4): scheduled TC released through the same path          PASS
+IT-10  TC_RX and SCHED paths concurrently: serialised                 PASS
+@@ INTEGRATION RESULT: FAIL 7/10 @@

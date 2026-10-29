@@ -13,5 +13,7 @@ TC-DET-01          MM-110          PASS
 TC-FAIL-01         MM-120          PASS
 TC-FAIL-02         MM-120          PASS
 TC-LATCH-01        MM-130          PASS
+TC-GND-02          MM-140          PASS
+TC-LAT-01          MM-150          PASS
 
-15 test cases, 0 failed
+17 test cases, 0 failed

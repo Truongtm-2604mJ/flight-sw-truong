@@ -37,7 +37,7 @@ On a cycle. Events can be posted at any time, from any task, under the mode lock
 
 The step runs in the supervisor task because the supervisor is the root of the liveness chain, with the watchdog behind it. A step placed in TM_HK would stop when TM_HK hangs, which is exactly the fault (TM_HK escalation → SAFE) it must handle.
 
-The cost is latency: a mode request takes effect up to one supervisor period after it is made. The system tests show this (divergence log, D-07).
+The cost is latency: a mode request takes effect up to one supervisor period after it is made. The system tests show this (divergence log, D-07), and the accepted bound is now a requirement, MM-150 (section "Latency requirement" below).
 
 **3. Do entry and exit actions run on a self transition?**
 
@@ -72,17 +72,45 @@ With at most one transition per cycle, several pending events have to go somewhe
 
 | Event | Fired this cycle | Ignored in the start state | Handled but lost to a higher priority |
 |---|---|---|---|
-| one shot (ground commands, `fault_cleared`) | consumed | consumed silently | consumed and **reported** (`mode_sm_on_discard`, event 0x0404) |
+| ground command (one shot) | consumed | consumed silently if the vehicle stays in the start mode; consumed and **reported** if an external transition fired this cycle (model v3, MM-140) | consumed and **reported** (`mode_sm_on_discard`, event 0x0404) |
+| `fault_cleared` (one shot, autonomous) | consumed | consumed silently | consumed and reported |
 | latched (faults) | consumed | consumed if no transition fired this cycle; **kept** if one fired | **kept** for the next cycle |
 
 The reasoning behind each rule:
 
+- **A ground command is never dropped silently when it was not applied (model v3, closes D-05).** A command for the start mode is in that state's ignore list because, on its own, it is already satisfied. That stops being true when another event moves the vehicle in the same cycle: NOMINAL with `tc_mode_degraded` and `tc_mode_nominal` ends in DEGRADED, so the operators' NOMINAL was not applied. Version 2 dropped it silently; version 3 reports it like any other lost command (`ignored_ground_command: report_if_state_changed`). The only silent case left is the one where the vehicle is in the commanded mode at the end of the cycle, which is a success, and the TC's TM(1,7) already told the operators so.
 - **Ground commands are one shot.** They were decided by operators looking at the vehicle before this cycle. A command that loses to a fault must not be replayed afterwards, so it is dropped. It is also reported, so the operators know to resend it. Replaying it would let a ground NOMINAL undo a SAFE entry caused by a critical fault in the same cycle.
 - **Faults are latched.** A fault is still true after the transition that pre-empted it. Example: in DEGRADED, a ground NOMINAL and a new non-critical alarm arrive in the same cycle. NOMINAL is entered, the alarm is kept, and the next cycle goes back to DEGRADED. The hand written version loses that alarm when the requests arrive in the order alarm, then ground (D-04).
 - **A latched event pending in a state that ignores it** is dropped once nothing fired, because its effect is already achieved: a fault that asks for DEGRADED while in DEGRADED or SAFE.
 - **The drain is bounded.** Each cycle consumes at least one pending event or drops all ignored ones, so a burst drains within a few cycles. The worst observed is 3 cycles (b2b summary, "max drain").
 
 **Coalescing.** Pending events are one bit each. Two posts of the same event in one cycle become one event, and the payload (cause, detail) of the last post wins. The transition report then names the last cause only. This is a stated limitation, not an accident (Section 6 of the report).
+
+## Latency requirement (MM-150)
+
+**Requirement.** A ground mode command shall take effect, and its transition shall be reported, no later than **3.0 s** after its completion report TM(1,7).
+
+**Why the cyclic evaluation satisfies it.** The command is posted when TC(8,1) executes, which is also when TM(1,7) is sent. The next step runs at the next supervisor release, at most one period (2.0 s) later. The step then runs under the mode lock and emits the report before releasing it.
+
+The supervisor has the highest priority of the supervised tasks (priority 5, Session 5 design note Section 4), so its release jitter is that of the clock tick: 10 ms. The step itself is a few hundred instructions. The bound is therefore 2.0 s + 0.01 s + the step, well inside 3.0 s, which leaves about 1 s (a third) of margin.
+
+**Measured.** The maximum measured on the host simulation is 1.999 s (`lab-6.2-generation/logs/latency-host-sim.md`); `app/run-sis.sh` measures the same on SIS. The unit level check TC-LAT-01 shows that a command always takes effect at the first step after it is posted.
+
+**Why 3 s is acceptable for the mission (the justification the review asked for).**
+
+- **Ground mode commands are not a fast loop.** They are issued by operators during a pass. The operators confirm the result from the TM(5,x) mode event or from housekeeping, which arrives at 1 Hz, so they wait several seconds in any case.
+- **The time-critical path is autonomous and not affected by this requirement.** A fault reaches SAFE through FDIR, not through the ground. That path is already bounded by the monitor persistence (3 samples at 1 Hz) plus at most one supervisor period. That is 2 to 5 s, against battery and bus time constants of minutes (Session 5 design note Section 2).
+- **A ground SAFE command in an emergency gains nothing from being faster than 3 s.** The ground loop that decided to send it took far longer.
+
+**What would break the requirement.** Any of these would break it, and each is a change to the stated semantics, not an implementation detail:
+
+- a longer supervisor period;
+- the step moving to a lower priority task;
+- a second evaluation per cycle being removed.
+
+The divergence log recommendation (D-07) lists the alternatives if a mission needs a faster response.
+
+**Consequence for service 1, not covered by MM-150.** TM(1,7) for TC(8,1) is sent when the request is posted, so it precedes the mode change by up to 2 s. Whether that is acceptable is a separate question. The Session 7 validation campaign raises it as a nonconformance against the TM/TC requirements (NCR-01).
 
 ## Boot, and an invalid state
 

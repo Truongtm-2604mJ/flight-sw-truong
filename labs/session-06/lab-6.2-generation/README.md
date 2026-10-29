@@ -41,6 +41,7 @@ These are the equivalent of the code generator settings in a commercial tool. Th
 | Arithmetic | Unsigned 32-bit bit masks; no floating point; `U` literal suffix | No FPU dependency; MISRA C style |
 | Switches | On `uint32_t`, every case listed, `default` used for invalid state recovery | `-Wswitch-enum`; no unreachable `default` |
 | Policy | None in generated code: every action is an extern hook | Logic and policy separated |
+| Ground command bookkeeping (v1.1) | `GROUND` mask; an ignored ground command is reported when an external transition fired | MM-140, closes D-05 |
 | Unused constructs | Not emitted: no empty exit functions, no guard code on unguarded transitions | No dead code to justify |
 | Diagnostics | Name strings only under `MODE_SM_WITH_NAMES` (test builds) | Not in flight builds |
 
@@ -84,13 +85,22 @@ Each finding was fixed in the generator, never in the output. That is the discip
 
 `make check-no-hand` confirms that `modes.c` is not linked: no `mode_request` symbol, and `mode_sm_step` present.
 
-The Session 5 system scenarios run unchanged against this build (`logs/`). At boot the build announces `Mode manager: GENERATED from vehicle_mode v2 (model sha256 ...)`.
+The Session 5 system scenarios run unchanged against this build (`logs/`). At boot the build announces `Mode manager: GENERATED from vehicle_mode v3 (model sha256 46d8922ca14ac291...)`.
 
-| Scenario | Result | Note |
+| Scenario | Host simulation | Note |
 |---|---|---|
 | `check_flight.py` (flight build) | 11/11 | |
 | `campaign.py`: six injections | all six detected and recovered | `logs/campaign-host-sim-generated.md` |
 | `campaign.py`: false positive run, 300 s | 0 detections | |
 | `gs_modes.py` (Lab 5.3 scenario) | 49/51 | The 2 failures are divergence D-07: the transition now happens at the next supervisor cycle, up to 2 s after the TC, and these two checks assume it is immediate |
+| MM-150 latency, TM(1,7) to mode report | max 1.999 s (limit 3.0 s), PASS | `latency.py` on the `gs_modes` log, `logs/latency-host-sim.md` |
 
-**On the target.** The session text says QEMU; as in Sessions 3 to 5 the target here is SIS. `make rtems` builds `lab6-test.exe` and `lab6-flight.exe` with the same flags as Session 5. The runs above are on the host simulation.
+**On the target (RTEMS 6 / LEON3, SIS).** The session text says QEMU; as in Sessions 3 to 5 the target here is SIS. `make rtems` builds `lab6-test.exe` and `lab6-flight.exe` with the same flags as Session 5.
+
+`app/run-sis.sh` builds both images, runs the same three scenarios under SIS and measures MM-150 on the SIS log. It writes `logs/sis-*.log`, `logs/campaign-sis-generated.md`, `logs/latency-sis.md` and the summary `logs/sis-summary.md`:
+
+```
+cd ../app && RTEMS_PREFIX=$HOME/Work/01.Code/rtems/rtems/6 ./run-sis.sh
+```
+
+The campaign runs with `--nv-volatile` on SIS, because the NV record is RAM there and a reset ends the simulation (Session 5 design note, Section 6).

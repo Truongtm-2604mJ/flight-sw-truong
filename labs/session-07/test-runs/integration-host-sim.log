@@ -1,0 +1,18 @@
+*** HOST SIMULATION (POSIX shim, not RTEMS), speedup x1 ***
+
+Integration suite: telecommand path (host simulation)
+Mode manager: GENERATED from vehicle_mode v3 (model sha256 46d8922ca14ac291...)
+IT-01  TC(17,1): TM(1,1), TM(17,2), TM(1,7), CRC, sequence            PASS
+IT-02  corrupted CRC: TM(1,2) code 3, not executed, counted           PASS
+IT-03  unknown service: TM(1,2) code 7                                PASS
+IT-04  wrong APID: TM(1,2) code 5                                     PASS
+IT-05  TC(8,1) invalid mode: TM(1,2) code 9, no change                PASS
+IT-06  TC(8,1) SAFE: reports, mode event at next cycle                PASS
+IT-07  two conflicting TC(8,1): one applied, other reported           PASS
+IT-08  TC(19,9): autonomous refused + reported, ground not            PASS
+IT-09  TC(11,4): scheduled TC released through the same path          PASS
+IT-10  fault + ground NOMINAL in one cycle: fault kept (MM-130)       PASS
+IT-11  TC_RX and SCHED paths concurrently: serialised                 PASS
+IT-12  service acceptance checks: 13 malformed TCs, codes 8/9         PASS
+IT-13  missed heartbeat under inhibit: reported, no restart           PASS
+@@ INTEGRATION RESULT: PASS 13/13 @@

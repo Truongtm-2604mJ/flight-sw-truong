@@ -1,0 +1,70 @@
+# Lab 7.3 - Fast checks: every push and pull request. Target: under 10 minutes.
+# Host build at the maximum warning set, unit and integration tests, static
+# analysis (fails on any finding without a disposition), coverage and MC/DC.
+# Every action is pinned to a commit SHA and every tool to an exact version
+# (tests/support/check_tools.sh fails the job on any other version).
+name: fast-checks
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: fast-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  fast:
+    runs-on: ubuntu-24.04          # pinned image, not ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683   # v4.2.2
+
+      - name: Install pinned tools
+        run: |
+          sudo apt-get update -q
+          sudo apt-get install -y -q --no-install-recommends \
+              gcc-13 clang-18 clang-tidy-18 llvm-18 libclang-rt-18-dev cppcheck python3-yaml
+          for t in clang clang-tidy llvm-cov llvm-profdata; do sudo ln -sf /usr/bin/$t-18 /usr/local/bin/$t; done
+          python3 -m pip install --break-system-packages --user gcovr==7.2
+          echo "$HOME/.local/bin" >> "$GITHUB_PATH"
+
+      - name: Check tool versions
+        run: tests/support/check_tools.sh
+
+      - name: Host build, maximum warning set, -Werror (both builds)
+        run: make -C tests warnings
+
+      - name: Unit tests (Unity)
+        run: make -C tests unit
+
+      - name: Integration tests (host simulation of the RTEMS API)
+        run: make -C tests integration
+
+      - name: Static analysis (gcc, clang -Weverything, cppcheck + MISRA, clang analyser)
+        run: make -C tests static
+
+      - name: Coverage (gcov, gcovr) and MC/DC (clang)
+        run: make -C tests coverage mcdc
+
+      - name: Session 6 model checks (generator, back-to-back, traceability)
+        run: make -C labs/session-06 test
+
+      - name: Show where regenerated evidence differs from the committed copy (informational)
+        run: git diff --stat -- labs/session-07 labs/session-06 || true
+
+      - name: Archive reports
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02   # v4.6.2
+        with:
+          name: fast-checks-${{ github.sha }}
+          retention-days: 14
+          path: |
+            tests/build/coverage-report
+            labs/session-07/coverage/mcdc-*
+            labs/session-07/static-analysis
+            tests/build/unit/*.txt
+            tests/build/integration/*.log

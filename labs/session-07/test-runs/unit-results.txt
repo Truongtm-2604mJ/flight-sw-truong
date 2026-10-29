@@ -1,0 +1,132 @@
+### build/unit/test_sp
+unit/test_sp.c:283:test_known_good_tm_packet:PASS
+unit/test_sp.c:284:test_known_good_tc_packet:PASS
+unit/test_sp.c:285:test_length_field_round_trip:PASS
+unit/test_sp.c:286:test_length_ten_octets_encodes_as_nine:PASS
+unit/test_sp.c:287:test_length_limits:PASS
+unit/test_sp.c:288:test_apid_out_of_range_rejected:PASS
+unit/test_sp.c:289:test_other_fields_out_of_range_rejected:PASS
+unit/test_sp.c:290:test_encode_capacity_and_null:PASS
+unit/test_sp.c:291:test_decode_truncated_input:PASS
+unit/test_sp.c:292:test_decode_inconsistent_length:PASS
+unit/test_sp.c:293:test_decode_rejects_unknown_version:PASS
+
+-----------------------
+11 Tests 0 Failures 0 Ignored 
+OK
+### build/unit/test_pus
+unit/test_pus.c:551:test_crc_check_value:PASS
+unit/test_pus.c:552:test_tc_build_matches_hand_computed_octets:PASS
+unit/test_pus.c:553:test_tm_build_matches_hand_computed_octets:PASS
+unit/test_pus.c:554:test_tm_sequence_count_wraps_at_14_bits:PASS
+unit/test_pus.c:555:test_tm_build_rejects_oversize_and_keeps_counter:PASS
+unit/test_pus.c:556:test_obt_conversion:PASS
+unit/test_pus.c:557:test_valid_ping_gives_accept_report_complete_in_order:PASS
+unit/test_pus.c:558:test_ack_flags_select_success_reports:PASS
+unit/test_pus.c:559:test_corrupted_checksum_is_rejected_and_not_executed:PASS
+unit/test_pus.c:560:test_unimplemented_service_has_its_own_failure_code:PASS
+unit/test_pus.c:561:test_validation_sequence_failure_codes:PASS
+unit/test_pus.c:562:test_sequence_count_increments_across_exchange:PASS
+unit/test_pus.c:563:test_execution_failure_reports_completion_failure:PASS
+unit/test_pus.c:564:test_completion_failure_report_contents:PASS
+unit/test_pus.c:565:test_s7_tm_build_rejects_null_arguments:PASS
+unit/test_pus.c:566:test_s7_tc_build_rejects_null_arguments:PASS
+unit/test_pus.c:567:test_s7_tc_validate_rejects_null_arguments:PASS
+unit/test_pus.c:568:test_s7_register_service_rejects_null_and_full_table:PASS
+unit/test_pus.c:569:test_s7_tm_build_rejects_too_small_output_buffer:PASS
+unit/test_pus.c:570:test_s7_tc_build_rejects_oversize_data_and_bad_flags:PASS
+unit/test_pus.c:571:test_s7_emit_tm_returns_the_build_error:PASS
+
+-----------------------
+21 Tests 0 Failures 0 Ignored 
+OK
+### build/unit/test_monitor
+unit/test_monitor.c:351:test_single_out_of_limit_sample_raises_nothing:PASS
+unit/test_monitor.c:352:test_three_consecutive_samples_raise_exactly_one_event:PASS
+unit/test_monitor.c:353:test_twenty_further_samples_raise_no_more_events:PASS
+unit/test_monitor.c:354:test_oscillation_between_alarm_and_clear_has_no_churn:PASS
+unit/test_monitor.c:355:test_disabled_monitor_produces_no_events:PASS
+unit/test_monitor.c:356:test_counter_resets_on_any_in_limit_sample:PASS
+unit/test_monitor.c:357:test_clearing_needs_persistence_inside_clear_threshold:PASS
+unit/test_monitor.c:358:test_low_limit_and_side_switching:PASS
+unit/test_monitor.c:359:test_persistence_of_one_reacts_immediately:PASS
+unit/test_monitor.c:360:test_definition_check:PASS
+unit/test_monitor.c:361:test_table_run_reports_the_right_parameter:PASS
+unit/test_monitor.c:362:test_mcdc_MC1_case1_A1_B1_in_band_counts:PASS
+unit/test_monitor.c:363:test_mcdc_MC1_case2_A0_B1_below_low_clear_restarts:PASS
+unit/test_monitor.c:364:test_mcdc_MC1_case3_A1_B0_above_high_clear_restarts:PASS
+unit/test_monitor.c:365:test_mcdc_MC2_case1_A1_B1_flip_counts_abandoned_run:PASS
+unit/test_monitor.c:366:test_mcdc_MC2_case2_A0_B1_same_side_continues_run:PASS
+unit/test_monitor.c:367:test_mcdc_MC2_case3_A1_B0_first_violation_starts_run:PASS
+unit/test_monitor.c:368:test_s7_table_run_without_callback_still_monitors:PASS
+
+-----------------------
+18 Tests 0 Failures 0 Ignored 
+OK
+### build/unit/test_liveness
+unit/test_liveness.c:397:test_registration_rules:PASS
+unit/test_liveness.c:398:test_healthy_tasks_raise_nothing:PASS
+unit/test_liveness.c:399:test_single_missed_heartbeat_restarts_only_that_task:PASS
+unit/test_liveness.c:400:test_repeated_failure_escalates_after_three_restarts:PASS
+unit/test_liveness.c:401:test_restarts_outside_the_window_do_not_count:PASS
+unit/test_liveness.c:402:test_window_is_wrap_safe:PASS
+unit/test_liveness.c:403:test_inhibit_detects_but_does_not_act:PASS
+unit/test_liveness.c:404:test_lifting_inhibit_acts_on_a_task_still_silent:PASS
+unit/test_liveness.c:405:test_watchdog_kicked_never_fires:PASS
+unit/test_liveness.c:406:test_watchdog_warns_then_resets:PASS
+unit/test_liveness.c:407:test_watchdog_late_kick_cannot_cancel_reset:PASS
+unit/test_liveness.c:408:test_nv_round_trip:PASS
+unit/test_liveness.c:409:test_nv_corruption_falls_back_to_cold_start:PASS
+unit/test_liveness.c:410:test_nv_boot_sequence:PASS
+unit/test_liveness.c:411:test_mcdc_MC3_case1_A1_B1_inhibited_no_restart:PASS
+unit/test_liveness.c:412:test_mcdc_MC3_case2_A0_B1_no_query_restarts:PASS
+unit/test_liveness.c:413:test_mcdc_MC3_case3_A1_B0_not_inhibited_restarts:PASS
+unit/test_liveness.c:414:test_s7_register_rejects_a_ninth_task:PASS
+
+-----------------------
+18 Tests 0 Failures 0 Ignored 
+OK
+### build/unit/test_schedule
+unit/test_schedule.c:131:test_schedule_releases_due_activities_in_time_order:PASS
+unit/test_schedule.c:132:test_suspended_schedule_releases_nothing:PASS
+unit/test_schedule.c:133:test_schedule_limits_and_reset:PASS
+unit/test_schedule.c:134:test_release_that_suspends_stops_the_pass:PASS
+unit/test_schedule.c:135:test_s7_insert_rejects_null_command:PASS
+unit/test_schedule.c:136:test_s7_earliest_due_released_first_whatever_the_slot:PASS
+
+-----------------------
+6 Tests 0 Failures 0 Ignored 
+OK
+### build/unit/test_mode_sm
+unit/test_mode_sm.c:433:test_boot_nominal_runs_entry_actions_without_report:PASS
+unit/test_mode_sm.c:434:test_boot_safe_after_watchdog_reset:PASS
+unit/test_mode_sm.c:435:test_boot_in_degraded_is_refused_and_enters_safe:PASS
+unit/test_mode_sm.c:436:test_post_rejects_event_outside_the_model:PASS
+unit/test_mode_sm.c:437:test_step_with_nothing_pending_is_idle:PASS
+unit/test_mode_sm.c:438:test_T01_nominal_to_safe_on_ground:PASS
+unit/test_mode_sm.c:439:test_T02_nominal_to_safe_on_critical_fault:PASS
+unit/test_mode_sm.c:440:test_T03_nominal_to_degraded_on_ground:PASS
+unit/test_mode_sm.c:441:test_T04_nominal_to_degraded_on_noncritical_fault:PASS
+unit/test_mode_sm.c:442:test_T05_T06_inhibited_faults_in_nominal_are_refused_and_reported:PASS
+unit/test_mode_sm.c:443:test_T07_T08_degraded_to_safe:PASS
+unit/test_mode_sm.c:444:test_T09_degraded_to_nominal_on_ground_only:PASS
+unit/test_mode_sm.c:445:test_T10_inhibited_critical_fault_in_degraded_is_refused:PASS
+unit/test_mode_sm.c:446:test_T11_T12_safe_left_by_ground_with_exit_action:PASS
+unit/test_mode_sm.c:447:test_autonomous_events_never_leave_safe:PASS
+unit/test_mode_sm.c:448:test_command_for_current_mode_is_ignored_silently:PASS
+unit/test_mode_sm.c:449:test_ground_command_losing_to_priority_is_reported:PASS
+unit/test_mode_sm.c:450:test_D05_ignored_ground_command_is_reported_when_mode_changes:PASS
+unit/test_mode_sm.c:451:test_ignored_ground_command_stays_silent_on_internal_transition:PASS
+unit/test_mode_sm.c:452:test_D04_fault_latched_across_ground_deescalation:PASS
+unit/test_mode_sm.c:453:test_latched_fault_ignored_in_start_state_is_dropped_when_idle:PASS
+unit/test_mode_sm.c:454:test_coalescing_last_payload_wins:PASS
+unit/test_mode_sm.c:455:test_invalid_state_recovers_to_safe_keeping_latched_events:PASS
+unit/test_mode_sm.c:456:test_mcdc_T02_case1_A1_B1_fires:PASS
+unit/test_mode_sm.c:457:test_mcdc_T02_case2_A0_B1_does_not_fire:PASS
+unit/test_mode_sm.c:458:test_mcdc_T02_case3_A1_B0_does_not_fire:PASS
+unit/test_mode_sm.c:459:test_mcdc_T05_case1_A1_C1_fires:PASS
+unit/test_mode_sm.c:460:test_mcdc_T05_case2_A0_C1_does_not_fire:PASS
+
+-----------------------
+28 Tests 0 Failures 0 Ignored 
+OK

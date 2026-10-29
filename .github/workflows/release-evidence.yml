@@ -1,0 +1,76 @@
+# Lab 7.3 - Evidence archive: on every tagged release (v*). Rebuilds and reruns
+# everything the release claims, and stores binaries, logs, coverage and
+# analysis reports against the exact commit, for 90 days (download and keep
+# them with the release for longer).
+name: release-evidence
+
+on:
+  push:
+    tags: ["v*"]
+
+permissions:
+  contents: read
+
+env:
+  RSB_COMMIT: b1aec32059aa0e86385ff75ec01daf93713fa382
+  RTEMS_COMMIT: 0a46769ba42d3476b0f37a85db49b3276658d293
+  RTEMS_PREFIX: /opt/rtems/6
+
+jobs:
+  evidence:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683   # v4.2.2
+
+      - name: Install pinned tools
+        run: |
+          sudo apt-get update -q
+          sudo apt-get install -y -q --no-install-recommends \
+              gcc-13 clang-18 clang-tidy-18 llvm-18 libclang-rt-18-dev cppcheck python3-yaml
+          for t in clang clang-tidy llvm-cov llvm-profdata; do sudo ln -sf /usr/bin/$t-18 /usr/local/bin/$t; done
+          python3 -m pip install --break-system-packages --user gcovr==7.2
+          echo "$HOME/.local/bin" >> "$GITHUB_PATH"
+          sudo mkdir -p "$RTEMS_PREFIX" && sudo chown "$USER" "$RTEMS_PREFIX"
+
+      - name: Restore RTEMS toolchain (built by the nightly job)
+        id: rtems
+        uses: actions/cache/restore@5a3ec84eff668545956fd18022155c47e93e2684   # v4.2.3
+        with:
+          path: /opt/rtems/6
+          key: rtems-${{ env.RSB_COMMIT }}-${{ env.RTEMS_COMMIT }}-sparc-leon3-v1
+
+      - run: tests/support/check_tools.sh
+
+      - name: All host levels, static analysis, coverage, MC/DC
+        run: make -C tests test static coverage mcdc
+
+      - name: Session 6 model checks
+        run: make -C labs/session-06 test
+
+      - name: RTEMS images and target tests (if the toolchain cache exists)
+        if: steps.rtems.outputs.cache-hit == 'true'
+        run: make -C tests target RTEMS_PREFIX="$RTEMS_PREFIX"
+
+      - name: Collect binaries
+        if: always()
+        run: |
+          mkdir -p evidence/bin
+          cp labs/session-06/app/*.host labs/session-06/app/*.exe tests/build/integration/int_tc_path.* evidence/bin/ 2>/dev/null || true
+          git rev-parse HEAD > evidence/COMMIT
+          tests/support/check_tools.sh > evidence/TOOLS.txt || true
+
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02   # v4.6.2
+        if: always()
+        with:
+          name: evidence-${{ github.ref_name }}
+          retention-days: 90
+          path: |
+            evidence
+            tests/build/unit/*.txt
+            tests/build/integration/*.log
+            labs/session-06/lab-6.2-generation/logs
+            labs/session-06/lab-6.3-equivalence/results
+            labs/session-07/coverage
+            labs/session-07/static-analysis
+            labs/session-07/validation

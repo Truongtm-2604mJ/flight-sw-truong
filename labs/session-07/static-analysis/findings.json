@@ -1,0 +1,2807 @@
+[
+ {
+  "tool": "gcc",
+  "file": "labs/session-05/app/lab5.c",
+  "line": 61,
+  "check": "-Wunused-macros",
+  "sev": "warning",
+  "msg": "macro \"CONFIGURE_MICROSECONDS_PER_TICK\" is not used",
+  "build": "test",
+  "key": "gcc|-Wunused-macros|labs/session-05/app/lab5.c|macro \"CONFIGURE_MICROSECONDS_PER_TICK\" is not used",
+  "lines": [
+   61
+  ],
+  "builds": [
+   "flight",
+   "test"
+  ],
+  "disposition": "SA-10"
+ },
+ {
+  "tool": "gcc",
+  "file": "labs/session-05/app/lab5.c",
+  "line": 51,
+  "check": "-Wunused-macros",
+  "sev": "warning",
+  "msg": "macro \"CONFIGURE_MAXIMUM_PERIODS\" is not used",
+  "build": "test",
+  "key": "gcc|-Wunused-macros|labs/session-05/app/lab5.c|macro \"CONFIGURE_MAXIMUM_PERIODS\" is not used",
+  "lines": [
+   51
+  ],
+  "builds": [
+   "flight",
+   "test"
+  ],
+  "disposition": "SA-10"
+ },
+ {
+  "tool": "gcc",
+  "file": "labs/session-05/app/lab5.c",
+  "line": 46,
+  "check": "-Wunused-macros",
+  "sev": "warning",
+  "msg": "macro \"CONFIGURE_APPLICATION_NEEDS_CONSOLE_DRIVER\" is not used",
+  "build": "test",
+  "key": "gcc|-Wunused-macros|labs/session-05/app/lab5.c|macro \"CONFIGURE_APPLICATION_NEEDS_CONSOLE_DRIVER\" is not used",
+  "lines": [
+   46
+  ],
+  "builds": [
+   "flight",
+   "test"
+  ],
+  "disposition": "SA-10"
+ },
+ {
+  "tool": "gcc",
+  "file": "labs/session-05/app/lab5.c",
+  "line": 59,
+  "check": "-Wunused-macros",
+  "sev": "warning",
+  "msg": "macro \"CONFIGURE_EXTRA_TASK_STACKS\" is not used",
+  "build": "test",
+  "key": "gcc|-Wunused-macros|labs/session-05/app/lab5.c|macro \"CONFIGURE_EXTRA_TASK_STACKS\" is not used",
+  "lines": [
+   59
+  ],
+  "builds": [
+   "flight",
+   "test"
+  ],
+  "disposition": "SA-10"
+ },
+ {
+  "tool": "gcc",
+  "file": "labs/session-05/app/lab5.c",
+  "line": 66,
+  "check": "-Wunused-macros",
+  "sev": "warning",
+  "msg": "macro \"CONFIGURE_RTEMS_INIT_TASKS_TABLE\" is not used",
+  "build": "test",
+  "key": "gcc|-Wunused-macros|labs/session-05/app/lab5.c|macro \"CONFIGURE_RTEMS_INIT_TASKS_TABLE\" is not used",
+  "lines": [
+   66
+  ],
+  "builds": [
+   "flight",
+   "test"
+  ],
+  "disposition": "SA-10"
+ },
+ {
+  "tool": "gcc",
+  "file": "labs/session-05/app/lab5.c",
+  "line": 55,
+  "check": "-Wunused-macros",
+  "sev": "warning",
+  "msg": "macro \"CONFIGURE_MESSAGE_BUFFER_MEMORY\" is not used",
+  "build": "test",
+  "key": "gcc|-Wunused-macros|labs/session-05/app/lab5.c|macro \"CONFIGURE_MESSAGE_BUFFER_MEMORY\" is not used",
+  "lines": [
+   55
+  ],
+  "builds": [
+   "flight",
+   "test"
+  ],
+  "disposition": "SA-10"
+ },
+ {
+  "tool": "gcc",
+  "file": "labs/session-05/app/lab5.c",
+  "line": 45,
+  "check": "-Wunused-macros",
+  "sev": "warning",
+  "msg": "macro \"CONFIGURE_APPLICATION_NEEDS_CLOCK_DRIVER\" is not used",
+  "build": "test",
+  "key": "gcc|-Wunused-macros|labs/session-05/app/lab5.c|macro \"CONFIGURE_APPLICATION_NEEDS_CLOCK_DRIVER\" is not used",
+  "lines": [
+   45
+  ],
+  "builds": [
+   "flight",
+   "test"
+  ],
+  "disposition": "SA-10"
+ },
+ {
+  "tool": "gcc",
+  "file": "labs/session-05/app/lab5.c",
+  "line": 67,
+  "check": "-Wunused-macros",
+  "sev": "warning",
+  "msg": "macro \"CONFIGURE_INIT\" is not used",
+  "build": "test",
+  "key": "gcc|-Wunused-macros|labs/session-05/app/lab5.c|macro \"CONFIGURE_INIT\" is not used",
+  "lines": [
+   67
+  ],
+  "builds": [
+   "flight",
+   "test"
+  ],
+  "disposition": "SA-10"
+ },
+ {
+  "tool": "gcc",
+  "file": "labs/session-05/app/lab5.c",
+  "line": 63,
+  "check": "-Wunused-macros",
+  "sev": "warning",
+  "msg": "macro \"CONFIGURE_INIT_TASK_ATTRIBUTES\" is not used",
+  "build": "test",
+  "key": "gcc|-Wunused-macros|labs/session-05/app/lab5.c|macro \"CONFIGURE_INIT_TASK_ATTRIBUTES\" is not used",
+  "lines": [
+   63
+  ],
+  "builds": [
+   "flight",
+   "test"
+  ],
+  "disposition": "SA-10"
+ },
+ {
+  "tool": "gcc",
+  "file": "labs/session-05/app/lab5.c",
+  "line": 54,
+  "check": "-Wunused-macros",
+  "sev": "warning",
+  "msg": "macro \"CONFIGURE_MAXIMUM_MESSAGE_QUEUES\" is not used",
+  "build": "test",
+  "key": "gcc|-Wunused-macros|labs/session-05/app/lab5.c|macro \"CONFIGURE_MAXIMUM_MESSAGE_QUEUES\" is not used",
+  "lines": [
+   54
+  ],
+  "builds": [
+   "flight",
+   "test"
+  ],
+  "disposition": "SA-10"
+ },
+ {
+  "tool": "gcc",
+  "file": "labs/session-05/app/lab5.c",
+  "line": 64,
+  "check": "-Wunused-macros",
+  "sev": "warning",
+  "msg": "macro \"CONFIGURE_INIT_TASK_STACK_SIZE\" is not used",
+  "build": "test",
+  "key": "gcc|-Wunused-macros|labs/session-05/app/lab5.c|macro \"CONFIGURE_INIT_TASK_STACK_SIZE\" is not used",
+  "lines": [
+   64
+  ],
+  "builds": [
+   "flight",
+   "test"
+  ],
+  "disposition": "SA-10"
+ },
+ {
+  "tool": "gcc",
+  "file": "labs/session-05/app/lab5.c",
+  "line": 53,
+  "check": "-Wunused-macros",
+  "sev": "warning",
+  "msg": "macro \"CONFIGURE_MAXIMUM_TIMERS\" is not used",
+  "build": "test",
+  "key": "gcc|-Wunused-macros|labs/session-05/app/lab5.c|macro \"CONFIGURE_MAXIMUM_TIMERS\" is not used",
+  "lines": [
+   53
+  ],
+  "builds": [
+   "flight",
+   "test"
+  ],
+  "disposition": "SA-10"
+ },
+ {
+  "tool": "gcc",
+  "file": "labs/session-05/app/lab5.c",
+  "line": 50,
+  "check": "-Wunused-macros",
+  "sev": "warning",
+  "msg": "macro \"CONFIGURE_MAXIMUM_TASKS\" is not used",
+  "build": "test",
+  "key": "gcc|-Wunused-macros|labs/session-05/app/lab5.c|macro \"CONFIGURE_MAXIMUM_TASKS\" is not used",
+  "lines": [
+   50
+  ],
+  "builds": [
+   "flight",
+   "test"
+  ],
+  "disposition": "SA-10"
+ },
+ {
+  "tool": "gcc",
+  "file": "labs/session-05/app/lab5.c",
+  "line": 52,
+  "check": "-Wunused-macros",
+  "sev": "warning",
+  "msg": "macro \"CONFIGURE_MAXIMUM_SEMAPHORES\" is not used",
+  "build": "test",
+  "key": "gcc|-Wunused-macros|labs/session-05/app/lab5.c|macro \"CONFIGURE_MAXIMUM_SEMAPHORES\" is not used",
+  "lines": [
+   52
+  ],
+  "builds": [
+   "flight",
+   "test"
+  ],
+  "disposition": "SA-10"
+ },
+ {
+  "tool": "clang",
+  "file": "labs/session-04/lab-4.1-space-packet/sp.c",
+  "line": 42,
+  "check": "-Wunsafe-buffer-usage",
+  "sev": "warning",
+  "msg": "unsafe buffer access",
+  "build": "test",
+  "key": "clang|-Wunsafe-buffer-usage|labs/session-04/lab-4.1-space-packet/sp.c|unsafe buffer access",
+  "lines": [
+   42,
+   46,
+   47,
+   51,
+   52,
+   54,
+   74,
+   80,
+   84,
+   97
+  ],
+  "builds": [
+   "flight",
+   "test"
+  ],
+  "disposition": "SA-12"
+ },
+ {
+  "tool": "clang",
+  "file": "labs/session-04/lab-4.2-pus-service17/crc16.c",
+  "line": 16,
+  "check": "-Wunsafe-buffer-usage",
+  "sev": "warning",
+  "msg": "unsafe buffer access",
+  "build": "test",
+  "key": "clang|-Wunsafe-buffer-usage|labs/session-04/lab-4.2-pus-service17/crc16.c|unsafe buffer access",
+  "lines": [
+   16
+  ],
+  "builds": [
+   "flight",
+   "test"
+  ],
+  "disposition": "SA-12"
+ },
+ {
+  "tool": "clang",
+  "file": "labs/session-04/lab-4.2-pus-service17/pus.c",
+  "line": 11,
+  "check": "-Wunsafe-buffer-usage",
+  "sev": "warning",
+  "msg": "unsafe buffer access",
+  "build": "test",
+  "key": "clang|-Wunsafe-buffer-usage|labs/session-04/lab-4.2-pus-service17/pus.c|unsafe buffer access",
+  "lines": [
+   11,
+   17,
+   18,
+   19,
+   24,
+   49,
+   50,
+   59,
+   80,
+   81,
+   82,
+   83,
+   84,
+   85,
+   87,
+   127,
+   128,
+   129,
+   131,
+   188,
+   210,
+   211,
+   212,
+   213
+  ],
+  "builds": [
+   "flight",
+   "test"
+  ],
+  "disposition": "SA-12"
+ },
+ {
+  "tool": "clang",
+  "file": "labs/session-04/lab-4.2-pus-service17/tc_handler.c",
+  "line": 44,
+  "check": "-Wunsafe-buffer-usage",
+  "sev": "warning",
+  "msg": "unsafe buffer access",
+  "build": "test",
+  "key": "clang|-Wunsafe-buffer-usage|labs/session-04/lab-4.2-pus-service17/tc_handler.c|unsafe buffer access",
+  "lines": [
+   44,
+   76,
+   80,
+   81,
+   82,
+   83,
+   124,
+   125
+  ],
+  "builds": [
+   "flight",
+   "test"
+  ],
+  "disposition": "SA-12"
+ },
+ {
+  "tool": "clang",
+  "file": "labs/session-05/lab-5.1-monitoring/monitor.c",
+  "line": 118,
+  "check": "-Wunsafe-buffer-usage",
+  "sev": "warning",
+  "msg": "unsafe buffer access",
+  "build": "test",
+  "key": "clang|-Wunsafe-buffer-usage|labs/session-05/lab-5.1-monitoring/monitor.c|unsafe buffer access",
+  "lines": [
+   118,
+   119,
+   134,
+   137,
+   138,
+   140
+  ],
+  "builds": [
+   "flight",
+   "test"
+  ],
+  "disposition": "SA-12"
+ },
+ {
+  "tool": "clang",
+  "file": "labs/session-05/lab-5.2-liveness/supervisor.c",
+  "line": 29,
+  "check": "-Wunsafe-buffer-usage",
+  "sev": "warning",
+  "msg": "unsafe buffer access",
+  "build": "test",
+  "key": "clang|-Wunsafe-buffer-usage|labs/session-05/lab-5.2-liveness/supervisor.c|unsafe buffer access",
+  "lines": [
+   29,
+   42,
+   50,
+   69,
+   119
+  ],
+  "builds": [
+   "flight",
+   "test"
+  ],
+  "disposition": "SA-12"
+ },
+ {
+  "tool": "clang",
+  "file": "labs/session-05/lab-5.2-liveness/watchdog.c",
+  "line": 43,
+  "check": "-Wcovered-switch-default",
+  "sev": "warning",
+  "msg": "default label in switch which covers all enumeration values",
+  "build": "test",
+  "key": "clang|-Wcovered-switch-default|labs/session-05/lab-5.2-liveness/watchdog.c|default label in switch which covers all enumeration values",
+  "lines": [
+   43
+  ],
+  "builds": [
+   "flight",
+   "test"
+  ],
+  "disposition": "SA-15"
+ },
+ {
+  "tool": "clang",
+  "file": "labs/session-05/lab-5.2-liveness/nvstate.c",
+  "line": 11,
+  "check": "-Wunsafe-buffer-usage",
+  "sev": "warning",
+  "msg": "unsafe buffer access",
+  "build": "test",
+  "key": "clang|-Wunsafe-buffer-usage|labs/session-05/lab-5.2-liveness/nvstate.c|unsafe buffer access",
+  "lines": [
+   11,
+   17,
+   18,
+   19,
+   24,
+   29,
+   30,
+   49,
+   50,
+   51,
+   52,
+   53,
+   54,
+   55,
+   56,
+   57,
+   58,
+   59,
+   60,
+   61,
+   62,
+   67,
+   68,
+   72,
+   73,
+   74,
+   75,
+   76,
+   77,
+   78,
+   79,
+   80,
+   81,
+   82,
+   83
+  ],
+  "builds": [
+   "flight",
+   "test"
+  ],
+  "disposition": "SA-12"
+ },
+ {
+  "tool": "clang",
+  "file": "labs/session-05/lab-5.3-safe-mode/schedule.c",
+  "line": 20,
+  "check": "-Wunsafe-buffer-usage",
+  "sev": "warning",
+  "msg": "unsafe buffer access",
+  "build": "test",
+  "key": "clang|-Wunsafe-buffer-usage|labs/session-05/lab-5.3-safe-mode/schedule.c|unsafe buffer access",
+  "lines": [
+   20,
+   21,
+   22,
+   23,
+   24,
+   35,
+   48,
+   61,
+   63,
+   73,
+   74
+  ],
+  "builds": [
+   "flight",
+   "test"
+  ],
+  "disposition": "SA-12"
+ },
+ {
+  "tool": "clang",
+  "file": "labs/session-06/lab-6.2-generation/generated/mode_sm.c",
+  "line": 69,
+  "check": "-Wunsafe-buffer-usage",
+  "sev": "warning",
+  "msg": "unsafe buffer access",
+  "build": "test",
+  "key": "clang|-Wunsafe-buffer-usage|labs/session-06/lab-6.2-generation/generated/mode_sm.c|unsafe buffer access",
+  "lines": [
+   69,
+   82,
+   95,
+   108,
+   121,
+   133,
+   145,
+   158,
+   171,
+   184,
+   196,
+   210,
+   281,
+   301,
+   354,
+   365,
+   371
+  ],
+  "builds": [
+   "flight",
+   "test"
+  ],
+  "disposition": "SA-12"
+ },
+ {
+  "tool": "clang",
+  "file": "labs/session-05/app/services.c",
+  "line": 29,
+  "check": "-Wunsafe-buffer-usage",
+  "sev": "warning",
+  "msg": "unsafe buffer access",
+  "build": "test",
+  "key": "clang|-Wunsafe-buffer-usage|labs/session-05/app/services.c|unsafe buffer access",
+  "lines": [
+   29,
+   30,
+   42,
+   51,
+   83,
+   106,
+   118,
+   168,
+   185,
+   186,
+   188
+  ],
+  "builds": [
+   "flight",
+   "test"
+  ],
+  "disposition": "SA-12"
+ },
+ {
+  "tool": "clang",
+  "file": "labs/session-05/app/tmtc5.c",
+  "line": 83,
+  "check": "-Wmissing-noreturn",
+  "sev": "warning",
+  "msg": "function 'tm_tx_task' could be declared with attribute 'noreturn'",
+  "build": "test",
+  "key": "clang|-Wmissing-noreturn|labs/session-05/app/tmtc5.c|function 'X' could be declared with attribute 'X'",
+  "lines": [
+   83,
+   139
+  ],
+  "builds": [
+   "flight",
+   "test"
+  ],
+  "disposition": "SA-16"
+ },
+ {
+  "tool": "clang",
+  "file": "labs/session-05/app/tmtc5.c",
+  "line": 34,
+  "check": "-Wunsafe-buffer-usage",
+  "sev": "warning",
+  "msg": "unsafe pointer arithmetic",
+  "build": "test",
+  "key": "clang|-Wunsafe-buffer-usage|labs/session-05/app/tmtc5.c|unsafe pointer arithmetic",
+  "lines": [
+   34,
+   116
+  ],
+  "builds": [
+   "flight",
+   "test"
+  ],
+  "disposition": "SA-12"
+ },
+ {
+  "tool": "clang",
+  "file": "labs/session-05/app/tmtc5.c",
+  "line": 96,
+  "check": "-Wunsafe-buffer-usage",
+  "sev": "warning",
+  "msg": "unsafe buffer access",
+  "build": "test",
+  "key": "clang|-Wunsafe-buffer-usage|labs/session-05/app/tmtc5.c|unsafe buffer access",
+  "lines": [
+   96,
+   98,
+   99,
+   101,
+   113,
+   125,
+   126,
+   133,
+   163,
+   180
+  ],
+  "builds": [
+   "flight",
+   "test"
+  ],
+  "disposition": "SA-12"
+ },
+ {
+  "tool": "clang",
+  "file": "labs/session-06/app/fdir6.c",
+  "line": 36,
+  "check": "-Wpadded",
+  "sev": "warning",
+  "msg": "padding struct 'struct (unnamed at ../labs/session-06/app/fdir6.c:34:8)' with 3 bytes to align 'until_ms'",
+  "build": "test",
+  "key": "clang|-Wpadded|labs/session-06/app/fdir6.c|padding struct 'X' with N bytes to align 'X'",
+  "lines": [
+   36,
+   452
+  ],
+  "builds": [
+   "flight",
+   "test"
+  ],
+  "disposition": "SA-14"
+ },
+ {
+  "tool": "clang",
+  "file": "labs/session-06/app/fdir6.c",
+  "line": 157,
+  "check": "-Wunsafe-buffer-usage",
+  "sev": "warning",
+  "msg": "unsafe buffer access",
+  "build": "test",
+  "key": "clang|-Wunsafe-buffer-usage|labs/session-06/app/fdir6.c|unsafe buffer access",
+  "lines": [
+   157,
+   158,
+   200,
+   223,
+   224,
+   225,
+   226,
+   242,
+   243,
+   252,
+   292,
+   293,
+   294,
+   376,
+   377,
+   469,
+   470,
+   478,
+   493,
+   494,
+   495,
+   497,
+   498,
+   508,
+   509,
+   510,
+   548,
+   549,
+   550,
+   553,
+   559,
+   560,
+   561,
+   563,
+   564,
+   565,
+   566,
+   567,
+   568,
+   569,
+   570,
+   571,
+   572,
+   573,
+   574,
+   575,
+   576,
+   577,
+   578,
+   579,
+   580,
+   581,
+   582,
+   592,
+   593,
+   595,
+   596,
+   597,
+   598,
+   599,
+   600,
+   601,
+   619,
+   621,
+   622,
+   630,
+   640,
+   641,
+   708,
+   709,
+   711,
+   729,
+   730,
+   731,
+   732,
+   733,
+   734,
+   735
+  ],
+  "builds": [
+   "flight",
+   "test"
+  ],
+  "disposition": "SA-12"
+ },
+ {
+  "tool": "clang",
+  "file": "labs/session-05/lab-5.4-fault-injection/finj.c",
+  "line": 10,
+  "check": "-Wpadded",
+  "sev": "warning",
+  "msg": "padding struct 'finj_param_t' with 1 byte to align 'param_id'",
+  "build": "test",
+  "key": "clang|-Wpadded|labs/session-05/lab-5.4-fault-injection/finj.c|padding struct 'X' with N byte to align 'X'",
+  "lines": [
+   10
+  ],
+  "builds": [
+   "test"
+  ],
+  "disposition": "SA-14"
+ },
+ {
+  "tool": "clang",
+  "file": "labs/session-05/lab-5.4-fault-injection/finj.c",
+  "line": 8,
+  "check": "-Wpadded",
+  "sev": "warning",
+  "msg": "padding size of 'finj_param_t' with 2 bytes to alignment boundary",
+  "build": "test",
+  "key": "clang|-Wpadded|labs/session-05/lab-5.4-fault-injection/finj.c|padding size of 'X' with N bytes to alignment boundary",
+  "lines": [
+   8
+  ],
+  "builds": [
+   "test"
+  ],
+  "disposition": "SA-14"
+ },
+ {
+  "tool": "clang",
+  "file": "labs/session-05/lab-5.4-fault-injection/finj.c",
+  "line": 23,
+  "check": "-Wunsafe-buffer-usage",
+  "sev": "warning",
+  "msg": "unsafe buffer access",
+  "build": "test",
+  "key": "clang|-Wunsafe-buffer-usage|labs/session-05/lab-5.4-fault-injection/finj.c|unsafe buffer access",
+  "lines": [
+   23,
+   26,
+   35,
+   39,
+   46,
+   47,
+   48,
+   49,
+   50,
+   56,
+   69,
+   70,
+   71,
+   72,
+   73,
+   74,
+   85,
+   86
+  ],
+  "builds": [
+   "test"
+  ],
+  "disposition": "SA-12"
+ },
+ {
+  "tool": "clang",
+  "file": "labs/session-05/app/lab5.c",
+  "line": 109,
+  "check": "-Wmissing-noreturn",
+  "sev": "warning",
+  "msg": "function 'finj_block_forever' could be declared with attribute 'noreturn'",
+  "build": "test",
+  "key": "clang|-Wmissing-noreturn|labs/session-05/app/lab5.c|function 'X' could be declared with attribute 'X'",
+  "lines": [
+   109,
+   124,
+   139,
+   155,
+   179,
+   197
+  ],
+  "builds": [
+   "flight",
+   "test"
+  ],
+  "disposition": "SA-16"
+ },
+ {
+  "tool": "clang",
+  "file": "labs/session-05/app/lab5.c",
+  "line": 46,
+  "check": "-Wunused-macros",
+  "sev": "warning",
+  "msg": "macro is not used",
+  "build": "test",
+  "key": "clang|-Wunused-macros|labs/session-05/app/lab5.c|macro is not used",
+  "lines": [
+   45,
+   46,
+   50,
+   51,
+   52,
+   53,
+   54,
+   55,
+   59,
+   61,
+   63,
+   64,
+   66,
+   67
+  ],
+  "builds": [
+   "flight",
+   "test"
+  ],
+  "disposition": "SA-10b"
+ },
+ {
+  "tool": "analyzer",
+  "file": "labs/session-04/lab-4.1-space-packet/sp.c",
+  "line": 54,
+  "check": "security.insecureAPI.DeprecatedOrUnsafeBufferHandling",
+  "sev": "warning",
+  "msg": "Call to function 'memcpy' is insecure as it does not provide security checks introduced in the C11 standard. Replace with analogous functions that support length arguments or provides boundary checks such as 'memcpy_s' in case of C11",
+  "build": "test",
+  "key": "analyzer|security.insecureAPI.DeprecatedOrUnsafeBufferHandling|labs/session-04/lab-4.1-space-packet/sp.c|Call to function 'X' is insecure as it does not provide security checks introduced in the CN standard. Replace with analogous functions that support length arguments or provides boundary checks such as 'X' in case of CN",
+  "lines": [
+   54
+  ],
+  "builds": [
+   "flight",
+   "test"
+  ],
+  "disposition": "SA-13"
+ },
+ {
+  "tool": "analyzer",
+  "file": "labs/session-04/lab-4.2-pus-service17/pus.c",
+  "line": 87,
+  "check": "security.insecureAPI.DeprecatedOrUnsafeBufferHandling",
+  "sev": "warning",
+  "msg": "Call to function 'memcpy' is insecure as it does not provide security checks introduced in the C11 standard. Replace with analogous functions that support length arguments or provides boundary checks such as 'memcpy_s' in case of C11",
+  "build": "test",
+  "key": "analyzer|security.insecureAPI.DeprecatedOrUnsafeBufferHandling|labs/session-04/lab-4.2-pus-service17/pus.c|Call to function 'X' is insecure as it does not provide security checks introduced in the CN standard. Replace with analogous functions that support length arguments or provides boundary checks such as 'X' in case of CN",
+  "lines": [
+   87,
+   131,
+   157,
+   164
+  ],
+  "builds": [
+   "flight",
+   "test"
+  ],
+  "disposition": "SA-13"
+ },
+ {
+  "tool": "analyzer",
+  "file": "labs/session-04/lab-4.2-pus-service17/tc_handler.c",
+  "line": 43,
+  "check": "security.insecureAPI.DeprecatedOrUnsafeBufferHandling",
+  "sev": "warning",
+  "msg": "Call to function 'memcpy' is insecure as it does not provide security checks introduced in the C11 standard. Replace with analogous functions that support length arguments or provides boundary checks such as 'memcpy_s' in case of C11",
+  "build": "test",
+  "key": "analyzer|security.insecureAPI.DeprecatedOrUnsafeBufferHandling|labs/session-04/lab-4.2-pus-service17/tc_handler.c|Call to function 'X' is insecure as it does not provide security checks introduced in the CN standard. Replace with analogous functions that support length arguments or provides boundary checks such as 'X' in case of CN",
+  "lines": [
+   43,
+   57
+  ],
+  "builds": [
+   "flight",
+   "test"
+  ],
+  "disposition": "SA-13"
+ },
+ {
+  "tool": "analyzer",
+  "file": "labs/session-05/lab-5.1-monitoring/monitor.c",
+  "line": 11,
+  "check": "security.insecureAPI.DeprecatedOrUnsafeBufferHandling",
+  "sev": "warning",
+  "msg": "Call to function 'memset' is insecure as it does not provide security checks introduced in the C11 standard. Replace with analogous functions that support length arguments or provides boundary checks such as 'memset_s' in case of C11",
+  "build": "test",
+  "key": "analyzer|security.insecureAPI.DeprecatedOrUnsafeBufferHandling|labs/session-05/lab-5.1-monitoring/monitor.c|Call to function 'X' is insecure as it does not provide security checks introduced in the CN standard. Replace with analogous functions that support length arguments or provides boundary checks such as 'X' in case of CN",
+  "lines": [
+   11
+  ],
+  "builds": [
+   "flight",
+   "test"
+  ],
+  "disposition": "SA-13"
+ },
+ {
+  "tool": "analyzer",
+  "file": "labs/session-05/lab-5.2-liveness/supervisor.c",
+  "line": 12,
+  "check": "security.insecureAPI.DeprecatedOrUnsafeBufferHandling",
+  "sev": "warning",
+  "msg": "Call to function 'memset' is insecure as it does not provide security checks introduced in the C11 standard. Replace with analogous functions that support length arguments or provides boundary checks such as 'memset_s' in case of C11",
+  "build": "test",
+  "key": "analyzer|security.insecureAPI.DeprecatedOrUnsafeBufferHandling|labs/session-05/lab-5.2-liveness/supervisor.c|Call to function 'X' is insecure as it does not provide security checks introduced in the CN standard. Replace with analogous functions that support length arguments or provides boundary checks such as 'X' in case of CN",
+  "lines": [
+   12,
+   30
+  ],
+  "builds": [
+   "flight",
+   "test"
+  ],
+  "disposition": "SA-13"
+ },
+ {
+  "tool": "analyzer",
+  "file": "labs/session-05/lab-5.2-liveness/nvstate.c",
+  "line": 35,
+  "check": "security.insecureAPI.DeprecatedOrUnsafeBufferHandling",
+  "sev": "warning",
+  "msg": "Call to function 'memset' is insecure as it does not provide security checks introduced in the C11 standard. Replace with analogous functions that support length arguments or provides boundary checks such as 'memset_s' in case of C11",
+  "build": "test",
+  "key": "analyzer|security.insecureAPI.DeprecatedOrUnsafeBufferHandling|labs/session-05/lab-5.2-liveness/nvstate.c|Call to function 'X' is insecure as it does not provide security checks introduced in the CN standard. Replace with analogous functions that support length arguments or provides boundary checks such as 'X' in case of CN",
+  "lines": [
+   35
+  ],
+  "builds": [
+   "flight",
+   "test"
+  ],
+  "disposition": "SA-13"
+ },
+ {
+  "tool": "analyzer",
+  "file": "labs/session-05/lab-5.3-safe-mode/schedule.c",
+  "line": 8,
+  "check": "security.insecureAPI.DeprecatedOrUnsafeBufferHandling",
+  "sev": "warning",
+  "msg": "Call to function 'memset' is insecure as it does not provide security checks introduced in the C11 standard. Replace with analogous functions that support length arguments or provides boundary checks such as 'memset_s' in case of C11",
+  "build": "test",
+  "key": "analyzer|security.insecureAPI.DeprecatedOrUnsafeBufferHandling|labs/session-05/lab-5.3-safe-mode/schedule.c|Call to function 'X' is insecure as it does not provide security checks introduced in the CN standard. Replace with analogous functions that support length arguments or provides boundary checks such as 'X' in case of CN",
+  "lines": [
+   8,
+   24
+  ],
+  "builds": [
+   "flight",
+   "test"
+  ],
+  "disposition": "SA-13"
+ },
+ {
+  "tool": "analyzer",
+  "file": "labs/session-06/app/fdir6.c",
+  "line": 107,
+  "check": "security.insecureAPI.DeprecatedOrUnsafeBufferHandling",
+  "sev": "warning",
+  "msg": "Call to function 'memset' is insecure as it does not provide security checks introduced in the C11 standard. Replace with analogous functions that support length arguments or provides boundary checks such as 'memset_s' in case of C11",
+  "build": "test",
+  "key": "analyzer|security.insecureAPI.DeprecatedOrUnsafeBufferHandling|labs/session-06/app/fdir6.c|Call to function 'X' is insecure as it does not provide security checks introduced in the CN standard. Replace with analogous functions that support length arguments or provides boundary checks such as 'X' in case of CN",
+  "lines": [
+   107,
+   110
+  ],
+  "builds": [
+   "flight",
+   "test"
+  ],
+  "disposition": "SA-13"
+ },
+ {
+  "tool": "fanalyzer",
+  "file": "labs/session-05/app/tmtc5.c",
+  "line": 113,
+  "check": "-Wanalyzer-use-of-uninitialized-value",
+  "sev": "warning",
+  "msg": "use of uninitialized value \u2018line[1]\u2019 [CWE-457]",
+  "build": "test",
+  "key": "fanalyzer|-Wanalyzer-use-of-uninitialized-value|labs/session-05/app/tmtc5.c|use of uninitialized value \u2018line[N]\u2019 [CWE-N]",
+  "lines": [
+   113
+  ],
+  "builds": [
+   "flight",
+   "test"
+  ],
+  "disposition": "SA-23"
+ },
+ {
+  "tool": "cppcheck",
+  "file": "labs/session-04/lab-4.1-space-packet/sp.c",
+  "line": 56,
+  "check": "misra-c2012-10.8",
+  "sev": "style",
+  "msg": "misra violation (use --rule-texts=<file> to get proper output)",
+  "build": "test",
+  "key": "cppcheck|misra-c2012-10.8|labs/session-04/lab-4.1-space-packet/sp.c|misra violation (use --rule-texts=<file> to get proper output)",
+  "lines": [
+   56
+  ],
+  "builds": [
+   "flight",
+   "test"
+  ],
+  "disposition": "SA-34"
+ },
+ {
+  "tool": "cppcheck",
+  "file": "labs/session-04/lab-4.1-space-packet/sp.c",
+  "line": 13,
+  "check": "misra-c2012-12.1",
+  "sev": "style",
+  "msg": "misra violation (use --rule-texts=<file> to get proper output)",
+  "build": "test",
+  "key": "cppcheck|misra-c2012-12.1|labs/session-04/lab-4.1-space-packet/sp.c|misra violation (use --rule-texts=<file> to get proper output)",
+  "lines": [
+   13,
+   19,
+   20,
+   21,
+   22,
+   23,
+   28,
+   32,
+   66,
+   93
+  ],
+  "builds": [
+   "flight",
+   "test"
+  ],
+  "disposition": "SA-31"
+ },
+ {
+  "tool": "cppcheck",
+  "file": "labs/session-04/lab-4.1-space-packet/sp.c",
+  "line": 14,
+  "check": "misra-c2012-15.5",
+  "sev": "style",
+  "msg": "misra violation (use --rule-texts=<file> to get proper output)",
+  "build": "test",
+  "key": "cppcheck|misra-c2012-15.5|labs/session-04/lab-4.1-space-packet/sp.c|misra violation (use --rule-texts=<file> to get proper output)",
+  "lines": [
+   14,
+   25,
+   29,
+   33,
+   67,
+   71,
+   87,
+   94
+  ],
+  "builds": [
+   "flight",
+   "test"
+  ],
+  "disposition": "SA-30"
+ },
+ {
+  "tool": "cppcheck",
+  "file": "labs/session-04/lab-4.1-space-packet/sp.c",
+  "line": 54,
+  "check": "misra-c2012-17.7",
+  "sev": "style",
+  "msg": "misra violation (use --rule-texts=<file> to get proper output)",
+  "build": "test",
+  "key": "cppcheck|misra-c2012-17.7|labs/session-04/lab-4.1-space-packet/sp.c|misra violation (use --rule-texts=<file> to get proper output)",
+  "lines": [
+   54
+  ],
+  "builds": [
+   "flight",
+   "test"
+  ],
+  "disposition": "SA-32"
+ },
+ {
+  "tool": "cppcheck",
+  "file": "labs/session-04/lab-4.2-pus-service17/crc16.c",
+  "line": 18,
+  "check": "misra-c2012-14.4",
+  "sev": "style",
+  "msg": "misra violation (use --rule-texts=<file> to get proper output)",
+  "build": "test",
+  "key": "cppcheck|misra-c2012-14.4|labs/session-04/lab-4.2-pus-service17/crc16.c|misra violation (use --rule-texts=<file> to get proper output)",
+  "lines": [
+   18
+  ],
+  "builds": [
+   "flight",
+   "test"
+  ],
+  "disposition": "SA-33"
+ },
+ {
+  "tool": "cppcheck",
+  "file": "labs/session-04/lab-4.2-pus-service17/pus.c",
+  "line": 72,
+  "check": "misra-c2012-12.1",
+  "sev": "style",
+  "msg": "misra violation (use --rule-texts=<file> to get proper output)",
+  "build": "test",
+  "key": "cppcheck|misra-c2012-12.1|labs/session-04/lab-4.2-pus-service17/pus.c|misra violation (use --rule-texts=<file> to get proper output)",
+  "lines": [
+   72,
+   116,
+   154,
+   178,
+   179,
+   180,
+   194
+  ],
+  "builds": [
+   "flight",
+   "test"
+  ],
+  "disposition": "SA-31"
+ },
+ {
+  "tool": "cppcheck",
+  "file": "labs/session-04/lab-4.2-pus-service17/pus.c",
+  "line": 55,
+  "check": "misra-c2012-15.5",
+  "sev": "style",
+  "msg": "misra violation (use --rule-texts=<file> to get proper output)",
+  "build": "test",
+  "key": "cppcheck|misra-c2012-15.5|labs/session-04/lab-4.2-pus-service17/pus.c|misra violation (use --rule-texts=<file> to get proper output)",
+  "lines": [
+   55,
+   73,
+   76,
+   117,
+   120,
+   123,
+   155,
+   162,
+   170,
+   182,
+   190,
+   196,
+   201,
+   206
+  ],
+  "builds": [
+   "flight",
+   "test"
+  ],
+  "disposition": "SA-30"
+ },
+ {
+  "tool": "cppcheck",
+  "file": "labs/session-04/lab-4.2-pus-service17/pus.c",
+  "line": 87,
+  "check": "misra-c2012-17.7",
+  "sev": "style",
+  "msg": "misra violation (use --rule-texts=<file> to get proper output)",
+  "build": "test",
+  "key": "cppcheck|misra-c2012-17.7|labs/session-04/lab-4.2-pus-service17/pus.c|misra violation (use --rule-texts=<file> to get proper output)",
+  "lines": [
+   87,
+   131,
+   157,
+   164
+  ],
+  "builds": [
+   "flight",
+   "test"
+  ],
+  "disposition": "SA-32"
+ },
+ {
+  "tool": "cppcheck",
+  "file": "labs/session-04/lab-4.2-pus-service17/tc_handler.c",
+  "line": 71,
+  "check": "misra-c2012-12.1",
+  "sev": "style",
+  "msg": "misra violation (use --rule-texts=<file> to get proper output)",
+  "build": "test",
+  "key": "cppcheck|misra-c2012-12.1|labs/session-04/lab-4.2-pus-service17/tc_handler.c|misra violation (use --rule-texts=<file> to get proper output)",
+  "lines": [
+   71
+  ],
+  "builds": [
+   "flight",
+   "test"
+  ],
+  "disposition": "SA-31"
+ },
+ {
+  "tool": "cppcheck",
+  "file": "labs/session-04/lab-4.2-pus-service17/tc_handler.c",
+  "line": 147,
+  "check": "misra-c2012-14.4",
+  "sev": "style",
+  "msg": "misra violation (use --rule-texts=<file> to get proper output)",
+  "build": "test",
+  "key": "cppcheck|misra-c2012-14.4|labs/session-04/lab-4.2-pus-service17/tc_handler.c|misra violation (use --rule-texts=<file> to get proper output)",
+  "lines": [
+   147,
+   150,
+   158
+  ],
+  "builds": [
+   "flight",
+   "test"
+  ],
+  "disposition": "SA-33"
+ },
+ {
+  "tool": "cppcheck",
+  "file": "labs/session-04/lab-4.2-pus-service17/tc_handler.c",
+  "line": 12,
+  "check": "misra-c2012-15.5",
+  "sev": "style",
+  "msg": "misra violation (use --rule-texts=<file> to get proper output)",
+  "build": "test",
+  "key": "cppcheck|misra-c2012-15.5|labs/session-04/lab-4.2-pus-service17/tc_handler.c|misra violation (use --rule-texts=<file> to get proper output)",
+  "lines": [
+   12,
+   15,
+   25,
+   73,
+   77,
+   97,
+   117,
+   143
+  ],
+  "builds": [
+   "flight",
+   "test"
+  ],
+  "disposition": "SA-30"
+ },
+ {
+  "tool": "cppcheck",
+  "file": "labs/session-04/lab-4.2-pus-service17/tc_handler.c",
+  "line": 43,
+  "check": "misra-c2012-17.7",
+  "sev": "style",
+  "msg": "misra violation (use --rule-texts=<file> to get proper output)",
+  "build": "test",
+  "key": "cppcheck|misra-c2012-17.7|labs/session-04/lab-4.2-pus-service17/tc_handler.c|misra violation (use --rule-texts=<file> to get proper output)",
+  "lines": [
+   43,
+   57
+  ],
+  "builds": [
+   "flight",
+   "test"
+  ],
+  "disposition": "SA-32"
+ },
+ {
+  "tool": "cppcheck",
+  "file": "labs/session-05/lab-5.1-monitoring/monitor.c",
+  "line": 27,
+  "check": "misra-c2012-12.1",
+  "sev": "style",
+  "msg": "misra violation (use --rule-texts=<file> to get proper output)",
+  "build": "test",
+  "key": "cppcheck|misra-c2012-12.1|labs/session-05/lab-5.1-monitoring/monitor.c|misra violation (use --rule-texts=<file> to get proper output)",
+  "lines": [
+   27,
+   55,
+   89,
+   139
+  ],
+  "builds": [
+   "flight",
+   "test"
+  ],
+  "disposition": "SA-31"
+ },
+ {
+  "tool": "cppcheck",
+  "file": "labs/session-05/lab-5.1-monitoring/monitor.c",
+  "line": 31,
+  "check": "misra-c2012-15.5",
+  "sev": "style",
+  "msg": "misra violation (use --rule-texts=<file> to get proper output)",
+  "build": "test",
+  "key": "cppcheck|misra-c2012-15.5|labs/session-05/lab-5.1-monitoring/monitor.c|misra violation (use --rule-texts=<file> to get proper output)",
+  "lines": [
+   31,
+   49,
+   59,
+   64,
+   86,
+   101,
+   119
+  ],
+  "builds": [
+   "flight",
+   "test"
+  ],
+  "disposition": "SA-30"
+ },
+ {
+  "tool": "cppcheck",
+  "file": "labs/session-05/lab-5.1-monitoring/monitor.c",
+  "line": 11,
+  "check": "misra-c2012-17.7",
+  "sev": "style",
+  "msg": "misra violation (use --rule-texts=<file> to get proper output)",
+  "build": "test",
+  "key": "cppcheck|misra-c2012-17.7|labs/session-05/lab-5.1-monitoring/monitor.c|misra violation (use --rule-texts=<file> to get proper output)",
+  "lines": [
+   11
+  ],
+  "builds": [
+   "flight",
+   "test"
+  ],
+  "disposition": "SA-32"
+ },
+ {
+  "tool": "cppcheck",
+  "file": "labs/session-05/lab-5.2-liveness/supervisor.c",
+  "line": 88,
+  "check": "misra-c2012-10.3",
+  "sev": "style",
+  "msg": "misra violation (use --rule-texts=<file> to get proper output)",
+  "build": "test",
+  "key": "cppcheck|misra-c2012-10.3|labs/session-05/lab-5.2-liveness/supervisor.c|misra violation (use --rule-texts=<file> to get proper output)",
+  "lines": [
+   88
+  ],
+  "builds": [
+   "flight",
+   "test"
+  ],
+  "disposition": "SA-34"
+ },
+ {
+  "tool": "cppcheck",
+  "file": "labs/session-05/lab-5.2-liveness/supervisor.c",
+  "line": 9,
+  "check": "misra-c2012-12.1",
+  "sev": "style",
+  "msg": "misra violation (use --rule-texts=<file> to get proper output)",
+  "build": "test",
+  "key": "cppcheck|misra-c2012-12.1|labs/session-05/lab-5.2-liveness/supervisor.c|misra violation (use --rule-texts=<file> to get proper output)",
+  "lines": [
+   9,
+   26
+  ],
+  "builds": [
+   "flight",
+   "test"
+  ],
+  "disposition": "SA-31"
+ },
+ {
+  "tool": "cppcheck",
+  "file": "labs/session-05/lab-5.2-liveness/supervisor.c",
+  "line": 92,
+  "check": "misra-c2012-14.4",
+  "sev": "style",
+  "msg": "misra violation (use --rule-texts=<file> to get proper output)",
+  "build": "test",
+  "key": "cppcheck|misra-c2012-14.4|labs/session-05/lab-5.2-liveness/supervisor.c|misra violation (use --rule-texts=<file> to get proper output)",
+  "lines": [
+   92,
+   100
+  ],
+  "builds": [
+   "flight",
+   "test"
+  ],
+  "disposition": "SA-33"
+ },
+ {
+  "tool": "cppcheck",
+  "file": "labs/session-05/lab-5.2-liveness/supervisor.c",
+  "line": 10,
+  "check": "misra-c2012-15.5",
+  "sev": "style",
+  "msg": "misra violation (use --rule-texts=<file> to get proper output)",
+  "build": "test",
+  "key": "cppcheck|misra-c2012-15.5|labs/session-05/lab-5.2-liveness/supervisor.c|misra violation (use --rule-texts=<file> to get proper output)",
+  "lines": [
+   10,
+   27
+  ],
+  "builds": [
+   "flight",
+   "test"
+  ],
+  "disposition": "SA-30"
+ },
+ {
+  "tool": "cppcheck",
+  "file": "labs/session-05/lab-5.2-liveness/supervisor.c",
+  "line": 12,
+  "check": "misra-c2012-17.7",
+  "sev": "style",
+  "msg": "misra violation (use --rule-texts=<file> to get proper output)",
+  "build": "test",
+  "key": "cppcheck|misra-c2012-17.7|labs/session-05/lab-5.2-liveness/supervisor.c|misra violation (use --rule-texts=<file> to get proper output)",
+  "lines": [
+   12,
+   30
+  ],
+  "builds": [
+   "flight",
+   "test"
+  ],
+  "disposition": "SA-32"
+ },
+ {
+  "tool": "cppcheck",
+  "file": "labs/session-05/lab-5.2-liveness/watchdog.c",
+  "line": 30,
+  "check": "misra-c2012-15.5",
+  "sev": "style",
+  "msg": "misra violation (use --rule-texts=<file> to get proper output)",
+  "build": "test",
+  "key": "cppcheck|misra-c2012-15.5|labs/session-05/lab-5.2-liveness/watchdog.c|misra violation (use --rule-texts=<file> to get proper output)",
+  "lines": [
+   30,
+   32,
+   38,
+   40,
+   44
+  ],
+  "builds": [
+   "flight",
+   "test"
+  ],
+  "disposition": "SA-30"
+ },
+ {
+  "tool": "cppcheck",
+  "file": "labs/session-05/lab-5.2-liveness/nvstate.c",
+  "line": 90,
+  "check": "misra-c2012-10.3",
+  "sev": "style",
+  "msg": "misra violation (use --rule-texts=<file> to get proper output)",
+  "build": "test",
+  "key": "cppcheck|misra-c2012-10.3|labs/session-05/lab-5.2-liveness/nvstate.c|misra violation (use --rule-texts=<file> to get proper output)",
+  "lines": [
+   90
+  ],
+  "builds": [
+   "flight",
+   "test"
+  ],
+  "disposition": "SA-34"
+ },
+ {
+  "tool": "cppcheck",
+  "file": "labs/session-05/lab-5.2-liveness/nvstate.c",
+  "line": 93,
+  "check": "misra-c2012-10.4",
+  "sev": "style",
+  "msg": "misra violation (use --rule-texts=<file> to get proper output)",
+  "build": "test",
+  "key": "cppcheck|misra-c2012-10.4|labs/session-05/lab-5.2-liveness/nvstate.c|misra violation (use --rule-texts=<file> to get proper output)",
+  "lines": [
+   93
+  ],
+  "builds": [
+   "flight",
+   "test"
+  ],
+  "disposition": "SA-34"
+ },
+ {
+  "tool": "cppcheck",
+  "file": "labs/session-05/lab-5.2-liveness/nvstate.c",
+  "line": 67,
+  "check": "misra-c2012-12.1",
+  "sev": "style",
+  "msg": "misra violation (use --rule-texts=<file> to get proper output)",
+  "build": "test",
+  "key": "cppcheck|misra-c2012-12.1|labs/session-05/lab-5.2-liveness/nvstate.c|misra violation (use --rule-texts=<file> to get proper output)",
+  "lines": [
+   67
+  ],
+  "builds": [
+   "flight",
+   "test"
+  ],
+  "disposition": "SA-31"
+ },
+ {
+  "tool": "cppcheck",
+  "file": "labs/session-05/lab-5.2-liveness/nvstate.c",
+  "line": 70,
+  "check": "misra-c2012-15.5",
+  "sev": "style",
+  "msg": "misra violation (use --rule-texts=<file> to get proper output)",
+  "build": "test",
+  "key": "cppcheck|misra-c2012-15.5|labs/session-05/lab-5.2-liveness/nvstate.c|misra violation (use --rule-texts=<file> to get proper output)",
+  "lines": [
+   70
+  ],
+  "builds": [
+   "flight",
+   "test"
+  ],
+  "disposition": "SA-30"
+ },
+ {
+  "tool": "cppcheck",
+  "file": "labs/session-05/lab-5.2-liveness/nvstate.c",
+  "line": 35,
+  "check": "misra-c2012-17.7",
+  "sev": "style",
+  "msg": "misra violation (use --rule-texts=<file> to get proper output)",
+  "build": "test",
+  "key": "cppcheck|misra-c2012-17.7|labs/session-05/lab-5.2-liveness/nvstate.c|misra violation (use --rule-texts=<file> to get proper output)",
+  "lines": [
+   35
+  ],
+  "builds": [
+   "flight",
+   "test"
+  ],
+  "disposition": "SA-32"
+ },
+ {
+  "tool": "cppcheck",
+  "file": "labs/session-05/lab-5.3-safe-mode/schedule.c",
+  "line": 16,
+  "check": "misra-c2012-12.1",
+  "sev": "style",
+  "msg": "misra violation (use --rule-texts=<file> to get proper output)",
+  "build": "test",
+  "key": "cppcheck|misra-c2012-12.1|labs/session-05/lab-5.3-safe-mode/schedule.c|misra violation (use --rule-texts=<file> to get proper output)",
+  "lines": [
+   16,
+   61,
+   62
+  ],
+  "builds": [
+   "flight",
+   "test"
+  ],
+  "disposition": "SA-31"
+ },
+ {
+  "tool": "cppcheck",
+  "file": "labs/session-05/lab-5.3-safe-mode/schedule.c",
+  "line": 46,
+  "check": "misra-c2012-12.3",
+  "sev": "style",
+  "msg": "misra violation (use --rule-texts=<file> to get proper output)",
+  "build": "test",
+  "key": "cppcheck|misra-c2012-12.3|labs/session-05/lab-5.3-safe-mode/schedule.c|misra violation (use --rule-texts=<file> to get proper output)",
+  "lines": [
+   46,
+   59
+  ],
+  "builds": [
+   "flight",
+   "test"
+  ],
+  "disposition": "SA-35"
+ },
+ {
+  "tool": "cppcheck",
+  "file": "labs/session-05/lab-5.3-safe-mode/schedule.c",
+  "line": 58,
+  "check": "misra-c2012-14.4",
+  "sev": "style",
+  "msg": "misra violation (use --rule-texts=<file> to get proper output)",
+  "build": "test",
+  "key": "cppcheck|misra-c2012-14.4|labs/session-05/lab-5.3-safe-mode/schedule.c|misra violation (use --rule-texts=<file> to get proper output)",
+  "lines": [
+   58
+  ],
+  "builds": [
+   "flight",
+   "test"
+  ],
+  "disposition": "SA-33"
+ },
+ {
+  "tool": "cppcheck",
+  "file": "labs/session-05/lab-5.3-safe-mode/schedule.c",
+  "line": 17,
+  "check": "misra-c2012-15.5",
+  "sev": "style",
+  "msg": "misra violation (use --rule-texts=<file> to get proper output)",
+  "build": "test",
+  "key": "cppcheck|misra-c2012-15.5|labs/session-05/lab-5.3-safe-mode/schedule.c|misra violation (use --rule-texts=<file> to get proper output)",
+  "lines": [
+   17,
+   25
+  ],
+  "builds": [
+   "flight",
+   "test"
+  ],
+  "disposition": "SA-30"
+ },
+ {
+  "tool": "cppcheck",
+  "file": "labs/session-05/lab-5.3-safe-mode/schedule.c",
+  "line": 8,
+  "check": "misra-c2012-17.7",
+  "sev": "style",
+  "msg": "misra violation (use --rule-texts=<file> to get proper output)",
+  "build": "test",
+  "key": "cppcheck|misra-c2012-17.7|labs/session-05/lab-5.3-safe-mode/schedule.c|misra violation (use --rule-texts=<file> to get proper output)",
+  "lines": [
+   8,
+   24
+  ],
+  "builds": [
+   "flight",
+   "test"
+  ],
+  "disposition": "SA-32"
+ },
+ {
+  "tool": "cppcheck",
+  "file": "labs/session-06/lab-6.2-generation/generated/mode_sm.c",
+  "line": 311,
+  "check": "funcArgNamesDifferent",
+  "sev": "style",
+  "msg": "Function 'mode_sm_step' argument 2 names different: declaration 'in' definition 'in_now'.",
+  "build": "test",
+  "key": "cppcheck|funcArgNamesDifferent|labs/session-06/lab-6.2-generation/generated/mode_sm.c|Function 'X' argument N names different: declaration 'X' definition 'X'.",
+  "lines": [
+   311
+  ],
+  "builds": [
+   "flight",
+   "test"
+  ],
+  "disposition": "SA-20"
+ },
+ {
+  "tool": "cppcheck",
+  "file": "labs/session-06/lab-6.2-generation/generated/mode_sm.c",
+  "line": 20,
+  "check": "misra-c2012-8.9",
+  "sev": "style",
+  "msg": "misra violation (use --rule-texts=<file> to get proper output)",
+  "build": "test",
+  "key": "cppcheck|misra-c2012-8.9|labs/session-06/lab-6.2-generation/generated/mode_sm.c|misra violation (use --rule-texts=<file> to get proper output)",
+  "lines": [
+   19,
+   20,
+   22,
+   25
+  ],
+  "builds": [
+   "flight",
+   "test"
+  ],
+  "disposition": "SA-35"
+ },
+ {
+  "tool": "cppcheck",
+  "file": "labs/session-06/lab-6.2-generation/generated/mode_sm.c",
+  "line": 227,
+  "check": "misra-c2012-12.1",
+  "sev": "style",
+  "msg": "misra violation (use --rule-texts=<file> to get proper output)",
+  "build": "test",
+  "key": "cppcheck|misra-c2012-12.1|labs/session-06/lab-6.2-generation/generated/mode_sm.c|misra violation (use --rule-texts=<file> to get proper output)",
+  "lines": [
+   227,
+   231,
+   233,
+   235,
+   248,
+   252
+  ],
+  "builds": [
+   "flight",
+   "test"
+  ],
+  "disposition": "SA-31"
+ },
+ {
+  "tool": "cppcheck",
+  "file": "labs/session-06/lab-6.2-generation/generated/mode_sm.c",
+  "line": 286,
+  "check": "misra-c2012-15.5",
+  "sev": "style",
+  "msg": "misra violation (use --rule-texts=<file> to get proper output)",
+  "build": "test",
+  "key": "cppcheck|misra-c2012-15.5|labs/session-06/lab-6.2-generation/generated/mode_sm.c|misra violation (use --rule-texts=<file> to get proper output)",
+  "lines": [
+   286,
+   289,
+   292,
+   299,
+   345,
+   381,
+   382,
+   383,
+   384,
+   391,
+   392,
+   393,
+   394,
+   395,
+   396,
+   397
+  ],
+  "builds": [
+   "flight",
+   "test"
+  ],
+  "disposition": "SA-30"
+ },
+ {
+  "tool": "cppcheck",
+  "file": "labs/session-05/app/services.c",
+  "line": 41,
+  "check": "misra-c2012-12.1",
+  "sev": "style",
+  "msg": "misra violation (use --rule-texts=<file> to get proper output)",
+  "build": "test",
+  "key": "cppcheck|misra-c2012-12.1|labs/session-05/app/services.c|misra violation (use --rule-texts=<file> to get proper output)",
+  "lines": [
+   41,
+   62,
+   64,
+   65,
+   84,
+   95,
+   102,
+   106,
+   118,
+   130,
+   138,
+   148,
+   151,
+   162,
+   167,
+   173
+  ],
+  "builds": [
+   "flight",
+   "test"
+  ],
+  "disposition": "SA-31"
+ },
+ {
+  "tool": "cppcheck",
+  "file": "labs/session-05/app/services.c",
+  "line": 93,
+  "check": "misra-c2012-12.3",
+  "sev": "style",
+  "msg": "misra violation (use --rule-texts=<file> to get proper output)",
+  "build": "test",
+  "key": "cppcheck|misra-c2012-12.3|labs/session-05/app/services.c|misra violation (use --rule-texts=<file> to get proper output)",
+  "lines": [
+   93
+  ],
+  "builds": [
+   "flight",
+   "test"
+  ],
+  "disposition": "SA-35"
+ },
+ {
+  "tool": "cppcheck",
+  "file": "labs/session-05/app/services.c",
+  "line": 205,
+  "check": "misra-c2012-14.4",
+  "sev": "style",
+  "msg": "misra violation (use --rule-texts=<file> to get proper output)",
+  "build": "test",
+  "key": "cppcheck|misra-c2012-14.4|labs/session-05/app/services.c|misra violation (use --rule-texts=<file> to get proper output)",
+  "lines": [
+   205
+  ],
+  "builds": [
+   "flight",
+   "test"
+  ],
+  "disposition": "SA-33"
+ },
+ {
+  "tool": "cppcheck",
+  "file": "labs/session-05/app/services.c",
+  "line": 39,
+  "check": "misra-c2012-15.5",
+  "sev": "style",
+  "msg": "misra violation (use --rule-texts=<file> to get proper output)",
+  "build": "test",
+  "key": "cppcheck|misra-c2012-15.5|labs/session-05/app/services.c|misra violation (use --rule-texts=<file> to get proper output)",
+  "lines": [
+   39,
+   43,
+   66,
+   68,
+   70,
+   79,
+   80,
+   81,
+   83,
+   96,
+   99,
+   103,
+   107,
+   135,
+   163,
+   165,
+   169,
+   171,
+   175,
+   202,
+   207
+  ],
+  "builds": [
+   "flight",
+   "test"
+  ],
+  "disposition": "SA-30"
+ },
+ {
+  "tool": "cppcheck",
+  "file": "labs/session-05/app/tmtc5.c",
+  "line": 17,
+  "check": "misra-c2012-8.9",
+  "sev": "style",
+  "msg": "misra violation (use --rule-texts=<file> to get proper output)",
+  "build": "test",
+  "key": "cppcheck|misra-c2012-8.9|labs/session-05/app/tmtc5.c|misra violation (use --rule-texts=<file> to get proper output)",
+  "lines": [
+   17
+  ],
+  "builds": [
+   "flight",
+   "test"
+  ],
+  "disposition": "SA-35"
+ },
+ {
+  "tool": "cppcheck",
+  "file": "labs/session-05/app/tmtc5.c",
+  "line": 133,
+  "check": "misra-c2012-10.1",
+  "sev": "style",
+  "msg": "misra violation (use --rule-texts=<file> to get proper output)",
+  "build": "test",
+  "key": "cppcheck|misra-c2012-10.1|labs/session-05/app/tmtc5.c|misra violation (use --rule-texts=<file> to get proper output)",
+  "lines": [
+   133
+  ],
+  "builds": [
+   "flight",
+   "test"
+  ],
+  "disposition": "SA-34"
+ },
+ {
+  "tool": "cppcheck",
+  "file": "labs/session-05/app/tmtc5.c",
+  "line": 34,
+  "check": "misra-c2012-10.3",
+  "sev": "style",
+  "msg": "misra violation (use --rule-texts=<file> to get proper output)",
+  "build": "test",
+  "key": "cppcheck|misra-c2012-10.3|labs/session-05/app/tmtc5.c|misra violation (use --rule-texts=<file> to get proper output)",
+  "lines": [
+   34
+  ],
+  "builds": [
+   "flight",
+   "test"
+  ],
+  "disposition": "SA-34"
+ },
+ {
+  "tool": "cppcheck",
+  "file": "labs/session-05/app/tmtc5.c",
+  "line": 21,
+  "check": "misra-c2012-12.1",
+  "sev": "style",
+  "msg": "misra violation (use --rule-texts=<file> to get proper output)",
+  "build": "test",
+  "key": "cppcheck|misra-c2012-12.1|labs/session-05/app/tmtc5.c|misra violation (use --rule-texts=<file> to get proper output)",
+  "lines": [
+   21,
+   22,
+   23,
+   85,
+   92,
+   113,
+   118,
+   127,
+   141,
+   164
+  ],
+  "builds": [
+   "flight",
+   "test"
+  ],
+  "disposition": "SA-31"
+ },
+ {
+  "tool": "cppcheck",
+  "file": "labs/session-05/app/tmtc5.c",
+  "line": 86,
+  "check": "misra-c2012-12.3",
+  "sev": "style",
+  "msg": "misra violation (use --rule-texts=<file> to get proper output)",
+  "build": "test",
+  "key": "cppcheck|misra-c2012-12.3|labs/session-05/app/tmtc5.c|misra violation (use --rule-texts=<file> to get proper output)",
+  "lines": [
+   86,
+   111
+  ],
+  "builds": [
+   "flight",
+   "test"
+  ],
+  "disposition": "SA-35"
+ },
+ {
+  "tool": "cppcheck",
+  "file": "labs/session-05/app/tmtc5.c",
+  "line": 96,
+  "check": "misra-c2012-13.3",
+  "sev": "style",
+  "msg": "misra violation (use --rule-texts=<file> to get proper output)",
+  "build": "test",
+  "key": "cppcheck|misra-c2012-13.3|labs/session-05/app/tmtc5.c|misra violation (use --rule-texts=<file> to get proper output)",
+  "lines": [
+   96,
+   98,
+   99,
+   101,
+   180
+  ],
+  "builds": [
+   "flight",
+   "test"
+  ],
+  "disposition": "SA-35"
+ },
+ {
+  "tool": "cppcheck",
+  "file": "labs/session-05/app/tmtc5.c",
+  "line": 165,
+  "check": "misra-c2012-14.4",
+  "sev": "style",
+  "msg": "misra violation (use --rule-texts=<file> to get proper output)",
+  "build": "test",
+  "key": "cppcheck|misra-c2012-14.4|labs/session-05/app/tmtc5.c|misra violation (use --rule-texts=<file> to get proper output)",
+  "lines": [
+   165
+  ],
+  "builds": [
+   "flight",
+   "test"
+  ],
+  "disposition": "SA-33"
+ },
+ {
+  "tool": "cppcheck",
+  "file": "labs/session-05/app/tmtc5.c",
+  "line": 32,
+  "check": "misra-c2012-15.5",
+  "sev": "style",
+  "msg": "misra violation (use --rule-texts=<file> to get proper output)",
+  "build": "test",
+  "key": "cppcheck|misra-c2012-15.5|labs/session-05/app/tmtc5.c|misra violation (use --rule-texts=<file> to get proper output)",
+  "lines": [
+   32,
+   53,
+   114,
+   122,
+   131,
+   208,
+   214,
+   228,
+   238
+  ],
+  "builds": [
+   "flight",
+   "test"
+  ],
+  "disposition": "SA-30"
+ },
+ {
+  "tool": "cppcheck",
+  "file": "labs/session-05/app/tmtc5.c",
+  "line": 193,
+  "check": "misra-c2012-17.3",
+  "sev": "style",
+  "msg": "misra violation (use --rule-texts=<file> to get proper output)",
+  "build": "test",
+  "key": "cppcheck|misra-c2012-17.3|labs/session-05/app/tmtc5.c|misra violation (use --rule-texts=<file> to get proper output)",
+  "lines": [
+   193
+  ],
+  "builds": [
+   "flight",
+   "test"
+  ],
+  "disposition": "SA-21"
+ },
+ {
+  "tool": "cppcheck",
+  "file": "labs/session-05/app/tmtc5.c",
+  "line": 193,
+  "check": "misra-config",
+  "sev": "error",
+  "msg": "Variable 'STDIN_FILENO' is unknown",
+  "build": "test",
+  "key": "cppcheck|misra-config|labs/session-05/app/tmtc5.c|Variable 'X' is unknown",
+  "lines": [
+   193
+  ],
+  "builds": [
+   "flight",
+   "test"
+  ],
+  "disposition": "SA-21"
+ },
+ {
+  "tool": "cppcheck",
+  "file": "labs/session-05/app/tmtc5.c",
+  "line": 151,
+  "check": "misra-c2012-17.7",
+  "sev": "style",
+  "msg": "misra violation (use --rule-texts=<file> to get proper output)",
+  "build": "test",
+  "key": "cppcheck|misra-c2012-17.7|labs/session-05/app/tmtc5.c|misra violation (use --rule-texts=<file> to get proper output)",
+  "lines": [
+   151,
+   156
+  ],
+  "builds": [
+   "flight",
+   "test"
+  ],
+  "disposition": "SA-32"
+ },
+ {
+  "tool": "cppcheck",
+  "file": "labs/session-05/app/tmtc5.c",
+  "line": 35,
+  "check": "misra-c2012-17.8",
+  "sev": "style",
+  "msg": "misra violation (use --rule-texts=<file> to get proper output)",
+  "build": "test",
+  "key": "cppcheck|misra-c2012-17.8|labs/session-05/app/tmtc5.c|misra violation (use --rule-texts=<file> to get proper output)",
+  "lines": [
+   35,
+   116,
+   117
+  ],
+  "builds": [
+   "flight",
+   "test"
+  ],
+  "disposition": "SA-35"
+ },
+ {
+  "tool": "cppcheck",
+  "file": "labs/session-05/app/sensors5.c",
+  "line": 12,
+  "check": "misra-c2012-10.8",
+  "sev": "style",
+  "msg": "misra violation (use --rule-texts=<file> to get proper output)",
+  "build": "test",
+  "key": "cppcheck|misra-c2012-10.8|labs/session-05/app/sensors5.c|misra violation (use --rule-texts=<file> to get proper output)",
+  "lines": [
+   12,
+   18
+  ],
+  "builds": [
+   "flight",
+   "test"
+  ],
+  "disposition": "SA-34"
+ },
+ {
+  "tool": "cppcheck",
+  "file": "labs/session-05/app/sensors5.c",
+  "line": 11,
+  "check": "misra-c2012-12.1",
+  "sev": "style",
+  "msg": "misra violation (use --rule-texts=<file> to get proper output)",
+  "build": "test",
+  "key": "cppcheck|misra-c2012-12.1|labs/session-05/app/sensors5.c|misra violation (use --rule-texts=<file> to get proper output)",
+  "lines": [
+   11,
+   21,
+   25,
+   28
+  ],
+  "builds": [
+   "flight",
+   "test"
+  ],
+  "disposition": "SA-31"
+ },
+ {
+  "tool": "cppcheck",
+  "file": "labs/session-06/app/fdir6.c",
+  "line": 51,
+  "check": "misra-c2012-8.9",
+  "sev": "style",
+  "msg": "misra violation (use --rule-texts=<file> to get proper output)",
+  "build": "test",
+  "key": "cppcheck|misra-c2012-8.9|labs/session-06/app/fdir6.c|misra violation (use --rule-texts=<file> to get proper output)",
+  "lines": [
+   32,
+   50,
+   51,
+   56,
+   389,
+   454
+  ],
+  "builds": [
+   "flight",
+   "test"
+  ],
+  "disposition": "SA-35"
+ },
+ {
+  "tool": "cppcheck",
+  "file": "labs/session-06/app/fdir6.c",
+  "line": 332,
+  "check": "misra-c2012-10.4",
+  "sev": "style",
+  "msg": "misra violation (use --rule-texts=<file> to get proper output)",
+  "build": "test",
+  "key": "cppcheck|misra-c2012-10.4|labs/session-06/app/fdir6.c|misra violation (use --rule-texts=<file> to get proper output)",
+  "lines": [
+   332
+  ],
+  "builds": [
+   "flight",
+   "test"
+  ],
+  "disposition": "SA-34"
+ },
+ {
+  "tool": "cppcheck",
+  "file": "labs/session-06/app/fdir6.c",
+  "line": 319,
+  "check": "misra-c2012-10.8",
+  "sev": "style",
+  "msg": "misra violation (use --rule-texts=<file> to get proper output)",
+  "build": "test",
+  "key": "cppcheck|misra-c2012-10.8|labs/session-06/app/fdir6.c|misra violation (use --rule-texts=<file> to get proper output)",
+  "lines": [
+   319,
+   331
+  ],
+  "builds": [
+   "flight",
+   "test"
+  ],
+  "disposition": "SA-34"
+ },
+ {
+  "tool": "cppcheck",
+  "file": "labs/session-06/app/fdir6.c",
+  "line": 75,
+  "check": "misra-c2012-12.1",
+  "sev": "style",
+  "msg": "misra violation (use --rule-texts=<file> to get proper output)",
+  "build": "test",
+  "key": "cppcheck|misra-c2012-12.1|labs/session-06/app/fdir6.c|misra violation (use --rule-texts=<file> to get proper output)",
+  "lines": [
+   75,
+   76,
+   102,
+   227,
+   301,
+   344,
+   495,
+   496,
+   499,
+   559,
+   592,
+   736,
+   738,
+   741
+  ],
+  "builds": [
+   "flight",
+   "test"
+  ],
+  "disposition": "SA-31"
+ },
+ {
+  "tool": "cppcheck",
+  "file": "labs/session-06/app/fdir6.c",
+  "line": 542,
+  "check": "misra-c2012-12.3",
+  "sev": "style",
+  "msg": "misra violation (use --rule-texts=<file> to get proper output)",
+  "build": "test",
+  "key": "cppcheck|misra-c2012-12.3|labs/session-06/app/fdir6.c|misra violation (use --rule-texts=<file> to get proper output)",
+  "lines": [
+   542
+  ],
+  "builds": [
+   "flight",
+   "test"
+  ],
+  "disposition": "SA-35"
+ },
+ {
+  "tool": "cppcheck",
+  "file": "labs/session-06/app/fdir6.c",
+  "line": 196,
+  "check": "misra-c2012-14.4",
+  "sev": "style",
+  "msg": "misra violation (use --rule-texts=<file> to get proper output)",
+  "build": "test",
+  "key": "cppcheck|misra-c2012-14.4|labs/session-06/app/fdir6.c|misra violation (use --rule-texts=<file> to get proper output)",
+  "lines": [
+   196,
+   305,
+   521,
+   522,
+   523,
+   524,
+   525,
+   548
+  ],
+  "builds": [
+   "flight",
+   "test"
+  ],
+  "disposition": "SA-33"
+ },
+ {
+  "tool": "cppcheck",
+  "file": "labs/session-06/app/fdir6.c",
+  "line": 302,
+  "check": "misra-c2012-15.5",
+  "sev": "style",
+  "msg": "misra violation (use --rule-texts=<file> to get proper output)",
+  "build": "test",
+  "key": "cppcheck|misra-c2012-15.5|labs/session-06/app/fdir6.c|misra violation (use --rule-texts=<file> to get proper output)",
+  "lines": [
+   302,
+   329,
+   373,
+   505,
+   695,
+   712,
+   721,
+   743
+  ],
+  "builds": [
+   "flight",
+   "test"
+  ],
+  "disposition": "SA-30"
+ },
+ {
+  "tool": "cppcheck",
+  "file": "labs/session-06/app/fdir6.c",
+  "line": 107,
+  "check": "misra-c2012-17.7",
+  "sev": "style",
+  "msg": "misra violation (use --rule-texts=<file> to get proper output)",
+  "build": "test",
+  "key": "cppcheck|misra-c2012-17.7|labs/session-06/app/fdir6.c|misra violation (use --rule-texts=<file> to get proper output)",
+  "lines": [
+   94,
+   95,
+   107,
+   110,
+   112,
+   120,
+   745
+  ],
+  "builds": [
+   "flight",
+   "test"
+  ],
+  "disposition": "SA-32"
+ },
+ {
+  "tool": "cppcheck",
+  "file": "labs/session-06/app/fdir6.c",
+  "line": 80,
+  "check": "misra-c2012-17.8",
+  "sev": "style",
+  "msg": "misra violation (use --rule-texts=<file> to get proper output)",
+  "build": "test",
+  "key": "cppcheck|misra-c2012-17.8|labs/session-06/app/fdir6.c|misra violation (use --rule-texts=<file> to get proper output)",
+  "lines": [
+   80,
+   81,
+   310
+  ],
+  "builds": [
+   "flight",
+   "test"
+  ],
+  "disposition": "SA-35"
+ },
+ {
+  "tool": "cppcheck",
+  "file": "labs/session-06/app/fdir6.c",
+  "line": 97,
+  "check": "misra-c2012-20.1",
+  "sev": "style",
+  "msg": "misra violation (use --rule-texts=<file> to get proper output)",
+  "build": "test",
+  "key": "cppcheck|misra-c2012-20.1|labs/session-06/app/fdir6.c|misra violation (use --rule-texts=<file> to get proper output)",
+  "lines": [
+   97
+  ],
+  "builds": [
+   "flight",
+   "test"
+  ],
+  "disposition": "SA-22"
+ },
+ {
+  "tool": "cppcheck",
+  "file": "labs/session-06/app/fdir6.c",
+  "line": 17,
+  "check": "misra-c2012-21.6",
+  "sev": "style",
+  "msg": "misra violation (use --rule-texts=<file> to get proper output)",
+  "build": "test",
+  "key": "cppcheck|misra-c2012-21.6|labs/session-06/app/fdir6.c|misra violation (use --rule-texts=<file> to get proper output)",
+  "lines": [
+   17
+  ],
+  "builds": [
+   "flight",
+   "test"
+  ],
+  "disposition": "SA-22"
+ },
+ {
+  "tool": "cppcheck",
+  "file": "labs/session-06/app/fdir6.c",
+  "line": 101,
+  "check": "misra-c2012-21.8",
+  "sev": "style",
+  "msg": "misra violation (use --rule-texts=<file> to get proper output)",
+  "build": "test",
+  "key": "cppcheck|misra-c2012-21.8|labs/session-06/app/fdir6.c|misra violation (use --rule-texts=<file> to get proper output)",
+  "lines": [
+   101
+  ],
+  "builds": [
+   "flight",
+   "test"
+  ],
+  "disposition": "SA-22"
+ },
+ {
+  "tool": "cppcheck",
+  "file": "labs/session-05/lab-5.4-fault-injection/finj.c",
+  "line": 35,
+  "check": "misra-c2012-12.1",
+  "sev": "style",
+  "msg": "misra violation (use --rule-texts=<file> to get proper output)",
+  "build": "test",
+  "key": "cppcheck|misra-c2012-12.1|labs/session-05/lab-5.4-fault-injection/finj.c|misra violation (use --rule-texts=<file> to get proper output)",
+  "lines": [
+   35,
+   39,
+   69,
+   85
+  ],
+  "builds": [
+   "flight",
+   "test"
+  ],
+  "disposition": "SA-31"
+ },
+ {
+  "tool": "cppcheck",
+  "file": "labs/session-05/lab-5.4-fault-injection/finj.c",
+  "line": 33,
+  "check": "misra-c2012-12.3",
+  "sev": "style",
+  "msg": "misra violation (use --rule-texts=<file> to get proper output)",
+  "build": "test",
+  "key": "cppcheck|misra-c2012-12.3|labs/session-05/lab-5.4-fault-injection/finj.c|misra violation (use --rule-texts=<file> to get proper output)",
+  "lines": [
+   33
+  ],
+  "builds": [
+   "flight",
+   "test"
+  ],
+  "disposition": "SA-35"
+ },
+ {
+  "tool": "cppcheck",
+  "file": "labs/session-05/lab-5.4-fault-injection/finj.c",
+  "line": 94,
+  "check": "misra-c2012-14.4",
+  "sev": "style",
+  "msg": "misra violation (use --rule-texts=<file> to get proper output)",
+  "build": "test",
+  "key": "cppcheck|misra-c2012-14.4|labs/session-05/lab-5.4-fault-injection/finj.c|misra violation (use --rule-texts=<file> to get proper output)",
+  "lines": [
+   94
+  ],
+  "builds": [
+   "flight",
+   "test"
+  ],
+  "disposition": "SA-33"
+ },
+ {
+  "tool": "cppcheck",
+  "file": "labs/session-05/lab-5.4-fault-injection/finj.c",
+  "line": 44,
+  "check": "misra-c2012-15.5",
+  "sev": "style",
+  "msg": "misra violation (use --rule-texts=<file> to get proper output)",
+  "build": "test",
+  "key": "cppcheck|misra-c2012-15.5|labs/session-05/lab-5.4-fault-injection/finj.c|misra violation (use --rule-texts=<file> to get proper output)",
+  "lines": [
+   44,
+   77,
+   87,
+   96
+  ],
+  "builds": [
+   "flight",
+   "test"
+  ],
+  "disposition": "SA-30"
+ },
+ {
+  "tool": "cppcheck",
+  "file": "labs/session-05/app/lab5.c",
+  "line": 258,
+  "check": "misra-c2012-10.8",
+  "sev": "style",
+  "msg": "misra violation (use --rule-texts=<file> to get proper output)",
+  "build": "test",
+  "key": "cppcheck|misra-c2012-10.8|labs/session-05/app/lab5.c|misra violation (use --rule-texts=<file> to get proper output)",
+  "lines": [
+   258
+  ],
+  "builds": [
+   "flight",
+   "test"
+  ],
+  "disposition": "SA-34"
+ },
+ {
+  "tool": "cppcheck",
+  "file": "labs/session-05/app/lab5.c",
+  "line": 267,
+  "check": "misra-c2012-12.1",
+  "sev": "style",
+  "msg": "misra violation (use --rule-texts=<file> to get proper output)",
+  "build": "test",
+  "key": "cppcheck|misra-c2012-12.1|labs/session-05/app/lab5.c|misra violation (use --rule-texts=<file> to get proper output)",
+  "lines": [
+   267
+  ],
+  "builds": [
+   "flight",
+   "test"
+  ],
+  "disposition": "SA-31"
+ },
+ {
+  "tool": "cppcheck",
+  "file": "labs/session-05/app/lab5.c",
+  "line": 242,
+  "check": "misra-c2012-12.3",
+  "sev": "style",
+  "msg": "misra violation (use --rule-texts=<file> to get proper output)",
+  "build": "test",
+  "key": "cppcheck|misra-c2012-12.3|labs/session-05/app/lab5.c|misra violation (use --rule-texts=<file> to get proper output)",
+  "lines": [
+   242
+  ],
+  "builds": [
+   "flight",
+   "test"
+  ],
+  "disposition": "SA-35"
+ },
+ {
+  "tool": "cppcheck",
+  "file": "labs/session-05/app/lab5.c",
+  "line": 132,
+  "check": "misra-c2012-14.4",
+  "sev": "style",
+  "msg": "misra violation (use --rule-texts=<file> to get proper output)",
+  "build": "test",
+  "key": "cppcheck|misra-c2012-14.4|labs/session-05/app/lab5.c|misra violation (use --rule-texts=<file> to get proper output)",
+  "lines": [
+   132,
+   147,
+   163,
+   165,
+   191
+  ],
+  "builds": [
+   "flight",
+   "test"
+  ],
+  "disposition": "SA-33"
+ },
+ {
+  "tool": "cppcheck",
+  "file": "labs/session-05/app/lab5.c",
+  "line": 127,
+  "check": "misra-c2012-17.7",
+  "sev": "style",
+  "msg": "misra violation (use --rule-texts=<file> to get proper output)",
+  "build": "test",
+  "key": "cppcheck|misra-c2012-17.7|labs/session-05/app/lab5.c|misra violation (use --rule-texts=<file> to get proper output)",
+  "lines": [
+   127,
+   142,
+   158,
+   182,
+   200,
+   223,
+   234,
+   246,
+   247,
+   248,
+   255,
+   256,
+   259,
+   260,
+   269,
+   280,
+   301
+  ],
+  "builds": [
+   "flight",
+   "test"
+  ],
+  "disposition": "SA-32"
+ },
+ {
+  "tool": "cppcheck",
+  "file": "labs/session-05/app/lab5.c",
+  "line": 2,
+  "check": "misra-c2012-21.6",
+  "sev": "style",
+  "msg": "misra violation (use --rule-texts=<file> to get proper output)",
+  "build": "test",
+  "key": "cppcheck|misra-c2012-21.6|labs/session-05/app/lab5.c|misra violation (use --rule-texts=<file> to get proper output)",
+  "lines": [
+   2
+  ],
+  "builds": [
+   "flight",
+   "test"
+  ],
+  "disposition": "SA-22"
+ },
+ {
+  "tool": "cppcheck",
+  "file": "labs/session-05/app/lab5.c",
+  "line": 45,
+  "check": "misra-c2012-2.5",
+  "sev": "style",
+  "msg": "misra violation (use --rule-texts=<file> to get proper output)",
+  "build": "test",
+  "key": "cppcheck|misra-c2012-2.5|labs/session-05/app/lab5.c|misra violation (use --rule-texts=<file> to get proper output)",
+  "lines": [
+   45,
+   46,
+   50,
+   51,
+   52,
+   53,
+   54,
+   55,
+   59,
+   61,
+   63,
+   64,
+   66,
+   67
+  ],
+  "builds": [
+   "flight",
+   "test"
+  ],
+  "disposition": "SA-11"
+ },
+ {
+  "tool": "cppcheck",
+  "file": "labs/session-05/lab-5.1-monitoring/monitor.c",
+  "line": 44,
+  "check": "misra-c2012-8.7",
+  "sev": "style",
+  "msg": "misra violation (use --rule-texts=<file> to get proper output)",
+  "build": "test",
+  "key": "cppcheck|misra-c2012-8.7|labs/session-05/lab-5.1-monitoring/monitor.c|misra violation (use --rule-texts=<file> to get proper output)",
+  "lines": [
+   44
+  ],
+  "builds": [
+   "flight",
+   "test"
+  ],
+  "disposition": "SA-35"
+ },
+ {
+  "tool": "cppcheck",
+  "file": "labs/session-05/lab-5.2-liveness/supervisor.c",
+  "line": 39,
+  "check": "misra-c2012-8.7",
+  "sev": "style",
+  "msg": "misra violation (use --rule-texts=<file> to get proper output)",
+  "build": "test",
+  "key": "cppcheck|misra-c2012-8.7|labs/session-05/lab-5.2-liveness/supervisor.c|misra violation (use --rule-texts=<file> to get proper output)",
+  "lines": [
+   39
+  ],
+  "builds": [
+   "flight",
+   "test"
+  ],
+  "disposition": "SA-35"
+ },
+ {
+  "tool": "cppcheck",
+  "file": "labs/session-05/lab-5.2-liveness/nvstate.c",
+  "line": 33,
+  "check": "misra-c2012-8.7",
+  "sev": "style",
+  "msg": "misra violation (use --rule-texts=<file> to get proper output)",
+  "build": "test",
+  "key": "cppcheck|misra-c2012-8.7|labs/session-05/lab-5.2-liveness/nvstate.c|misra violation (use --rule-texts=<file> to get proper output)",
+  "lines": [
+   33,
+   65
+  ],
+  "builds": [
+   "flight",
+   "test"
+  ],
+  "disposition": "SA-35"
+ },
+ {
+  "tool": "cppcheck",
+  "file": "labs/session-05/app/tmtc5.c",
+  "line": 73,
+  "check": "misra-c2012-8.7",
+  "sev": "style",
+  "msg": "misra violation (use --rule-texts=<file> to get proper output)",
+  "build": "test",
+  "key": "cppcheck|misra-c2012-8.7|labs/session-05/app/tmtc5.c|misra violation (use --rule-texts=<file> to get proper output)",
+  "lines": [
+   73
+  ],
+  "builds": [
+   "flight",
+   "test"
+  ],
+  "disposition": "SA-35"
+ },
+ {
+  "tool": "cppcheck",
+  "file": "labs/session-05/app/lab5.c",
+  "line": 239,
+  "check": "unusedFunction",
+  "sev": "style",
+  "msg": "The function 'Init' is never used.",
+  "build": "test",
+  "key": "cppcheck|unusedFunction|labs/session-05/app/lab5.c|The function 'X' is never used.",
+  "lines": [
+   239
+  ],
+  "builds": [
+   "flight",
+   "test"
+  ],
+  "disposition": "SA-17"
+ },
+ {
+  "tool": "cppcheck",
+  "file": "labs/session-06/app/fdir6.c",
+  "line": 335,
+  "check": "unusedFunction",
+  "sev": "style",
+  "msg": "The function 'fdir_mode' is never used.",
+  "build": "test",
+  "key": "cppcheck|unusedFunction|labs/session-06/app/fdir6.c|The function 'X' is never used.",
+  "lines": [
+   335
+  ],
+  "builds": [
+   "flight",
+   "test"
+  ],
+  "disposition": "SA-18"
+ },
+ {
+  "tool": "cppcheck",
+  "file": "labs/session-04/lab-4.2-pus-service17/pus.c",
+  "line": 108,
+  "check": "unusedFunction",
+  "sev": "style",
+  "msg": "The function 'pus_tc_build' is never used.",
+  "build": "test",
+  "key": "cppcheck|unusedFunction|labs/session-04/lab-4.2-pus-service17/pus.c|The function 'X' is never used.",
+  "lines": [
+   108
+  ],
+  "builds": [
+   "flight",
+   "test"
+  ],
+  "disposition": "SA-18"
+ },
+ {
+  "tool": "cppcheck",
+  "file": "labs/session-05/lab-5.4-fault-injection/finj.c",
+  "line": 103,
+  "check": "misra-c2012-2.3",
+  "sev": "style",
+  "msg": "misra violation (use --rule-texts=<file> to get proper output)",
+  "build": "flight",
+  "key": "cppcheck|misra-c2012-2.3|labs/session-05/lab-5.4-fault-injection/finj.c|misra violation (use --rule-texts=<file> to get proper output)",
+  "lines": [
+   103
+  ],
+  "builds": [
+   "flight"
+  ],
+  "disposition": "SA-35"
+ },
+ {
+  "tool": "cppcheck",
+  "file": "labs/session-06/lab-6.2-generation/generated/mode_sm.c",
+  "line": 388,
+  "check": "unusedFunction",
+  "sev": "style",
+  "msg": "The function 'mode_sm_event_name' is never used.",
+  "build": "flight",
+  "key": "cppcheck|unusedFunction|labs/session-06/lab-6.2-generation/generated/mode_sm.c|The function 'X' is never used.",
+  "lines": [
+   378,
+   388
+  ],
+  "builds": [
+   "flight"
+  ],
+  "disposition": "SA-19"
+ }
+]

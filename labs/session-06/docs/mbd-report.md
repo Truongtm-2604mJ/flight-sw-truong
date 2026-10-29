@@ -86,7 +86,7 @@ Every model element produces a fixed, named construct (table in `lab-6.2-generat
 | fault campaign | six of six detected and recovered, and 0 false positives in 300 s |
 | `gs_modes.py` | 49/51 |
 
-The two `gs_modes` failures are D-07, below. These runs are on the Session 5 host simulation of the RTEMS API. The same sources build for RTEMS 6 / LEON3 with `make rtems`; the SIS runs follow in a later commit.
+The two `gs_modes` failures are D-07, below. These runs are on the Session 5 host simulation of the RTEMS API. The same sources build for RTEMS 6 / LEON3 with `make rtems`, and `app/run-sis.sh` runs the same scenarios on SIS; its results are in `lab-6.2-generation/logs/sis-summary.md`.
 
 ## 4. Equivalence results
 
@@ -102,6 +102,7 @@ In total that is 10 726 cycles and 12 752 events. Each cycle it compares the mod
 |---|---|---|
 | 1, model v1 | 502 of 7996 | 1140 of 2730, 223 unclassified |
 | 2, model v2 | **0** of 7996 | 998 of 2730, 0 unclassified |
+| 3, model v3 (after the review) | **0** of 7996 | 998 of 2730, 0 unclassified; D-05 losing commands now reported |
 
 **With one event per cycle the two are identical.** All remaining divergences need two or more requests in one cycle, where the hand written code has no defined behaviour.
 
@@ -111,9 +112,9 @@ In total that is 10 726 cycles and 12 752 events. Each cycle it compares the mod
 | D-02 | Hand version passes through an intermediate mode | 236 | Neither: same end state and outputs. |
 | D-03 | Ground command undoes a same-cycle safing | 105 | **The hand written code**: a genuine weakness (A2). |
 | D-04 | Fault lost to arrival order | 158 | **The hand written code**: a genuine defect (A3). |
-| D-05 | Two conflicting ground commands | 365 | A specification choice: last wins vs priority wins. The losing command is still dropped silently in one case; recorded as an open item. |
+| D-05 | Two conflicting ground commands | 365 | A specification choice: last wins vs priority wins. Closed in model v3: a losing ground command is always reported (MM-140; 57 silent cases in v2, 0 in v3). |
 | D-06 | Same end state, cause reported differently | 134 | Neither. |
-| D-07 | Mode change up to 2 s after the TC | 2 of 51 system checks | Neither: the cost of cyclic evaluation. The two checks encode the hand version's immediate effect. |
+| D-07 | Mode change up to 2 s after the TC | 2 of 51 system checks | Neither: the cost of cyclic evaluation. Now bounded by requirement MM-150 (3.0 s after TM(1,7)); measured maximum 1.999 s. |
 
 **No divergence was a defect of the generated code with respect to its model.** The one real modelling error, D-01, was found by the harness and not by me. That is the strongest argument for back-to-back testing: I had read `modes.c` carefully, and the defect was in a file I had not thought to read.
 
@@ -121,8 +122,8 @@ In total that is 10 726 cycles and 12 752 events. Each cycle it compares the mod
 
 gcov over the whole Lab 6.3 suite gives the following results for the flight part of `mode_sm.c`:
 
-- **statements:** 231/231 (100 %);
-- **branches:** 52/55 (94.5 %).
+- **statements:** 233/233 (100 %);
+- **branches:** 54/57 (94.7 %).
 
 The three branches not taken are the false outcome of the guard term in T05, T06 and T10, the inhibited refusals. Each is unreachable by construction:
 
@@ -150,6 +151,21 @@ The test-only name strings (`MODE_SM_WITH_NAMES`) are reported separately and ar
   - The generator is now flight-critical tooling. On a real project it would need its own qualification, or the output would need to be verified as if hand written, which is what Lab 6.3 did.
 
 **Position.** For a mode manager this small, I would keep the model and the back-to-back harness as the specification and the test oracle, and I would accept either generated or hand written code checked against it. The model earned its place by finding three defects (D-01, D-03, D-04) and by turning ten implicit behaviours into stated ones. The code generation itself earns its place only when the machine grows, or when the model changes often enough that keeping hand code and specification in step becomes the dominant cost.
+
+### Follow-up after the Session 6 review
+
+The review left two items open. Both are now closed in the model and the requirements, not in the C.
+
+- **D-05.** A ground command that loses to another command in the same cycle is no longer dropped silently.
+  - Model version 3 adds the semantics rule `ignored_ground_command: report_if_state_changed`, implemented by generator 1.1.
+  - Requirement MM-140 states it, and TC-GND-02 checks it exhaustively.
+  - The same tests run against the v2 code fail on 57 combinations, so the test does detect the old behaviour.
+- **D-07.** The latency is now requirement MM-150: at most 3.0 s from TM(1,7) to the mode report.
+  - The bound follows from the 2 s supervisor period.
+  - The mission argument is in `semantics.md`: ground mode commands are not a fast loop, and the time-critical path is the autonomous one.
+  - Measured maximum: 1.999 s.
+
+The model change did not alter any equivalence result: run 3 reproduces run 2's counts exactly, because the change only adds reports.
 
 ### Reversal: requirements derived from code
 

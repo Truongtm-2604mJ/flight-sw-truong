@@ -21,6 +21,7 @@
 typedef struct {
     int payload_on, sun, sched, hk_rate, mon_fast, rx;
     int transitions, refusals, discards, invalid;
+    unsigned discard_mask;
     mode_sm_state_t last_from, last_to;
     mode_sm_event_t last_event;
     uint8_t last_src;
@@ -61,8 +62,9 @@ void mode_sm_on_transition(void *user, mode_sm_state_t from, mode_sm_state_t to,
 
 void mode_sm_on_discard(void *user, mode_sm_event_t event, const mode_sm_payload_t *c)
 {
-    (void)user; (void)event; (void)c;
+    (void)user; (void)c;
     o.discards++;
+    o.discard_mask |= 1u << (unsigned)event;
 }
 
 void mode_sm_on_invalid_state(void *user, uint32_t raw)
@@ -115,6 +117,7 @@ static void reach(mode_sm_state_t s)
     o.transitions = 0;
     o.refusals = 0;
     o.discards = 0;
+    o.discard_mask = 0u;
 }
 
 static const mode_sm_event_t AUTONOMOUS[] = {
@@ -388,6 +391,103 @@ static void tc_latch_01(void)
     EXPECT(mode_sm_state(&sm) == MODE_SM_NOMINAL);
 }
 
+/* Target mode of each ground command. */
+static mode_sm_state_t target_of(mode_sm_event_t e)
+{
+    return e == MODE_SM_EV_TC_MODE_NOMINAL ? MODE_SM_NOMINAL
+         : e == MODE_SM_EV_TC_MODE_DEGRADED ? MODE_SM_DEGRADED : MODE_SM_SAFE;
+}
+
+static const mode_sm_event_t GROUND_CMDS[] = {
+    MODE_SM_EV_TC_MODE_NOMINAL, MODE_SM_EV_TC_MODE_DEGRADED, MODE_SM_EV_TC_MODE_SAFE
+};
+
+/* MM-140: a ground mode command that is not applied is reported. In every
+ * start state, with every non-empty set of ground commands, alone or
+ * together with each fault, inhibited or not: after the step, each
+ * command either fired, or the vehicle is in the commanded mode, or a
+ * discard report names it. Includes the D-05 case (NOMINAL: degraded +
+ * nominal), which v2 dropped silently. */
+static void tc_gnd_02(void)
+{
+    static const mode_sm_state_t ST[] = { MODE_SM_NOMINAL, MODE_SM_DEGRADED, MODE_SM_SAFE };
+    static const int FAULT[] = { -1, MODE_SM_EV_FAULT_NONCRITICAL, MODE_SM_EV_FAULT_CRITICAL };
+    size_t s, f, k;
+    unsigned set;
+    int inh;
+    for (s = 0; s < 3; s++) {
+        for (set = 1u; set < 8u; set++) {
+            for (f = 0; f < 3; f++) {
+                for (inh = 0; inh < 2; inh++) {
+                    mode_sm_result_t r;
+                    reach(ST[s]);
+                    for (k = 0; k < 3; k++) {
+                        if ((set & (1u << k)) != 0u) {
+                            post(GROUND_CMDS[k], 1, 0);
+                        }
+                    }
+                    if (FAULT[f] >= 0) {
+                        post((mode_sm_event_t)FAULT[f], 2, 0);
+                    }
+                    r = step(inh);
+                    for (k = 0; k < 3; k++) {
+                        int fired, satisfied, reported;
+                        if ((set & (1u << k)) == 0u) {
+                            continue;
+                        }
+                        fired = r.kind == MODE_SM_STEP_TRANSITION && r.event == GROUND_CMDS[k];
+                        satisfied = mode_sm_state(&sm) == target_of(GROUND_CMDS[k]);
+                        reported = (o.discard_mask & (1u << (unsigned)GROUND_CMDS[k])) != 0u;
+                        EXPECT(fired || satisfied || reported);
+                        /* and never both applied and reported */
+                        EXPECT(!(fired && reported));
+                    }
+                }
+            }
+        }
+    }
+    /* The silent case is exactly "already in the commanded mode, nothing
+     * else happened": no report, no transition. */
+    for (s = 0; s < 3; s++) {
+        reach(ST[s]);
+        post(GROUND_CMDS[s], 1, 0);
+        EXPECT(step(0).kind == MODE_SM_STEP_IDLE);
+        EXPECT(o.discards == 0 && o.transitions == 0);
+    }
+    /* D-05 example from the divergence log. */
+    reach(MODE_SM_NOMINAL);
+    post(MODE_SM_EV_TC_MODE_DEGRADED, 1, 0);
+    post(MODE_SM_EV_TC_MODE_NOMINAL, 1, 0);
+    (void)step(0);
+    EXPECT(mode_sm_state(&sm) == MODE_SM_DEGRADED);
+    EXPECT(o.discard_mask == (1u << (unsigned)MODE_SM_EV_TC_MODE_NOMINAL));
+}
+
+/* MM-150 (unit part): a ground mode command takes effect at the first
+ * step after it is posted, in every state, inhibited or not. The step is
+ * called once per supervisor period (2 s), so the onboard latency is at
+ * most one period; the system part is measured from the ground logs. */
+static void tc_lat_01(void)
+{
+    static const mode_sm_state_t ST[] = { MODE_SM_NOMINAL, MODE_SM_DEGRADED, MODE_SM_SAFE };
+    size_t s, k;
+    int inh;
+    for (s = 0; s < 3; s++) {
+        for (k = 0; k < 3; k++) {
+            for (inh = 0; inh < 2; inh++) {
+                if (k == s) {
+                    continue;
+                }
+                reach(ST[s]);
+                post(GROUND_CMDS[k], 1, 0);
+                EXPECT(step(inh).kind == MODE_SM_STEP_TRANSITION);
+                EXPECT(mode_sm_state(&sm) == target_of(GROUND_CMDS[k]));
+                EXPECT(o.transitions == 1);
+            }
+        }
+    }
+}
+
 typedef struct {
     const char *id;
     const char *reqs;
@@ -410,6 +510,8 @@ static const tc_t TESTS[] = {
     { "TC-FAIL-01",       "MM-120",        tc_fail_01 },
     { "TC-FAIL-02",       "MM-120",        tc_fail_02 },
     { "TC-LATCH-01",      "MM-130",        tc_latch_01 },
+    { "TC-GND-02",        "MM-140",        tc_gnd_02 },
+    { "TC-LAT-01",        "MM-150",        tc_lat_01 },
 };
 
 int main(void)

@@ -1,0 +1,87 @@
+# Session 7, Lab 7.4 - Requirement set for the validation campaign.
+#
+# Extends the Lab 6.4 mode management set (MM-010..MM-150, included below
+# from labs/session-06/lab-6.4-traceability/requirements.yaml, unchanged)
+# with TM/TC and FDIR requirements. 31 requirements in total.
+#
+# Each requirement states:
+#   source  where it comes from: the mission need it serves, then the design
+#           note that set the number. Written from the design notes (Session 4
+#           Section 3, Session 5 Sections 1, 2 and 4), not from the code.
+#   method  T  test through the ground interface (validation campaign)
+#           T-I test at integration level (tests/integration), where the ground
+#               cannot set up the condition deterministically
+#           A  analysis
+#   level   how it is verified at each test level; the matrix lists the tests.
+
+include: ../../session-06/lab-6.4-traceability/requirements.yaml
+
+requirements:
+  # ---- TM/TC -------------------------------------------------------------------
+  - id: TMTC-010
+    text: In every mode, a telecommand that passes acceptance shall be answered with TM(1,1) if acceptance acknowledgement is requested and, after successful execution, with TM(1,7) if completion acknowledgement is requested, both carrying the telecommand's request ID.
+    source: Operators must know that every command was received and executed (PUS service 1). Session 4 design note, Section 3.
+    method: T
+  - id: TMTC-020
+    text: A telecommand that fails an acceptance check shall not be executed and shall be answered with TM(1,2) carrying the code of the first failed check (checksum 3, APID 5, service 7, subtype 8, application data 9).
+    source: A corrupted or wrong command must never act ("validate before you act"). Session 4 design note, Section 3.
+    method: T
+  - id: TMTC-030
+    text: A received line that cannot be decoded into a telecommand with a request ID (odd number of hex digits, non hex characters, longer than 120 octets, shorter than a primary header) shall be discarded without any other effect and counted in the housekeeping TC rejected counter.
+    source: Link noise must be visible to the ground but must not act. Session 4 design note, Section 3, check 1.
+    method: T
+  - id: TMTC-040
+    text: The completion report TM(1,7) of a telecommand shall be sent only once the function it commands has taken effect.
+    source: Operations procedures move to their next step on TM(1,7) (PUS service 1 meaning of "completion of execution"). Session 4 design note, Section 3.
+    method: T
+  - id: TMTC-050
+    text: Every telemetry packet shall pass the ground's packet checks (CRC, length, version), and within one boot the sequence count of each APID shall advance by exactly one per packet while the TM drop counter stays 0.
+    source: The ground detects lost or corrupted telemetry from the sequence count and the CRC. Session 4 design note, Sections 1 and 6.
+    method: T
+  - id: TMTC-060
+    text: In NOMINAL, the full housekeeping report (SID 1) shall be generated every 1.0 s, each interval within 0.9 s to 1.1 s of onboard time.
+    source: The HK rate sizes the ground's view of the vehicle and the downlink budget. Session 4 design note (HK), Session 5 design note Section 2 (1 Hz in NOMINAL).
+    method: T
+  - id: TMTC-070
+    text: The flight build shall not contain the fault injection service; every TC(200,x) shall be rejected with TM(1,2) code 7 and have no effect.
+    source: Test hooks must not fly. Session 5 review.
+    method: T
+
+  # ---- FDIR --------------------------------------------------------------------
+  - id: FDIR-010
+    text: A monitored parameter out of its limits for fewer consecutive samples than its persistence shall raise no event and cause no action, and the rejected transient shall be counted in housekeeping.
+    source: Single sample glitches (EMI, ADC) must not trigger FDIR. Session 5 design note, Sections 1 and 2.
+    method: T
+  - id: FDIR-020
+    text: A monitored parameter out of its limits for its persistence shall raise exactly one alarm event, no later than (persistence + 1) sample periods after the first violating sample, and no further event while it stays out of limits.
+    source: Detection latency budget and no event flooding. Session 5 design note, Section 2.
+    method: T
+  - id: FDIR-030
+    text: Bus under voltage (V_BUS below 26.0 V for 3 samples) shall put the vehicle in SAFE.
+    source: Power negative threatens survival. Session 5 design note, Sections 1 and 2.
+    method: T
+  - id: FDIR-040
+    text: A supervised task that misses one heartbeat check shall be restarted, and the miss and the restart reported, no later than 4.0 s after the hang begins, with no mode change.
+    source: Transient task faults are handled at subsystem level. Session 5 design note, Section 4 (2 s check).
+    method: T
+  - id: FDIR-050
+    text: A supervised task that misses its heartbeat with 3 restarts already in the last 300 s shall not be restarted again; it shall be marked failed (visible in housekeeping) and the escalation reported; ACS_CTRL or TM_HK failure shall put the vehicle in SAFE, PL_LOG failure in DEGRADED.
+    source: A fault that keeps coming back is not transient; bounded retries. Session 5 design note, Sections 1 and 4. The PL_LOG case and the housekeeping flag were added after the Session 7 coverage analysis showed no system test reached them (coverage.md, C-04).
+    revised: Session 7, after campaign run 2
+    method: T
+  - id: FDIR-060
+    text: If the supervisor stops, a watchdog warning shall be reported and the processor reset no later than 6 s after the last kick; the vehicle shall then boot in SAFE and report the watchdog reset as the cause.
+    source: Last line of defence; 5 s timeout plus 1 s grace. Session 5 design note, Section 4.
+    method: T
+  - id: FDIR-070
+    text: With no fault injected, the FDIR shall raise no alarm, restart or mode change during 300 s of nominal operation.
+    source: False alarms cost operations and science time. Session 5 design note, Section 5 (false positive run).
+    method: T
+  - id: FDIR-080
+    text: An FDIR inhibit commanded by TC(19,9) shall end by itself after its duration (1 s to 3600 s), and its end shall be reported with the reason "timeout".
+    source: An operator who forgets to re-enable FDIR must not leave the vehicle unprotected. Session 5 design note, Section 1 (bounded to 1 h).
+    method: T
+  - id: FDIR-090
+    text: Monitoring of a parameter disabled by TC(12,2) shall raise no event whatever its value; re-enabled by TC(12,1), it shall detect again.
+    source: Operators must be able to silence a failed sensor. Session 5 design note, Section 2.
+    method: T

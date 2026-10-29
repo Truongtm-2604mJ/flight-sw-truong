@@ -41,7 +41,7 @@ import sys
 
 import yaml
 
-GENERATOR_VERSION = "1.0"
+GENERATOR_VERSION = "1.1"
 IDENT = re.compile(r"^[A-Za-z_][A-Za-z0-9_]*$")
 
 SUPPORTED_SEMANTICS = {
@@ -52,6 +52,12 @@ SUPPORTED_SEMANTICS = {
     "self_transition_runs_entry": {False},
     "unconsumed_one_shot": {"discard_and_report"},
     "unconsumed_latched": {"retain_if_transition_fired"},
+    # v1.1 (D-05): a ground command ignored in the start state is reported
+    # as discarded when an external transition fired in the same cycle,
+    # because the vehicle then ends the cycle in another mode than the one
+    # commanded. It stays silent only when the vehicle is (and remains) in
+    # the commanded mode.
+    "ignored_ground_command": {"report_if_state_changed"},
 }
 
 
@@ -481,6 +487,11 @@ def emit(m, prefix, gen_hash):
     c("static const uint32_t LATCHED = " +
       mask([e for e in events if ev[e]["class"] == "latched"]) + ";")
     c.end("semantics:unconsumed_one_shot", "ONE_SHOT, LATCHED")
+    c.begin("semantics:ignored_ground_command")
+    c("/* Ground commands (semantics: ignored_ground_command). */")
+    c("static const uint32_t GROUND = " +
+      mask([e for e in events if ev[e]["source"] == "ground"]) + ";")
+    c.end("semantics:ignored_ground_command", "GROUND")
     c("\n/* Events explicitly ignored, per state (completeness). */")
     c(f"static const uint32_t IGNORED[{P}_STATE_COUNT] = {{")
     for s in states:
@@ -647,8 +658,14 @@ def emit(m, prefix, gen_hash):
     c.begin("semantics:consumption")
     c(f"""    /* One shot events are consumed every cycle. Those neither taken
      * nor ignored in the start state were lost to a higher priority
-     * transition: reported. */
+     * transition: reported (semantics: unconsumed_one_shot). */
     lost = pending & ONE_SHOT & ~consumed & ~IGNORED[start];
+    /* semantics: ignored_ground_command = report_if_state_changed. A
+     * ground command for the start mode is already satisfied, unless an
+     * external transition left that mode in this cycle (D-05). */
+    if (r.kind == {P}_STEP_TRANSITION) {{
+        lost |= pending & GROUND & ~consumed;
+    }}
     consumed |= pending & ONE_SHOT;
     /* Latched events ignored in the start state are dropped only if
      * nothing fired; otherwise they are re-evaluated in the new state. */

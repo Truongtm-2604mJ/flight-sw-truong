@@ -1,7 +1,7 @@
 {
   "model": "mode_machine.yaml",
-  "model_sha256": "f82e7dfde38f18f475df59611e585b20e3c4466247d1732833060af4f2dd56bb",
-  "generator_sha256": "4e01934c54195d8ecf8660e6aafeb2bd7c644bfadfa0e7237c5db0c2597c9594",
+  "model_sha256": "46d8922ca14ac2917bc4bf7ba7d5c85a3dc0ad984d941a39f8f728d665cebf66",
+  "generator_sha256": "358817262c6f4d3c3635a50f045af71b94bbf802d79d4401d16e733e0dddbb3f",
   "header": {
     "state:NOMINAL": [
       {
@@ -95,12 +95,21 @@
         ]
       }
     ],
+    "semantics:ignored_ground_command": [
+      {
+        "symbol": "GROUND",
+        "lines": [
+          21,
+          22
+        ]
+      }
+    ],
     "ignore:NOMINAL": [
       {
         "symbol": "IGNORED[MODE_SM_NOMINAL]",
         "lines": [
-          24,
-          24
+          26,
+          26
         ]
       }
     ],
@@ -108,8 +117,8 @@
       {
         "symbol": "IGNORED[MODE_SM_DEGRADED]",
         "lines": [
-          25,
-          25
+          27,
+          27
         ]
       }
     ],
@@ -117,8 +126,8 @@
       {
         "symbol": "IGNORED[MODE_SM_SAFE]",
         "lines": [
-          26,
-          26
+          28,
+          28
         ]
       }
     ],
@@ -126,8 +135,8 @@
       {
         "symbol": "enter_NOMINAL()",
         "lines": [
-          29,
-          36
+          31,
+          38
         ]
       }
     ],
@@ -135,8 +144,8 @@
       {
         "symbol": "enter_DEGRADED()",
         "lines": [
-          37,
-          45
+          39,
+          47
         ]
       }
     ],
@@ -144,8 +153,8 @@
       {
         "symbol": "enter_SAFE()",
         "lines": [
-          46,
-          57
+          48,
+          59
         ]
       }
     ],
@@ -153,8 +162,8 @@
       {
         "symbol": "exit_SAFE()",
         "lines": [
-          58,
-          63
+          60,
+          65
         ]
       }
     ],
@@ -162,8 +171,8 @@
       {
         "symbol": "fire_T01()",
         "lines": [
-          64,
-          76
+          66,
+          78
         ]
       }
     ],
@@ -171,8 +180,8 @@
       {
         "symbol": "fire_T02()",
         "lines": [
-          77,
-          89
+          79,
+          91
         ]
       }
     ],
@@ -180,8 +189,8 @@
       {
         "symbol": "fire_T03()",
         "lines": [
-          90,
-          102
+          92,
+          104
         ]
       }
     ],
@@ -189,8 +198,8 @@
       {
         "symbol": "fire_T04()",
         "lines": [
-          103,
-          115
+          105,
+          117
         ]
       }
     ],
@@ -198,8 +207,8 @@
       {
         "symbol": "fire_T05()",
         "lines": [
-          116,
-          127
+          118,
+          129
         ]
       }
     ],
@@ -207,8 +216,8 @@
       {
         "symbol": "fire_T06()",
         "lines": [
-          128,
-          139
+          130,
+          141
         ]
       }
     ],
@@ -216,8 +225,8 @@
       {
         "symbol": "fire_T07()",
         "lines": [
-          140,
-          152
+          142,
+          154
         ]
       }
     ],
@@ -225,8 +234,8 @@
       {
         "symbol": "fire_T08()",
         "lines": [
-          153,
-          165
+          155,
+          167
         ]
       }
     ],
@@ -234,8 +243,8 @@
       {
         "symbol": "fire_T09()",
         "lines": [
-          166,
-          178
+          168,
+          180
         ]
       }
     ],
@@ -243,8 +252,8 @@
       {
         "symbol": "fire_T10()",
         "lines": [
-          179,
-          190
+          181,
+          192
         ]
       }
     ],
@@ -252,8 +261,8 @@
       {
         "symbol": "fire_T11()",
         "lines": [
-          191,
-          204
+          193,
+          206
         ]
       }
     ],
@@ -261,21 +270,12 @@
       {
         "symbol": "fire_T12()",
         "lines": [
-          205,
-          218
+          207,
+          220
         ]
       }
     ],
     "select:T01": [
-      {
-        "symbol": "select_NOMINAL()",
-        "lines": [
-          223,
-          224
-        ]
-      }
-    ],
-    "select:T02": [
       {
         "symbol": "select_NOMINAL()",
         "lines": [
@@ -284,7 +284,7 @@
         ]
       }
     ],
-    "select:T03": [
+    "select:T02": [
       {
         "symbol": "select_NOMINAL()",
         "lines": [
@@ -293,7 +293,7 @@
         ]
       }
     ],
-    "select:T04": [
+    "select:T03": [
       {
         "symbol": "select_NOMINAL()",
         "lines": [
@@ -302,7 +302,7 @@
         ]
       }
     ],
-    "select:T05": [
+    "select:T04": [
       {
         "symbol": "select_NOMINAL()",
         "lines": [
@@ -311,7 +311,7 @@
         ]
       }
     ],
-    "select:T06": [
+    "select:T05": [
       {
         "symbol": "select_NOMINAL()",
         "lines": [
@@ -320,25 +320,25 @@
         ]
       }
     ],
+    "select:T06": [
+      {
+        "symbol": "select_NOMINAL()",
+        "lines": [
+          235,
+          236
+        ]
+      }
+    ],
     "select:NOMINAL": [
       {
         "symbol": "select_NOMINAL()",
         "lines": [
-          219,
-          239
+          221,
+          241
         ]
       }
     ],
     "select:T07": [
-      {
-        "symbol": "select_DEGRADED()",
-        "lines": [
-          244,
-          245
-        ]
-      }
-    ],
-    "select:T08": [
       {
         "symbol": "select_DEGRADED()",
         "lines": [
@@ -347,7 +347,7 @@
         ]
       }
     ],
-    "select:T09": [
+    "select:T08": [
       {
         "symbol": "select_DEGRADED()",
         "lines": [
@@ -356,7 +356,7 @@
         ]
       }
     ],
-    "select:T10": [
+    "select:T09": [
       {
         "symbol": "select_DEGRADED()",
         "lines": [
@@ -365,25 +365,25 @@
         ]
       }
     ],
+    "select:T10": [
+      {
+        "symbol": "select_DEGRADED()",
+        "lines": [
+          252,
+          253
+        ]
+      }
+    ],
     "select:DEGRADED": [
       {
         "symbol": "select_DEGRADED()",
         "lines": [
-          240,
-          256
+          242,
+          258
         ]
       }
     ],
     "select:T11": [
-      {
-        "symbol": "select_SAFE()",
-        "lines": [
-          262,
-          263
-        ]
-      }
-    ],
-    "select:T12": [
       {
         "symbol": "select_SAFE()",
         "lines": [
@@ -392,12 +392,21 @@
         ]
       }
     ],
+    "select:T12": [
+      {
+        "symbol": "select_SAFE()",
+        "lines": [
+          266,
+          267
+        ]
+      }
+    ],
     "select:SAFE": [
       {
         "symbol": "select_SAFE()",
         "lines": [
-          257,
-          270
+          259,
+          272
         ]
       }
     ],
@@ -405,8 +414,8 @@
       {
         "symbol": "mode_sm_init()",
         "lines": [
-          281,
-          291
+          283,
+          293
         ]
       }
     ],
@@ -414,8 +423,8 @@
       {
         "symbol": "mode_sm_step() default",
         "lines": [
-          335,
-          344
+          337,
+          346
         ]
       }
     ],
@@ -423,8 +432,8 @@
       {
         "symbol": "mode_sm_step() consumption",
         "lines": [
-          349,
-          367
+          351,
+          375
         ]
       }
     ],
@@ -432,8 +441,8 @@
       {
         "symbol": "mode_sm_step()",
         "lines": [
-          309,
-          367
+          311,
+          375
         ]
       }
     ]

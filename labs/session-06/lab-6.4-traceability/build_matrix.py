@@ -8,6 +8,8 @@ Inputs (all produced by the other labs, nothing typed by hand here):
   ../lab-6.3-equivalence/results/req-tests.txt      requirement test results
   ../lab-6.3-equivalence/results/b2b-summary.txt    back-to-back results
   ../lab-6.2-generation/tests/results.txt           generator check results
+  ../lab-6.2-generation/logs/latency-*.txt           MM-150 system measurement
+                                                    (host simulation, SIS)
 
 Output: traceability.md. A requirement with no model element, no
 generated artefact or no passing test is shown as a GAP and makes the
@@ -29,11 +31,16 @@ def main():
     reqs = yaml.safe_load(open(os.path.join(HERE, "requirements.yaml")))["requirements"]
     trace = json.load(open(P("lab-6.2-generation", "generated", "mode_sm_trace.json")))
     tests = {}
-    for line in open(P("lab-6.3-equivalence", "results", "req-tests.txt")):
-        m = re.match(r"^(TC-\S+)\s+(\S+)\s+(PASS|FAIL)\s*$", line)
-        if m:
-            for r in m.group(2).split(","):
-                tests.setdefault(r, []).append((m.group(1), m.group(3)))
+    result_files = [P("lab-6.3-equivalence", "results", "req-tests.txt")]
+    logs = P("lab-6.2-generation", "logs")
+    result_files += sorted(os.path.join(logs, f) for f in os.listdir(logs)
+                           if re.match(r"latency-.*\.txt$", f))
+    for path in result_files:
+        for line in open(path):
+            m = re.match(r"^(TC-\S+)\s+(\S+)\s+(PASS|FAIL)\s*$", line)
+            if m:
+                for r in m.group(2).split(","):
+                    tests.setdefault(r, []).append((m.group(1), m.group(3)))
     b2b = open(P("lab-6.3-equivalence", "results", "b2b-summary.txt")).read()
     # Exact equivalence holds if no single-event cycle diverged, in any suite.
     b2b_ok = "cycles compared" in b2b and "single-event mismatch" not in b2b

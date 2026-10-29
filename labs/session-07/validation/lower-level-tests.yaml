@@ -1,0 +1,92 @@
+# Lab 7.4 - Which unit, integration and Session 6 requirement tests also
+# verify each requirement (the validation tests list their requirements
+# themselves, in tests/validation/run_campaign.py). Read by build_matrix.py,
+# which takes every verdict from the test outputs.
+#   unit:        Unity test function names (tests/unit/*.c)
+#   integration: IT ids (tests/integration/int_tc_path.c)
+#   s6:          Session 6 requirement tests (labs/session-06/lab-6.3-equivalence/req_tests.c,
+#                lab-6.2-generation/latency.py)
+TMTC-010:
+  unit: [test_valid_ping_gives_accept_report_complete_in_order, test_ack_flags_select_success_reports]
+  integration: [IT-01, IT-06, IT-09, IT-12]
+TMTC-020:
+  unit: [test_corrupted_checksum_is_rejected_and_not_executed, test_unimplemented_service_has_its_own_failure_code,
+         test_validation_sequence_failure_codes, test_s7_tc_validate_rejects_null_arguments]
+  integration: [IT-02, IT-03, IT-04, IT-05, IT-12]
+TMTC-030:
+  unit: [test_validation_sequence_failure_codes]
+TMTC-040: {}
+TMTC-050:
+  unit: [test_tm_sequence_count_wraps_at_14_bits, test_sequence_count_increments_across_exchange]
+  integration: [IT-01, IT-11]
+TMTC-060: {}
+TMTC-070: {}
+FDIR-010:
+  unit: [test_single_out_of_limit_sample_raises_nothing, test_counter_resets_on_any_in_limit_sample]
+FDIR-020:
+  unit: [test_three_consecutive_samples_raise_exactly_one_event, test_twenty_further_samples_raise_no_more_events,
+         test_mcdc_MC1_case1_A1_B1_in_band_counts, test_mcdc_MC2_case1_A1_B1_flip_counts_abandoned_run]
+FDIR-030: {}
+FDIR-040:
+  unit: [test_single_missed_heartbeat_restarts_only_that_task, test_mcdc_MC3_case3_A1_B0_not_inhibited_restarts]
+FDIR-050:
+  unit: [test_repeated_failure_escalates_after_three_restarts, test_restarts_outside_the_window_do_not_count,
+         test_window_is_wrap_safe]
+FDIR-060:
+  unit: [test_watchdog_warns_then_resets, test_watchdog_late_kick_cannot_cancel_reset, test_nv_boot_sequence]
+FDIR-070:
+  unit: [test_healthy_tasks_raise_nothing, test_watchdog_kicked_never_fires]
+FDIR-080: {}
+FDIR-090:
+  unit: [test_disabled_monitor_produces_no_events]
+MM-010:
+  unit: [test_autonomous_events_never_leave_safe, test_T11_T12_safe_left_by_ground_with_exit_action]
+  s6: [TC-SAFE-EXIT-01, TC-SAFE-EXIT-02, TC-SAFE-EXIT-03]
+MM-020:
+  integration: [IT-06]
+  s6: [TC-SAFE-ENTRY-02]
+MM-030:
+  unit: [test_T01_nominal_to_safe_on_ground, test_boot_safe_after_watchdog_reset]
+  s6: [TC-SAFE-ENTRY-01]
+MM-040:
+  unit: [test_T02_nominal_to_safe_on_critical_fault, test_T04_nominal_to_degraded_on_noncritical_fault,
+         test_T07_T08_degraded_to_safe]
+  s6: [TC-FAULT-01]
+MM-050:
+  unit: [test_autonomous_events_never_leave_safe]
+  s6: [TC-NOREC-01]
+MM-060:
+  unit: [test_T05_T06_inhibited_faults_in_nominal_are_refused_and_reported,
+         test_T10_inhibited_critical_fault_in_degraded_is_refused]
+  integration: [IT-08, IT-13]
+  s6: [TC-INH-01]
+MM-070:
+  unit: [test_T01_nominal_to_safe_on_ground, test_T03_nominal_to_degraded_on_ground]
+  integration: [IT-06, IT-08]
+  s6: [TC-GND-01]
+MM-080:
+  integration: [IT-06]
+  s6: [TC-REP-01]
+MM-090:
+  unit: [test_boot_nominal_runs_entry_actions_without_report, test_boot_safe_after_watchdog_reset,
+         test_boot_in_degraded_is_refused_and_enters_safe]
+  s6: [TC-BOOT-01]
+MM-100:
+  s6: [TC-GEN-01]
+MM-110:
+  integration: [IT-07]
+  s6: [TC-DET-01]
+MM-120:
+  unit: [test_post_rejects_event_outside_the_model, test_invalid_state_recovers_to_safe_keeping_latched_events]
+  integration: [IT-05]
+  s6: [TC-FAIL-01, TC-FAIL-02]
+MM-130:
+  unit: [test_D04_fault_latched_across_ground_deescalation]
+  integration: [IT-10]
+  s6: [TC-LATCH-01]
+MM-140:
+  unit: [test_D05_ignored_ground_command_is_reported_when_mode_changes, test_ground_command_losing_to_priority_is_reported]
+  integration: [IT-07]
+  s6: [TC-GND-02]
+MM-150:
+  s6: [TC-LAT-01, TC-LAT-SYS-host-sim]

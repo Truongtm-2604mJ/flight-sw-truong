@@ -1,6 +1,6 @@
 # Lab 6.4 - Traceability
 
-- `requirements.yaml`: 13 mode management requirements, MM-010 to MM-130, each with its source.
+- `requirements.yaml`: 15 mode management requirements, MM-010 to MM-150, each with its source.
 - `build_matrix.py`: builds `traceability.md` from the evidence files. Nothing in the matrix is typed by hand:
   - model elements come from the `req:` tags in `mode_machine.yaml`;
   - generated artefacts and line numbers come from the generator's `mode_sm_trace.json`;

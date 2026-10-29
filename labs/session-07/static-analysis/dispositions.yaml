@@ -1,0 +1,220 @@
+# Static analysis dispositions (Lab 7.2). Read by tests/support/static_analysis.py.
+#
+# Every finding of every tool must match exactly one rule below, or it is NEW
+# and the CI job fails. A rule matches on tool, and optionally a regex on the
+# check id, the file path and the message.
+#
+#   fixed      the code was changed; the finding must no longer appear (if it
+#              reappears it is reported as a regression)
+#   justified  the finding is correct about the code, and the code is right:
+#              the argument says why
+#   accepted   a real deviation, kept on purpose; the risk is stated, and
+#              where there is one, the plan
+#
+# Ordered: the first matching rule wins.
+
+dispositions:
+
+  # ---- Fixed --------------------------------------------------------------------
+  - id: SA-01
+    tool: gcc
+    check: -Wbad-function-cast
+    disposition: fixed
+    argument: fdir6.c cast the enum returned by cur_mode() straight to uint8_t in hk_full and hk_essential. The value is now held in a vmode_t first.
+  - id: SA-01b
+    tool: clang
+    check: -Wbad-function-cast
+    disposition: fixed
+    argument: Same finding as SA-01, reported by clang.
+  - id: SA-03
+    tool: cppcheck
+    check: variableScope
+    file: tc_handler\.c
+    disposition: fixed
+    argument: Loop index in tc_handle() moved into the block that uses it.
+  - id: SA-04
+    tool: cppcheck
+    check: misra-c2012-15\.7
+    disposition: fixed
+    argument: Four if / else if chains without a final else (tc_handler.c, tmtc5.c, fdir6.c x2). A final else with a comment saying why nothing is done was added to each (MISRA C:2012 rule 15.7, required).
+  - id: SA-05
+    tool: cppcheck
+    check: funcArgNamesDifferent
+    file: fdir6\.c
+    disposition: fixed
+    argument: The mode machine hooks in fdir6.c used parameter names (u, c, raw) different from the generated declarations (user, cause, raw_state). Renamed to match.
+
+  # ---- Justified: the tool is right about the code, and the code is right -----
+  - id: SA-10
+    tool: gcc
+    check: -Wunused-macros
+    file: lab5\.c
+    disposition: justified
+    argument: The CONFIGURE_* macros are the RTEMS application configuration, consumed by <rtems/confdefs.h>. The host simulation's confdefs.h is empty, so on the host they look unused; in the RTEMS build they are used. The tests/Makefile warning set therefore leaves -Wunused-macros out of the host build.
+  - id: SA-10b
+    tool: clang
+    check: -Wunused-macros
+    file: lab5\.c
+    disposition: justified
+    argument: As SA-10.
+  - id: SA-11
+    tool: cppcheck
+    check: misra-c2012-2\.5
+    file: lab5\.c
+    disposition: justified
+    argument: As SA-10 (MISRA 2.5, unused macro, advisory).
+  - id: SA-12
+    tool: clang
+    check: -Wunsafe-buffer-usage
+    disposition: justified
+    argument: >-
+      clang's C++ hardening check, which flags every array subscript and pointer
+      arithmetic and asks for std::span. C99 has no such construct. Each access
+      it lists is bounded by an explicit length check before it (the packet
+      layer checks lengths before parsing, Session 4 design note Section 3), and
+      the unit suites exercise the boundaries (test_sp, test_pus: oversize,
+      truncated and length-mismatch packets).
+  - id: SA-13
+    tool: analyzer
+    check: security\.insecureAPI\.DeprecatedOrUnsafeBufferHandling
+    disposition: justified
+    argument: >-
+      The analyser suggests memcpy_s / memset_s from C11 Annex K. Annex K is
+      optional, and not provided by newlib, which RTEMS uses. Every memcpy and
+      memset here has a length derived from a checked size (sizeof of the
+      destination, or a length checked against the destination's capacity just
+      before).
+  - id: SA-14
+    tool: clang
+    check: -Wpadded
+    disposition: justified
+    argument: Padding inside RAM-only structures (fdir6.c inhibit state, finj_param_t). None of them is a wire or NV format; those are built and parsed octet by octet with pus_put_u16/u32 and nv_encode, so their layout does not depend on padding.
+  - id: SA-15
+    tool: clang
+    check: -Wcovered-switch-default
+    file: watchdog\.c
+    disposition: justified
+    argument: The default branch of the watchdog state switch is defensive. A corrupted state value (memory upset) falls to a safe action. MISRA C:2012 rule 16.4 requires a default label in every switch, which is the opposite of what clang suggests.
+  - id: SA-16
+    tool: clang
+    check: -Wmissing-noreturn
+    disposition: justified
+    argument: >-
+      These are RTEMS task bodies (rtems_task entry points) and the test-build
+      hang hook finj_block_forever. They loop forever by design. The rtems_task
+      type is fixed by the RTEMS API, and adding a GNU noreturn attribute would
+      not change code generation for an infinite loop, so the declaration is
+      left portable.
+  - id: SA-17
+    tool: cppcheck
+    check: unusedFunction
+    file: lab5\.c
+    msg: "'Init'"
+    disposition: justified
+    argument: Init is the RTEMS initialisation task, called by RTEMS through CONFIGURE_RTEMS_INIT_TASKS_TABLE (and by the host simulation's main). cppcheck does not see that call.
+  - id: SA-18
+    tool: cppcheck
+    check: unusedFunction
+    msg: "'(fdir_mode|pus_tc_build)'"
+    disposition: justified
+    argument: Interface functions used by the test levels but not by the flight code. fdir_mode() is the FDIR read accessor that the integration suite checks. pus_tc_build() builds telecommands for the unit and integration suites; the ground builds its own. Both are a few lines, reviewed, and covered by the tests that use them.
+  - id: SA-19
+    tool: cppcheck
+    check: unusedFunction
+    file: mode_sm\.c
+    disposition: justified
+    argument: mode_sm_event_name/mode_sm_state_name are compiled only with MODE_SM_WITH_NAMES (test builds). cppcheck checks every preprocessor configuration, including the one where nothing calls them.
+  - id: SA-20
+    tool: cppcheck
+    check: funcArgNamesDifferent
+    file: mode_sm\.c
+    disposition: justified
+    argument: Generated code. mode_sm_step() is declared with parameter 'in' and defined with 'in_now' (the definition copies it into a local 'in' at the start of the step, which is the input sampling rule). The fix belongs in the generator, not the output (Session 6 rule); recorded in the generator backlog. The names do not affect behaviour.
+  - id: SA-21
+    tool: cppcheck
+    check: misra-config|misra-c2012-17\.3
+    file: tmtc5\.c
+    disposition: justified
+    argument: >-
+      Tool configuration, not code. cppcheck runs without the system headers
+      (missingIncludeSystem suppressed), so it does not see read() and
+      STDIN_FILENO from <unistd.h> and reports an implicit declaration (MISRA
+      17.3). The compilers build the same file with -Werror and
+      -Wimplicit-function-declaration enabled (part of -Wall) and report
+      nothing.
+  - id: SA-22
+    tool: cppcheck
+    check: misra-c2012-(20\.1|21\.6|21\.8)
+    file: fdir6\.c|lab5\.c
+    disposition: justified
+    argument: >-
+      <stdio.h> and <stdlib.h> are used for two things: the console boot banner
+      and error messages (printf on the console UART, which is also the TM/TC
+      link), and the host simulation's file standing in for non volatile
+      memory (fopen, getenv, an #include inside the host-only #ifndef
+      __rtems__ block). The RTEMS build keeps NV in RAM, so getenv and file I/O
+      are not compiled for the target.
+  - id: SA-23
+    tool: fanalyzer
+    check: -Wanalyzer-use-of-uninitialized-value
+    file: tmtc5\.c
+    disposition: justified
+    argument: >-
+      False positive. process_line() reads line[0..2] only after checking len >=
+      3, and len is the count of characters tc_rx_task has written into line
+      for this line, so those three are always initialised. The analyser does
+      not relate line_len to the initialised prefix of the buffer across loop
+      iterations.
+
+  # ---- Accepted deviations from MISRA C:2012 (advisory or project rules) --------
+  - id: SA-30
+    tool: cppcheck
+    check: misra-c2012-15\.5
+    disposition: accepted
+    argument: >-
+      Rule 15.5 (advisory, single point of exit). The validation functions
+      return at the first failed check, which is how "validate before you act"
+      is written (Session 4 design note Section 3), and early return keeps them
+      flat. Risk: resources released at a common exit could be skipped; none of
+      these functions allocates or locks before returning, which review
+      confirms.
+  - id: SA-31
+    tool: cppcheck
+    check: misra-c2012-12\.1
+    disposition: accepted
+    argument: Rule 12.1 (advisory, explicit precedence). It flags expressions such as a << 8 | b and x == 0 || y. GCC -Wparentheses (in -Wall, -Werror) already rejects the ambiguous mixes. Risk low; extra parentheses are added when a line is touched for another reason.
+  - id: SA-32
+    tool: cppcheck
+    check: misra-c2012-17\.7
+    disposition: accepted
+    argument: >-
+      Rule 17.7 (required, use the return value). Every instance is memcpy or
+      memset (whose return value is the destination pointer), printf/fflush/
+      fclose on the console or the host NV file, make_period, or
+      rtems_task_wake_after in the TC_RX retry loop. Where a return value
+      carries a status that matters, the code already checks it or casts it to
+      (void) with a reason. Risk: a future status-returning call could be
+      ignored silently; the rule stays on, so a new instance is NEW and fails
+      CI until dispositioned.
+  - id: SA-33
+    tool: cppcheck
+    check: misra-c2012-14\.4
+    disposition: accepted
+    argument: Rule 14.4 (required, essentially Boolean controlling expression). The code tests flag bits and uint8_t flags directly (if (flags & ACK), while (s->enabled)). This is a deliberate project deviation for bit flags. Risk low; -Wconversion and -Wsign-conversion are enforced.
+  - id: SA-34
+    tool: cppcheck
+    check: misra-c2012-10\.[1348]
+    disposition: accepted
+    argument: >-
+      Rules 10.1, 10.3, 10.4, 10.8 (essential type model). Twelve instances:
+      shifts and ors of hex digit values, Boolean results stored in int, and
+      composite expressions cast to a wider type. Each was reviewed: no
+      instance can overflow or change sign for the values the code can hold
+      (bounded by the checks before them). The project enforces the GCC
+      conversion warnings instead of the full MISRA essential type model; that
+      is a documented gap (verification report, limitations).
+  - id: SA-35
+    tool: cppcheck
+    check: misra-c2012-(8\.7|8\.9|12\.3|13\.3|17\.8|2\.3)
+    disposition: accepted
+    argument: Advisory style rules. 8.7 and 8.9 ask for objects and functions at the narrowest scope; 12.3 objects to several declarators in one declaration; 13.3 to ++ inside a larger expression; 17.8 to modifying a parameter; 2.3 to an unused type. Kept as written; no behaviour depends on them.
