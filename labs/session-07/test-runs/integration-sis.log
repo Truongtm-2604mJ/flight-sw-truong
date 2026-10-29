@@ -6,12 +6,21 @@
 
  Loaded build/integration/int_tc_path.exe, entry 0x40000000
 
-*** FATAL ***
-fatal source: 0 (INTERNAL_ERROR_CORE)
-fatal code: 38 (INTERNAL_ERROR_ILLEGAL_USE_OF_FLOATING_POINT_UNIT)
-RTEMS version: 6.0.0.cb1f47527d05d70056fc0da73d8295eb993ae949
-RTEMS tools: 13.3.0 20240521 (RTEMS 6, RSB 84b3f5660ebaa96e1e405ca12f67b538b48636d6-modified, Newlib 1b3dcfd)
-executing thread ID: 0x0a010001
-executing thread name: UI1 
-cpu 0 in error mode (tt = 0x80)
-   180856  40013f80:  91d02000   ta  0x0
+Integration suite: telecommand path (RTEMS)
+Mode manager: GENERATED from vehicle_mode v3 (model sha256 46d8922ca14ac291...)
+IT-01  TC(17,1): TM(1,1), TM(17,2), TM(1,7), CRC, sequence            PASS
+IT-02  corrupted CRC: TM(1,2) code 3, not executed, counted           PASS
+IT-03  unknown service: TM(1,2) code 7                                PASS
+IT-04  wrong APID: TM(1,2) code 5                                     PASS
+IT-05  TC(8,1) invalid mode: TM(1,2) code 9, no change                PASS
+IT-06  TC(8,1) SAFE: reports, mode event at next cycle                PASS
+IT-07  two conflicting TC(8,1): one applied, other reported           PASS
+IT-08  TC(19,9): autonomous refused + reported, ground not            PASS
+IT-09  TC(11,4): scheduled TC released through the same path          PASS
+IT-10  fault + ground NOMINAL in one cycle: fault kept (MM-130)       PASS
+IT-11  TC_RX and SCHED paths concurrently: serialised                 PASS
+IT-12  service acceptance checks: 13 malformed TCs, codes 8/9         PASS
+IT-13  missed heartbeat under inhibit: reported, no restart           PASS
+@@ INTEGRATION RESULT: PASS 13/13 @@
+
+[ RTEMS shutd

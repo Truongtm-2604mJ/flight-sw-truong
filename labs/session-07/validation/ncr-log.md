@@ -12,6 +12,7 @@ Severity (NCR): critical, loss of vehicle or mission possible; major, requiremen
 | NCR-02 | NCR | TMTC-030 | minor | **fixed** | VT-TMTC-030, campaign run 1 (host simulation) |
 | TA-01 | TA | MM-030 | - | **fixed** | VT-MM-030, campaign run 1 |
 | TA-02 | TA | TMTC-020, TMTC-010 | - | **fixed** | integration suite, first run (labs/session-07/test-runs/integration-host-sim-first-run.log) |
+| TA-03 | TA | (integration level, all IT cases) | - | **fixed** | first run of the integration image on SIS (make -C tests target) |
 | OBS-01 | OBS | (none; candidate FDIR-100) | - | **open** | VT-OBS-01 (exploratory), campaign runs 1, 2 and 3 |
 
 ## NCR-01: Nonconformance, TMTC-040
@@ -62,6 +63,18 @@ Severity (NCR): critical, loss of vehicle or mission possible; major, requiremen
 **Disposition.** Tests corrected to the documented behaviour. The product was not changed.
 
 **Retest.** Integration suite 11/11, and 20 consecutive runs passing.
+
+## TA-03: Test anomaly, (integration level, all IT cases)
+
+**Status:** fixed.
+
+**Description.** On RTEMS 6 / LEON3 under SIS, the integration image stopped at start with RTEMS fatal error 38 (INTERNAL_ERROR_ILLEGAL_USE_OF_FLOATING_POINT_UNIT) in its Init task. The same image passes on the host simulation.
+
+**Cause.** Test harness configuration. The application runs the TC path in tasks with the RTEMS_FLOATING_POINT attribute (Init in lab5.c, TC_RX and TM_TX in tmtc5.c); the integration program gave its Init task and its two dispatching tasks the default attributes. The host simulation of the RTEMS API ignores task attributes, so only the target could show this: an example of the defect class the host level cannot catch (verification report, Section 1).
+
+**Disposition.** int_tc_path.c now configures its tasks like the application. The flight code was not changed. The SIS runner also needed a pseudo-terminal, like the ground scripts (run_image.py --pty).
+
+**Retest.** Integration image on SIS (make -C tests target).
 
 ## OBS-01: Validation observation, (none; candidate FDIR-100)
 

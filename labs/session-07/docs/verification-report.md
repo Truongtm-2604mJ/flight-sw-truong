@@ -156,6 +156,7 @@ Final traceability (`validation/traceability-matrix.md`, generated from the test
 | NCR-02 | NCR | TMTC-030 | minor | **fixed** | An over-long received line was dropped without being counted. Fixed in `tmtc5.c`; retest PASS. |
 | TA-01 | test anomaly | MM-030 | – | fixed | Test compared telemetry across boots; corrected, product unchanged. |
 | TA-02 | test anomaly | TMTC-010/020 | – | fixed | Integration expectations contradicted the documented design (destination 0 for packet-level rejections); corrected. |
+| TA-03 | test anomaly | integration | – | fixed | First SIS run of the integration image: RTEMS fatal 38, FPU used by a task without `RTEMS_FLOATING_POINT`. The harness, unlike the application, created its tasks without the attribute; the host simulation ignores attributes, so only the target showed it. Harness fixed; flight code unchanged. |
 | OBS-01 | validation observation | none | – | open | After an alarm, the ground can return to NOMINAL while the alarm is still active, and nothing reminds it. No requirement is violated; candidate requirement FDIR-100 is raised for operations to decide. |
 
 NCR-02 and OBS-01 illustrate the two halves of V&V:

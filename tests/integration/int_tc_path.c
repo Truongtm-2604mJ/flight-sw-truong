@@ -48,9 +48,14 @@
 #define CONFIGURE_MAXIMUM_MESSAGE_QUEUES   1
 #define CONFIGURE_MESSAGE_BUFFER_MEMORY \
     CONFIGURE_MESSAGE_BUFFERS_FOR_QUEUE(TM_QUEUE_DEPTH, PUS_MAX_PACKET)
-#define CONFIGURE_EXTRA_TASK_STACKS        (2u * 8u * 1024u)
+#define CONFIGURE_EXTRA_TASK_STACKS        (3u * 8u * 1024u)
 #define CONFIGURE_MICROSECONDS_PER_TICK    10000
 #define CONFIGURE_INIT_TASK_STACK_SIZE     (16 * 1024)
+/* The TC path runs with the FPU enabled in the application (Init and the
+ * TM/TC tasks are RTEMS_FLOATING_POINT, lab5.c and tmtc5.c). Without it, the
+ * first SIS run stopped with fatal 38, illegal use of the FPU (TA-03); the
+ * host simulation ignores task attributes, so only the target showed it. */
+#define CONFIGURE_INIT_TASK_ATTRIBUTES     RTEMS_FLOATING_POINT
 #define CONFIGURE_RTEMS_INIT_TASKS_TABLE
 #define CONFIGURE_INIT
 #include <rtems/confdefs.h>
@@ -405,10 +410,10 @@ static void it11_concurrent_dispatch(void)
     uint32_t acc = tmtc_tc_ctx()->accepted;
     int order_ok = 1;
     EXPECT(rtems_task_create(rtems_build_name('C', 'R', 'X', ' '), 10, 8u * 1024u,
-                             RTEMS_DEFAULT_MODES, RTEMS_DEFAULT_ATTRIBUTES, &t1)
+                             RTEMS_DEFAULT_MODES, RTEMS_FLOATING_POINT, &t1)
            == RTEMS_SUCCESSFUL);
     EXPECT(rtems_task_create(rtems_build_name('C', 'S', 'C', 'H'), 10, 8u * 1024u,
-                             RTEMS_DEFAULT_MODES, RTEMS_DEFAULT_ATTRIBUTES, &t2)
+                             RTEMS_DEFAULT_MODES, RTEMS_FLOATING_POINT, &t2)
            == RTEMS_SUCCESSFUL);
     (void)rtems_task_start(t1, conc_rx, 0);
     (void)rtems_task_start(t2, conc_sched, 0);
