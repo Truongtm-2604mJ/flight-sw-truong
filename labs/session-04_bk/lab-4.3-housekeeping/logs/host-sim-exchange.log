@@ -1,0 +1,188 @@
+[   0.000] # transport: child process: ./lab4-3.host
+[   0.004] # 1. Housekeeping is generated periodically from boot
+[   0.004] console  *** HOST SIMULATION (POSIX shim, not RTEMS) ***
+[   0.004] console  ============================================
+[   0.004] console  Lab 4.3 - Housekeeping and event reporting
+[   0.004] console  ============================================
+[   0.004] console  Tick = 10 ms
+[   0.004] console  ACS_CTRL: T=100 ms,  P=10
+[   0.004] console  TM_HK:    T=500 ms,  P=20  TM(3,25) on APID 0x020
+[   0.004] console  PL_LOG:   T=1000 ms, P=30
+[   0.004] console  TC_RX:    aperiodic, P=40  TC on APID 0x010
+[   0.004] console  TM_TX:    aperiodic, P=50
+[   0.004] console  T_BAT limit 45.00 C, hysteresis 2.00 C, events on APID 0x021
+[   0.004] TM <- 0820C000002220031900000000000000000023016CEA10FE09C4010000000000000000000000003812
+[   0.004]         APID 0x020 seq     0 t=    0.001s TM(3,25)  HK SID 1: Vbus 27882 mV, Tbat 43.50 C, Tobc 25.00 C, mode 0x01, TC acc/rej 0/0, TM drop 0, up 0 s, exec 0 us
+[   0.503] TM <- 0820C00100222003190000000000000000802F016DF210C809CE0100000000000000000000000176A9
+[   0.503]         APID 0x020 seq     1 t=    0.501s TM(3,25)  HK SID 1: Vbus 28146 mV, Tbat 42.96 C, Tobc 25.10 C, mode 0x01, TC acc/rej 0/0, TM drop 0, up 0 s, exec 1 us
+[   1.003] TM <- 0820C002002220031900000000000000010036016D1E110209D80100000000000000000001001902E0
+[   1.004]         APID 0x020 seq     2 t=    1.001s TM(3,25)  HK SID 1: Vbus 27934 mV, Tbat 43.54 C, Tobc 25.20 C, mode 0x01, TC acc/rej 0/0, TM drop 0, up 1 s, exec 25 us
+[   1.503] TM <- 0820C003002220031900000000000000018035016DC2115D09E2010000000000000000000100231708
+[   1.503]         APID 0x020 seq     3 t=    1.501s TM(3,25)  HK SID 1: Vbus 28098 mV, Tbat 44.45 C, Tobc 25.30 C, mode 0x01, TC acc/rej 0/0, TM drop 0, up 1 s, exec 35 us
+[   2.003] TM <- 0820C004002220031900000000000000020034016D15115F09EC01000000000000000000020023EE2E
+[   2.003]         APID 0x020 seq     4 t=    2.001s TM(3,25)  HK SID 1: Vbus 27925 mV, Tbat 44.47 C, Tobc 25.40 C, mode 0x01, TC acc/rej 0/0, TM drop 0, up 2 s, exec 35 us
+[   2.503] TM <- 0820C005002220031900000000000000028032016CDA117409F60100000000000000000002004AFBA4
+[   2.503]         APID 0x020 seq     5 t=    2.501s TM(3,25)  HK SID 1: Vbus 27866 mV, Tbat 44.68 C, Tobc 25.50 C, mode 0x01, TC acc/rej 0/0, TM drop 0, up 2 s, exec 74 us
+[   2.503]   PASS  received 6 of 6 TM(3,25) reports
+[   2.504]   PASS  onboard timestamps are 0.500 s apart (+/- 0.05): 0.500, 0.500, 0.500, 0.500, 0.500
+[   2.504]   PASS  reports are SID 1 on APID 0x020
+[   2.504]   PASS  UPTIME parameter equals the packet time (stamped at acquisition)
+[   2.504] # 2. TC(3,6) disables periodic generation
+[   2.504] TC -> 1810C0000008290306000101018368  TC(3,6) disable periodic HK, SID 1
+[   2.504] TM <- 0810C00000122001010000000100000002807D1810C000EDF2
+[   2.504]         APID 0x010 seq     0 t=    2.502s TM(1,1)  acceptance OK for request 1810C000
+[   2.505] TM <- 0810C00100122001070000000100000002807D1810C0000E2A
+[   2.505]         APID 0x010 seq     1 t=    2.502s TM(1,7)  completion OK for request 1810C000
+[   2.505]   PASS  TC(3,6) accepted and completed
+[   3.003] TM <- 0821C00000152005020000000000000003002C01010211C1119423F4
+[   3.004]         APID 0x021 seq     0 t=    3.001s TM(5,2)  EVENT [low severity anomaly] TEMP_BAT_HIGH: param 2 = 45.45 C, limit 45.00 C
+[   3.505] TC -> 1810C0010006291101000177B9  TC(17,1) ping, to read the onboard time
+[   3.506] TM <- 0810C0020012200101000000010000000380D01810C00125CA
+[   3.506]         APID 0x010 seq     2 t=    3.503s TM(1,1)  acceptance OK for request 1810C001
+[   3.506] TM <- 0810C003000E201102000000010000000380D1C9E6
+[   3.506]         APID 0x010 seq     3 t=    3.503s TM(17,2)  connection test report (alive)
+[   3.506] TM <- 0810C0040012200107000000010000000380D11810C001E45A
+[   3.506]         APID 0x010 seq     4 t=    3.503s TM(1,7)  completion OK for request 1810C001
+[   4.506] TC -> 1810C00200062911010001BFCC  TC(17,1) ping, to read the onboard time
+[   4.507] TM <- 0810C0050012200101000000010000000481081810C002F49B
+[   4.507]         APID 0x010 seq     5 t=    4.504s TM(1,1)  acceptance OK for request 1810C002
+[   4.507] TM <- 0810C006000E2011020000000100000004810A2DA7
+[   4.507]         APID 0x010 seq     6 t=    4.504s TM(17,2)  connection test report (alive)
+[   4.507] TM <- 0810C00700122001070000000100000004810A1810C0020D15
+[   4.507]         APID 0x010 seq     7 t=    4.504s TM(1,7)  completion OK for request 1810C002
+[   4.507]   PASS  no housekeeping sampled during 2.0 s of onboard time after the command (0 found)
+[   4.507] # 2. TC(3,5) enables it again
+[   4.507] TC -> 1810C003000829030500010101DC75  TC(3,5) enable periodic HK, SID 1
+[   4.507] TM <- 0810C00800122001010000000100000004812F1810C003D51C
+[   4.507]         APID 0x010 seq     8 t=    4.505s TM(1,1)  acceptance OK for request 1810C003
+[   4.507] TM <- 0810C00900122001070000000100000004812F1810C00336C4
+[   4.507]         APID 0x010 seq     9 t=    4.505s TM(1,7)  completion OK for request 1810C003
+[   4.507]   PASS  TC(3,5) accepted and completed
+[   5.005] TM <- 0820C006002220031900000000000000050030016D8411F60A280300000004000000000005000007EB
+[   5.005]         APID 0x020 seq     6 t=    5.001s TM(3,25)  HK SID 1: Vbus 28036 mV, Tbat 45.98 C, Tobc 26.00 C, mode 0x03, TC acc/rej 4/0, TM drop 0, up 5 s, exec 0 us
+[   5.503] TM <- 0820C007002220031900000000000000058030016D9E12200A320300000004000000000005001788AA
+[   5.504]         APID 0x020 seq     7 t=    5.501s TM(3,25)  HK SID 1: Vbus 28062 mV, Tbat 46.40 C, Tobc 26.10 C, mode 0x03, TC acc/rej 4/0, TM drop 0, up 5 s, exec 23 us
+[   6.003] TM <- 0820C00800222003190000000000000006002E016CF612150A3C0300000004000000000006001641A4
+[   6.004]         APID 0x020 seq     8 t=    6.001s TM(3,25)  HK SID 1: Vbus 27894 mV, Tbat 46.29 C, Tobc 26.20 C, mode 0x03, TC acc/rej 4/0, TM drop 0, up 6 s, exec 22 us
+[   6.004]   PASS  housekeeping resumed: 3 more reports received
+[   6.004]   PASS  and they are 0.500 s apart again
+[   6.004] # 2. A malformed TC(3,6) is rejected and changes nothing
+[   6.004] TC -> 1810C004000829030600010109AF55  TC(3,6) unknown SID 9
+[   6.004] TM <- 0810C00A0013200102000000010000000600651810C0040972D5
+[   6.004]         APID 0x010 seq    10 t=    6.002s TM(1,2)  acceptance FAILED for request 1810C004, failure code 9 (APP_DATA)
+[   6.004]   PASS  TM(1,2) with code 9 APP_DATA: got code 9
+[   6.504] TM <- 0820C009002220031900000000000000068034016D1F11CC0A46030001000400000000000600197544
+[   6.504]         APID 0x020 seq     9 t=    6.501s TM(3,25)  HK SID 1: Vbus 27935 mV, Tbat 45.56 C, Tobc 26.30 C, mode 0x03, TC acc/rej 4/1, TM drop 0, up 6 s, exec 25 us
+[   7.003] TM <- 0820C00A00222003190000000000000007002C016D2D12580A500300010004000000000007001E7709
+[   7.003]         APID 0x020 seq    10 t=    7.001s TM(3,25)  HK SID 1: Vbus 27949 mV, Tbat 46.96 C, Tobc 26.40 C, mode 0x03, TC acc/rej 4/1, TM drop 0, up 7 s, exec 30 us
+[   7.003]   PASS  housekeeping is still running afterwards
+[   7.004]   PASS  HK counters agree with the ground: TC accepted 4 (ground saw 4), rejected 1 (ground sent 1 bad)
+[   7.004] # 3. Observing until onboard time 30 s for the temperature excursion
+[   7.503] TM <- 0820C00B00222003190000000000000007802C016D65125C0A5A0300010004000000000007001903B1
+[   7.504]         APID 0x020 seq    11 t=    7.501s TM(3,25)  HK SID 1: Vbus 28005 mV, Tbat 47.00 C, Tobc 26.50 C, mode 0x03, TC acc/rej 4/1, TM drop 0, up 7 s, exec 25 us
+[   8.004] TM <- 0820C00C002220031900000000000000080039016D9912780A6403000100040000000000080016D20C
+[   8.004]         APID 0x020 seq    12 t=    8.001s TM(3,25)  HK SID 1: Vbus 28057 mV, Tbat 47.28 C, Tobc 26.60 C, mode 0x03, TC acc/rej 4/1, TM drop 0, up 8 s, exec 22 us
+[   8.504] TM <- 0820C00D002220031900000000000000088047016D39129C0A6E0300010004000000000008003E2244
+[   8.504]         APID 0x020 seq    13 t=    8.501s TM(3,25)  HK SID 1: Vbus 27961 mV, Tbat 47.64 C, Tobc 26.70 C, mode 0x03, TC acc/rej 4/1, TM drop 0, up 8 s, exec 62 us
+[   9.004] TM <- 0820C00E002220031900000000000000090031016CCB128B0A780300010004000000000009001E62C4
+[   9.004]         APID 0x020 seq    14 t=    9.001s TM(3,25)  HK SID 1: Vbus 27851 mV, Tbat 47.47 C, Tobc 26.80 C, mode 0x03, TC acc/rej 4/1, TM drop 0, up 9 s, exec 30 us
+[   9.503] TM <- 0820C00F00222003190000000000000009802F016CE4124E0A8203000100040000000000090011FFA8
+[   9.503]         APID 0x020 seq    15 t=    9.501s TM(3,25)  HK SID 1: Vbus 27876 mV, Tbat 46.86 C, Tobc 26.90 C, mode 0x03, TC acc/rej 4/1, TM drop 0, up 9 s, exec 17 us
+[  10.004] TM <- 0820C0100022200319000000000000000A0034016D2012A70A8C030001000400000000000A001AB4FF
+[  10.004]         APID 0x020 seq    16 t=   10.001s TM(3,25)  HK SID 1: Vbus 27936 mV, Tbat 47.75 C, Tobc 27.00 C, mode 0x03, TC acc/rej 4/1, TM drop 0, up 10 s, exec 26 us
+[  10.504] TM <- 0820C0110022200319000000000000000A8031016D7812800A96030001000400000000000A001A98BC
+[  10.504]         APID 0x020 seq    17 t=   10.501s TM(3,25)  HK SID 1: Vbus 28024 mV, Tbat 47.36 C, Tobc 27.10 C, mode 0x03, TC acc/rej 4/1, TM drop 0, up 10 s, exec 26 us
+[  11.003] TM <- 0820C0120022200319000000000000000B0034016CDF12F70AA0030001000400000000000B00187422
+[  11.003]         APID 0x020 seq    18 t=   11.001s TM(3,25)  HK SID 1: Vbus 27871 mV, Tbat 48.55 C, Tobc 27.20 C, mode 0x03, TC acc/rej 4/1, TM drop 0, up 11 s, exec 24 us
+[  11.503] TM <- 0820C0130022200319000000000000000B8031016DA8127E0AAA030001000400000000000B0016CA79
+[  11.503]         APID 0x020 seq    19 t=   11.501s TM(3,25)  HK SID 1: Vbus 28072 mV, Tbat 47.34 C, Tobc 27.30 C, mode 0x03, TC acc/rej 4/1, TM drop 0, up 11 s, exec 22 us
+[  12.003] TM <- 0820C0140022200319000000000000000C002D016D2D126A0AB4030001000400000000000C001314A4
+[  12.003]         APID 0x020 seq    20 t=   12.001s TM(3,25)  HK SID 1: Vbus 27949 mV, Tbat 47.14 C, Tobc 27.40 C, mode 0x03, TC acc/rej 4/1, TM drop 0, up 12 s, exec 19 us
+[  12.503] TM <- 0820C0150022200319000000000000000C8034016DB912490ABE030001000400000000000C0016152F
+[  12.504]         APID 0x020 seq    21 t=   12.501s TM(3,25)  HK SID 1: Vbus 28089 mV, Tbat 46.81 C, Tobc 27.50 C, mode 0x03, TC acc/rej 4/1, TM drop 0, up 12 s, exec 22 us
+[  13.004] TM <- 0820C0160022200319000000000000000D003A016DA612A00AC8030001000400000000000D007ACB21
+[  13.004]         APID 0x020 seq    22 t=   13.001s TM(3,25)  HK SID 1: Vbus 28070 mV, Tbat 47.68 C, Tobc 27.60 C, mode 0x03, TC acc/rej 4/1, TM drop 0, up 13 s, exec 122 us
+[  13.503] TM <- 0820C0170022200319000000000000000D8030016DCE12350AD2030001000400000000000D001A6714
+[  13.503]         APID 0x020 seq    23 t=   13.501s TM(3,25)  HK SID 1: Vbus 28110 mV, Tbat 46.61 C, Tobc 27.70 C, mode 0x03, TC acc/rej 4/1, TM drop 0, up 13 s, exec 26 us
+[  14.004] TM <- 0820C0180022200319000000000000000E0030016D7412150ADC030001000400000000000E000AFA18
+[  14.004]         APID 0x020 seq    24 t=   14.001s TM(3,25)  HK SID 1: Vbus 28020 mV, Tbat 46.29 C, Tobc 27.80 C, mode 0x03, TC acc/rej 4/1, TM drop 0, up 14 s, exec 10 us
+[  14.503] TM <- 0820C0190022200319000000000000000E8031016D14127C0AE6030001000400000000000E0020025E
+[  14.504]         APID 0x020 seq    25 t=   14.501s TM(3,25)  HK SID 1: Vbus 27924 mV, Tbat 47.32 C, Tobc 27.90 C, mode 0x03, TC acc/rej 4/1, TM drop 0, up 14 s, exec 32 us
+[  15.004] TM <- 0820C01A0022200319000000000000000F0030016D7F11EA0AF0030001000400000000000F0014DA39
+[  15.004]         APID 0x020 seq    26 t=   15.001s TM(3,25)  HK SID 1: Vbus 28031 mV, Tbat 45.86 C, Tobc 28.00 C, mode 0x03, TC acc/rej 4/1, TM drop 0, up 15 s, exec 20 us
+[  15.503] TM <- 0820C01B0022200319000000000000000F802C016D7B121A0AFA030001000400000000000F001AB34C
+[  15.504]         APID 0x020 seq    27 t=   15.501s TM(3,25)  HK SID 1: Vbus 28027 mV, Tbat 46.34 C, Tobc 28.10 C, mode 0x03, TC acc/rej 4/1, TM drop 0, up 15 s, exec 26 us
+[  16.003] TM <- 0820C01C002220031900000000000000100030016D1211BA0B040300010004000000000010001755E8
+[  16.004]         APID 0x020 seq    28 t=   16.001s TM(3,25)  HK SID 1: Vbus 27922 mV, Tbat 45.38 C, Tobc 28.20 C, mode 0x03, TC acc/rej 4/1, TM drop 0, up 16 s, exec 23 us
+[  16.503] TM <- 0820C01D00222003190000000000000010802F016D1F11AC0B0E03000100040000000000100015A1A4
+[  16.504]         APID 0x020 seq    29 t=   16.501s TM(3,25)  HK SID 1: Vbus 27935 mV, Tbat 45.24 C, Tobc 28.30 C, mode 0x03, TC acc/rej 4/1, TM drop 0, up 16 s, exec 21 us
+[  17.003] TM <- 0820C01E00222003190000000000000011002F016CF511B40B1803000100040000000000110015FBBA
+[  17.004]         APID 0x020 seq    30 t=   17.001s TM(3,25)  HK SID 1: Vbus 27893 mV, Tbat 45.32 C, Tobc 28.40 C, mode 0x03, TC acc/rej 4/1, TM drop 0, up 17 s, exec 21 us
+[  17.503] TM <- 0820C01F00222003190000000000000011802D016DC512010B22030001000400000000001100135874
+[  17.504]         APID 0x020 seq    31 t=   17.501s TM(3,25)  HK SID 1: Vbus 28101 mV, Tbat 46.09 C, Tobc 28.50 C, mode 0x03, TC acc/rej 4/1, TM drop 0, up 17 s, exec 19 us
+[  18.004] TM <- 0820C02000222003190000000000000012002B016D1711EC0B2C0300010004000000000012001805A0
+[  18.004]         APID 0x020 seq    32 t=   18.001s TM(3,25)  HK SID 1: Vbus 27927 mV, Tbat 45.88 C, Tobc 28.60 C, mode 0x03, TC acc/rej 4/1, TM drop 0, up 18 s, exec 24 us
+[  18.503] TM <- 0820C02100222003190000000000000012802C016DB511720B3603000100040000000000120020EB37
+[  18.504]         APID 0x020 seq    33 t=   18.501s TM(3,25)  HK SID 1: Vbus 28085 mV, Tbat 44.66 C, Tobc 28.70 C, mode 0x03, TC acc/rej 4/1, TM drop 0, up 18 s, exec 32 us
+[  19.004] TM <- 0820C022002220031900000000000000130032016D2511C90B400300010004000000000013001A8829
+[  19.004]         APID 0x020 seq    34 t=   19.001s TM(3,25)  HK SID 1: Vbus 27941 mV, Tbat 45.53 C, Tobc 28.80 C, mode 0x03, TC acc/rej 4/1, TM drop 0, up 19 s, exec 26 us
+[  19.504] TM <- 0820C023002220031900000000000000138030016CDC118F0B4A03000100040000000000130020A2F2
+[  19.504]         APID 0x020 seq    35 t=   19.501s TM(3,25)  HK SID 1: Vbus 27868 mV, Tbat 44.95 C, Tobc 28.90 C, mode 0x03, TC acc/rej 4/1, TM drop 0, up 19 s, exec 32 us
+[  20.004] TM <- 0820C02400222003190000000000000014002D016DEB112C0B540300010004000000000014002032EF
+[  20.004]         APID 0x020 seq    36 t=   20.001s TM(3,25)  HK SID 1: Vbus 28139 mV, Tbat 43.96 C, Tobc 29.00 C, mode 0x03, TC acc/rej 4/1, TM drop 0, up 20 s, exec 32 us
+[  20.503] TM <- 0820C02500222003190000000000000014802D016D7211220B5E030001000400000000001400162F87
+[  20.503]         APID 0x020 seq    37 t=   20.501s TM(3,25)  HK SID 1: Vbus 28018 mV, Tbat 43.86 C, Tobc 29.10 C, mode 0x03, TC acc/rej 4/1, TM drop 0, up 20 s, exec 22 us
+[  21.004] TM <- 0820C026002220031900000000000000150034016D2D11770B6803000100040000000000150017E7D7
+[  21.004]         APID 0x020 seq    38 t=   21.001s TM(3,25)  HK SID 1: Vbus 27949 mV, Tbat 44.71 C, Tobc 29.20 C, mode 0x03, TC acc/rej 4/1, TM drop 0, up 21 s, exec 23 us
+[  21.503] TM <- 0820C02700222003190000000000000015802A016CFE10FB0B720300010004000000000015000C281C
+[  21.504]         APID 0x020 seq    39 t=   21.501s TM(3,25)  HK SID 1: Vbus 27902 mV, Tbat 43.47 C, Tobc 29.30 C, mode 0x03, TC acc/rej 4/1, TM drop 0, up 21 s, exec 12 us
+[  22.003] TM <- 0820C02800222003190000000000000016002F016D7C114F0B7C03000100040000000000160016350C
+[  22.004]         APID 0x020 seq    40 t=   22.001s TM(3,25)  HK SID 1: Vbus 28028 mV, Tbat 44.31 C, Tobc 29.40 C, mode 0x03, TC acc/rej 4/1, TM drop 0, up 22 s, exec 22 us
+[  22.503] TM <- 0820C02900222003190000000000000016802C016DD410DC0B8603000100040000000000160014E28A
+[  22.504]         APID 0x020 seq    41 t=   22.501s TM(3,25)  HK SID 1: Vbus 28116 mV, Tbat 43.16 C, Tobc 29.50 C, mode 0x03, TC acc/rej 4/1, TM drop 0, up 22 s, exec 20 us
+[  23.004] TM <- 0820C02A00222003190000000000000017002F016D0E10E50B9003000100040000000000170019300D
+[  23.004]         APID 0x020 seq    42 t=   23.001s TM(3,25)  HK SID 1: Vbus 27918 mV, Tbat 43.25 C, Tobc 29.60 C, mode 0x03, TC acc/rej 4/1, TM drop 0, up 23 s, exec 25 us
+[  23.503] TM <- 0821C00100152005010000000000000017802D0102021091119461D5
+[  23.503]         APID 0x021 seq     1 t=   23.501s TM(5,1)  EVENT [informative] TEMP_BAT_NOMINAL: param 2 = 42.41 C, limit 45.00 C
+[  23.504] TM <- 0820C02B00222003190000000000000017802D016D7110910B9A0100010004000000000017001D5B1E
+[  23.504]         APID 0x020 seq    43 t=   23.501s TM(3,25)  HK SID 1: Vbus 28017 mV, Tbat 42.41 C, Tobc 29.70 C, mode 0x01, TC acc/rej 4/1, TM drop 0, up 23 s, exec 29 us
+[  24.003] TM <- 0820C02C002220031900000000000000180032016CDF10D00BA4010001000400000000001800176B4B
+[  24.004]         APID 0x020 seq    44 t=   24.001s TM(3,25)  HK SID 1: Vbus 27871 mV, Tbat 43.04 C, Tobc 29.80 C, mode 0x01, TC acc/rej 4/1, TM drop 0, up 24 s, exec 23 us
+[  24.503] TM <- 0820C02D00222003190000000000000018802F016D3810DE0BAE0100010004000000000018000F9352
+[  24.503]         APID 0x020 seq    45 t=   24.501s TM(3,25)  HK SID 1: Vbus 27960 mV, Tbat 43.18 C, Tobc 29.90 C, mode 0x01, TC acc/rej 4/1, TM drop 0, up 24 s, exec 15 us
+[  25.004] TM <- 0820C02E002220031900000000000000190031016D8110750BB8010001000400000000001900179597
+[  25.004]         APID 0x020 seq    46 t=   25.001s TM(3,25)  HK SID 1: Vbus 28033 mV, Tbat 42.13 C, Tobc 30.00 C, mode 0x01, TC acc/rej 4/1, TM drop 0, up 25 s, exec 23 us
+[  25.503] TM <- 0820C02F00222003190000000000000019802C016DB910410BC20100010004000000000019000A4884
+[  25.503]         APID 0x020 seq    47 t=   25.501s TM(3,25)  HK SID 1: Vbus 28089 mV, Tbat 41.61 C, Tobc 30.10 C, mode 0x01, TC acc/rej 4/1, TM drop 0, up 25 s, exec 10 us
+[  26.003] TM <- 0820C0300022200319000000000000001A002D016CE810640BCC010001000400000000001A00187AC5
+[  26.003]         APID 0x020 seq    48 t=   26.001s TM(3,25)  HK SID 1: Vbus 27880 mV, Tbat 41.96 C, Tobc 30.20 C, mode 0x01, TC acc/rej 4/1, TM drop 0, up 26 s, exec 24 us
+[  26.503] TM <- 0820C0310022200319000000000000001A802D016D7210670BD6010001000400000000001A0016F11F
+[  26.503]         APID 0x020 seq    49 t=   26.501s TM(3,25)  HK SID 1: Vbus 28018 mV, Tbat 41.99 C, Tobc 30.30 C, mode 0x01, TC acc/rej 4/1, TM drop 0, up 26 s, exec 22 us
+[  27.004] TM <- 0820C0320022200319000000000000001B0030016DEB10850BE0010001000400000000001B00174760
+[  27.004]         APID 0x020 seq    50 t=   27.001s TM(3,25)  HK SID 1: Vbus 28139 mV, Tbat 42.29 C, Tobc 30.40 C, mode 0x01, TC acc/rej 4/1, TM drop 0, up 27 s, exec 23 us
+[  27.503] TM <- 0820C0330022200319000000000000001B8029016DC010CA0BEA010001000400000000001B0017ACA0
+[  27.503]         APID 0x020 seq    51 t=   27.501s TM(3,25)  HK SID 1: Vbus 28096 mV, Tbat 42.98 C, Tobc 30.50 C, mode 0x01, TC acc/rej 4/1, TM drop 0, up 27 s, exec 23 us
+[  28.004] TM <- 0820C0340022200319000000000000001C0031016DB510AB0BF4010001000400000000001C0014AF60
+[  28.004]         APID 0x020 seq    52 t=   28.001s TM(3,25)  HK SID 1: Vbus 28085 mV, Tbat 42.67 C, Tobc 30.60 C, mode 0x01, TC acc/rej 4/1, TM drop 0, up 28 s, exec 20 us
+[  28.503] TM <- 0820C0350022200319000000000000001C802D016CD410D40BFE010001000400000000001C001A5691
+[  28.504]         APID 0x020 seq    53 t=   28.501s TM(3,25)  HK SID 1: Vbus 27860 mV, Tbat 43.08 C, Tobc 30.70 C, mode 0x01, TC acc/rej 4/1, TM drop 0, up 28 s, exec 26 us
+[  29.004] TM <- 0820C0360022200319000000000000001D002D016D49109B0C08010001000400000000001D00178F6C
+[  29.004]         APID 0x020 seq    54 t=   29.001s TM(3,25)  HK SID 1: Vbus 27977 mV, Tbat 42.51 C, Tobc 30.80 C, mode 0x01, TC acc/rej 4/1, TM drop 0, up 29 s, exec 23 us
+[  29.503] TM <- 0820C0370022200319000000000000001D8030016DA210BD0C12010001000400000000001D00185B12
+[  29.504]         APID 0x020 seq    55 t=   29.501s TM(3,25)  HK SID 1: Vbus 28066 mV, Tbat 42.85 C, Tobc 30.90 C, mode 0x01, TC acc/rej 4/1, TM drop 0, up 29 s, exec 24 us
+[  30.004] TM <- 0820C0380022200319000000000000001E0038016D03113D0C1C010001000400000000001E0016A7F2
+[  30.004]         APID 0x020 seq    56 t=   30.001s TM(3,25)  HK SID 1: Vbus 27907 mV, Tbat 44.13 C, Tobc 31.00 C, mode 0x01, TC acc/rej 4/1, TM drop 0, up 30 s, exec 22 us
+[  30.004]   PASS  TM(5,2) anomaly events received: 1
+[  30.004]   PASS  T_BAT was above 45.00 C in 28 housekeeping reports, for 1 event(s): not one event per cycle
+[  30.004]   PASS  events strictly alternate anomaly / return-to-nominal (one per crossing): (5,2)@3.0s (5,1)@23.5s
+[  30.004]   PASS  TM(5,1) return-to-nominal events received: 1
+[  30.004]   PASS  event carries the sample that tripped it: 45.45 C > 45.00 C
+[  30.004]   PASS  MODE bit 1 (monitor HIGH) set in 37 reports
+[  30.004] # 4. Sequence counts per APID
+[  30.005]   PASS  APID 0x010: 11 packets, sequence counts consecutive (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10)
+[  30.005]   PASS  APID 0x020: 57 packets, sequence counts consecutive (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, ... 56)
+[  30.005]   PASS  APID 0x021: 2 packets, sequence counts consecutive (0, 1)
+[  30.005]   PASS  TM_DROPPED is 0: the TM queue never overflowed
+[  30.005]   PASS  every TM line passed the ground CRC check
+[  30.005] # HK_EXEC over 55 reports: min 0 us, median 23 us, max 122 us (wall clock on the spacecraft; includes preemption)
+[  30.005] # result: 23 passed, 0 failed

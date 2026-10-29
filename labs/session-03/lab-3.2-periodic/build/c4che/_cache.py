@@ -1,0 +1,9 @@
+ARCHS = ['sparc-rtems6']
+ARCH_BSPS = ['sparc-rtems6-leon3']
+BINDIR = '/usr/local/bin'
+LIBDIR = '/usr/local/lib'
+LONG_COMMANDS = 'no'
+PREFIX = '/usr/local'
+RTEMS_ARCH_BSP_LIST = ['sparc-rtems6-leon3']
+RTEMS_TOOLS = ['/home/truongtm/Work/01.Code/rtems/rtems/6/bin']
+SHOW_COMMANDS = 'no'

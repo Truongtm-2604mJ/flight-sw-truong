@@ -1,0 +1,6 @@
+test_sp
+test_pus
+test_hk
+*.host
+*.exe
+__pycache__/
