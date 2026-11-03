@@ -1,0 +1,46 @@
+22:42:08 SETUP: TEST_INJECT_PARAM V_BUS 25000 mV (test build) to enter SAFE
+22:42:13 SETUP: mode = SAFE, cause MONITOR
+22:42:13 [0] ## SAFE-01 Recovery from SAFE
+22:42:13 [1] CHECK: 1. Why SAFE? MONITOR: read the monitor events (Events page). LIVENESS: a task escalated. WATCHDOG_RESET: the software reset itself, read BOOT_REPORT. GROUND: commanded.
+22:42:13    /S8/mode = SAFE
+22:42:13    /S8/mode_cause = MONITOR
+22:42:13    /S8/mode_cause_detail = 1
+22:42:13    /S8/last_reset = NONE_COLD
+22:42:13    /S8/boot_count = 1
+22:42:13    /S8/uptime = 58
+22:42:13 [2] CHECK: 2. Can we command? Active slot ACTIVE, not CORRUPT; rejection counters not rising. FACTORY=ON after a reset means the key store was re-provisioned: tell the security unit (run-bridge.sh fresh). If not: contingency C-SEC.
+22:42:13    /S8/sec_active_slot = 2
+22:42:13    /S8/sec_slot1_state = LOADED
+22:42:13    /S8/sec_slot2_state = ACTIVE
+22:42:13    /S8/sec_rej_auth = 0
+22:42:13    /S8/sec_rej_replay = 0
+22:42:13    /S8/sec_rej_state = 0
+22:42:13    /S8/sec_flag_factory = True
+22:42:13 [3] COMMAND: 3. Authenticated round trip. Accepted and Complete must come back. A TIMEOUT at Accepted with no TM(1,2) means the TC was rejected before authentication: read the SECURITY events, contingency C-SEC.
+22:42:13    PING : Verifier_Accepted=OK, Verifier_Complete=OK, CommandComplete=OK
+22:42:13 [4] COMMAND: 4. TEST BUILD ONLY (lab demonstration): remove the injected fault. On flight, the corrective action for the cause found in step 1 goes here.
+22:42:13    TEST_INJECT_CLEAR : Verifier_Accepted=OK, Verifier_Complete=OK, CommandComplete=OK
+22:42:13 [5] VERIFY: 5. The cause is gone. In SAFE only the essential HK (SID 2) flows, and it has no monitor states (finding OBS-02), so check the values against the onboard CLEAR thresholds: V_BUS >= 26300 mV, T_BAT <= 43.00 C. If not met, stay in SAFE.
+22:42:15    /S8/vbus=28080 (want 26300), /S8/tbat=31.48 (want 43)  OK
+22:42:15 [6] COMMAND: 6. SAFE -> DEGRADED (T11). Advance on Complete: it passes when HK shows the mode (up to 2 s after TM(1,7), NCR-01 / MM-150).
+22:42:18    SET_MODE {'mode': 'DEGRADED'}: Verifier_Accepted=OK, Verifier_PUS_Completed=OK, Verifier_Complete=OK, CommandComplete=OK
+22:42:18 [7] VERIFY: 7. In DEGRADED the full HK (SID 1) is back at 2 Hz: now every monitor must read OK (OBS-01: a ground command does not re-check an alarm raised earlier). If one is not OK, command SAFE again.
+22:42:18    /S8/mode=DEGRADED (want DEGRADED), /S8/mon_state_vbus=OK (want OK), /S8/mon_state_tbat=OK (want OK), /S8/mon_state_tobc=OK (want OK)  OK
+22:42:18 [8] CHECK: 8. Hold one minute in DEGRADED and watch the trends; no new monitor event.
+22:42:18    /S8/vbus = 27988
+22:42:18    /S8/tbat = 31.82
+22:42:18    /S8/tobc = 40.2
+22:42:18    /S8/mon_state_vbus = OK
+22:42:18    /S8/mon_state_tbat = OK
+22:42:18    /S8/mon_state_tobc = OK
+22:42:18    /S8/payload_on = False
+22:42:18 [9] COMMAND: 9. DEGRADED -> NOMINAL (T09).
+22:42:20    SET_MODE {'mode': 'NOMINAL'}: Verifier_Accepted=OK, Verifier_PUS_Completed=OK, Verifier_Complete=OK, CommandComplete=OK
+22:42:20 [10] VERIFY: 10. NOMINAL, payload on.
+22:42:20    /S8/mode=NOMINAL (want NOMINAL), /S8/payload_on=True (want true)  OK
+22:42:20 [11] COMMAND: 11. SAFE entry suspended the schedule (SCHED_SUSPENDED event). Re-enable it once the timeline has been reviewed.
+22:42:20    SCHED_ENABLE : Verifier_Accepted=OK, Verifier_Complete=OK, CommandComplete=OK
+22:42:20 [12] VERIFY: 12. Schedule enabled.
+22:42:21    /S8/sched_enabled=True (want true)  OK
+22:42:21 [13] **Close-out:** note in the log the cause, the time in SAFE, and the counters /S8/tc_rejected and /S8/sec_rej_* at the end. Procedure complete.
+22:42:21 PROCEDURE COMPLETE

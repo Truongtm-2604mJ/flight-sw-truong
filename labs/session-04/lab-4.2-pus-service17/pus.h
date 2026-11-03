@@ -104,6 +104,12 @@ typedef enum {
     PUS_FAIL_SERVICE          = 7, /* service type not implemented          */
     PUS_FAIL_SUBTYPE          = 8, /* subtype not implemented               */
     PUS_FAIL_APP_DATA         = 9, /* application data wrong size or value  */
+    /* Session 8, command authentication (never sent in TM(1,2): see
+     * labs/session-08, rejections before authentication are not answered). */
+    PUS_FAIL_AUTH             = 10,/* authentication tag does not verify    */
+    PUS_FAIL_REPLAY           = 11,/* counter not above the last accepted   */
+    PUS_FAIL_WINDOW           = 12,/* counter too far ahead (policy)        */
+    PUS_FAIL_SEC_STATE        = 13,/* no usable key / counter for that SPI  */
     PUS_FAIL_EXECUTION        = 16,/* accepted, but execution failed        */
     PUS_FAIL_NO_REPORT        = 255/* too short to carry a request ID       */
 } pus_fail_t;

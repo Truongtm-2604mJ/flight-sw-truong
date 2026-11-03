@@ -72,8 +72,8 @@ Tools: gcc: `gcc (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0`; clang: `Ubuntu clang 
 | cppcheck | `misra-c2012-15.5` | `labs/session-04/lab-4.2-pus-service17/pus.c` | 55, 73, 76, 117, 120, 123 (+8) | misra violation (use --rule-texts=<file> to get proper output) | SA-30 accepted |
 | cppcheck | `misra-c2012-17.7` | `labs/session-04/lab-4.2-pus-service17/pus.c` | 87, 131, 157, 164 | misra violation (use --rule-texts=<file> to get proper output) | SA-32 accepted |
 | cppcheck | `misra-c2012-12.1` | `labs/session-04/lab-4.2-pus-service17/tc_handler.c` | 71 | misra violation (use --rule-texts=<file> to get proper output) | SA-31 accepted |
-| cppcheck | `misra-c2012-14.4` | `labs/session-04/lab-4.2-pus-service17/tc_handler.c` | 147, 150, 158 | misra violation (use --rule-texts=<file> to get proper output) | SA-33 accepted |
-| cppcheck | `misra-c2012-15.5` | `labs/session-04/lab-4.2-pus-service17/tc_handler.c` | 12, 15, 25, 73, 77, 97 (+2) | misra violation (use --rule-texts=<file> to get proper output) | SA-30 accepted |
+| cppcheck | `misra-c2012-14.4` | `labs/session-04/lab-4.2-pus-service17/tc_handler.c` | 165, 168, 176 | misra violation (use --rule-texts=<file> to get proper output) | SA-33 accepted |
+| cppcheck | `misra-c2012-15.5` | `labs/session-04/lab-4.2-pus-service17/tc_handler.c` | 12, 15, 25, 73, 77, 97 (+3) | misra violation (use --rule-texts=<file> to get proper output) | SA-30 accepted |
 | cppcheck | `misra-c2012-17.7` | `labs/session-04/lab-4.2-pus-service17/tc_handler.c` | 43, 57 | misra violation (use --rule-texts=<file> to get proper output) | SA-32 accepted |
 | cppcheck | `misra-c2012-12.1` | `labs/session-05/lab-5.1-monitoring/monitor.c` | 27, 55, 89, 139 | misra violation (use --rule-texts=<file> to get proper output) | SA-31 accepted |
 | cppcheck | `misra-c2012-15.5` | `labs/session-05/lab-5.1-monitoring/monitor.c` | 31, 49, 59, 64, 86, 101 (+1) | misra violation (use --rule-texts=<file> to get proper output) | SA-30 accepted |

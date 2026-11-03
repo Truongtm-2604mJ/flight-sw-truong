@@ -1,0 +1,20 @@
+  PASS  TM link OK, 58 packets in
+  PASS  TC link OK
+  PASS  FIRST CONTACT from Yamcs: RECOVERY_SET_COUNTER floor 0 (security unit picks the safe floor), released from the supervised queue
+  PASS  /S8/mode = NOMINAL (HK SID 1 decoded)
+  PASS  /S8/sec_slot1_state decoded
+  PASS  /S8/sec_slot1_kcv = F0AD4481 (provisioned key F0AD4481)
+  PASS  PING from Yamcs: Accepted OK, Complete OK (authenticated by the bridge)
+  PASS  SET_MODE DEGRADED: TM(1,7) then Complete when HK shows the mode
+  PASS  /S8/mode = DEGRADED
+  PASS  SET_MODE NOMINAL complete
+  PASS  MONITOR_ENABLE T_BAT complete
+  PASS  event log: MODE_CHANGED decoded with its template
+  PASS  LOAD_KEY (critical) waits in the supervised queue
+  PASS  second operator releases it
+  PASS  LOAD_KEY slot 2 complete
+  PASS  slot 2 LOADED
+  PASS  ACTIVATE_KEY slot 2 complete
+  PASS  /S8/sec_active_slot = 2
+  PASS  PING under the new key, from Yamcs
+# result: 19 passed, 0 failed

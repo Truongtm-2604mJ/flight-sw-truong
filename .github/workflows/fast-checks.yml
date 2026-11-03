@@ -53,6 +53,11 @@ jobs:
       - name: Session 6 model checks (generator, back-to-back, traceability)
         run: make -C labs/session-06 test
 
+      - name: Session 8 security (warnings, unit tests with ASan/UBSan, MDB check, system tests)
+        run: |
+          sudo apt-get install -y -q --no-install-recommends python3-cryptography
+          make -C labs/session-08 warnings unit mdb-check system-test
+
       - name: Show where regenerated evidence differs from the committed copy (informational)
         run: git diff --stat -- labs/session-07 labs/session-06 || true
 

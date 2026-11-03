@@ -1,0 +1,220 @@
+{
+  "$schema": "https://yamcs.org/schema/stack.schema.json",
+  "steps": [
+    {
+      "type": "text",
+      "text": "## SAFE-01 Recovery from SAFE\n\nRun by two operators: the **commander** sends, the **checker** reads each check aloud and releases supervised commands. Stop at any failed step and go to the contingency named in `procedures/recover-from-safe.md`.\n\n**Entry:** /S8/mode = SAFE, HK SID 2 at 0.5 Hz, TM link OK."
+    },
+    {
+      "type": "check",
+      "comment": "1. Why SAFE? MONITOR: read the monitor events (Events page). LIVENESS: a task escalated. WATCHDOG_RESET: the software reset itself, read BOOT_REPORT. GROUND: commanded.",
+      "parameters": [
+        {
+          "parameter": "/S8/mode"
+        },
+        {
+          "parameter": "/S8/mode_cause"
+        },
+        {
+          "parameter": "/S8/mode_cause_detail"
+        },
+        {
+          "parameter": "/S8/last_reset"
+        },
+        {
+          "parameter": "/S8/boot_count"
+        },
+        {
+          "parameter": "/S8/uptime"
+        }
+      ]
+    },
+    {
+      "type": "check",
+      "comment": "2. Can we command? Active slot ACTIVE, not CORRUPT; rejection counters not rising. FACTORY=ON after a reset means the key store was re-provisioned: tell the security unit (run-bridge.sh fresh). If not: contingency C-SEC.",
+      "parameters": [
+        {
+          "parameter": "/S8/sec_active_slot"
+        },
+        {
+          "parameter": "/S8/sec_slot1_state"
+        },
+        {
+          "parameter": "/S8/sec_slot2_state"
+        },
+        {
+          "parameter": "/S8/sec_rej_auth"
+        },
+        {
+          "parameter": "/S8/sec_rej_replay"
+        },
+        {
+          "parameter": "/S8/sec_rej_state"
+        },
+        {
+          "parameter": "/S8/sec_flag_factory"
+        }
+      ]
+    },
+    {
+      "type": "command",
+      "name": "/S8/PING",
+      "comment": "3. Authenticated round trip. Accepted and Complete must come back. A TIMEOUT at Accepted with no TM(1,2) means the TC was rejected before authentication: read the SECURITY events, contingency C-SEC.",
+      "advancement": {
+        "acknowledgment": "Verifier_Complete"
+      }
+    },
+    {
+      "type": "command",
+      "name": "/S8/TEST_INJECT_CLEAR",
+      "comment": "4. TEST BUILD ONLY (lab demonstration): remove the injected fault. On flight, the corrective action for the cause found in step 1 goes here.",
+      "advancement": {
+        "acknowledgment": "Verifier_Complete"
+      }
+    },
+    {
+      "type": "verify",
+      "comment": "5. The cause is gone. In SAFE only the essential HK (SID 2) flows, and it has no monitor states (finding OBS-02), so check the values against the onboard CLEAR thresholds: V_BUS >= 26300 mV, T_BAT <= 43.00 C. If not met, stay in SAFE.",
+      "condition": [
+        {
+          "parameter": "/S8/vbus",
+          "operator": "gte",
+          "value": "26300"
+        },
+        {
+          "parameter": "/S8/tbat",
+          "operator": "lte",
+          "value": "43"
+        }
+      ],
+      "timeout": 20000
+    },
+    {
+      "type": "command",
+      "name": "/S8/SET_MODE",
+      "comment": "6. SAFE -> DEGRADED (T11). Advance on Complete: it passes when HK shows the mode (up to 2 s after TM(1,7), NCR-01 / MM-150).",
+      "arguments": [
+        {
+          "name": "mode",
+          "value": "DEGRADED"
+        }
+      ],
+      "advancement": {
+        "acknowledgment": "Verifier_Complete"
+      }
+    },
+    {
+      "type": "verify",
+      "comment": "7. In DEGRADED the full HK (SID 1) is back at 2 Hz: now every monitor must read OK (OBS-01: a ground command does not re-check an alarm raised earlier). If one is not OK, command SAFE again.",
+      "condition": [
+        {
+          "parameter": "/S8/mode",
+          "operator": "eq",
+          "value": "DEGRADED"
+        },
+        {
+          "parameter": "/S8/mon_state_vbus",
+          "operator": "eq",
+          "value": "OK"
+        },
+        {
+          "parameter": "/S8/mon_state_tbat",
+          "operator": "eq",
+          "value": "OK"
+        },
+        {
+          "parameter": "/S8/mon_state_tobc",
+          "operator": "eq",
+          "value": "OK"
+        }
+      ],
+      "timeout": 8000
+    },
+    {
+      "type": "check",
+      "comment": "8. Hold one minute in DEGRADED and watch the trends; no new monitor event.",
+      "parameters": [
+        {
+          "parameter": "/S8/vbus"
+        },
+        {
+          "parameter": "/S8/tbat"
+        },
+        {
+          "parameter": "/S8/tobc"
+        },
+        {
+          "parameter": "/S8/mon_state_vbus"
+        },
+        {
+          "parameter": "/S8/mon_state_tbat"
+        },
+        {
+          "parameter": "/S8/mon_state_tobc"
+        },
+        {
+          "parameter": "/S8/payload_on"
+        }
+      ]
+    },
+    {
+      "type": "command",
+      "name": "/S8/SET_MODE",
+      "comment": "9. DEGRADED -> NOMINAL (T09).",
+      "arguments": [
+        {
+          "name": "mode",
+          "value": "NOMINAL"
+        }
+      ],
+      "advancement": {
+        "acknowledgment": "Verifier_Complete"
+      }
+    },
+    {
+      "type": "verify",
+      "comment": "10. NOMINAL, payload on.",
+      "condition": [
+        {
+          "parameter": "/S8/mode",
+          "operator": "eq",
+          "value": "NOMINAL"
+        },
+        {
+          "parameter": "/S8/payload_on",
+          "operator": "eq",
+          "value": "true"
+        }
+      ],
+      "timeout": 6000
+    },
+    {
+      "type": "command",
+      "name": "/S8/SCHED_ENABLE",
+      "comment": "11. SAFE entry suspended the schedule (SCHED_SUSPENDED event). Re-enable it once the timeline has been reviewed.",
+      "advancement": {
+        "acknowledgment": "Verifier_Complete"
+      }
+    },
+    {
+      "type": "verify",
+      "comment": "12. Schedule enabled.",
+      "condition": [
+        {
+          "parameter": "/S8/sched_enabled",
+          "operator": "eq",
+          "value": "true"
+        }
+      ],
+      "timeout": 5000
+    },
+    {
+      "type": "text",
+      "text": "**Close-out:** note in the log the cause, the time in SAFE, and the counters /S8/tc_rejected and /S8/sec_rej_* at the end. Procedure complete."
+    }
+  ],
+  "advancement": {
+    "acknowledgment": "Verifier_Complete",
+    "wait": 1000
+  }
+}

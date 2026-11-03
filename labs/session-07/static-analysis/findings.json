@@ -353,8 +353,8 @@
    81,
    82,
    83,
-   124,
-   125
+   138,
+   139
   ],
   "builds": [
    "flight",
@@ -1240,16 +1240,16 @@
  {
   "tool": "cppcheck",
   "file": "labs/session-04/lab-4.2-pus-service17/tc_handler.c",
-  "line": 147,
+  "line": 165,
   "check": "misra-c2012-14.4",
   "sev": "style",
   "msg": "misra violation (use --rule-texts=<file> to get proper output)",
   "build": "test",
   "key": "cppcheck|misra-c2012-14.4|labs/session-04/lab-4.2-pus-service17/tc_handler.c|misra violation (use --rule-texts=<file> to get proper output)",
   "lines": [
-   147,
-   150,
-   158
+   165,
+   168,
+   176
   ],
   "builds": [
    "flight",
@@ -1273,8 +1273,9 @@
    73,
    77,
    97,
-   117,
-   143
+   126,
+   131,
+   157
   ],
   "builds": [
    "flight",

@@ -1,0 +1,9 @@
+build/
+app/*.host
+app/*.exe
+app/fdir_nv.bin*
+app/sec_nv.bin
+*.ground.json
+*.ground.json.tmp
+__pycache__/
+lab-8.3-ground-segment/.run/

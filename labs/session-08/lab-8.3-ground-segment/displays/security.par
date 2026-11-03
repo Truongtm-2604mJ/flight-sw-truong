@@ -1,0 +1,12 @@
+{
+  "scroll": true,
+  "parameters": [
+    "/S8/sec_active_slot",
+    "/S8/sec_slot1_counter",
+    "/S8/sec_slot2_counter",
+    "/S8/sec_challenge",
+    "/S8/sec_rej_auth",
+    "/S8/sec_rej_replay",
+    "/S8/sec_auth_accepted"
+  ]
+}

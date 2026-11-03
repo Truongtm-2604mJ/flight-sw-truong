@@ -1,0 +1,34 @@
+# Yamcs processor types (from the 5.13.7 sample, with the parameter cache
+# options removed: since 5.11 they belong to the ParameterRetrievalService,
+# and the realtime streams come from yamcs.s8.yaml streamConfig only).
+realtime:
+  services:
+  - class: org.yamcs.StreamTmPacketProvider
+  - class: org.yamcs.StreamTcCommandReleaser
+  - class: org.yamcs.tctm.StreamParameterProvider
+    args:
+      stream: pp_realtime
+  - class: org.yamcs.algorithms.AlgorithmManager
+  - class: org.yamcs.parameter.LocalParameterManager
+  config:
+    subscribeAll: true
+    generateEvents: true
+    alarm:
+      parameterCheck: true
+      parameterServer: enabled
+    tmProcessor:
+      ignoreOutOfContainerEntries: false
+Archive:
+  services:
+  - class: org.yamcs.tctm.ReplayService
+  config: {}
+ParameterArchive:
+  services:
+  - class: org.yamcs.tctm.ReplayService
+  config:
+    generateEvents: false
+ArchiveRetrieval:
+  services:
+  - class: org.yamcs.tctm.ReplayService
+  config:
+    generateEvents: false

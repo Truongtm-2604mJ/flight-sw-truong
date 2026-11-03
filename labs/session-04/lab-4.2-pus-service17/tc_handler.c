@@ -109,9 +109,23 @@ void tc_handle(tc_ctx_t *ctx, const uint8_t *frame, size_t frame_len)
     pus_tc_t tc;
     pus_fail_t code;
     const tc_service_t *svc = NULL;
+    uint32_t token = 0u;
 
     /* Checks 1 to 7: packet level. */
     code = pus_tc_validate(frame, frame_len, ctx->tm_src.apid, &tc);
+
+    /* Session 8: authentication and freshness, before any semantic check. */
+    if (ctx->security != NULL) {
+        if (code == PUS_OK) {
+            code = ctx->security->verify(ctx->security->arg, frame, frame_len,
+                                         &tc, &token);
+        }
+        if (code != PUS_OK) {
+            ctx->rejected = ctx->rejected + 1u;
+            ctx->security->reject(ctx->security->arg, code);
+            return;            /* no TM(1,2) to an unauthenticated sender */
+        }
+    }
     if (code == PUS_FAIL_NO_REPORT) {
         ctx->rejected = ctx->rejected + 1u;
         return;
@@ -143,6 +157,10 @@ void tc_handle(tc_ctx_t *ctx, const uint8_t *frame, size_t frame_len)
         return; /* never executed */
     }
 
+    /* Accepted: only now may the anti-replay state advance (Session 8). */
+    if (ctx->security != NULL) {
+        ctx->security->commit(ctx->security->arg, &tc, token);
+    }
     ctx->accepted = ctx->accepted + 1u;
     if (tc.ack_flags & PUS_ACK_ACCEPTANCE) {
         report_success(ctx, &tc, PUS_TM_1_ACCEPT_OK);

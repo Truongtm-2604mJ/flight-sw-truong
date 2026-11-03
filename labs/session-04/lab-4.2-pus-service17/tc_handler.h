@@ -40,6 +40,25 @@ typedef obt_t (*obt_now_fn)(void);
 struct tc_ctx;
 
 /*
+ * Optional security layer (Session 8). NULL in tc_ctx_t keeps the Session 4
+ * behaviour exactly. When present, tc_handle() runs, in this order:
+ *   checks 1 to 7 (structure, length, CRC, header)  pus_tc_validate()
+ *   verify()  authentication, then freshness          (may shorten app_len)
+ *   checks 8 to 10 (service, subtype, data)           semantic
+ *   commit()  the command is accepted: advance the anti-replay state
+ *   TM(1,1), execution, TM(1,7) / TM(1,8)
+ * Every rejection up to and including verify() goes to reject() and gets
+ * no TM(1,2): an unauthenticated sender receives no per-command answer.
+ */
+typedef struct {
+    pus_fail_t (*verify)(void *arg, const uint8_t *frame, size_t frame_len,
+                         pus_tc_t *tc, uint32_t *token);
+    void (*commit)(void *arg, const pus_tc_t *tc, uint32_t token);
+    void (*reject)(void *arg, pus_fail_t code);
+    void *arg;
+} tc_security_t;
+
+/*
  * A service is two functions:
  *   check  runs during acceptance. It looks at subtype and application
  *          data only and must have no side effects. It returns PUS_OK
@@ -68,6 +87,7 @@ typedef struct tc_ctx {
     size_t       service_count;
     volatile uint32_t accepted; /* telecommands that passed acceptance   */
     volatile uint32_t rejected; /* telecommands rejected for any reason  */
+    const tc_security_t *security; /* Session 8; NULL: no authentication */
 } tc_ctx_t;
 
 /* Prepare a context. Service 17 is registered by default. */

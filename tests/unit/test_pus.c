@@ -542,6 +542,93 @@ static void test_s7_emit_tm_returns_the_build_error(void)
     TEST_ASSERT_EQUAL_INT(0, cap_count);           /* nothing reached the sink */
 }
 
+/* ---- Session 8: the optional security hook in tc_handle() ---------------- */
+/* The hook itself is tested in labs/session-08 (test_tc_auth.c, with the real
+ * HMAC); here a stub checks the contract tc_handler.c gives it. */
+static pus_fail_t stub_verdict;
+static int stub_verified, stub_committed, stub_rejected;
+static pus_fail_t stub_reject_code;
+static pus_fail_t stub_verify(void *arg, const uint8_t *frame, size_t frame_len,
+                              pus_tc_t *tc, uint32_t *token)
+{
+    (void)arg; (void)frame; (void)frame_len; (void)tc;
+    stub_verified++;
+    *token = 42u;
+    return stub_verdict;
+}
+static void stub_commit(void *arg, const pus_tc_t *tc, uint32_t token)
+{
+    (void)arg; (void)tc;
+    TEST_ASSERT_EQUAL_UINT32(42u, token);
+    TEST_ASSERT_EQUAL_INT(0, cap_count);  /* before TM(1,1): before execution */
+    stub_committed++;
+}
+static void stub_reject(void *arg, pus_fail_t code)
+{
+    (void)arg;
+    stub_rejected++;
+    stub_reject_code = code;
+}
+static const tc_security_t stub_security = { stub_verify, stub_commit, stub_reject, NULL };
+
+static void setup_secure(pus_fail_t verdict)
+{
+    setup();
+    ctx.security = &stub_security;
+    stub_verdict = verdict;
+    stub_verified = stub_committed = stub_rejected = 0;
+    stub_reject_code = PUS_OK;
+}
+
+static void test_s8_hook_accepts_then_commits_before_execution(void)
+{
+    setup_secure(PUS_OK);
+    tc_handle(&ctx, TC_PING, sizeof(TC_PING));
+    TEST_ASSERT_EQUAL_INT(1, stub_verified);
+    TEST_ASSERT_EQUAL_INT(1, stub_committed);
+    TEST_ASSERT_EQUAL_INT(0, stub_rejected);
+    TEST_ASSERT_EQUAL_INT(3, cap_count);          /* TM(1,1), TM(17,2), TM(1,7) */
+}
+
+static void test_s8_hook_rejection_is_silent_and_not_executed(void)
+{
+    setup_secure(PUS_FAIL_AUTH);
+    tc_handle(&ctx, TC_PING, sizeof(TC_PING));
+    TEST_ASSERT_EQUAL_INT(0, cap_count);          /* no TM(1,2), no TM(17,2) */
+    TEST_ASSERT_EQUAL_INT(0, stub_committed);
+    TEST_ASSERT_EQUAL_INT(1, stub_rejected);
+    TEST_ASSERT_EQUAL_INT(PUS_FAIL_AUTH, stub_reject_code);
+    TEST_ASSERT_EQUAL_UINT32(1u, ctx.rejected);
+}
+
+static void test_s8_hook_sees_packet_failures_without_verifying(void)
+{
+    uint8_t bad[sizeof(TC_PING)];
+    memcpy(bad, TC_PING, sizeof(bad));
+    bad[sizeof(bad) - 1u] ^= 0x01u;               /* CRC */
+    setup_secure(PUS_OK);
+    tc_handle(&ctx, bad, sizeof(bad));
+    TEST_ASSERT_EQUAL_INT(0, stub_verified);      /* CRC before the MAC */
+    TEST_ASSERT_EQUAL_INT(1, stub_rejected);
+    TEST_ASSERT_EQUAL_INT(PUS_FAIL_CHECKSUM, stub_reject_code);
+    TEST_ASSERT_EQUAL_INT(0, cap_count);
+}
+
+static void test_s8_hook_no_commit_on_semantic_rejection(void)
+{
+    static const uint8_t svc99[13] = {           /* TC(99,1): not implemented */
+        0x18, 0x10, 0xC0, 0x00, 0x00, 0x06, 0x29, 0x63, 0x01, 0x00, 0x01, 0, 0 };
+    uint8_t f[13];
+    memcpy(f, svc99, sizeof(f));
+    fix_crc(f, sizeof(f));
+    setup_secure(PUS_OK);
+    tc_handle(&ctx, f, sizeof(f));
+    TEST_ASSERT_EQUAL_INT(1, stub_verified);
+    TEST_ASSERT_EQUAL_INT(0, stub_committed);     /* counter not consumed */
+    TEST_ASSERT_EQUAL_INT(1, cap_count);          /* authenticated: TM(1,2) */
+    TEST_ASSERT_EQUAL_INT(2, (int)tm_subtype(0));
+}
+
 void setUp(void) {}
 void tearDown(void) {}
 
@@ -569,5 +656,9 @@ int main(void)
     RUN_TEST(test_s7_tm_build_rejects_too_small_output_buffer);
     RUN_TEST(test_s7_tc_build_rejects_oversize_data_and_bad_flags);
     RUN_TEST(test_s7_emit_tm_returns_the_build_error);
+    RUN_TEST(test_s8_hook_accepts_then_commits_before_execution);
+    RUN_TEST(test_s8_hook_rejection_is_silent_and_not_executed);
+    RUN_TEST(test_s8_hook_sees_packet_failures_without_verifying);
+    RUN_TEST(test_s8_hook_no_commit_on_semantic_rejection);
     return UNITY_END();
 }

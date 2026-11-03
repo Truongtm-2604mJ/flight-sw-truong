@@ -1,0 +1,14 @@
+# Session 8 command queues.
+#
+# supervised: every command of significance "critical" (all of service 210,
+# key management and recovery, and the test-only security injections) waits
+# here until a second operator releases it in the web interface
+# (Commanding > Queues > supervised > Accept). A two person rule for the
+# commands that can lock the ground out, in the ground segment, where it
+# costs nothing onboard. Set state: enabled to commission without it.
+supervised:
+  state: blocked
+  minLevel: critical
+
+default:
+  state: enabled

@@ -175,11 +175,11 @@ In file included from ../labs/session-04/lab-4.2-pus-service17/pus.h:34:
    37 | typedef struct {
       |         ^
 In file included from ../labs/session-04/lab-4.2-pus-service17/tc_handler.c:2:
-../labs/session-04/lab-4.2-pus-service17/tc_handler.h:57:17: warning: padding struct 'tc_service_t' with 7 bytes to align 'check' [-Wpadded]
-   57 |     tc_check_fn check;
+../labs/session-04/lab-4.2-pus-service17/tc_handler.h:76:17: warning: padding struct 'tc_service_t' with 7 bytes to align 'check' [-Wpadded]
+   76 |     tc_check_fn check;
       |                 ^
-../labs/session-04/lab-4.2-pus-service17/tc_handler.h:64:18: warning: padding struct 'struct tc_ctx' with 4 bytes to align 'sink' [-Wpadded]
-   64 |     tm_sink_fn   sink;
+../labs/session-04/lab-4.2-pus-service17/tc_handler.h:83:18: warning: padding struct 'struct tc_ctx' with 4 bytes to align 'sink' [-Wpadded]
+   83 |     tm_sink_fn   sink;
       |                  ^
 In file included from ../labs/session-04/lab-4.2-pus-service17/tc_handler.c:2:
 In file included from ../labs/session-04/lab-4.2-pus-service17/tc_handler.h:19:
@@ -213,11 +213,11 @@ In file included from ../labs/session-04/lab-4.2-pus-service17/tc_handler.h:19:
 ../labs/session-04/lab-4.2-pus-service17/tc_handler.c:83:5: warning: unsafe buffer access [-Wunsafe-buffer-usage]
    83 |     ctx->services[ctx->service_count].arg     = arg;
       |     ^~~~~~~~~~~~~
-../labs/session-04/lab-4.2-pus-service17/tc_handler.c:124:17: warning: unsafe buffer access [-Wunsafe-buffer-usage]
-  124 |             if (ctx->services[i].service == tc.service) {
+../labs/session-04/lab-4.2-pus-service17/tc_handler.c:138:17: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  138 |             if (ctx->services[i].service == tc.service) {
       |                 ^~~~~~~~~~~~~
-../labs/session-04/lab-4.2-pus-service17/tc_handler.c:125:24: warning: unsafe buffer access [-Wunsafe-buffer-usage]
-  125 |                 svc = &ctx->services[i];
+../labs/session-04/lab-4.2-pus-service17/tc_handler.c:139:24: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  139 |                 svc = &ctx->services[i];
       |                        ^~~~~~~~~~~~~
 18 warnings generated.
 
@@ -529,8 +529,8 @@ In file included from ../labs/session-04/lab-4.2-pus-service17/pus.h:34:
       |         ^
 In file included from ../labs/session-05/app/services.c:20:
 In file included from ../labs/session-05/app/services.h:6:
-../labs/session-04/lab-4.2-pus-service17/tc_handler.h:57:17: warning: padding struct 'tc_service_t' with 7 bytes to align 'check' [-Wpadded]
-   57 |     tc_check_fn check;
+../labs/session-04/lab-4.2-pus-service17/tc_handler.h:76:17: warning: padding struct 'tc_service_t' with 7 bytes to align 'check' [-Wpadded]
+   76 |     tc_check_fn check;
       |                 ^
 In file included from ../labs/session-05/app/services.c:22:
 In file included from ../labs/session-05/app/fdir.h:21:
@@ -552,8 +552,8 @@ In file included from ../labs/session-05/app/fdir.h:21:
       |         ^
 In file included from ../labs/session-05/app/services.c:20:
 In file included from ../labs/session-05/app/services.h:6:
-../labs/session-04/lab-4.2-pus-service17/tc_handler.h:64:18: warning: padding struct 'struct tc_ctx' with 4 bytes to align 'sink' [-Wpadded]
-   64 |     tm_sink_fn   sink;
+../labs/session-04/lab-4.2-pus-service17/tc_handler.h:83:18: warning: padding struct 'struct tc_ctx' with 4 bytes to align 'sink' [-Wpadded]
+   83 |     tm_sink_fn   sink;
       |                  ^
 In file included from ../labs/session-05/app/services.c:22:
 In file included from ../labs/session-05/app/fdir.h:22:
@@ -623,8 +623,8 @@ In file included from ../labs/session-04/lab-4.2-pus-service17/pus.h:34:
       |         ^
 In file included from ../labs/session-05/app/tmtc5.c:2:
 In file included from ../labs/session-05/app/tmtc5.h:16:
-../labs/session-04/lab-4.2-pus-service17/tc_handler.h:57:17: warning: padding struct 'tc_service_t' with 7 bytes to align 'check' [-Wpadded]
-   57 |     tc_check_fn check;
+../labs/session-04/lab-4.2-pus-service17/tc_handler.h:76:17: warning: padding struct 'tc_service_t' with 7 bytes to align 'check' [-Wpadded]
+   76 |     tc_check_fn check;
       |                 ^
 In file included from ../labs/session-05/app/tmtc5.c:2:
 In file included from ../labs/session-05/app/tmtc5.h:16:
@@ -634,8 +634,8 @@ In file included from ../labs/session-04/lab-4.2-pus-service17/tc_handler.h:19:
       |         ^
 In file included from ../labs/session-05/app/tmtc5.c:2:
 In file included from ../labs/session-05/app/tmtc5.h:16:
-../labs/session-04/lab-4.2-pus-service17/tc_handler.h:64:18: warning: padding struct 'struct tc_ctx' with 4 bytes to align 'sink' [-Wpadded]
-   64 |     tm_sink_fn   sink;
+../labs/session-04/lab-4.2-pus-service17/tc_handler.h:83:18: warning: padding struct 'struct tc_ctx' with 4 bytes to align 'sink' [-Wpadded]
+   83 |     tm_sink_fn   sink;
       |                  ^
 ../labs/session-05/app/tmtc5.c:83:1: warning: function 'tm_tx_task' could be declared with attribute 'noreturn' [-Wmissing-noreturn]
    83 | {
@@ -738,8 +738,8 @@ In file included from ../labs/session-04/lab-4.2-pus-service17/pus.h:34:
       |         ^
 In file included from ../labs/session-06/app/fdir6.c:27:
 In file included from ../labs/session-05/app/tmtc5.h:16:
-../labs/session-04/lab-4.2-pus-service17/tc_handler.h:57:17: warning: padding struct 'tc_service_t' with 7 bytes to align 'check' [-Wpadded]
-   57 |     tc_check_fn check;
+../labs/session-04/lab-4.2-pus-service17/tc_handler.h:76:17: warning: padding struct 'tc_service_t' with 7 bytes to align 'check' [-Wpadded]
+   76 |     tc_check_fn check;
       |                 ^
 In file included from ../labs/session-06/app/fdir6.c:23:
 ../labs/session-05/lab-5.1-monitoring/monitor.h:57:17: warning: padding struct 'monitor_entry_t' with 2 bytes to align 'limit_high' [-Wpadded]
@@ -1031,8 +1031,8 @@ In file included from ../labs/session-05/app/fdir.h:22:
       |     ^~~
 In file included from ../labs/session-06/app/fdir6.c:27:
 In file included from ../labs/session-05/app/tmtc5.h:16:
-../labs/session-04/lab-4.2-pus-service17/tc_handler.h:64:18: warning: padding struct 'struct tc_ctx' with 4 bytes to align 'sink' [-Wpadded]
-   64 |     tm_sink_fn   sink;
+../labs/session-04/lab-4.2-pus-service17/tc_handler.h:83:18: warning: padding struct 'struct tc_ctx' with 4 bytes to align 'sink' [-Wpadded]
+   83 |     tm_sink_fn   sink;
       |                  ^
 103 warnings generated.
 
@@ -1070,8 +1070,8 @@ In file included from ../labs/session-04/lab-4.2-pus-service17/pus.h:34:
       |         ^
 In file included from ../labs/session-05/app/lab5.c:8:
 In file included from ../labs/session-05/app/services.h:6:
-../labs/session-04/lab-4.2-pus-service17/tc_handler.h:57:17: warning: padding struct 'tc_service_t' with 7 bytes to align 'check' [-Wpadded]
-   57 |     tc_check_fn check;
+../labs/session-04/lab-4.2-pus-service17/tc_handler.h:76:17: warning: padding struct 'tc_service_t' with 7 bytes to align 'check' [-Wpadded]
+   76 |     tc_check_fn check;
       |                 ^
 ../labs/session-05/app/lab5.c:124:1: warning: function 'acs_ctrl_task' could be declared with attribute 'noreturn' [-Wmissing-noreturn]
   124 | {
@@ -1090,8 +1090,8 @@ In file included from ../labs/session-05/app/services.h:6:
       | ^
 In file included from ../labs/session-05/app/lab5.c:8:
 In file included from ../labs/session-05/app/services.h:6:
-../labs/session-04/lab-4.2-pus-service17/tc_handler.h:64:18: warning: padding struct 'struct tc_ctx' with 4 bytes to align 'sink' [-Wpadded]
-   64 |     tm_sink_fn   sink;
+../labs/session-04/lab-4.2-pus-service17/tc_handler.h:83:18: warning: padding struct 'struct tc_ctx' with 4 bytes to align 'sink' [-Wpadded]
+   83 |     tm_sink_fn   sink;
       |                  ^
 ../labs/session-05/app/lab5.c:46:9: warning: macro is not used [-Wunused-macros]
    46 | #define CONFIGURE_APPLICATION_NEEDS_CONSOLE_DRIVER
