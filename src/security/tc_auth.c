@@ -53,7 +53,7 @@ sec_rej_t tc_auth_class(pus_fail_t code)
     }
 }
 
-static uint32_t get_u32(const uint8_t *p)
+static uint32_t auth_get_u32(const uint8_t *p)
 {
     return ((uint32_t)p[0] << 24) | ((uint32_t)p[1] << 16) |
            ((uint32_t)p[2] << 8) | (uint32_t)p[3];
@@ -85,7 +85,7 @@ pus_fail_t tc_auth_verify(void *arg, const uint8_t *frame, size_t frame_len,
     }
     trailer = &tc->app_data[tc->app_len - SEC_TRAILER_LEN];
     spi = trailer[0];
-    seq = get_u32(&trailer[1]);
+    seq = auth_get_u32(&trailer[1]);
     covered = (size_t)(trailer - frame) + 5u;
 
     /* 3. Authentication. An SPI without a usable key cannot be checked;

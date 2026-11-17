@@ -301,13 +301,13 @@ unsigned ks_scrub(keystore_t *ks)
 
 /* ---- Non volatile image ------------------------------------------------------------- */
 
-static void put32(uint8_t *p, uint32_t v)
+static void ks_put32(uint8_t *p, uint32_t v)
 {
     p[0] = (uint8_t)(v >> 24); p[1] = (uint8_t)(v >> 16);
     p[2] = (uint8_t)(v >> 8);  p[3] = (uint8_t)v;
 }
 
-static uint32_t get32(const uint8_t *p)
+static uint32_t ks_get32(const uint8_t *p)
 {
     return ((uint32_t)p[0] << 24) | ((uint32_t)p[1] << 16) |
            ((uint32_t)p[2] << 8) | (uint32_t)p[3];
@@ -320,8 +320,8 @@ size_t ks_encode(const keystore_t *ks, uint8_t *out, size_t cap)
     if (cap < KS_IMAGE_LEN) {
         return 0u;
     }
-    put32(&out[0], KS_MAGIC);
-    put32(&out[4], ((uint32_t)KS_VERSION << 16) | (uint32_t)sizeof(keystore_t));
+    ks_put32(&out[0], KS_MAGIC);
+    ks_put32(&out[4], ((uint32_t)KS_VERSION << 16) | (uint32_t)sizeof(keystore_t));
     (void)memcpy(&out[8], ks, sizeof(keystore_t));
     crc = crc16_ccitt(out, 8u + sizeof(keystore_t));
     out[8u + sizeof(keystore_t)] = (uint8_t)(crc >> 8);
@@ -334,8 +334,8 @@ int ks_decode(keystore_t *ks, const uint8_t *in, size_t len)
     uint16_t crc;
     keystore_t tmp;
 
-    if (len < KS_IMAGE_LEN || get32(&in[0]) != KS_MAGIC ||
-        get32(&in[4]) != (((uint32_t)KS_VERSION << 16) |
+    if (len < KS_IMAGE_LEN || ks_get32(&in[0]) != KS_MAGIC ||
+        ks_get32(&in[4]) != (((uint32_t)KS_VERSION << 16) |
                           (uint32_t)sizeof(keystore_t))) {
         return -1;
     }

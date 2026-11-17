@@ -352,13 +352,13 @@ int     fdir_payload_on(void)  { return payload_allowed && payload_cmd; }
  * the payload could not run, and the operator should know at once. */
 int fdir_payload_command(int on)
 {
-    uint8_t aux[4];
     int r = 0;
 
     lock(mode_lock);
     if (on && cur_mode() != MODE_NOMINAL) {
         r = -1;
     } else {
+        uint8_t aux[4];
         payload_cmd = on ? 1u : 0u;
         pus_put_u16(&aux[0], EVT_PAYLOAD);
         aux[2] = payload_cmd;

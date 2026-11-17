@@ -5,13 +5,13 @@
 
 #define LOAD_LEN (1u + KS_NONCE_LEN + KS_WRAPPED_LEN)
 
-static void put32(uint8_t *p, uint32_t v)
+static void svc_put32(uint8_t *p, uint32_t v)
 {
     p[0] = (uint8_t)(v >> 24); p[1] = (uint8_t)(v >> 16);
     p[2] = (uint8_t)(v >> 8);  p[3] = (uint8_t)v;
 }
 
-static uint32_t get32(const uint8_t *p)
+static uint32_t svc_get32(const uint8_t *p)
 {
     return ((uint32_t)p[0] << 24) | ((uint32_t)p[1] << 16) |
            ((uint32_t)p[2] << 8) | (uint32_t)p[3];
@@ -55,7 +55,7 @@ size_t sec_service_take(sec_service_t *s, uint8_t *severity,
     return len;
 }
 
-static void event(sec_service_t *s, uint8_t sev, uint16_t id,
+static void svc_event(sec_service_t *s, uint8_t sev, uint16_t id,
                   const uint8_t *data, size_t n)
 {
     uint8_t aux[SEC_EV_MAX];
@@ -145,9 +145,9 @@ static pus_fail_t do_activate(sec_service_t *s, uint8_t slot, uint8_t recovery)
     }
     d[0] = slot;
     d[1] = prev;
-    put32(&d[2], ks->slot[slot].kcv[0]);
+    svc_put32(&d[2], ks->slot[slot].kcv[0]);
     d[6] = recovery;
-    event(s, 2u, SEC_EVT_KEY_ACTIVATED, d, sizeof(d));
+    svc_event(s, 2u, SEC_EVT_KEY_ACTIVATED, d, sizeof(d));
     return PUS_OK;
 }
 
@@ -166,12 +166,12 @@ pus_fail_t sec_service_exec(const pus_tc_t *tc, struct tc_ctx *ctx, void *arg)
         if (ks_load(ks, slot, &tc->app_data[1], &tc->app_data[1u + KS_NONCE_LEN])
             != 0) {
             d[0] = slot;
-            event(s, 3u, SEC_EVT_KEY_LOAD_FAILED, d, 1u);
+            svc_event(s, 3u, SEC_EVT_KEY_LOAD_FAILED, d, 1u);
             r = PUS_FAIL_EXECUTION;
         } else {
             d[0] = slot;
-            put32(&d[1], ks->slot[slot].kcv[0]);
-            event(s, 1u, SEC_EVT_KEY_LOADED, d, 5u);
+            svc_put32(&d[1], ks->slot[slot].kcv[0]);
+            svc_event(s, 1u, SEC_EVT_KEY_LOADED, d, 5u);
         }
         break;
     case SEC_TC_ACTIVATE:
@@ -182,34 +182,34 @@ pus_fail_t sec_service_exec(const pus_tc_t *tc, struct tc_ctx *ctx, void *arg)
             r = PUS_FAIL_EXECUTION;
         } else {
             d[0] = slot;
-            event(s, 1u, SEC_EVT_KEY_ERASED, d, 1u);
+            svc_event(s, 1u, SEC_EVT_KEY_ERASED, d, 1u);
         }
         break;
     case SEC_TC_RECOVERY_COUNTER:
     {
-        uint32_t floor_value = get32(&tc->app_data[1]);
+        uint32_t floor_value = svc_get32(&tc->app_data[1]);
         uint32_t used;
 
         (void)ks_challenge(ks, &used);  /* commit() already moved it on */
         d[0] = SEC_TC_RECOVERY_COUNTER;
         d[1] = slot;
-        put32(&d[2], used - 1u);        /* the challenge this command used */
-        event(s, 3u, SEC_EVT_RECOVERY_USED, d, 6u);
+        svc_put32(&d[2], used - 1u);        /* the challenge this command used */
+        svc_event(s, 3u, SEC_EVT_RECOVERY_USED, d, 6u);
 
         (void)ks_counter(ks, slot, &old);
         ks_counter_floor(ks, slot, floor_value);  /* trusted from now on */
         d[0] = slot;
-        put32(&d[1], old);
-        put32(&d[5], floor_value);
-        event(s, 2u, SEC_EVT_COUNTER_SET, d, 9u);
+        svc_put32(&d[1], old);
+        svc_put32(&d[5], floor_value);
+        svc_event(s, 2u, SEC_EVT_COUNTER_SET, d, 9u);
         break;
     }
     case SEC_TC_RECOVERY_ACTIVATE:
         d[0] = SEC_TC_RECOVERY_ACTIVATE;
         d[1] = slot;
         (void)ks_challenge(ks, &old);
-        put32(&d[2], old - 1u);
-        event(s, 3u, SEC_EVT_RECOVERY_USED, d, 6u);
+        svc_put32(&d[2], old - 1u);
+        svc_event(s, 3u, SEC_EVT_RECOVERY_USED, d, 6u);
         r = do_activate(s, slot, 1u);
         break;
     default:

@@ -28,12 +28,12 @@ static uint8_t       g_flags;
  * flight unit this is the key store partition of the NV memory, written
  * with read-back verification. */
 static uint8_t nv_image[KS_IMAGE_LEN];
-static int nv_load(uint8_t *img, size_t len)
+static int sec_nv_load(uint8_t *img, size_t len)
 {
     (void)memcpy(img, nv_image, len);
     return 0;
 }
-static int nv_store(const uint8_t *img, size_t len)
+static int sec_nv_store(const uint8_t *img, size_t len)
 {
     (void)memcpy(nv_image, img, len);
     return 0;
@@ -41,7 +41,7 @@ static int nv_store(const uint8_t *img, size_t len)
 #else
 /* Host simulation: a file next to the FDIR NV file, which survives the
  * process "reset" (SEC_NV_FILE, else $FDIR_NV_FILE.sec, else sec_nv.bin). */
-static const char *nv_path(void)
+static const char *sec_nv_path(void)
 {
     static char path[512];
     const char *p = getenv("SEC_NV_FILE");
@@ -56,9 +56,9 @@ static const char *nv_path(void)
     }
     return "sec_nv.bin";
 }
-static int nv_load(uint8_t *img, size_t len)
+static int sec_nv_load(uint8_t *img, size_t len)
 {
-    FILE *f = fopen(nv_path(), "rb");
+    FILE *f = fopen(sec_nv_path(), "rb");
     size_t got = 0u;
 
     (void)memset(img, 0, len);
@@ -68,9 +68,9 @@ static int nv_load(uint8_t *img, size_t len)
     }
     return got == len ? 0 : -1;
 }
-static int nv_store(const uint8_t *img, size_t len)
+static int sec_nv_store(const uint8_t *img, size_t len)
 {
-    FILE *f = fopen(nv_path(), "wb");
+    FILE *f = fopen(sec_nv_path(), "wb");
     int ok;
 
     if (f == NULL) {
@@ -82,13 +82,13 @@ static int nv_store(const uint8_t *img, size_t len)
 }
 #endif
 
-static void persist(const keystore_t *ks, void *arg)
+static void sec_persist(const keystore_t *ks, void *arg)
 {
     uint8_t img[KS_IMAGE_LEN];
     size_t n = ks_encode(ks, img, sizeof(img));
 
     (void)arg;
-    if (n == 0u || nv_store(img, n) != 0) {
+    if (n == 0u || sec_nv_store(img, n) != 0) {
         g_flags |= SEC_FL_NV_FAIL;
     } else {
         g_flags &= (uint8_t)~SEC_FL_NV_FAIL;
@@ -104,7 +104,7 @@ static void persist(const keystore_t *ks, void *arg)
  * Stands for memory upsets, which the host simulation cannot produce. */
 #define SVC_SEC_INJECT 211u
 
-static uint32_t get32(const uint8_t *p)
+static uint32_t inj_get32(const uint8_t *p)
 {
     return ((uint32_t)p[0] << 24) | ((uint32_t)p[1] << 16) |
            ((uint32_t)p[2] << 8) | (uint32_t)p[3];
@@ -131,16 +131,16 @@ static pus_fail_t inject_exec(const pus_tc_t *tc, struct tc_ctx *ctx, void *arg)
     ks_slot_t *k = &g_ks.slot[tc->app_data[0]];
     (void)ctx; (void)arg;
     if (tc->subtype == 1u) {
-        k->ctr[0] = get32(&tc->app_data[1]);
-        k->ctr[1] = get32(&tc->app_data[5]);
-        k->ctr[2] = get32(&tc->app_data[9]);
+        k->ctr[0] = inj_get32(&tc->app_data[1]);
+        k->ctr[1] = inj_get32(&tc->app_data[5]);
+        k->ctr[2] = inj_get32(&tc->app_data[9]);
     } else {
         uint8_t copies = tc->app_data[1], at = tc->app_data[2], m = tc->app_data[3];
         if ((copies & 1u) != 0u) { k->key[at] ^= m; }
         if ((copies & 2u) != 0u) { k->key_copy[0][at] ^= m; }
         if ((copies & 4u) != 0u) { k->key_copy[1][at] ^= m; }
     }
-    persist(&g_ks, NULL);
+    sec_persist(&g_ks, NULL);
     return PUS_OK;
 }
 #endif
@@ -151,17 +151,17 @@ int security_init(tc_ctx_t *ctx)
 {
     uint8_t img[KS_IMAGE_LEN];
 
-    if (nv_load(img, sizeof(img)) != 0 || ks_decode(&g_ks, img, sizeof(img)) != 0) {
+    if (sec_nv_load(img, sizeof(img)) != 0 || ks_decode(&g_ks, img, sizeof(img)) != 0) {
         static const uint8_t ev[2] = { (uint8_t)(SEC_EVT_FACTORY_STATE >> 8),
                                        (uint8_t)SEC_EVT_FACTORY_STATE };
         ks_factory(&g_ks);
         g_flags |= SEC_FL_FACTORY;
-        tc_auth_init(&g_auth, &g_ks, persist, NULL);
+        tc_auth_init(&g_auth, &g_ks, sec_persist, NULL);
         sec_service_init(&g_svc, &g_auth);
         sec_service_queue(&g_svc, 2u, ev, sizeof(ev));
-        persist(&g_ks, NULL);
+        sec_persist(&g_ks, NULL);
     } else {
-        tc_auth_init(&g_auth, &g_ks, persist, NULL);
+        tc_auth_init(&g_auth, &g_ks, sec_persist, NULL);
         sec_service_init(&g_svc, &g_auth);
     }
     (void)memset(img, 0, sizeof(img));
@@ -208,10 +208,10 @@ static void emit_event(uint8_t severity, const uint8_t *aux, size_t len, void *a
     emit_tm(5u, severity, aux, len);
 }
 
-static uint16_t sat16(uint32_t v) { return v > 0xFFFFu ? 0xFFFFu : (uint16_t)v; }
-static uint8_t  sat8(uint32_t v)  { return v > 0xFFu ? 0xFFu : (uint8_t)v; }
+static uint16_t sec_sat16(uint32_t v) { return v > 0xFFFFu ? 0xFFFFu : (uint16_t)v; }
+static uint8_t  sec_sat8(uint32_t v)  { return v > 0xFFu ? 0xFFu : (uint8_t)v; }
 
-static void put32(uint8_t *p, uint32_t v)
+static void sec_put32(uint8_t *p, uint32_t v)
 {
     p[0] = (uint8_t)(v >> 24); p[1] = (uint8_t)(v >> 16);
     p[2] = (uint8_t)(v >> 8);  p[3] = (uint8_t)v;
@@ -228,25 +228,25 @@ static void build_sid3(uint8_t d[HK_SID3_LEN])
     d[1] = g_ks.active;
     for (s = 1u; s < KS_SLOTS; s++) {
         d[1u + s] = g_ks.slot[s].state;
-        put32(&d[4u + 4u * (s - 1u)], g_ks.slot[s].kcv[0]);
+        sec_put32(&d[4u + 4u * (s - 1u)], g_ks.slot[s].kcv[0]);
         if (ks_counter(&g_ks, s, &v) > 0) {
             g_auth.vote_repairs |= (uint8_t)(1u << s);
         }
-        put32(&d[12u + 4u * (s - 1u)], v);
+        sec_put32(&d[12u + 4u * (s - 1u)], v);
     }
     if (ks_challenge(&g_ks, &v) > 0) {
         g_auth.vote_repairs |= 1u;
     }
-    put32(&d[20], v);
+    sec_put32(&d[20], v);
     for (c = 0; c < (size_t)SEC_REJ_CLASSES; c++) {
-        pus_put_u16(&d[24u + 2u * c], sat16(g_auth.rej_total[c]));
+        pus_put_u16(&d[24u + 2u * c], sec_sat16(g_auth.rej_total[c]));
     }
-    d[36] = sat8(g_ks.scrub_errors);
-    d[37] = sat8(g_ks.scrub_repairs);
+    d[36] = sec_sat8(g_ks.scrub_errors);
+    d[37] = sec_sat8(g_ks.scrub_repairs);
     d[38] = (uint8_t)(g_flags | (g_svc.ev_dropped > 0u ? SEC_FL_EV_DROPPED : 0u) |
                       (ks_counter_untrusted(&g_ks, 1u) ? SEC_FL_CTR1_UNTRUSTED : 0u) |
                       (ks_counter_untrusted(&g_ks, 2u) ? SEC_FL_CTR2_UNTRUSTED : 0u));
-    pus_put_u16(&d[39], sat16(g_auth.auth_accepted));
+    pus_put_u16(&d[39], sec_sat16(g_auth.auth_accepted));
 }
 
 void security_hk_cycle(void)
@@ -271,18 +271,18 @@ void security_hk_cycle(void)
             uint8_t a[5];
             pus_put_u16(&a[0], SEC_EVT_KEY_CORRUPT);
             a[2] = (uint8_t)lost;
-            pus_put_u16(&a[3], sat16(g_ks.scrub_errors));
+            pus_put_u16(&a[3], sec_sat16(g_ks.scrub_errors));
             sec_service_queue(&g_svc, 4u, a, sizeof(a));
         }
         if (g_ks.scrub_repairs != repairs) {
             uint8_t a[4];
             pus_put_u16(&a[0], SEC_EVT_KEY_REPAIRED);
-            pus_put_u16(&a[2], sat16(g_ks.scrub_repairs));
+            pus_put_u16(&a[2], sec_sat16(g_ks.scrub_repairs));
             sec_service_queue(&g_svc, 1u, a, sizeof(a));
         }
         build_sid3(sid3);
         if (lost != 0u || g_ks.scrub_repairs != repairs) {
-            persist(&g_ks, NULL);
+            sec_persist(&g_ks, NULL);
         }
     }
     if (g_auth.vote_repairs != 0u) {
@@ -291,7 +291,7 @@ void security_hk_cycle(void)
         a[2] = g_auth.vote_repairs;
         g_auth.vote_repairs = 0u;
         sec_service_queue(&g_svc, 3u, a, sizeof(a));
-        persist(&g_ks, NULL);
+        sec_persist(&g_ks, NULL);
     }
     (void)memcpy(totals, g_auth.rej_total, sizeof(totals));
     (void)memcpy(codes, g_auth.rej_last_code, sizeof(codes));

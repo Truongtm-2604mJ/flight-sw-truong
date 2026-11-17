@@ -3,13 +3,13 @@
 
 #include <string.h>
 
-static void put16(uint8_t *p, uint32_t v)
+static void rep_put16(uint8_t *p, uint32_t v)
 {
     p[0] = (uint8_t)(v >> 8);
     p[1] = (uint8_t)v;
 }
 
-static void put32(uint8_t *p, uint32_t v)
+static void rep_put32(uint8_t *p, uint32_t v)
 {
     p[0] = (uint8_t)(v >> 24); p[1] = (uint8_t)(v >> 16);
     p[2] = (uint8_t)(v >> 8);  p[3] = (uint8_t)v;
@@ -41,10 +41,10 @@ void sec_report_cycle(sec_report_t *r, const uint32_t totals[SEC_REJ_CLASSES],
 
         if (delta > 0u && !r->open[c]) {
             /* First rejection after a quiet period: report it now. */
-            put16(&aux[0], SEC_EVT_REJECT_FIRST);
+            rep_put16(&aux[0], SEC_EVT_REJECT_FIRST);
             aux[2] = (uint8_t)c;
             aux[3] = last_code[c];
-            put32(&aux[4], totals[c]);
+            rep_put32(&aux[4], totals[c]);
             emit(severity(c), aux, 8u, arg);
             r->events_emitted++;
             r->open[c] = 1u;
@@ -58,12 +58,12 @@ void sec_report_cycle(sec_report_t *r, const uint32_t totals[SEC_REJ_CLASSES],
 
         if (r->open[c] && now_ms - r->window_start[c] >= SEC_REPORT_WINDOW_MS) {
             if (r->in_window[c] > 0u) {
-                put16(&aux[0], SEC_EVT_REJECT_SUMMARY);
+                rep_put16(&aux[0], SEC_EVT_REJECT_SUMMARY);
                 aux[2] = (uint8_t)c;
                 aux[3] = last_code[c];
-                put32(&aux[4], r->in_window[c]);
-                put32(&aux[8], totals[c]);
-                put16(&aux[12], (now_ms - r->window_start[c]) / 1000u);
+                rep_put32(&aux[4], r->in_window[c]);
+                rep_put32(&aux[8], totals[c]);
+                rep_put16(&aux[12], (now_ms - r->window_start[c]) / 1000u);
                 emit(severity(c), aux, 14u, arg);
                 r->events_emitted++;
                 r->in_window[c] = 0u;
