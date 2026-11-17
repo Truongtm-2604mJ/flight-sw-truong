@@ -1,0 +1,151 @@
+{
+ "files": [
+  {
+   "filename": "src/app/sensors.c",
+   "line_total": 19,
+   "line_covered": 4,
+   "branch_total": 6,
+   "branch_covered": 0
+  },
+  {
+   "filename": "src/app/services.c",
+   "line_total": 107,
+   "line_covered": 81,
+   "branch_total": 97,
+   "branch_covered": 61
+  },
+  {
+   "filename": "src/app/tmtc.c",
+   "line_total": 118,
+   "line_covered": 30,
+   "branch_total": 70,
+   "branch_covered": 3
+  },
+  {
+   "filename": "src/core/crc16.c",
+   "line_total": 9,
+   "line_covered": 9,
+   "branch_total": 6,
+   "branch_covered": 6
+  },
+  {
+   "filename": "src/core/pus.c",
+   "line_total": 105,
+   "line_covered": 105,
+   "branch_total": 56,
+   "branch_covered": 56
+  },
+  {
+   "filename": "src/core/sp.c",
+   "line_total": 49,
+   "line_covered": 49,
+   "branch_total": 38,
+   "branch_covered": 38
+  },
+  {
+   "filename": "src/core/tc_handler.c",
+   "line_total": 88,
+   "line_covered": 85,
+   "branch_total": 48,
+   "branch_covered": 48
+  },
+  {
+   "filename": "src/fdir/fdir.c",
+   "line_total": 421,
+   "line_covered": 214,
+   "branch_total": 182,
+   "branch_covered": 61
+  },
+  {
+   "filename": "src/fdir/mode_sm.c",
+   "line_total": 248,
+   "line_covered": 233,
+   "branch_total": 68,
+   "branch_covered": 54
+  },
+  {
+   "filename": "src/fdir/monitor.c",
+   "line_total": 80,
+   "line_covered": 80,
+   "branch_total": 48,
+   "branch_covered": 48
+  },
+  {
+   "filename": "src/fdir/nvstate.c",
+   "line_total": 66,
+   "line_covered": 66,
+   "branch_total": 12,
+   "branch_covered": 11
+  },
+  {
+   "filename": "src/fdir/schedule.c",
+   "line_total": 43,
+   "line_covered": 43,
+   "branch_total": 32,
+   "branch_covered": 32
+  },
+  {
+   "filename": "src/fdir/supervisor.c",
+   "line_total": 72,
+   "line_covered": 72,
+   "branch_total": 40,
+   "branch_covered": 36
+  },
+  {
+   "filename": "src/fdir/thermal.c",
+   "line_total": 30,
+   "line_covered": 30,
+   "branch_total": 18,
+   "branch_covered": 18
+  },
+  {
+   "filename": "src/fdir/watchdog.c",
+   "line_total": 28,
+   "line_covered": 28,
+   "branch_total": 9,
+   "branch_covered": 9
+  },
+  {
+   "filename": "src/security/keystore.c",
+   "line_total": 184,
+   "line_covered": 182,
+   "branch_total": 108,
+   "branch_covered": 89
+  },
+  {
+   "filename": "src/security/sec_report.c",
+   "line_total": 44,
+   "line_covered": 44,
+   "branch_total": 20,
+   "branch_covered": 18
+  },
+  {
+   "filename": "src/security/sec_service.c",
+   "line_total": 145,
+   "line_covered": 140,
+   "branch_total": 78,
+   "branch_covered": 60
+  },
+  {
+   "filename": "src/security/security.c",
+   "line_total": 155,
+   "line_covered": 45,
+   "branch_total": 102,
+   "branch_covered": 15
+  },
+  {
+   "filename": "src/security/tc_auth.c",
+   "line_total": 86,
+   "line_covered": 84,
+   "branch_total": 50,
+   "branch_covered": 46
+  },
+  {
+   "filename": "src/test/finj.c",
+   "line_total": 49,
+   "line_covered": 0,
+   "branch_total": 34,
+   "branch_covered": 0
+  }
+ ]
+}

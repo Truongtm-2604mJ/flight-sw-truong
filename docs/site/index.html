@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tran Manh Truong: flight software</title>
+<meta name="description" content="Tran Manh Truong, embedded and flight software engineer. LOTUS-1: RTEMS flight software with PUS TM/TC, FDIR and authenticated commanding.">
+<style>
+  :root { --ink:#1d2430; --muted:#5b6575; --line:#e3e6ea; --accent:#1f5fa8; --bg:#ffffff; --panel:#f6f7f9; }
+  @media (prefers-color-scheme: dark) {
+    :root { --ink:#e6e9ee; --muted:#a3abb8; --line:#2c323c; --accent:#7fb2ee; --bg:#14171c; --panel:#1b1f26; }
+  }
+  * { box-sizing: border-box; }
+  body { margin:0; background:var(--bg); color:var(--ink);
+         font:17px/1.6 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+  main { max-width: 760px; margin: 0 auto; padding: 48px 16px 64px; }
+  h1 { font-size: 2rem; margin: 0 0 4px; letter-spacing: -0.01em; }
+  h2 { font-size: 1.25rem; margin: 48px 0 12px; }
+  .role { color: var(--muted); margin: 0 0 24px; }
+  a { color: var(--accent); }
+  .video { position: relative; padding-top: 56.25%; background: var(--panel);
+           border: 1px solid var(--line); border-radius: 8px; overflow: hidden; }
+  .video iframe { position:absolute; inset:0; width:100%; height:100%; border:0; }
+  img { max-width: 100%; height: auto; border: 1px solid var(--line); border-radius: 8px; background:#fff; }
+  table { border-collapse: collapse; width: 100%; font-size: .95rem; }
+  td, th { text-align: left; padding: 6px 8px; border-bottom: 1px solid var(--line); vertical-align: top; }
+  th { color: var(--muted); font-weight: 600; }
+  ul { padding-left: 1.2em; }
+  .links a { margin-right: 18px; white-space: nowrap; }
+  footer { margin-top: 56px; color: var(--muted); font-size: .9rem; }
+</style>
+</head>
+<body>
+<main>
+  <h1>Tran Manh Truong</h1>
+  <p class="role">Embedded and flight software: C, RTEMS, CCSDS / ECSS PUS, fault management, verification.</p>
+  <p class="links">
+    <a href="https://github.com/Truongtm-2604mJ/flight-sw-truong">GitHub</a>
+    <a href="LOTUS-1-technical-report.pdf">Technical report (PDF)</a>
+    <a href="cv.pdf">CV</a>
+    <a href="mailto:CONTACT_EMAIL">Contact</a>
+  </p>
+
+  <h2>LOTUS-1 flight software</h2>
+  <p>Flight software for a small Earth observation satellite, on RTEMS 6 on a LEON3 processor (SIS) and
+     operated from Yamcs. In the demonstration it rejects a forged command, detects a battery
+     over-temperature, tries three bounded recoveries, goes to SAFE, and is recovered by an authenticated
+     ground procedure.</p>
+  <div class="video">
+    <iframe src="VIDEO_EMBED_URL" title="LOTUS-1 demonstration" allowfullscreen></iframe>
+  </div>
+
+  <h2>What it does</h2>
+  <ul>
+    <li><strong>TM/TC:</strong> CCSDS Space Packets, PUS-C services 1, 3, 5, 8, 11, 12, 17, 19, with verification reports for every command.</li>
+    <li><strong>FDIR:</strong> limit monitors with persistence, heartbeat supervision with bounded restarts, a watchdog, bounded thermal recovery.</li>
+    <li><strong>Modes:</strong> NOMINAL / DEGRADED / SAFE, generated from a model and checked against it in CI. SAFE is left only by ground command.</li>
+    <li><strong>Security:</strong> HMAC-SHA-256 authentication with anti-replay, key rotation, a minimal recovery key, no reply to forged commands.</li>
+  </ul>
+  <img src="architecture.png" alt="Architecture: seven RTEMS tasks, the TM/TC path with the security check, FDIR and the generated mode machine, and the Yamcs ground segment">
+
+  <h2>Evidence</h2>
+  <table>
+    <tr><th>Requirements</th><td>30, traced to design, code and tests at four levels</td></tr>
+    <tr><th>Tests</th><td>142 unit, 16 integration, a validation campaign through the ground interface, the mission scenario in CI</td></tr>
+    <tr><th>Analysis</th><td>coverage with a justification for every uncovered line, MC/DC on the FDIR guards, MISRA C:2012 static analysis</td></tr>
+    <tr><th>Timing</th><td>response time analysis of the integrated task set: U = 0.39, every deadline met</td></tr>
+    <tr><th>Honesty</th><td>a non-conformance log where open items stay open, and a report section on what this is not</td></tr>
+  </table>
+
+  <footer>Built in the Refonte Learning Spacecraft Software Engineer Program, 2026.</footer>
+</main>
+</body>
+</html>

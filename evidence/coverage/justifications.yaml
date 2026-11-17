@@ -1,0 +1,186 @@
+# LOTUS-1 integrated application (src/), migrated from Session 7 with the
+# line numbers re-mapped by source text to the integrated files.
+#
+# Classification of every flight line not executed by any test level
+# (unit + integration + validation). Read by tests/support/coverage_report.py;
+# a line not covered by an entry is UNCLASSIFIED and fails the report.
+#
+# Classes (Lab 7.2):
+#   unreachable by construction   no input can reach it; argued
+#   defensive                     reachable only through a failure the test
+#                                 environment cannot produce (OS object creation,
+#                                 driver errors, memory corruption); argued
+#   not in the flight build       compiled only in test builds or only in the
+#                                 host simulation
+# The third class of the lab, "genuinely untested, now covered by a new test",
+# does not appear here: those lines are now covered. They are listed in
+# coverage.md under "Covered after the first analysis" (C-01 to C-04).
+
+justifications:
+  - id: J-01
+    file: src/fdir/mode_sm.c
+    lines: 377-400
+    class: not in the flight build
+    argument: mode_sm_state_name / mode_sm_event_name exist only with MODE_SM_WITH_NAMES, which only the unit test build defines, and no test prints names.
+  - id: J-02
+    file: src/test/finj.c
+    lines: 1-105
+    class: not in the flight build
+    argument: Fault injection is compiled only with FDIR_TEST_BUILD. VT-TMTC-070 shows it absent from the flight build. The lines not executed are the slot reuse when one parameter is injected twice without a clear, and the full injection table.
+  - id: J-03
+    file: src/app/tmtc.c
+    lines: 34, 54-55, 99, 157-158
+    class: defensive
+    argument: >-
+      Driver and OS failures: write() to the console failing (34), the TM queue
+      full (54-55, a packet dropped and counted), message queue receive failing
+      (99), read() failing (157-158). None can be produced without a fault in
+      the console driver or the RTEMS object. The queue is sized for the worst
+      burst (48 packets): VT-TMTC-050 shows the TM drop counter at 0 over 10
+      boots and 681 packets.
+  - id: J-04
+    file: src/app/tmtc.c
+    lines: 165
+    class: not in the flight build
+    argument: Host simulation only (#ifndef __rtems__). When the ground closes the link (EOF on stdin), the host process shuts down. The campaign stops the spacecraft with SIGKILL instead, so this line never runs; on RTEMS the branch above it waits and retries.
+  - id: J-05
+    file: src/app/tmtc.c
+    lines: 200-201
+    class: not in the flight build
+    argument: Turns off terminal echo when the console is a terminal (isatty). The host campaigns use pipes; the SIS runs, on a pseudo-terminal, execute it. It is environment-specific, not a behaviour of the flight software.
+  - id: J-06
+    file: src/app/tmtc.c
+    lines: 214, 220, 234, 244
+    class: defensive
+    argument: Return after an RTEMS object creation or task start failure at boot. RTEMS objects are statically configured (CONFIGURE_MAXIMUM_*, sized in lab5.c with margin); a failure means a configuration error, which the first boot of any build would show.
+  - id: J-07
+    file: src/fdir/fdir.c
+    lines: 775, 792, 802, 824
+    class: defensive
+    argument: >-
+      Boot failures: mutex creation (775), an invalid monitor definition (792:
+      the definitions are constants, checked by mon_check_definition, and
+      test_monitor covers the check), supervisor initialisation with invalid
+      constants (802), and mode machine initialisation with a non-boot state
+      (824: boot_mode is NOMINAL or SAFE by construction, and
+      test_boot_in_degraded_is_refused_and_enters_safe covers the refusal in
+      the module).
+  - id: J-08
+    file: src/app/main.c
+    lines: 104, 229-230, 240-241, 276-277, 287-288, 308-309
+    class: defensive
+    argument: RTEMS rate monotonic period, task creation, task start, FDIR boot, TM/TC task start and supervised task registration failures at boot. Each prints the reason and shuts down. They are statically configured, as J-06.
+  - id: J-09
+    file: src/app/main.c
+    lines: 330
+    class: unreachable by construction
+    argument: The closing brace of Init after rtems_task_exit(), which does not return (RUN_SECONDS is 0 in every build tested here). gcov attributes the function's return to this line.
+  - id: J-10
+    file: src/app/services.c
+    lines: 213, 218
+    class: defensive
+    argument: services_register() failing because the handler's table is full. 5 services are registered against a table of TC_MAX_SERVICES = 8; the table-full path of tc_register_service itself is unit tested (test_s7_register_service_rejects_null_and_full_table).
+  - id: J-11
+    file: src/fdir/fdir.c
+    lines: 120
+    class: not in the flight build
+    argument: Host simulation NV file shorter than a record, treated as blank. On RTEMS the NV record is a RAM array. The decoding of a corrupted record, the flight-relevant part, is unit tested (test_nv_corruption_falls_back_to_cold_start).
+  - id: J-12
+    file: src/fdir/fdir.c
+    lines: 260-267
+    class: defensive
+    argument: The hook that reports an invalid mode state (event 0x0405). It is reached only if g_sm.state is corrupted in memory, which no ground command or test input can do. The generated recovery (enter SAFE, keep latched faults, call this hook) is tested at unit level (test_invalid_state_recovers_to_safe_keeping_latched_events, TC-FAIL-02). This function only formats the event.
+  - id: J-13
+    file: src/fdir/fdir.c
+    lines: 315
+    class: unreachable by construction
+    argument: fdir_set_inhibit() rejecting a duration outside 1..3600 s. Its only caller, TC(19,9), is rejected at acceptance for those values before execution (svc19_check; IT-12 and VT-TMTC-020 show TM(1,2) code 9 for 0 s). The check is kept as the function's own contract.
+
+# Lines that the first full analysis found not executed and that were
+# testable: each got a test (class 3 of the lab, "genuinely untested, now
+# covered by a new test"). The first analysis is kept in initial/coverage-initial.md.
+  # ---- Capstone: telecommand security in the integrated application ---------------
+  - id: J-14
+    file: src/security/security.c
+    lines: 51, 57, 77
+    class: not in the flight build
+    argument: Host simulation of the non volatile key store only (the #else branch of __rtems__) - the SEC_NV_FILE override, the default file name when FDIR_NV_FILE is not set, and fopen() failing. The tests always set FDIR_NV_FILE. On RTEMS the store is the NV partition (a RAM image on SIS, NCR-04).
+  - id: J-15
+    file: src/security/security.c
+    lines: 92
+    class: defensive
+    argument: The NV write of the key store failing sets SEC_FL_NV_FAIL in SID 3, so the operator knows the counters may not survive a reset. The host file system cannot be made to fail a write inside the campaign. The flag is decoded by the MDB and shown on operator.par.
+  - id: J-16
+    file: src/security/security.c
+    lines: 171, 176
+    class: defensive
+    argument: Registration of service 210 (and 211 in the test build) failing at boot. The handler's service table has a fixed size and the registrations are compile-time constants, so this cannot fail. If it did, security_init() returns -1 and Init() stops the boot before any TC is accepted (fail closed).
+  - id: J-17
+    file: src/security/security.c
+    lines: 126
+    class: not in the flight build
+    argument: TC(211,x) with an unknown subtype. Service 211 (memory upset injection) exists only with FDIR_TEST_BUILD, like service 200 (VT-TMTC-070 shows the flight build rejecting it).
+  - id: J-18
+    file: src/security/security.c
+    lines: 272-275
+    class: tested at another level
+    argument: The KEY_CORRUPT event, raised when the scrub finds two of three copies of a key lost. The detection is unit tested (test_scrub_detects_lost_key, test_recovery_activate_spare, where the slot goes CORRUPT and recovery activates the spare). The full operator recovery ran end to end in the Session 8 system tests. It is not in the integrated campaign, because it leaves the key store on the spare key for every later run. Next step - a campaign run of its own with a fresh key store (evidence/ncr-log.md, future work).
+  - id: J-19
+    file: src/security/tc_auth.c
+    lines: 114, 125
+    class: tested at another level
+    argument: A vote repair noticed by the TC path rather than by the 1 Hz HK path (114 for the recovery challenge, 125 for a slot counter). In the campaign the HK cycle always reads the upset copies first (VT-SEC-020 covers that path in security.c). The vote itself is the same keystore.c function, unit tested by test_counter_vote. The challenge copies have no injection command.
+  - id: J-19b
+    file: src/security/security.c
+    lines: 238
+    class: tested at another level
+    argument: The HK cycle noticing a vote repair of the recovery challenge copies. No injection command can upset the challenge (TC(211,x) reaches only keys and slot counters), so the campaign cannot produce it. The vote is the keystore.c function unit tested by test_counter_vote (which upsets the challenge copies directly). The same path for a slot counter (line 233) is covered by VT-SEC-020.
+  - id: J-20
+    file: src/security/keystore.c
+    lines: 158
+    class: unreachable by construction
+    argument: ks_kcv() when tinycrypt's HMAC returns an error. It does so only for a NULL pointer or a zero key length, and here the key is a fixed 32-octet array and the label a constant.
+  - id: J-21
+    file: src/security/keystore.c
+    lines: 349
+    class: defensive
+    argument: A key store image whose CRC is valid but whose active slot is not 1 or 2. Only a corrupted image that still passes the CRC-16 can do this. The decode refuses it, and security_init() falls back to the factory state, which needs a first contact (fail closed).
+  - id: J-22
+    file: src/security/sec_service.c
+    lines: 144, 182, 215-217
+    class: unreachable by construction
+    argument: Execution failures of ACTIVATE (144) and ERASE (182) after the acceptance check has verified exactly the conditions they test. Check and execute run in one critical section under the tc lock, so nothing can change in between. 215-217 is the default of the execution switch, for a subtype the check already refused (commented as such). The branches are kept so each function is safe on its own.
+
+covered_after_analysis:
+  - id: C-01
+    where: pus.c 55, 120, 123; tc_handler.c 97
+    what: Packet build errors (output buffer too small, oversize application data, ack flags out of range) and their propagation through tc_emit_tm()
+    tests: unit test_s7_tm_build_rejects_too_small_output_buffer, test_s7_tc_build_rejects_oversize_data_and_bad_flags, test_s7_emit_tm_returns_the_build_error
+  - id: C-02
+    where: services.c 39, 66, 69-70, 80-81, 96, 99, 103, 107, 135, 141, 163, 169, 174-175 (135 after the second full run)
+    what: Every acceptance check of services 8, 11, 12, 19 and 200 that no test had sent a malformed command to, and the execution of TC(11,2) and TC(11,3)
+    tests: integration IT-12 (13 malformed telecommands, codes 8 and 9; schedule disable and reset)
+  - id: C-03
+    where: fdir6.c 372-373
+    what: A missed heartbeat while FDIR actions are inhibited, reported with ACTION INHIBITED (restart) and not restarted
+    tests: integration IT-13
+  - id: C-04
+    where: fdir6.c 554
+    what: The failed-task bit in full housekeeping. It is set only when a task has escalated while the vehicle still sends full HK, which happens only for PL_LOG (to DEGRADED). No system test had exercised the PL_LOG escalation, and the requirement did not mention it. FDIR-050 was refined and a validation test added.
+    tests: validation VT-FDIR-050b
+  - id: C-05
+    where: sensors5.c 26, 29
+    what: The sensor model's single sample glitches (every 137th and 211th sample). They were not reached because the first coverage run shortened the false positive run to 30 s; now it runs the full 300 s.
+    tests: validation VT-FDIR-070 (300 s)
+  - id: C-05
+    where: sec_service.c 83-86, 93, 106, 112, 117, 121, 180-187 (capstone analysis)
+    what: Acceptance checks of service 210 that no test had reached (no data, unknown subtype with no data, a short LOAD_KEY, a slot that does not exist, recovery commands under the operational key or with short data), and the execution of ERASE
+    tests: unit test_210_remaining_acceptance_and_erase (test_tc_auth.c)
+  - id: C-06
+    where: services.c 44, 52 (capstone analysis)
+    what: TC(8,1) with one octet of data, and with an unknown function code
+    tests: validation VT-PL-010 (codes 9, 8, 9 for the three malformed TC(8,x))
+  - id: C-07
+    where: security.c 107-145, 233, 238, 279-294; keystore.c 72 (capstone analysis)
+    what: The memory-upset injection service (test build), the counter vote with no majority, the KEY_REPAIRED and COUNTER_VOTE events from the HK cycle
+    tests: validation VT-SEC-020 (a flipped key copy repaired; counter copies N, N+3, N+7 voted to N+7)

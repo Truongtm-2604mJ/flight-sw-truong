@@ -1,0 +1,10 @@
+{
+  "_warning": "LAB TEST KEYS ONLY. Published in the repository, therefore worthless as secrets. A flight unit is provisioned from a key management facility and these values never leave it (security-report.md, Section 3).",
+  "recovery_key": "173d4e99be34a76e70ea2c12de9893d8ade4819b8214fa2e1e7187918897b89e",
+  "kek": "04651ec4884440b00876556dd1181ff5",
+  "provisioned_key": "52e3fd742fc0bbdf862623f26b781af4cbde1951173845e5ce7bfc0026798d01",
+  "spare_keys": [
+    "cb589bcedb94241b2b8c253fce0f7607b134418fb7e296e21b1b2a8fa6fa64a1",
+    "a3f858dc0c260a16dcc02e67f7e246ec669a71fda7e36cbcab7897c4a0b5633a"
+  ]
+}

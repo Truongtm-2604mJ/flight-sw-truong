@@ -30,13 +30,16 @@
 
 #include "crc16.h"
 #include "fdir.h"
-#include "fdir_app.h"
+#include "mission.h"
 #include "mode_sm.h"
 #include "pus.h"
 #include "services.h"
 #include "supervisor.h"
 #include "tc_handler.h"
-#include "tmtc5.h"
+#include "tmtc.h"
+#include "keystore.h"
+#include "security.h"
+#include "tc_auth.h"
 #include "schedule.h"
 
 /* ---- RTEMS configuration --------------------------------------------------------- */
@@ -506,6 +509,128 @@ static void it13_restart_refused_under_inhibit(void)
     EXPECT(find_event(SUP_EVT_TASK_RESTARTED) < 0);
 }
 
+/* ---- Capstone: payload command and telecommand security -------------------------------- */
+
+static void set_payload(uint8_t on)
+{
+    uint8_t d[2];
+    d[0] = FUNC_PAYLOAD;
+    d[1] = on;
+    tc_send(SVC_FUNCTION, 1, d, 2);
+}
+
+/* PL-010..030: the payload runs only in NOMINAL and only when the ground
+ * enabled it; SAFE clears the enable; enabling outside NOMINAL fails. */
+static void it14_payload_command(void)
+{
+    set_mode((uint8_t)MODE_NOMINAL);
+    fdir_supervisor_cycle();
+    set_payload(0);
+    EXPECT(!fdir_payload_on());
+    cap_reset();
+    set_payload(1);
+    EXPECT(is_report(0, 1) && is_report(2, 7));      /* TM(1,1), event, TM(1,7) */
+    EXPECT(find_event(EVT_PAYLOAD) == 1);
+    EXPECT(fdir_payload_on());
+    set_mode((uint8_t)MODE_SAFE);
+    fdir_supervisor_cycle();
+    EXPECT(fdir_mode() == MODE_SAFE && !fdir_payload_on());
+    cap_reset();
+    set_payload(1);
+    EXPECT(is_report(0, 1) && is_report(1, 8) && cap[1].data[4] == PUS_FAIL_EXECUTION);
+    set_mode((uint8_t)MODE_NOMINAL);
+    fdir_supervisor_cycle();
+    EXPECT(fdir_mode() == MODE_NOMINAL && !fdir_payload_on());   /* enable was cleared */
+}
+
+/* A secured TC: app data + SPI + SEQ + MAC, MAC from a factory key store
+ * (the same provisioned key the spacecraft starts with). */
+static size_t secure_tc(uint8_t *out, uint8_t svc, uint8_t sub, const uint8_t *data,
+                        size_t len, uint8_t spi, uint32_t seq, int forge)
+{
+    static keystore_t ks;
+    uint8_t app[PUS_TC_MAX_DATA];
+    size_t n, t;
+    uint16_t crc;
+
+    ks_factory(&ks);
+    if (len > 0u) {
+        memcpy(app, data, len);
+    }
+    app[len] = spi;
+    pus_put_u32(&app[len + 1u], seq);
+    memset(&app[len + 5u], 0, KS_MAC_LEN);
+    n = build_tc(out, APID_CMD, svc, sub, app, len + SEC_TRAILER_LEN);
+    t = 6u + 5u + len;
+    (void)ks_mac(&ks, spi, out, t + 5u, &out[t + 5u]);
+    if (forge) {
+        out[t + 5u] ^= 0x01u;                      /* one bit of the MAC */
+    }
+    crc = crc16_ccitt(out, n - 2u);
+    out[n - 2u] = (uint8_t)(crc >> 8);
+    out[n - 1u] = (uint8_t)crc;
+    return n;
+}
+
+/* SEC-010..060 through the real TC chain, with security_init() as main.c
+ * does it: factory key store, first contact, authenticated TC executes,
+ * forged and plain TCs are silent, replay refused. */
+static void it15_security(void)
+{
+    uint8_t f[PUS_MAX_PACKET];
+    uint8_t floor_cmd[5] = { 1u, 0u, 0u, 0u, 0u };     /* slot 1, floor 0 */
+    uint32_t rejected;
+    size_t n;
+
+    EXPECT(security_init(tmtc_tc_ctx()) == 0);
+    cap_reset();
+    n = secure_tc(f, 17, 1, NULL, 0, 1u, 1u, 0);        /* before first contact */
+    tmtc_dispatch(f, n);
+    EXPECT(cap_n == 0u);
+    n = secure_tc(f, SEC_SVC, SEC_TC_RECOVERY_COUNTER, floor_cmd, 5u, 0u, 1u, 0);
+    tmtc_dispatch(f, n);                               /* first contact, challenge 1 */
+    EXPECT(is_report(0, 1) && is_report(1, 7));
+    cap_reset();
+    n = secure_tc(f, 17, 1, NULL, 0, 1u, 1u, 0);
+    tmtc_dispatch(f, n);
+    EXPECT(cap_n == 3u && is_report(0, 1) && find(17, 2, 0) == 1 && is_report(2, 7));
+    rejected = tmtc_tc_ctx()->rejected;
+    cap_reset();
+    tmtc_dispatch(f, n);                               /* replay */
+    n = secure_tc(f, 17, 1, NULL, 0, 1u, 2u, 1);       /* forged MAC */
+    tmtc_dispatch(f, n);
+    n = build_tc(f, APID_CMD, 17, 1, NULL, 0);          /* no trailer */
+    tmtc_dispatch(f, n);
+    EXPECT(cap_n == 0u);                               /* no TM(1,2): no oracle */
+    EXPECT(tmtc_tc_ctx()->rejected == rejected + 3u);
+}
+
+/* A TC released by the onboard schedule was authenticated inside its
+ * TC(11,4) and carries no trailer: it is executed (trusted release). */
+static void it16_scheduled_release_trusted(void)
+{
+    uint8_t inner[PUS_MAX_PACKET], f[PUS_MAX_PACKET];
+    uint8_t d[1 + 4 + PUS_MAX_PACKET];
+    uint8_t inner_req[PUS_REQUEST_ID_LEN];
+    size_t n = build_tc(inner, APID_CMD, 17, 1, NULL, 0);
+    memcpy(inner_req, last_req, sizeof(inner_req));
+    d[0] = 1u;
+    pus_put_u32(&d[1], 0u);
+    memcpy(&d[5], inner, n);
+    n = secure_tc(f, SVC_SCHEDULE, 4, d, 5u + (size_t)(inner[4] * 256u + inner[5] + 7u),
+                  1u, 3u, 0);
+    tmtc_dispatch(f, n);
+    EXPECT(is_report(1, 7));
+    cap_reset();
+    n = secure_tc(f, SVC_SCHEDULE, 1, NULL, 0, 1u, 4u, 0);   /* enable (SAFE suspended it) */
+    tmtc_dispatch(f, n);
+    EXPECT(is_report(1, 7));
+    cap_reset();
+    fdir_sched_cycle();
+    memcpy(last_req, inner_req, sizeof(last_req));
+    EXPECT(cap_n == 3u && is_report(0, 1) && is_report(2, 7) && find(17, 2, 0) == 1);
+}
+
 /* ---- Init --------------------------------------------------------------------------------- */
 
 #ifdef INT_COVERAGE
@@ -553,6 +678,10 @@ rtems_task Init(rtems_task_argument arg)
     run_case("IT-11", "TC_RX and SCHED paths concurrently: serialised", it11_concurrent_dispatch);
     run_case("IT-12", "service acceptance checks: 13 malformed TCs, codes 8/9", it12_service_acceptance_checks);
     run_case("IT-13", "missed heartbeat under inhibit: reported, no restart", it13_restart_refused_under_inhibit);
+    run_case("IT-14", "payload: ground enable, NOMINAL only, SAFE clears it", it14_payload_command);
+    /* From here on, telecommand security is active (as in main.c). */
+    run_case("IT-15", "security: first contact, authenticated, forged/replay silent", it15_security);
+    run_case("IT-16", "scheduled TC released without trailer (trusted)", it16_scheduled_release_trusted);
 
 #ifdef INT_COVERAGE
     __gcov_dump();    /* before the marker: the runner stops the image on it */

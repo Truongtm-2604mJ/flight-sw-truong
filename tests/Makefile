@@ -18,37 +18,24 @@
 # .github/workflows/nightly-target.yml), SIS 2.30.
 
 ROOT   := ..
-S4     := $(ROOT)/labs/session-04
-S5     := $(ROOT)/labs/session-05
-S6     := $(ROOT)/labs/session-06
 OUT    ?= build
 PYTHON ?= python3
+EVIDENCE := $(ROOT)/evidence
 
 UNITY  := support/unity
-GEN    := $(S6)/lab-6.2-generation/generated
 
-# ---- Flight sources, by module ------------------------------------------------
-SP_SRC    := $(S4)/lab-4.1-space-packet/sp.c
-PUS_SRC   := $(S4)/lab-4.2-pus-service17/crc16.c $(S4)/lab-4.2-pus-service17/pus.c \
-             $(S4)/lab-4.2-pus-service17/tc_handler.c
-MON_SRC   := $(S5)/lab-5.1-monitoring/monitor.c
-LIVE_SRC  := $(S5)/lab-5.2-liveness/supervisor.c $(S5)/lab-5.2-liveness/watchdog.c \
-             $(S5)/lab-5.2-liveness/nvstate.c
-SCHED_SRC := $(S5)/lab-5.3-safe-mode/schedule.c
-MODE_SRC  := $(GEN)/mode_sm.c
-APP_SRC   := $(S5)/app/services.c $(S5)/app/tmtc5.c $(S5)/app/sensors5.c \
-             $(S6)/app/fdir6.c $(S5)/lab-5.4-fault-injection/finj.c
-CORE_SRC  := $(SP_SRC) $(PUS_SRC) $(MON_SRC) $(LIVE_SRC) $(SCHED_SRC) $(MODE_SRC)
-FLIGHT_SRC := $(CORE_SRC) $(APP_SRC) $(S5)/app/lab5.c
-
-INC := -I$(S4)/lab-4.1-space-packet -I$(S4)/lab-4.2-pus-service17 \
-       -I$(S5)/lab-5.1-monitoring -I$(S5)/lab-5.2-liveness -I$(S5)/lab-5.3-safe-mode \
-       -I$(S5)/lab-5.4-fault-injection -I$(S5)/app -I$(S6)/app -I$(GEN)
-SIM := -I$(S5)/host-sim
+# ---- Flight sources: the single list in src/sources.mk ---------------------------
+include $(ROOT)/src/sources.mk
+SP_SRC    := $(SRC_ROOT)/core/sp.c
+PUS_SRC   := $(SRC_ROOT)/core/crc16.c $(SRC_ROOT)/core/pus.c $(SRC_ROOT)/core/tc_handler.c
+APP_LIB_SRC := $(LIB_SRC) $(TEST_SRC)
+FLIGHT_SRC := $(OWN_FLIGHT_SRC)
+INC := $(SRC_INC)
+SIM := $(SIM_INC)
 
 # ---- Warning sets ---------------------------------------------------------------
 # Maximum set used on flight code (Lab 7.2). -Wunused-macros is left out of the
-# host build only: the RTEMS configuration macros in lab5.c are consumed by
+# host build only: the RTEMS configuration macros in main.c are consumed by
 # <rtems/confdefs.h>, which the host simulation does not have (findings log
 # SA-03).
 WARN_MAX := -std=c99 -Wall -Wextra -Wpedantic -Wconversion -Wsign-conversion \
@@ -63,14 +50,18 @@ WARN_TEST := -std=c99 -Wall -Wextra -Wpedantic -Wshadow -Werror
 CFLAGS_UNIT := -O1 -g $(WARN_TEST) -DUNITY_INCLUDE_DOUBLE=0 -I$(UNITY) $(INC) \
                -DMODE_SM_WITH_NAMES
 
-UNIT_SUITES := test_sp test_pus test_monitor test_liveness test_schedule test_mode_sm
+UNIT_SUITES := test_sp test_pus test_monitor test_liveness test_schedule test_mode_sm \
+               test_thermal test_keystore test_tc_auth
 
 test_sp_SRC       := $(SP_SRC)
 test_pus_SRC      := $(PUS_SRC) $(SP_SRC)
 test_monitor_SRC  := $(MON_SRC)
-test_liveness_SRC := $(LIVE_SRC) $(S4)/lab-4.2-pus-service17/crc16.c
+test_liveness_SRC := $(LIVE_SRC) $(SRC_ROOT)/core/crc16.c
 test_schedule_SRC := $(SCHED_SRC)
 test_mode_sm_SRC  := $(MODE_SRC)
+test_thermal_SRC  := $(THERM_SRC)
+test_keystore_SRC := $(SEC_LIB_SRC) $(PUS_SRC) $(SP_SRC)
+test_tc_auth_SRC  := $(SEC_LIB_SRC) $(PUS_SRC) $(SP_SRC)
 
 .PHONY: all test unit integration validation target warnings coverage coverage-full \
         mcdc static tools evidence matrix clean
@@ -102,27 +93,27 @@ unit: $(UNIT_BINS)
 # The same integration program runs on the host simulation of the RTEMS API
 # (here) and on RTEMS / SIS (make target). It prints a termination marker
 # and exits; support/run_image.py turns the marker into an exit code.
-INT_SRC := integration/int_tc_path.c $(CORE_SRC) $(APP_SRC)
+INT_SRC := integration/int_tc_path.c $(APP_LIB_SRC)
 INT_LDWRAP := -Wl,--wrap=tmtc_tm_sink
 
-$(OUT)/integration/int_tc_path.host: $(INT_SRC) $(S5)/host-sim/rtems_shim.c | $(OUT)/integration
+$(OUT)/integration/int_tc_path.host: $(INT_SRC) $(SIM_SRC) | $(OUT)/integration
 	$(CC) -O1 -g -std=gnu99 -Wall -Wextra -Werror -DFDIR_TEST_BUILD $(SIM) $(INC) \
-	    $(INT_EXTRA) -o $@ $(INT_SRC) $(S5)/host-sim/rtems_shim.c -lpthread $(INT_LDWRAP)
+	    $(INT_EXTRA) -o $@ $(INT_SRC) $(SIM_SRC) -lpthread $(INT_LDWRAP)
 
 integration: $(OUT)/integration/int_tc_path.host
-	rm -f $(OUT)/integration/nv.bin
+	rm -f $(OUT)/integration/nv.bin $(OUT)/integration/nv.bin.sec
 	FDIR_NV_FILE=$(OUT)/integration/nv.bin $(PYTHON) support/run_image.py --timeout 120 --log $(OUT)/integration/int_tc_path.host.log \
 	    -- $(OUT)/integration/int_tc_path.host
 
 # ---- Validation level ---------------------------------------------------------------
 # Drives the complete application through the ground interface only.
-APP_DIR := $(S6)/app
+APP_BUILD := $(abspath $(ROOT)/build)
 validation:
-	$(MAKE) -C $(APP_DIR) host
+	$(MAKE) -C $(ROOT) host
 	$(PYTHON) validation/run_campaign.py --target host-sim \
-	    --spawn $(abspath $(APP_DIR))/lab6-test.host \
-	    --spawn-flight $(abspath $(APP_DIR))/lab6-flight.host \
-	    --out $(ROOT)/labs/session-07/validation/results-host-sim
+	    --spawn $(APP_BUILD)/host/lotus1-test.host \
+	    --spawn-flight $(APP_BUILD)/host/lotus1-flight.host \
+	    --out $(EVIDENCE)/validation/results-host-sim
 
 # ---- Target level (RTEMS 6 / LEON3, SIS) --------------------------------------------------
 RTEMS_PREFIX ?= $(HOME)/quick-start/rtems/6
@@ -138,11 +129,12 @@ $(OUT)/integration/int_tc_path.exe: $(INT_SRC) | $(OUT)/integration
 target: $(OUT)/integration/int_tc_path.exe
 	$(PYTHON) support/run_image.py --pty --timeout 300 --log $(OUT)/integration/int_tc_path.sis.log \
 	    -- $(SIS) -leon3 -r $(OUT)/integration/int_tc_path.exe
-	$(MAKE) -C $(APP_DIR) rtems
+	$(MAKE) -C $(ROOT) rtems RTEMS_PREFIX=$(RTEMS_PREFIX)
 	$(PYTHON) validation/run_campaign.py --target sis --pty --nv-volatile \
-	    --spawn "$(SIS) -leon3 -rt -r $(abspath $(APP_DIR))/lab6-test.exe" \
-	    --spawn-flight "$(SIS) -leon3 -rt -r $(abspath $(APP_DIR))/lab6-flight.exe" \
-	    --out $(ROOT)/labs/session-07/validation/results-sis
+	    --spawn "$(SIS) -leon3 -rt -r $(APP_BUILD)/rtems/lotus1-test.exe" \
+	    --spawn-flight "$(SIS) -leon3 -rt -r $(APP_BUILD)/rtems/lotus1-flight.exe" \
+	    --integration-log $(abspath $(OUT))/integration/int_tc_path.sis.log \
+	    --out $(EVIDENCE)/validation/results-sis
 
 # ---- Static checks ------------------------------------------------------------------------
 warnings:
@@ -151,7 +143,7 @@ warnings:
 	done; done; echo "== warnings: $(words $(FLIGHT_SRC)) flight sources x 2 builds, 0 warnings"
 
 static: | $(OUT)/reports
-	$(PYTHON) support/static_analysis.py --out $(ROOT)/labs/session-07/static-analysis \
+	$(PYTHON) support/static_analysis.py --out $(EVIDENCE)/static-analysis \
 	    -- $(SIM) $(INC) -- $(FLIGHT_SRC)
 
 # ---- Coverage -------------------------------------------------------------------------------
@@ -160,8 +152,7 @@ static: | $(OUT)/reports
 # coverage-full  + the validation campaign on instrumented host builds of the
 #                application (about 10 min; release job and the committed report)
 COV := $(OUT)/cov
-COV_APP_SRC := $(S5)/app/lab5.c $(APP_SRC) $(CORE_SRC) $(S5)/host-sim/rtems_shim.c \
-               support/gcov_periodic.c
+COV_APP_SRC := $(APP_SRC) $(SIM_SRC) support/gcov_periodic.c
 COV_APP_FLAGS := --coverage -fprofile-update=atomic -O0 -g -std=gnu99 $(SIM) $(INC) \
                  -Wl,--wrap=_exit -lpthread
 
@@ -169,28 +160,31 @@ coverage:
 	rm -rf $(COV)/unit $(COV)/integration
 	$(MAKE) OUT=$(COV) UNIT_EXTRA="--coverage -O0" INT_EXTRA="--coverage -fprofile-update=atomic -O0 -DINT_COVERAGE" unit integration
 	$(PYTHON) support/coverage_report.py --objdir $(COV) --root $(ROOT) --no-enforce \
-	    --justifications $(ROOT)/labs/session-07/coverage/justifications.yaml \
+	    --justifications $(EVIDENCE)/coverage/justifications.yaml \
 	    --out $(OUT)/coverage-report
 
 coverage-full:
 	rm -rf $(COV)
 	$(MAKE) OUT=$(COV) UNIT_EXTRA="--coverage -O0" INT_EXTRA="--coverage -fprofile-update=atomic -O0 -DINT_COVERAGE" unit integration
 	mkdir -p $(COV)/validation
-	$(CC) -DFDIR_TEST_BUILD -o $(COV)/validation/lab6-test.host $(COV_APP_SRC) $(COV_APP_FLAGS)
-	$(CC) -o $(COV)/validation/lab6-flight.host $(COV_APP_SRC) $(COV_APP_FLAGS)
+	$(CC) -DFDIR_TEST_BUILD -o $(COV)/validation/lotus1-test.host $(COV_APP_SRC) $(TEST_SRC) $(COV_APP_FLAGS)
+	$(CC) -o $(COV)/validation/lotus1-flight.host $(COV_APP_SRC) $(COV_APP_FLAGS)
 	-$(PYTHON) validation/run_campaign.py --target host-sim-coverage --fp-seconds 300 \
-	    --spawn $(abspath $(COV))/validation/lab6-test.host \
-	    --spawn-flight $(abspath $(COV))/validation/lab6-flight.host \
+	    --spawn $(abspath $(COV))/validation/lotus1-test.host \
+	    --spawn-flight $(abspath $(COV))/validation/lotus1-flight.host \
 	    --out $(COV)/validation/campaign
+	-$(PYTHON) $(ROOT)/demo/scenario.py --spawn $(abspath $(COV))/validation/lotus1-test.host \
+	    --log $(COV)/validation/scenario.log
 	$(PYTHON) support/coverage_report.py --objdir $(COV) --root $(ROOT) \
-	    --out $(ROOT)/labs/session-07/coverage
+	    --justifications $(EVIDENCE)/coverage/justifications.yaml \
+	    --out $(EVIDENCE)/coverage
 
 mcdc:
-	$(PYTHON) support/mcdc_clang.py --root $(ROOT) --out $(ROOT)/labs/session-07/coverage
+	$(PYTHON) support/mcdc_clang.py --root $(ROOT) --out $(EVIDENCE)/coverage
 
 # Copy the host test outputs into the committed evidence, then rebuild the
 # traceability matrix from them (Lab 7.4).
-EVID := $(ROOT)/labs/session-07/test-runs
+EVID := $(EVIDENCE)/test-runs
 evidence: unit integration
 	mkdir -p $(EVID)
 	for t in $(UNIT_BINS); do echo "### $$t"; cat $$t.txt; done > $(EVID)/unit-results.txt

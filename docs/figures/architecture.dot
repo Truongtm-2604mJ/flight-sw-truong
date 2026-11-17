@@ -1,0 +1,57 @@
+digraph lotus1 {
+  rankdir=LR; compound=true; newrank=true;
+  graph [fontname="Helvetica", fontsize=11, nodesep=0.25, ranksep=0.45, pad=0.2];
+  node  [fontname="Helvetica", fontsize=10, shape=box, style="rounded,filled", fillcolor="#ffffff", color="#555555"];
+  edge  [fontname="Helvetica", fontsize=9, color="#555555"];
+
+  subgraph cluster_ground {
+    label="Ground segment (ground/, mcs/)"; style="rounded,filled"; fillcolor="#eef3fa"; color="#8aa4c8";
+    yamcs   [label="Yamcs 5.13 MCS\ninstance lotus1\nXTCE MDB, displays, stacks"];
+    bridge  [label="bridge + security unit\nHMAC-SHA-256/128 trailer\nper-slot counter (secunit.py)"];
+    raw     [label="raw uplink :10026\n(no trailer: forged TC demo)", fillcolor="#fdf1e6"];
+    yamcs -> bridge [label="TC / TM\nUDP"];
+  }
+
+  subgraph cluster_obc {
+    label="On-board software - one RTEMS 6 application (src/)"; style="rounded,filled"; fillcolor="#f6f6f6"; color="#999999";
+
+    subgraph cluster_link {
+      label="TM/TC path"; style="rounded"; color="#bbbbbb";
+      tcrx   [label="TC_RX  P40\naperiodic"];
+      auth   [label="security_tc_check\nstructure > CRC > MAC >\nfreshness > commit\n(src/security)", fillcolor="#fbeaea"];
+      handler[label="tc_handler + services\nPUS 1, 3, 5, 8, 11, 17,\n200 (test build), 210"];
+      tmtx   [label="TM_TX  P50\naperiodic\nmessage queue TMQ1"];
+      tcrx -> auth -> handler;
+    }
+
+    subgraph cluster_fdir {
+      label="FDIR and mode management (src/fdir)"; style="rounded"; color="#bbbbbb";
+      sup    [label="SUP  P5  2000 ms\nliveness, inhibit expiry,\nmode_sm_step, watchdog kick"];
+      modesm [label="mode_sm (generated from\nmodel/mode_machine.yaml)\nNOMINAL / DEGRADED / SAFE", fillcolor="#eaf5ea"];
+      mon    [label="monitors\nV_BUS, T_BAT, T_OBC\npersistence filter"];
+      therm  [label="thermal recovery\n3 attempts, 10 s apart"];
+      nv     [label="nvstate\n(boot count, cause)"];
+      wdog   [label="WDOG timer\n100 ms"];
+      sched  [label="SCHED  P45  1000 ms\ntime-tagged TCs (trusted)"];
+      mon -> therm -> modesm [style=dashed];
+      sup -> modesm; sup -> wdog [label="kick"]; modesm -> nv;
+    }
+
+    subgraph cluster_app {
+      label="Application tasks (src/app)"; style="rounded"; color="#bbbbbb";
+      acs   [label="ACS_CTRL  P10\n100 ms"];
+      hk    [label="TM_HK  P20  500 ms\nsensors, monitors, HK SID 1,\nsecurity HK SID 3"];
+      pl    [label="PL_LOG  P30  1000 ms\nruns if payload_on"];
+    }
+    hk -> mon;
+    handler -> modesm [label="TC(8,1)"];
+    handler -> sched [label="TC(11,x)"];
+    sched -> handler [label="release"];
+    modesm -> pl [label="payload_allowed\n&& payload_cmd", style=dashed];
+    hk -> tmtx; handler -> tmtx [label="TM(1,x)"]; modesm -> tmtx [label="events\nAPID 0x021"];
+  }
+
+  bridge -> tcrx [label="UART (hex lines)\nSIS console / host pty", lhead=cluster_link];
+  raw -> tcrx [style=dashed];
+  tmtx -> bridge [label="TM APIDs\n0x010/0x020/0x021/0x022"];
+}

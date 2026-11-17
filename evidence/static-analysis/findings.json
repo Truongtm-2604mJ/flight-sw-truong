@@ -1,0 +1,1439 @@
+[
+ {
+  "tool": "gcc",
+  "file": "src/app/main.c",
+  "line": 66,
+  "check": "-Wunused-macros",
+  "sev": "warning",
+  "msg": "macro \"CONFIGURE_MICROSECONDS_PER_TICK\" is not used",
+  "build": "test",
+  "key": "gcc|-Wunused-macros|src/app/main.c|macro \"CONFIGURE_MICROSECONDS_PER_TICK\" is not used",
+  "lines": [
+   66
+  ],
+  "builds": [
+   "flight",
+   "test"
+  ],
+  "disposition": "SA-10"
+ },
+ {
+  "tool": "gcc",
+  "file": "src/app/main.c",
+  "line": 56,
+  "check": "-Wunused-macros",
+  "sev": "warning",
+  "msg": "macro \"CONFIGURE_MAXIMUM_PERIODS\" is not used",
+  "build": "test",
+  "key": "gcc|-Wunused-macros|src/app/main.c|macro \"CONFIGURE_MAXIMUM_PERIODS\" is not used",
+  "lines": [
+   56
+  ],
+  "builds": [
+   "flight",
+   "test"
+  ],
+  "disposition": "SA-10"
+ },
+ {
+  "tool": "gcc",
+  "file": "src/app/main.c",
+  "line": 51,
+  "check": "-Wunused-macros",
+  "sev": "warning",
+  "msg": "macro \"CONFIGURE_APPLICATION_NEEDS_CONSOLE_DRIVER\" is not used",
+  "build": "test",
+  "key": "gcc|-Wunused-macros|src/app/main.c|macro \"CONFIGURE_APPLICATION_NEEDS_CONSOLE_DRIVER\" is not used",
+  "lines": [
+   51
+  ],
+  "builds": [
+   "flight",
+   "test"
+  ],
+  "disposition": "SA-10"
+ },
+ {
+  "tool": "gcc",
+  "file": "src/app/main.c",
+  "line": 64,
+  "check": "-Wunused-macros",
+  "sev": "warning",
+  "msg": "macro \"CONFIGURE_EXTRA_TASK_STACKS\" is not used",
+  "build": "test",
+  "key": "gcc|-Wunused-macros|src/app/main.c|macro \"CONFIGURE_EXTRA_TASK_STACKS\" is not used",
+  "lines": [
+   64
+  ],
+  "builds": [
+   "flight",
+   "test"
+  ],
+  "disposition": "SA-10"
+ },
+ {
+  "tool": "gcc",
+  "file": "src/app/main.c",
+  "line": 71,
+  "check": "-Wunused-macros",
+  "sev": "warning",
+  "msg": "macro \"CONFIGURE_RTEMS_INIT_TASKS_TABLE\" is not used",
+  "build": "test",
+  "key": "gcc|-Wunused-macros|src/app/main.c|macro \"CONFIGURE_RTEMS_INIT_TASKS_TABLE\" is not used",
+  "lines": [
+   71
+  ],
+  "builds": [
+   "flight",
+   "test"
+  ],
+  "disposition": "SA-10"
+ },
+ {
+  "tool": "gcc",
+  "file": "src/app/main.c",
+  "line": 60,
+  "check": "-Wunused-macros",
+  "sev": "warning",
+  "msg": "macro \"CONFIGURE_MESSAGE_BUFFER_MEMORY\" is not used",
+  "build": "test",
+  "key": "gcc|-Wunused-macros|src/app/main.c|macro \"CONFIGURE_MESSAGE_BUFFER_MEMORY\" is not used",
+  "lines": [
+   60
+  ],
+  "builds": [
+   "flight",
+   "test"
+  ],
+  "disposition": "SA-10"
+ },
+ {
+  "tool": "gcc",
+  "file": "src/app/main.c",
+  "line": 50,
+  "check": "-Wunused-macros",
+  "sev": "warning",
+  "msg": "macro \"CONFIGURE_APPLICATION_NEEDS_CLOCK_DRIVER\" is not used",
+  "build": "test",
+  "key": "gcc|-Wunused-macros|src/app/main.c|macro \"CONFIGURE_APPLICATION_NEEDS_CLOCK_DRIVER\" is not used",
+  "lines": [
+   50
+  ],
+  "builds": [
+   "flight",
+   "test"
+  ],
+  "disposition": "SA-10"
+ },
+ {
+  "tool": "gcc",
+  "file": "src/app/main.c",
+  "line": 72,
+  "check": "-Wunused-macros",
+  "sev": "warning",
+  "msg": "macro \"CONFIGURE_INIT\" is not used",
+  "build": "test",
+  "key": "gcc|-Wunused-macros|src/app/main.c|macro \"CONFIGURE_INIT\" is not used",
+  "lines": [
+   72
+  ],
+  "builds": [
+   "flight",
+   "test"
+  ],
+  "disposition": "SA-10"
+ },
+ {
+  "tool": "gcc",
+  "file": "src/app/main.c",
+  "line": 68,
+  "check": "-Wunused-macros",
+  "sev": "warning",
+  "msg": "macro \"CONFIGURE_INIT_TASK_ATTRIBUTES\" is not used",
+  "build": "test",
+  "key": "gcc|-Wunused-macros|src/app/main.c|macro \"CONFIGURE_INIT_TASK_ATTRIBUTES\" is not used",
+  "lines": [
+   68
+  ],
+  "builds": [
+   "flight",
+   "test"
+  ],
+  "disposition": "SA-10"
+ },
+ {
+  "tool": "gcc",
+  "file": "src/app/main.c",
+  "line": 59,
+  "check": "-Wunused-macros",
+  "sev": "warning",
+  "msg": "macro \"CONFIGURE_MAXIMUM_MESSAGE_QUEUES\" is not used",
+  "build": "test",
+  "key": "gcc|-Wunused-macros|src/app/main.c|macro \"CONFIGURE_MAXIMUM_MESSAGE_QUEUES\" is not used",
+  "lines": [
+   59
+  ],
+  "builds": [
+   "flight",
+   "test"
+  ],
+  "disposition": "SA-10"
+ },
+ {
+  "tool": "gcc",
+  "file": "src/app/main.c",
+  "line": 69,
+  "check": "-Wunused-macros",
+  "sev": "warning",
+  "msg": "macro \"CONFIGURE_INIT_TASK_STACK_SIZE\" is not used",
+  "build": "test",
+  "key": "gcc|-Wunused-macros|src/app/main.c|macro \"CONFIGURE_INIT_TASK_STACK_SIZE\" is not used",
+  "lines": [
+   69
+  ],
+  "builds": [
+   "flight",
+   "test"
+  ],
+  "disposition": "SA-10"
+ },
+ {
+  "tool": "gcc",
+  "file": "src/app/main.c",
+  "line": 58,
+  "check": "-Wunused-macros",
+  "sev": "warning",
+  "msg": "macro \"CONFIGURE_MAXIMUM_TIMERS\" is not used",
+  "build": "test",
+  "key": "gcc|-Wunused-macros|src/app/main.c|macro \"CONFIGURE_MAXIMUM_TIMERS\" is not used",
+  "lines": [
+   58
+  ],
+  "builds": [
+   "flight",
+   "test"
+  ],
+  "disposition": "SA-10"
+ },
+ {
+  "tool": "gcc",
+  "file": "src/app/main.c",
+  "line": 55,
+  "check": "-Wunused-macros",
+  "sev": "warning",
+  "msg": "macro \"CONFIGURE_MAXIMUM_TASKS\" is not used",
+  "build": "test",
+  "key": "gcc|-Wunused-macros|src/app/main.c|macro \"CONFIGURE_MAXIMUM_TASKS\" is not used",
+  "lines": [
+   55
+  ],
+  "builds": [
+   "flight",
+   "test"
+  ],
+  "disposition": "SA-10"
+ },
+ {
+  "tool": "gcc",
+  "file": "src/app/main.c",
+  "line": 57,
+  "check": "-Wunused-macros",
+  "sev": "warning",
+  "msg": "macro \"CONFIGURE_MAXIMUM_SEMAPHORES\" is not used",
+  "build": "test",
+  "key": "gcc|-Wunused-macros|src/app/main.c|macro \"CONFIGURE_MAXIMUM_SEMAPHORES\" is not used",
+  "lines": [
+   57
+  ],
+  "builds": [
+   "flight",
+   "test"
+  ],
+  "disposition": "SA-10"
+ },
+ {
+  "tool": "clang",
+  "file": "src/core/sp.c",
+  "line": 42,
+  "check": "-Wunsafe-buffer-usage",
+  "sev": "warning",
+  "msg": "unsafe buffer access",
+  "build": "test",
+  "key": "clang|-Wunsafe-buffer-usage|src/core/sp.c|unsafe buffer access",
+  "lines": [
+   42,
+   46,
+   47,
+   51,
+   52,
+   54,
+   74,
+   80,
+   84,
+   97
+  ],
+  "builds": [
+   "flight",
+   "test"
+  ],
+  "disposition": "SA-12"
+ },
+ {
+  "tool": "clang",
+  "file": "src/core/crc16.c",
+  "line": 16,
+  "check": "-Wunsafe-buffer-usage",
+  "sev": "warning",
+  "msg": "unsafe buffer access",
+  "build": "test",
+  "key": "clang|-Wunsafe-buffer-usage|src/core/crc16.c|unsafe buffer access",
+  "lines": [
+   16
+  ],
+  "builds": [
+   "flight",
+   "test"
+  ],
+  "disposition": "SA-12"
+ },
+ {
+  "tool": "clang",
+  "file": "src/core/pus.c",
+  "line": 11,
+  "check": "-Wunsafe-buffer-usage",
+  "sev": "warning",
+  "msg": "unsafe buffer access",
+  "build": "test",
+  "key": "clang|-Wunsafe-buffer-usage|src/core/pus.c|unsafe buffer access",
+  "lines": [
+   11,
+   17,
+   18,
+   19,
+   24,
+   49,
+   50,
+   59,
+   80,
+   81,
+   82,
+   83,
+   84,
+   85,
+   87,
+   127,
+   128,
+   129,
+   131,
+   188,
+   210,
+   211,
+   212,
+   213
+  ],
+  "builds": [
+   "flight",
+   "test"
+  ],
+  "disposition": "SA-12"
+ },
+ {
+  "tool": "clang",
+  "file": "src/core/tc_handler.c",
+  "line": 44,
+  "check": "-Wunsafe-buffer-usage",
+  "sev": "warning",
+  "msg": "unsafe buffer access",
+  "build": "test",
+  "key": "clang|-Wunsafe-buffer-usage|src/core/tc_handler.c|unsafe buffer access",
+  "lines": [
+   44,
+   76,
+   80,
+   81,
+   82,
+   83,
+   138,
+   139
+  ],
+  "builds": [
+   "flight",
+   "test"
+  ],
+  "disposition": "SA-12"
+ },
+ {
+  "tool": "clang",
+  "file": "src/fdir/monitor.c",
+  "line": 118,
+  "check": "-Wunsafe-buffer-usage",
+  "sev": "warning",
+  "msg": "unsafe buffer access",
+  "build": "test",
+  "key": "clang|-Wunsafe-buffer-usage|src/fdir/monitor.c|unsafe buffer access",
+  "lines": [
+   118,
+   119,
+   134,
+   137,
+   138,
+   140
+  ],
+  "builds": [
+   "flight",
+   "test"
+  ],
+  "disposition": "SA-12"
+ },
+ {
+  "tool": "clang",
+  "file": "src/fdir/supervisor.c",
+  "line": 29,
+  "check": "-Wunsafe-buffer-usage",
+  "sev": "warning",
+  "msg": "unsafe buffer access",
+  "build": "test",
+  "key": "clang|-Wunsafe-buffer-usage|src/fdir/supervisor.c|unsafe buffer access",
+  "lines": [
+   29,
+   42,
+   50,
+   69,
+   119
+  ],
+  "builds": [
+   "flight",
+   "test"
+  ],
+  "disposition": "SA-12"
+ },
+ {
+  "tool": "clang",
+  "file": "src/fdir/watchdog.c",
+  "line": 43,
+  "check": "-Wcovered-switch-default",
+  "sev": "warning",
+  "msg": "default label in switch which covers all enumeration values",
+  "build": "test",
+  "key": "clang|-Wcovered-switch-default|src/fdir/watchdog.c|default label in switch which covers all enumeration values",
+  "lines": [
+   43
+  ],
+  "builds": [
+   "flight",
+   "test"
+  ],
+  "disposition": "SA-15"
+ },
+ {
+  "tool": "clang",
+  "file": "src/fdir/nvstate.c",
+  "line": 11,
+  "check": "-Wunsafe-buffer-usage",
+  "sev": "warning",
+  "msg": "unsafe buffer access",
+  "build": "test",
+  "key": "clang|-Wunsafe-buffer-usage|src/fdir/nvstate.c|unsafe buffer access",
+  "lines": [
+   11,
+   17,
+   18,
+   19,
+   24,
+   29,
+   30,
+   49,
+   50,
+   51,
+   52,
+   53,
+   54,
+   55,
+   56,
+   57,
+   58,
+   59,
+   60,
+   61,
+   62,
+   67,
+   68,
+   72,
+   73,
+   74,
+   75,
+   76,
+   77,
+   78,
+   79,
+   80,
+   81,
+   82,
+   83
+  ],
+  "builds": [
+   "flight",
+   "test"
+  ],
+  "disposition": "SA-12"
+ },
+ {
+  "tool": "clang",
+  "file": "src/fdir/schedule.c",
+  "line": 20,
+  "check": "-Wunsafe-buffer-usage",
+  "sev": "warning",
+  "msg": "unsafe buffer access",
+  "build": "test",
+  "key": "clang|-Wunsafe-buffer-usage|src/fdir/schedule.c|unsafe buffer access",
+  "lines": [
+   20,
+   21,
+   22,
+   23,
+   24,
+   35,
+   48,
+   61,
+   63,
+   73,
+   74
+  ],
+  "builds": [
+   "flight",
+   "test"
+  ],
+  "disposition": "SA-12"
+ },
+ {
+  "tool": "clang",
+  "file": "src/fdir/mode_sm.c",
+  "line": 69,
+  "check": "-Wunsafe-buffer-usage",
+  "sev": "warning",
+  "msg": "unsafe buffer access",
+  "build": "test",
+  "key": "clang|-Wunsafe-buffer-usage|src/fdir/mode_sm.c|unsafe buffer access",
+  "lines": [
+   69,
+   82,
+   95,
+   108,
+   121,
+   133,
+   145,
+   158,
+   171,
+   184,
+   196,
+   210,
+   281,
+   301,
+   354,
+   365,
+   371
+  ],
+  "builds": [
+   "flight",
+   "test"
+  ],
+  "disposition": "SA-12"
+ },
+ {
+  "tool": "clang",
+  "file": "src/fdir/fdir.c",
+  "line": 44,
+  "check": "-Wpadded",
+  "sev": "warning",
+  "msg": "padding struct 'struct (unnamed at ../src/fdir/fdir.c:42:8)' with 3 bytes to align 'until_ms'",
+  "build": "test",
+  "key": "clang|-Wpadded|src/fdir/fdir.c|padding struct 'X' with N bytes to align 'X'",
+  "lines": [
+   44,
+   486
+  ],
+  "builds": [
+   "flight",
+   "test"
+  ],
+  "disposition": "SA-14"
+ },
+ {
+  "tool": "clang",
+  "file": "src/fdir/fdir.c",
+  "line": 679,
+  "check": "-Wcovered-switch-default",
+  "sev": "warning",
+  "msg": "default label in switch which covers all enumeration values",
+  "build": "test",
+  "key": "clang|-Wcovered-switch-default|src/fdir/fdir.c|default label in switch which covers all enumeration values",
+  "lines": [
+   679
+  ],
+  "builds": [
+   "flight",
+   "test"
+  ],
+  "disposition": "SA-15b"
+ },
+ {
+  "tool": "clang",
+  "file": "src/fdir/fdir.c",
+  "line": 167,
+  "check": "-Wunsafe-buffer-usage",
+  "sev": "warning",
+  "msg": "unsafe buffer access",
+  "build": "test",
+  "key": "clang|-Wunsafe-buffer-usage|src/fdir/fdir.c|unsafe buffer access",
+  "lines": [
+   167,
+   168,
+   213,
+   236,
+   237,
+   238,
+   239,
+   255,
+   256,
+   265,
+   305,
+   306,
+   307,
+   364,
+   365,
+   410,
+   411,
+   503,
+   504,
+   512,
+   527,
+   528,
+   529,
+   531,
+   532,
+   542,
+   543,
+   544,
+   584,
+   585,
+   586,
+   589,
+   595,
+   596,
+   597,
+   599,
+   600,
+   601,
+   602,
+   603,
+   604,
+   605,
+   606,
+   607,
+   608,
+   609,
+   610,
+   611,
+   612,
+   613,
+   614,
+   615,
+   616,
+   617,
+   618,
+   628,
+   629,
+   631,
+   632,
+   633,
+   634,
+   635,
+   636,
+   637,
+   646,
+   647,
+   658,
+   659,
+   660,
+   661,
+   666,
+   671,
+   672,
+   698,
+   700,
+   701,
+   709,
+   719,
+   720,
+   788,
+   789,
+   791,
+   810,
+   811,
+   812,
+   813,
+   814,
+   815,
+   816
+  ],
+  "builds": [
+   "flight",
+   "test"
+  ],
+  "disposition": "SA-12"
+ },
+ {
+  "tool": "clang",
+  "file": "src/security/tc_auth.c",
+  "line": 51,
+  "check": "-Wcovered-switch-default",
+  "sev": "warning",
+  "msg": "default label in switch which covers all enumeration values",
+  "build": "test",
+  "key": "clang|-Wcovered-switch-default|src/security/tc_auth.c|default label in switch which covers all enumeration values",
+  "lines": [
+   51
+  ],
+  "builds": [
+   "flight",
+   "test"
+  ],
+  "disposition": "SA-15b"
+ },
+ {
+  "tool": "clang",
+  "file": "src/security/tc_auth.c",
+  "line": 58,
+  "check": "-Wunsafe-buffer-usage",
+  "sev": "warning",
+  "msg": "unsafe buffer access",
+  "build": "test",
+  "key": "clang|-Wunsafe-buffer-usage|src/security/tc_auth.c|unsafe buffer access",
+  "lines": [
+   58,
+   59,
+   86,
+   88,
+   98,
+   166,
+   167
+  ],
+  "builds": [
+   "flight",
+   "test"
+  ],
+  "disposition": "SA-12"
+ },
+ {
+  "tool": "clang",
+  "file": "src/security/sec_report.c",
+  "line": 9,
+  "check": "-Wunsafe-buffer-usage",
+  "sev": "warning",
+  "msg": "unsafe buffer access",
+  "build": "test",
+  "key": "clang|-Wunsafe-buffer-usage|src/security/sec_report.c|unsafe buffer access",
+  "lines": [
+   9,
+   14,
+   15,
+   39,
+   40,
+   42,
+   45,
+   46,
+   47,
+   50,
+   51,
+   52,
+   54,
+   59,
+   60,
+   62,
+   63,
+   64,
+   65,
+   66,
+   69,
+   70,
+   72
+  ],
+  "builds": [
+   "flight",
+   "test"
+  ],
+  "disposition": "SA-12"
+ },
+ {
+  "tool": "clang",
+  "file": "src/security/keystore.c",
+  "line": 45,
+  "check": "-Wunsafe-buffer-usage",
+  "sev": "warning",
+  "msg": "unsafe buffer access",
+  "build": "test",
+  "key": "clang|-Wunsafe-buffer-usage|src/security/keystore.c|unsafe buffer access",
+  "lines": [
+   45,
+   54,
+   56,
+   57,
+   69,
+   71,
+   72,
+   77,
+   78,
+   80,
+   84,
+   85,
+   94,
+   100,
+   101,
+   102,
+   127,
+   128,
+   160,
+   161,
+   172,
+   173,
+   185,
+   193,
+   194,
+   195,
+   214,
+   215,
+   228,
+   230,
+   238,
+   242,
+   243,
+   245,
+   255,
+   256,
+   257,
+   258,
+   269,
+   279,
+   280,
+   283,
+   284,
+   285,
+   306,
+   307,
+   312,
+   313,
+   324,
+   325,
+   327,
+   328,
+   338,
+   343,
+   344,
+   347
+  ],
+  "builds": [
+   "flight",
+   "test"
+  ],
+  "disposition": "SA-12"
+ },
+ {
+  "tool": "clang",
+  "file": "src/security/sec_service.c",
+  "line": 10,
+  "check": "-Wunsafe-buffer-usage",
+  "sev": "warning",
+  "msg": "unsafe buffer access",
+  "build": "test",
+  "key": "clang|-Wunsafe-buffer-usage|src/security/sec_service.c|unsafe buffer access",
+  "lines": [
+   10,
+   11,
+   16,
+   17,
+   36,
+   37,
+   38,
+   50,
+   51,
+   52,
+   63,
+   64,
+   98,
+   120,
+   147,
+   148,
+   149,
+   166,
+   173,
+   190,
+   195,
+   196,
+   202,
+   203,
+   209,
+   211
+  ],
+  "builds": [
+   "flight",
+   "test"
+  ],
+  "disposition": "SA-12"
+ },
+ {
+  "tool": "clang",
+  "file": "src/security/security.c",
+  "line": 109,
+  "check": "-Wunsafe-buffer-usage",
+  "sev": "warning",
+  "msg": "unsafe buffer access",
+  "build": "test",
+  "key": "clang|-Wunsafe-buffer-usage|src/security/security.c|unsafe buffer access",
+  "lines": [
+   109,
+   110,
+   122,
+   123,
+   131,
+   134,
+   135,
+   136,
+   138,
+   139,
+   140,
+   141,
+   216,
+   217,
+   228,
+   230,
+   231,
+   235,
+   240,
+   242,
+   244,
+   245,
+   246,
+   249,
+   273,
+   274,
+   280,
+   291,
+   299,
+   306
+  ],
+  "builds": [
+   "flight",
+   "test"
+  ],
+  "disposition": "SA-12"
+ },
+ {
+  "tool": "clang",
+  "file": "src/app/services.c",
+  "line": 31,
+  "check": "-Wunsafe-buffer-usage",
+  "sev": "warning",
+  "msg": "unsafe buffer access",
+  "build": "test",
+  "key": "clang|-Wunsafe-buffer-usage|src/app/services.c|unsafe buffer access",
+  "lines": [
+   31,
+   32,
+   47,
+   50,
+   59,
+   62,
+   94,
+   117,
+   129,
+   179,
+   196,
+   197,
+   199
+  ],
+  "builds": [
+   "flight",
+   "test"
+  ],
+  "disposition": "SA-12"
+ },
+ {
+  "tool": "clang",
+  "file": "src/app/tmtc.c",
+  "line": 89,
+  "check": "-Wmissing-noreturn",
+  "sev": "warning",
+  "msg": "function 'tm_tx_task' could be declared with attribute 'noreturn'",
+  "build": "test",
+  "key": "clang|-Wmissing-noreturn|src/app/tmtc.c|function 'X' could be declared with attribute 'X'",
+  "lines": [
+   89,
+   145
+  ],
+  "builds": [
+   "flight",
+   "test"
+  ],
+  "disposition": "SA-16"
+ },
+ {
+  "tool": "clang",
+  "file": "src/app/tmtc.c",
+  "line": 36,
+  "check": "-Wunsafe-buffer-usage",
+  "sev": "warning",
+  "msg": "unsafe pointer arithmetic",
+  "build": "test",
+  "key": "clang|-Wunsafe-buffer-usage|src/app/tmtc.c|unsafe pointer arithmetic",
+  "lines": [
+   36,
+   122
+  ],
+  "builds": [
+   "flight",
+   "test"
+  ],
+  "disposition": "SA-12"
+ },
+ {
+  "tool": "clang",
+  "file": "src/app/tmtc.c",
+  "line": 102,
+  "check": "-Wunsafe-buffer-usage",
+  "sev": "warning",
+  "msg": "unsafe buffer access",
+  "build": "test",
+  "key": "clang|-Wunsafe-buffer-usage|src/app/tmtc.c|unsafe buffer access",
+  "lines": [
+   102,
+   104,
+   105,
+   107,
+   119,
+   131,
+   132,
+   139,
+   169,
+   186
+  ],
+  "builds": [
+   "flight",
+   "test"
+  ],
+  "disposition": "SA-12"
+ },
+ {
+  "tool": "clang",
+  "file": "src/app/main.c",
+  "line": 114,
+  "check": "-Wmissing-noreturn",
+  "sev": "warning",
+  "msg": "function 'finj_block_forever' could be declared with attribute 'noreturn'",
+  "build": "test",
+  "key": "clang|-Wmissing-noreturn|src/app/main.c|function 'X' could be declared with attribute 'X'",
+  "lines": [
+   114,
+   129,
+   144,
+   161,
+   185,
+   203
+  ],
+  "builds": [
+   "flight",
+   "test"
+  ],
+  "disposition": "SA-16"
+ },
+ {
+  "tool": "clang",
+  "file": "src/app/main.c",
+  "line": 66,
+  "check": "-Wunused-macros",
+  "sev": "warning",
+  "msg": "macro is not used",
+  "build": "test",
+  "key": "clang|-Wunused-macros|src/app/main.c|macro is not used",
+  "lines": [
+   50,
+   51,
+   55,
+   56,
+   57,
+   58,
+   59,
+   60,
+   64,
+   66,
+   68,
+   69,
+   71,
+   72
+  ],
+  "builds": [
+   "flight",
+   "test"
+  ],
+  "disposition": "SA-10b"
+ },
+ {
+  "tool": "clang",
+  "file": "src/test/finj.c",
+  "line": 10,
+  "check": "-Wpadded",
+  "sev": "warning",
+  "msg": "padding struct 'finj_param_t' with 1 byte to align 'param_id'",
+  "build": "test",
+  "key": "clang|-Wpadded|src/test/finj.c|padding struct 'X' with N byte to align 'X'",
+  "lines": [
+   10
+  ],
+  "builds": [
+   "test"
+  ],
+  "disposition": "SA-14"
+ },
+ {
+  "tool": "clang",
+  "file": "src/test/finj.c",
+  "line": 8,
+  "check": "-Wpadded",
+  "sev": "warning",
+  "msg": "padding size of 'finj_param_t' with 2 bytes to alignment boundary",
+  "build": "test",
+  "key": "clang|-Wpadded|src/test/finj.c|padding size of 'X' with N bytes to alignment boundary",
+  "lines": [
+   8
+  ],
+  "builds": [
+   "test"
+  ],
+  "disposition": "SA-14"
+ },
+ {
+  "tool": "clang",
+  "file": "src/test/finj.c",
+  "line": 23,
+  "check": "-Wunsafe-buffer-usage",
+  "sev": "warning",
+  "msg": "unsafe buffer access",
+  "build": "test",
+  "key": "clang|-Wunsafe-buffer-usage|src/test/finj.c|unsafe buffer access",
+  "lines": [
+   23,
+   26,
+   35,
+   39,
+   46,
+   47,
+   48,
+   49,
+   50,
+   56,
+   69,
+   70,
+   71,
+   72,
+   73,
+   74,
+   85,
+   86
+  ],
+  "builds": [
+   "test"
+  ],
+  "disposition": "SA-12"
+ },
+ {
+  "tool": "analyzer",
+  "file": "src/core/sp.c",
+  "line": 54,
+  "check": "security.insecureAPI.DeprecatedOrUnsafeBufferHandling",
+  "sev": "warning",
+  "msg": "Call to function 'memcpy' is insecure as it does not provide security checks introduced in the C11 standard. Replace with analogous functions that support length arguments or provides boundary checks such as 'memcpy_s' in case of C11",
+  "build": "test",
+  "key": "analyzer|security.insecureAPI.DeprecatedOrUnsafeBufferHandling|src/core/sp.c|Call to function 'X' is insecure as it does not provide security checks introduced in the CN standard. Replace with analogous functions that support length arguments or provides boundary checks such as 'X' in case of CN",
+  "lines": [
+   54
+  ],
+  "builds": [
+   "flight",
+   "test"
+  ],
+  "disposition": "SA-13"
+ },
+ {
+  "tool": "analyzer",
+  "file": "src/core/pus.c",
+  "line": 87,
+  "check": "security.insecureAPI.DeprecatedOrUnsafeBufferHandling",
+  "sev": "warning",
+  "msg": "Call to function 'memcpy' is insecure as it does not provide security checks introduced in the C11 standard. Replace with analogous functions that support length arguments or provides boundary checks such as 'memcpy_s' in case of C11",
+  "build": "test",
+  "key": "analyzer|security.insecureAPI.DeprecatedOrUnsafeBufferHandling|src/core/pus.c|Call to function 'X' is insecure as it does not provide security checks introduced in the CN standard. Replace with analogous functions that support length arguments or provides boundary checks such as 'X' in case of CN",
+  "lines": [
+   87,
+   131,
+   157,
+   164
+  ],
+  "builds": [
+   "flight",
+   "test"
+  ],
+  "disposition": "SA-13"
+ },
+ {
+  "tool": "analyzer",
+  "file": "src/core/tc_handler.c",
+  "line": 43,
+  "check": "security.insecureAPI.DeprecatedOrUnsafeBufferHandling",
+  "sev": "warning",
+  "msg": "Call to function 'memcpy' is insecure as it does not provide security checks introduced in the C11 standard. Replace with analogous functions that support length arguments or provides boundary checks such as 'memcpy_s' in case of C11",
+  "build": "test",
+  "key": "analyzer|security.insecureAPI.DeprecatedOrUnsafeBufferHandling|src/core/tc_handler.c|Call to function 'X' is insecure as it does not provide security checks introduced in the CN standard. Replace with analogous functions that support length arguments or provides boundary checks such as 'X' in case of CN",
+  "lines": [
+   43,
+   57
+  ],
+  "builds": [
+   "flight",
+   "test"
+  ],
+  "disposition": "SA-13"
+ },
+ {
+  "tool": "analyzer",
+  "file": "src/fdir/monitor.c",
+  "line": 11,
+  "check": "security.insecureAPI.DeprecatedOrUnsafeBufferHandling",
+  "sev": "warning",
+  "msg": "Call to function 'memset' is insecure as it does not provide security checks introduced in the C11 standard. Replace with analogous functions that support length arguments or provides boundary checks such as 'memset_s' in case of C11",
+  "build": "test",
+  "key": "analyzer|security.insecureAPI.DeprecatedOrUnsafeBufferHandling|src/fdir/monitor.c|Call to function 'X' is insecure as it does not provide security checks introduced in the CN standard. Replace with analogous functions that support length arguments or provides boundary checks such as 'X' in case of CN",
+  "lines": [
+   11
+  ],
+  "builds": [
+   "flight",
+   "test"
+  ],
+  "disposition": "SA-13"
+ },
+ {
+  "tool": "analyzer",
+  "file": "src/fdir/supervisor.c",
+  "line": 12,
+  "check": "security.insecureAPI.DeprecatedOrUnsafeBufferHandling",
+  "sev": "warning",
+  "msg": "Call to function 'memset' is insecure as it does not provide security checks introduced in the C11 standard. Replace with analogous functions that support length arguments or provides boundary checks such as 'memset_s' in case of C11",
+  "build": "test",
+  "key": "analyzer|security.insecureAPI.DeprecatedOrUnsafeBufferHandling|src/fdir/supervisor.c|Call to function 'X' is insecure as it does not provide security checks introduced in the CN standard. Replace with analogous functions that support length arguments or provides boundary checks such as 'X' in case of CN",
+  "lines": [
+   12,
+   30
+  ],
+  "builds": [
+   "flight",
+   "test"
+  ],
+  "disposition": "SA-13"
+ },
+ {
+  "tool": "analyzer",
+  "file": "src/fdir/nvstate.c",
+  "line": 35,
+  "check": "security.insecureAPI.DeprecatedOrUnsafeBufferHandling",
+  "sev": "warning",
+  "msg": "Call to function 'memset' is insecure as it does not provide security checks introduced in the C11 standard. Replace with analogous functions that support length arguments or provides boundary checks such as 'memset_s' in case of C11",
+  "build": "test",
+  "key": "analyzer|security.insecureAPI.DeprecatedOrUnsafeBufferHandling|src/fdir/nvstate.c|Call to function 'X' is insecure as it does not provide security checks introduced in the CN standard. Replace with analogous functions that support length arguments or provides boundary checks such as 'X' in case of CN",
+  "lines": [
+   35
+  ],
+  "builds": [
+   "flight",
+   "test"
+  ],
+  "disposition": "SA-13"
+ },
+ {
+  "tool": "analyzer",
+  "file": "src/fdir/schedule.c",
+  "line": 8,
+  "check": "security.insecureAPI.DeprecatedOrUnsafeBufferHandling",
+  "sev": "warning",
+  "msg": "Call to function 'memset' is insecure as it does not provide security checks introduced in the C11 standard. Replace with analogous functions that support length arguments or provides boundary checks such as 'memset_s' in case of C11",
+  "build": "test",
+  "key": "analyzer|security.insecureAPI.DeprecatedOrUnsafeBufferHandling|src/fdir/schedule.c|Call to function 'X' is insecure as it does not provide security checks introduced in the CN standard. Replace with analogous functions that support length arguments or provides boundary checks such as 'X' in case of CN",
+  "lines": [
+   8,
+   24
+  ],
+  "builds": [
+   "flight",
+   "test"
+  ],
+  "disposition": "SA-13"
+ },
+ {
+  "tool": "analyzer",
+  "file": "src/fdir/thermal.c",
+  "line": 8,
+  "check": "security.insecureAPI.DeprecatedOrUnsafeBufferHandling",
+  "sev": "warning",
+  "msg": "Call to function 'memset' is insecure as it does not provide security checks introduced in the C11 standard. Replace with analogous functions that support length arguments or provides boundary checks such as 'memset_s' in case of C11",
+  "build": "test",
+  "key": "analyzer|security.insecureAPI.DeprecatedOrUnsafeBufferHandling|src/fdir/thermal.c|Call to function 'X' is insecure as it does not provide security checks introduced in the CN standard. Replace with analogous functions that support length arguments or provides boundary checks such as 'X' in case of CN",
+  "lines": [
+   8
+  ],
+  "builds": [
+   "flight",
+   "test"
+  ],
+  "disposition": "SA-13"
+ },
+ {
+  "tool": "analyzer",
+  "file": "src/fdir/fdir.c",
+  "line": 117,
+  "check": "security.insecureAPI.DeprecatedOrUnsafeBufferHandling",
+  "sev": "warning",
+  "msg": "Call to function 'memset' is insecure as it does not provide security checks introduced in the C11 standard. Replace with analogous functions that support length arguments or provides boundary checks such as 'memset_s' in case of C11",
+  "build": "test",
+  "key": "analyzer|security.insecureAPI.DeprecatedOrUnsafeBufferHandling|src/fdir/fdir.c|Call to function 'X' is insecure as it does not provide security checks introduced in the CN standard. Replace with analogous functions that support length arguments or provides boundary checks such as 'X' in case of CN",
+  "lines": [
+   117,
+   120
+  ],
+  "builds": [
+   "flight",
+   "test"
+  ],
+  "disposition": "SA-13"
+ },
+ {
+  "tool": "analyzer",
+  "file": "src/security/tc_auth.c",
+  "line": 11,
+  "check": "security.insecureAPI.DeprecatedOrUnsafeBufferHandling",
+  "sev": "warning",
+  "msg": "Call to function 'memset' is insecure as it does not provide security checks introduced in the C11 standard. Replace with analogous functions that support length arguments or provides boundary checks such as 'memset_s' in case of C11",
+  "build": "test",
+  "key": "analyzer|security.insecureAPI.DeprecatedOrUnsafeBufferHandling|src/security/tc_auth.c|Call to function 'X' is insecure as it does not provide security checks introduced in the CN standard. Replace with analogous functions that support length arguments or provides boundary checks such as 'X' in case of CN",
+  "lines": [
+   11
+  ],
+  "builds": [
+   "flight",
+   "test"
+  ],
+  "disposition": "SA-13"
+ },
+ {
+  "tool": "analyzer",
+  "file": "src/security/sec_report.c",
+  "line": 28,
+  "check": "security.insecureAPI.DeprecatedOrUnsafeBufferHandling",
+  "sev": "warning",
+  "msg": "Call to function 'memset' is insecure as it does not provide security checks introduced in the C11 standard. Replace with analogous functions that support length arguments or provides boundary checks such as 'memset_s' in case of C11",
+  "build": "test",
+  "key": "analyzer|security.insecureAPI.DeprecatedOrUnsafeBufferHandling|src/security/sec_report.c|Call to function 'X' is insecure as it does not provide security checks introduced in the CN standard. Replace with analogous functions that support length arguments or provides boundary checks such as 'X' in case of CN",
+  "lines": [
+   28
+  ],
+  "builds": [
+   "flight",
+   "test"
+  ],
+  "disposition": "SA-13"
+ },
+ {
+  "tool": "analyzer",
+  "file": "src/security/keystore.c",
+  "line": 52,
+  "check": "security.insecureAPI.DeprecatedOrUnsafeBufferHandling",
+  "sev": "warning",
+  "msg": "Call to function 'memcpy' is insecure as it does not provide security checks introduced in the C11 standard. Replace with analogous functions that support length arguments or provides boundary checks such as 'memcpy_s' in case of C11",
+  "build": "test",
+  "key": "analyzer|security.insecureAPI.DeprecatedOrUnsafeBufferHandling|src/security/keystore.c|Call to function 'X' is insecure as it does not provide security checks introduced in the CN standard. Replace with analogous functions that support length arguments or provides boundary checks such as 'X' in case of CN",
+  "lines": [
+   52,
+   53,
+   54,
+   145,
+   192,
+   216,
+   325,
+   347
+  ],
+  "builds": [
+   "flight",
+   "test"
+  ],
+  "disposition": "SA-13"
+ },
+ {
+  "tool": "analyzer",
+  "file": "src/security/sec_service.c",
+  "line": 22,
+  "check": "security.insecureAPI.DeprecatedOrUnsafeBufferHandling",
+  "sev": "warning",
+  "msg": "Call to function 'memset' is insecure as it does not provide security checks introduced in the C11 standard. Replace with analogous functions that support length arguments or provides boundary checks such as 'memset_s' in case of C11",
+  "build": "test",
+  "key": "analyzer|security.insecureAPI.DeprecatedOrUnsafeBufferHandling|src/security/sec_service.c|Call to function 'X' is insecure as it does not provide security checks introduced in the CN standard. Replace with analogous functions that support length arguments or provides boundary checks such as 'X' in case of CN",
+  "lines": [
+   22,
+   36,
+   51,
+   64
+  ],
+  "builds": [
+   "flight",
+   "test"
+  ],
+  "disposition": "SA-13"
+ },
+ {
+  "tool": "analyzer",
+  "file": "src/security/security.c",
+  "line": 54,
+  "check": "security.insecureAPI.DeprecatedOrUnsafeBufferHandling",
+  "sev": "warning",
+  "msg": "Call to function 'snprintf' is insecure as it does not provide security checks introduced in the C11 standard. Replace with analogous functions that support length arguments or provides boundary checks such as 'snprintf_s' in case of C11",
+  "build": "test",
+  "key": "analyzer|security.insecureAPI.DeprecatedOrUnsafeBufferHandling|src/security/security.c|Call to function 'X' is insecure as it does not provide security checks introduced in the CN standard. Replace with analogous functions that support length arguments or provides boundary checks such as 'X' in case of CN",
+  "lines": [
+   54,
+   64,
+   96,
+   167,
+   296,
+   297
+  ],
+  "builds": [
+   "flight",
+   "test"
+  ],
+  "disposition": "SA-13"
+ },
+ {
+  "tool": "fanalyzer",
+  "file": "src/app/tmtc.c",
+  "line": 119,
+  "check": "-Wanalyzer-use-of-uninitialized-value",
+  "sev": "warning",
+  "msg": "use of uninitialized value \u2018line[1]\u2019 [CWE-457]",
+  "build": "test",
+  "key": "fanalyzer|-Wanalyzer-use-of-uninitialized-value|src/app/tmtc.c|use of uninitialized value \u2018line[N]\u2019 [CWE-N]",
+  "lines": [
+   119
+  ],
+  "builds": [
+   "flight",
+   "test"
+  ],
+  "disposition": "SA-23"
+ }
+]

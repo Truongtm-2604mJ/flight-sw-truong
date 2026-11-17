@@ -1,4 +1,4 @@
-# Lab 7.3 - Target build and test: nightly, and on demand.
+# LOTUS-1 (capstone; from Lab 7.3) - Target build and test: nightly, and on demand.
 # RTEMS 6.1 cross toolchain and SIS built once by the RTEMS Source Builder at a
 # pinned commit and cached; RTEMS 6.1 LEON3 BSP built and cached with it. Then
 # the integration image and the validation campaign run under SIS, each with a
@@ -34,7 +34,7 @@ jobs:
           sudo apt-get update -q
           sudo apt-get install -y -q --no-install-recommends \
               build-essential flex bison texinfo unzip pax python3-dev python3-yaml \
-              libncurses-dev zlib1g-dev cppcheck clang-18 llvm-18 libclang-rt-18-dev
+              libncurses-dev zlib1g-dev python3-cryptography cppcheck clang-18 llvm-18 libclang-rt-18-dev
           for t in clang llvm-cov llvm-profdata; do sudo ln -sf /usr/bin/$t-18 /usr/local/bin/$t; done
           python3 -m pip install --break-system-packages --user gcovr==7.2
           echo "$HOME/.local/bin" >> "$GITHUB_PATH"
@@ -54,8 +54,11 @@ jobs:
       - name: Check tool versions
         run: tests/support/check_tools.sh
 
-      - name: Integration image on SIS, then the validation campaign on SIS
-        run: make -C tests target RTEMS_PREFIX="$RTEMS_PREFIX"
+      - name: Host validation campaign (complete application, ground interface only)
+        run: make -C tests validation
+
+      - name: SIS - timing, mission scenario, integration image and validation campaign
+        run: make sis RTEMS_PREFIX="$RTEMS_PREFIX"
 
       - name: Archive target evidence
         if: always()
@@ -65,4 +68,6 @@ jobs:
           retention-days: 30
           path: |
             tests/build/integration/*.log
-            labs/session-07/validation/results-sis
+            evidence/timing
+            evidence/demo
+            evidence/validation

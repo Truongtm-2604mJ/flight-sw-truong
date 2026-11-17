@@ -1,0 +1,12 @@
+TinyCrypt v0.2.8 (intel/tinycrypt), commit b1fed54ce0f79e0e2ffbec7684bb4988a5f20607
+https://github.com/intel/tinycrypt/tree/v0.2.8
+Vendored unmodified, only the primitives used: SHA-256, HMAC-SHA-256, AES-128 (encryption direction), AES-CCM, utils.
+BSD-3-Clause, see LICENSE.
+
+Local patch (session-08, found by UBSan in tests/unit/test_keystore):
+  source/aes_encrypt.c line 86, tc_aes128_set_encrypt_key(): k[Nb*i]<<24,
+  and line 67, macro subbyte(): sbox[...] << 24. Both shift a uint8_t
+  promoted to int into the sign bit for octets >= 0x80 (undefined
+  behaviour, C99 6.5.7p4). Cast to unsigned int first. The
+  result is the same on every compiler tried; the behaviour was undefined.
+  Upstream tinycrypt is archived, so the fix is kept here (security-report.md).

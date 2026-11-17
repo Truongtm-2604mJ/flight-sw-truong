@@ -1,0 +1,27 @@
+# LOTUS-1 mission control - Yamcs server configuration (Yamcs 5.13.7).
+# Started by ../run-yamcs.sh, which makes a Yamcs home with this etc/ and
+# ../mdb/. Web interface: http://localhost:8090/
+services:
+  - class: org.yamcs.http.HttpServer
+    args:
+      port: 8090
+
+instances:
+  - lotus1
+
+dataDir: data
+
+# Lab installation: no users, no TLS. A flight ground segment would run with
+# authentication on (security-report.md, ground segment note).
+secretKey: "lab-only-change-me"
+
+yamcs-web:
+  tag: "LOTUS-1 (LAB)"
+  displayBucket: displays
+  stackBucket: stacks
+
+buckets:
+  - name: displays
+    path: displays
+  - name: stacks
+    path: stacks

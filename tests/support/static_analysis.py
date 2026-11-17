@@ -16,12 +16,12 @@ Runs four layers over every flight source, test build and flight build
 
 Each finding gets a key (tool, check, file, normalised message). Every key
 must have a disposition in
-labs/session-07/static-analysis/dispositions.yaml: fixed (then it must no
+evidence/static-analysis/dispositions.yaml: fixed (then it must no
 longer appear), justified (with the argument), or accepted (with the
 stated risk). A finding without a disposition is NEW and makes the script
 exit 1: that is how CI fails on new warnings.
 
-    python3 support/static_analysis.py --out ../labs/session-07/static-analysis \
+    python3 support/static_analysis.py --out ../evidence/static-analysis \
         -- <include flags> -- <flight sources>
 
 Writes raw/ (each tool's complete output), findings.json and findings-log.md.
@@ -86,7 +86,10 @@ def parse(tool, text, flight):
 
 
 def run(cmd):
-    r = subprocess.run(cmd, capture_output=True, text=True)
+    try:
+        r = subprocess.run(cmd, capture_output=True, text=True)
+    except FileNotFoundError:
+        return ""
     return r.stdout + r.stderr
 
 
@@ -107,6 +110,10 @@ def main():
         "clang": run(["clang", "--version"]).splitlines()[0],
         "cppcheck": run(["cppcheck", "--version"]).strip(),
     }
+    missing = [t for t in ("gcc", "clang", "cppcheck") if shutil.which(t) is None]
+    for t in missing:
+        versions[t] = "NOT INSTALLED in this run (CI runs it: fast-checks job)"
+        print(f"WARNING: {t} not installed: its findings are not in this run")
 
     for bname, bflags in BUILDS:
         for tool, flags in (("gcc", GCC_WARN), ("clang", CLANG_WARN), ("analyzer", ANALYZER),
@@ -126,6 +133,8 @@ def main():
                 found.append(d)
 
         # cppcheck: whole program, with the MISRA addon
+        if "cppcheck" in missing:
+            continue
         cdir = os.path.join(raw, f"cppcheck-{bname}")
         os.makedirs(cdir)
         cmd = ["cppcheck", "--enable=all", "--inconclusive", "--std=c99", "--language=c",

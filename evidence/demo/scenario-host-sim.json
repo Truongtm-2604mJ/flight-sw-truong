@@ -1,0 +1,146 @@
+[
+ {
+  "step": "1",
+  "check": "NOMINAL after boot, HK SID 1 flowing",
+  "ok": true,
+  "measured": "0.0 s to first HK"
+ },
+ {
+  "step": "1",
+  "check": "payload OFF at boot (until commanded)",
+  "ok": true,
+  "measured": null
+ },
+ {
+  "step": "1",
+  "check": "key store: first contact done (factory state)",
+  "ok": true,
+  "measured": null
+ },
+ {
+  "step": "2",
+  "check": "TM(1,1) acceptance then TM(1,7) completion",
+  "ok": true,
+  "measured": "1 ms round trip"
+ },
+ {
+  "step": "2",
+  "check": "HK: payload enabled and running",
+  "ok": true,
+  "measured": null
+ },
+ {
+  "step": "3",
+  "check": "rejected: no TM(1,x) at all (no oracle)",
+  "ok": true,
+  "measured": null
+ },
+ {
+  "step": "3",
+  "check": "security event REJECT_FIRST, class AUTH",
+  "ok": true,
+  "measured": "code 10"
+ },
+ {
+  "step": "3",
+  "check": "payload state unchanged (still ON)",
+  "ok": true,
+  "measured": null
+ },
+ {
+  "step": "4",
+  "check": "monitor event T_BAT ALARM after persistence",
+  "ok": true,
+  "measured": "3.00 s onboard after the injection (3 samples at 1 Hz)"
+ },
+ {
+  "step": "4",
+  "check": "mode NOMINAL -> DEGRADED, cause MONITOR T_BAT",
+  "ok": true,
+  "measured": "0.00 s after the monitor event (2 s mode cycle)"
+ },
+ {
+  "step": "4",
+  "check": "exactly ONE monitor ALARM event (no repeats)",
+  "ok": true,
+  "measured": "1"
+ },
+ {
+  "step": "4",
+  "check": "payload suspended (enable kept), DEGRADED full HK at 2 Hz",
+  "ok": true,
+  "measured": null
+ },
+ {
+  "step": "5",
+  "check": "3 recovery attempts, then EXHAUSTED",
+  "ok": true,
+  "measured": "exhausted 30.50 s after DEGRADED"
+ },
+ {
+  "step": "5",
+  "check": "mode DEGRADED -> SAFE, cause MONITOR",
+  "ok": true,
+  "measured": "35.00 s from injection to SAFE, onboard time"
+ },
+ {
+  "step": "5",
+  "check": "command schedule suspended",
+  "ok": true,
+  "measured": null
+ },
+ {
+  "step": "5",
+  "check": "telemetry reduced to essentials (SID 2 only, every 2 s)",
+  "ok": true,
+  "measured": "3 HK packets in 6.5 s, all SID 2"
+ },
+ {
+  "step": "5",
+  "check": "payload OFF (enable cleared), schedule off",
+  "ok": true,
+  "measured": null
+ },
+ {
+  "step": "5",
+  "check": "payload enable in SAFE refused: TM(1,8)",
+  "ok": true,
+  "measured": null
+ },
+ {
+  "step": "6",
+  "check": "assess: SAFE, cause MONITOR, T_BAT above its limit in essential HK",
+  "ok": true,
+  "measured": "T_BAT 48.00 C"
+ },
+ {
+  "step": "6",
+  "check": "fault condition cleared: T_BAT below the 43.00 C clear threshold",
+  "ok": true,
+  "measured": "T_BAT 35.05 C"
+ },
+ {
+  "step": "6",
+  "check": "authenticated SAFE exit command accepted and completed",
+  "ok": true,
+  "measured": null
+ },
+ {
+  "step": "6",
+  "check": "mode SAFE -> NOMINAL, cause GROUND",
+  "ok": true,
+  "measured": "2.00 s after TM(1,7) (MM-150: <= 3.0 s)"
+ },
+ {
+  "step": "6",
+  "check": "NOMINAL confirmed in full HK, payload running, schedule enabled",
+  "ok": true,
+  "measured": null
+ },
+ {
+  "step": "6",
+  "check": "security HK: exactly one AUTH rejection over the whole run",
+  "ok": true,
+  "measured": null
+ }
+]

@@ -1,0 +1,2160 @@
+### clang -std=c99 -O2 -Weverything -DFDIR_TEST_BUILD -I../src/sim -I../src/core -I../src/fdir -I../src/security -I../src/app -I../src/test -I../src/third_party/tinycrypt/include -c ../src/core/sp.c -o /dev/null
+In file included from ../src/core/sp.c:2:
+../src/core/sp.h:39:15: warning: padding struct 'sp_primary_header_t' with 3 bytes to align 'type' [-Wpadded]
+   39 |     sp_type_t type;          /* 1 bit  */
+      |               ^
+../src/core/sp.h:41:15: warning: padding struct 'sp_primary_header_t' with 1 byte to align 'apid' [-Wpadded]
+   41 |     uint16_t  apid;          /* 11 bits */
+      |               ^
+../src/core/sp.h:43:15: warning: padding struct 'sp_primary_header_t' with 1 byte to align 'seq_count' [-Wpadded]
+   43 |     uint16_t  seq_count;     /* 14 bits */
+      |               ^
+../src/core/sp.h:37:9: warning: padding size of 'sp_primary_header_t' with 2 bytes to alignment boundary [-Wpadded]
+   37 | typedef struct {
+      |         ^
+../src/core/sp.c:42:5: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   42 |     out[1] = (uint8_t)(word & 0xFFu);
+      |     ^~~
+../src/core/sp.c:46:5: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   46 |     out[2] = (uint8_t)(word >> 8);
+      |     ^~~
+../src/core/sp.c:47:5: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   47 |     out[3] = (uint8_t)(word & 0xFFu);
+      |     ^~~
+../src/core/sp.c:51:5: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   51 |     out[4] = (uint8_t)(length_field >> 8);
+      |     ^~~
+../src/core/sp.c:52:5: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   52 |     out[5] = (uint8_t)(length_field & 0xFFu);
+      |     ^~~
+../src/core/sp.c:54:13: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   54 |     memcpy(&out[SP_PRIMARY_HEADER_LEN], payload, payload_len);
+      |             ^~~
+../src/core/sp.c:74:48: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   74 |     word = (uint16_t)(((uint16_t)in[0] << 8) | in[1]);
+      |                                                ^~
+../src/core/sp.c:80:34: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   80 |     word = (uint16_t)(((uint16_t)in[2] << 8) | in[3]);
+      |                                  ^~
+../src/core/sp.c:80:48: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   80 |     word = (uint16_t)(((uint16_t)in[2] << 8) | in[3]);
+      |                                                ^~
+../src/core/sp.c:84:46: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   84 |     hdr->data_length = (uint16_t)(((uint16_t)in[4] << 8) | in[5]);
+      |                                              ^~
+../src/core/sp.c:84:60: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   84 |     hdr->data_length = (uint16_t)(((uint16_t)in[4] << 8) | in[5]);
+      |                                                            ^~
+../src/core/sp.c:97:21: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   97 |     *payload_out = &in[SP_PRIMARY_HEADER_LEN];
+      |                     ^~
+16 warnings generated.
+
+### clang -std=c99 -O2 -Weverything -DFDIR_TEST_BUILD -I../src/sim -I../src/core -I../src/fdir -I../src/security -I../src/app -I../src/test -I../src/third_party/tinycrypt/include -c ../src/core/crc16.c -o /dev/null
+../src/core/crc16.c:16:37: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   16 |         crc ^= (uint16_t)((uint16_t)data[i] << 8);
+      |                                     ^~~~
+1 warning generated.
+
+### clang -std=c99 -O2 -Weverything -DFDIR_TEST_BUILD -I../src/sim -I../src/core -I../src/fdir -I../src/security -I../src/app -I../src/test -I../src/third_party/tinycrypt/include -c ../src/core/pus.c -o /dev/null
+In file included from ../src/core/pus.c:2:
+In file included from ../src/core/pus.h:34:
+../src/core/sp.h:39:15: warning: padding struct 'sp_primary_header_t' with 3 bytes to align 'type' [-Wpadded]
+   39 |     sp_type_t type;          /* 1 bit  */
+      |               ^
+../src/core/sp.h:41:15: warning: padding struct 'sp_primary_header_t' with 1 byte to align 'apid' [-Wpadded]
+   41 |     uint16_t  apid;          /* 11 bits */
+      |               ^
+../src/core/sp.h:43:15: warning: padding struct 'sp_primary_header_t' with 1 byte to align 'seq_count' [-Wpadded]
+   43 |     uint16_t  seq_count;     /* 14 bits */
+      |               ^
+../src/core/sp.h:37:9: warning: padding size of 'sp_primary_header_t' with 2 bytes to alignment boundary [-Wpadded]
+   37 | typedef struct {
+      |         ^
+In file included from ../src/core/pus.c:2:
+../src/core/pus.h:63:9: warning: padding size of 'obt_t' with 2 bytes to alignment boundary [-Wpadded]
+   63 | typedef struct {
+      |         ^
+../src/core/pus.h:86:14: warning: padding struct 'pus_tc_t' with 1 byte to align 'source_id' [-Wpadded]
+   86 |     uint16_t source_id;
+      |              ^
+../src/core/pus.h:87:20: warning: padding struct 'pus_tc_t' with 6 bytes to align 'app_data' [-Wpadded]
+   87 |     const uint8_t *app_data;
+      |                    ^
+../src/core/pus.h:81:9: warning: padding size of 'pus_tc_t' with 4 bytes to alignment boundary [-Wpadded]
+   81 | typedef struct {
+      |         ^
+../src/core/pus.c:11:5: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   11 |     p[1] = (uint8_t)(v & 0xFFu);
+      |     ^
+../src/core/pus.c:17:5: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   17 |     p[1] = (uint8_t)((v >> 16) & 0xFFu);
+      |     ^
+../src/core/pus.c:18:5: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   18 |     p[2] = (uint8_t)((v >> 8) & 0xFFu);
+      |     ^
+../src/core/pus.c:19:5: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   19 |     p[3] = (uint8_t)(v & 0xFFu);
+      |     ^
+../src/core/pus.c:24:47: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   24 |     return (uint16_t)(((uint16_t)p[0] << 8) | p[1]);
+      |                                               ^
+../src/core/pus.c:49:5: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   49 |     field[field_len_without_crc]      = 0;
+      |     ^~~~~
+../src/core/pus.c:50:5: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   50 |     field[field_len_without_crc + 1u] = 0;
+      |     ^~~~~
+../src/core/pus.c:59:18: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   59 |     pus_put_u16(&out[(size_t)total - PUS_CRC_LEN], crc);
+      |                  ^~~
+../src/core/pus.c:80:5: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   80 |     field[1] = service;
+      |     ^~~~~
+../src/core/pus.c:81:5: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   81 |     field[2] = subtype;
+      |     ^~~~~
+../src/core/pus.c:82:18: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   82 |     pus_put_u16(&field[3], 0);              /* message type counter: unused */
+      |                  ^~~~~
+../src/core/pus.c:83:18: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   83 |     pus_put_u16(&field[5], dest_id);
+      |                  ^~~~~
+../src/core/pus.c:84:18: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   84 |     pus_put_u32(&field[7], time.coarse);
+      |                  ^~~~~
+../src/core/pus.c:85:18: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   85 |     pus_put_u16(&field[11], time.fine);
+      |                  ^~~~~
+../src/core/pus.c:87:17: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   87 |         memcpy(&field[PUS_TM_SEC_HDR_LEN], data, data_len);
+      |                 ^~~~~
+../src/core/pus.c:127:5: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  127 |     field[1] = service;
+      |     ^~~~~
+../src/core/pus.c:128:5: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  128 |     field[2] = subtype;
+      |     ^~~~~
+../src/core/pus.c:129:18: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  129 |     pus_put_u16(&field[3], source_id);
+      |                  ^~~~~
+../src/core/pus.c:131:17: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  131 |         memcpy(&field[PUS_TC_SEC_HDR_LEN], app_data, app_len);
+      |                 ^~~~~
+../src/core/pus.c:188:29: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  188 |     crc_recv = pus_get_u16(&frame[frame_len - PUS_CRC_LEN]);
+      |                             ^~~~~
+../src/core/pus.c:210:21: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  210 |     tc->service   = field[1];
+      |                     ^~~~~
+../src/core/pus.c:211:21: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  211 |     tc->subtype   = field[2];
+      |                     ^~~~~
+../src/core/pus.c:212:34: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  212 |     tc->source_id = pus_get_u16(&field[3]);
+      |                                  ^~~~~
+../src/core/pus.c:213:22: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  213 |     tc->app_data  = &field[PUS_TC_SEC_HDR_LEN];
+      |                      ^~~~~
+32 warnings generated.
+
+### clang -std=c99 -O2 -Weverything -DFDIR_TEST_BUILD -I../src/sim -I../src/core -I../src/fdir -I../src/security -I../src/app -I../src/test -I../src/third_party/tinycrypt/include -c ../src/core/tc_handler.c -o /dev/null
+In file included from ../src/core/tc_handler.c:2:
+In file included from ../src/core/tc_handler.h:19:
+In file included from ../src/core/pus.h:34:
+../src/core/sp.h:39:15: warning: padding struct 'sp_primary_header_t' with 3 bytes to align 'type' [-Wpadded]
+   39 |     sp_type_t type;          /* 1 bit  */
+      |               ^
+../src/core/sp.h:41:15: warning: padding struct 'sp_primary_header_t' with 1 byte to align 'apid' [-Wpadded]
+   41 |     uint16_t  apid;          /* 11 bits */
+      |               ^
+../src/core/sp.h:43:15: warning: padding struct 'sp_primary_header_t' with 1 byte to align 'seq_count' [-Wpadded]
+   43 |     uint16_t  seq_count;     /* 14 bits */
+      |               ^
+../src/core/sp.h:37:9: warning: padding size of 'sp_primary_header_t' with 2 bytes to alignment boundary [-Wpadded]
+   37 | typedef struct {
+      |         ^
+In file included from ../src/core/tc_handler.c:2:
+../src/core/tc_handler.h:76:17: warning: padding struct 'tc_service_t' with 7 bytes to align 'check' [-Wpadded]
+   76 |     tc_check_fn check;
+      |                 ^
+../src/core/tc_handler.h:83:18: warning: padding struct 'struct tc_ctx' with 4 bytes to align 'sink' [-Wpadded]
+   83 |     tm_sink_fn   sink;
+      |                  ^
+In file included from ../src/core/tc_handler.c:2:
+In file included from ../src/core/tc_handler.h:19:
+../src/core/pus.h:63:9: warning: padding size of 'obt_t' with 2 bytes to alignment boundary [-Wpadded]
+   63 | typedef struct {
+      |         ^
+../src/core/pus.h:86:14: warning: padding struct 'pus_tc_t' with 1 byte to align 'source_id' [-Wpadded]
+   86 |     uint16_t source_id;
+      |              ^
+../src/core/pus.h:87:20: warning: padding struct 'pus_tc_t' with 6 bytes to align 'app_data' [-Wpadded]
+   87 |     const uint8_t *app_data;
+      |                    ^
+../src/core/pus.h:81:9: warning: padding size of 'pus_tc_t' with 4 bytes to alignment boundary [-Wpadded]
+   81 | typedef struct {
+      |         ^
+../src/core/tc_handler.c:44:5: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   44 |     data[PUS_REQUEST_ID_LEN] = (uint8_t)code;
+      |     ^~~~
+../src/core/tc_handler.c:76:13: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   76 |         if (ctx->services[i].service == service) {
+      |             ^~~~~~~~~~~~~
+../src/core/tc_handler.c:80:5: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   80 |     ctx->services[ctx->service_count].service = service;
+      |     ^~~~~~~~~~~~~
+../src/core/tc_handler.c:81:5: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   81 |     ctx->services[ctx->service_count].check   = check;
+      |     ^~~~~~~~~~~~~
+../src/core/tc_handler.c:82:5: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   82 |     ctx->services[ctx->service_count].exec    = exec;
+      |     ^~~~~~~~~~~~~
+../src/core/tc_handler.c:83:5: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   83 |     ctx->services[ctx->service_count].arg     = arg;
+      |     ^~~~~~~~~~~~~
+../src/core/tc_handler.c:138:17: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  138 |             if (ctx->services[i].service == tc.service) {
+      |                 ^~~~~~~~~~~~~
+../src/core/tc_handler.c:139:24: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  139 |                 svc = &ctx->services[i];
+      |                        ^~~~~~~~~~~~~
+18 warnings generated.
+
+### clang -std=c99 -O2 -Weverything -DFDIR_TEST_BUILD -I../src/sim -I../src/core -I../src/fdir -I../src/security -I../src/app -I../src/test -I../src/third_party/tinycrypt/include -c ../src/fdir/monitor.c -o /dev/null
+In file included from ../src/fdir/monitor.c:2:
+../src/fdir/monitor.h:57:17: warning: padding struct 'monitor_entry_t' with 2 bytes to align 'limit_high' [-Wpadded]
+   57 |     int32_t     limit_high;       /* alarm threshold                   */
+      |                 ^
+../src/fdir/monitor.h:71:17: warning: padding struct 'monitor_entry_t' with 2 bytes to align 'filtered' [-Wpadded]
+   71 |     uint32_t    filtered;         /* violations rejected by persistence  */
+      |                 ^
+../src/fdir/monitor.c:118:13: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  118 |         if (table[i].param_id == param_id) {
+      |             ^~~~~
+../src/fdir/monitor.c:119:21: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  119 |             return &table[i];
+      |                     ^~~~~
+../src/fdir/monitor.c:134:14: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  134 |         if (!table[i].enabled) {
+      |              ^~~~~
+../src/fdir/monitor.c:137:21: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  137 |         value = get(table[i].param_id, ctx);
+      |                     ^~~~~
+../src/fdir/monitor.c:138:26: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  138 |         tr = mon_update(&table[i], value);
+      |                          ^~~~~
+../src/fdir/monitor.c:140:28: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  140 |             on_transition(&table[i], tr, value, ctx);
+      |                            ^~~~~
+8 warnings generated.
+
+### clang -std=c99 -O2 -Weverything -DFDIR_TEST_BUILD -I../src/sim -I../src/core -I../src/fdir -I../src/security -I../src/app -I../src/test -I../src/third_party/tinycrypt/include -c ../src/fdir/supervisor.c -o /dev/null
+In file included from ../src/fdir/supervisor.c:2:
+../src/fdir/supervisor.h:59:23: warning: padding struct 'sup_task_t' with 3 bytes to align 'os_id' [-Wpadded]
+   59 |     uint32_t          os_id;           /* for ops->restart (RTEMS id)    */
+      |                       ^
+../src/fdir/supervisor.h:66:23: warning: padding struct 'sup_task_t' with 2 bytes to align 'misses_total' [-Wpadded]
+   66 |     uint32_t          misses_total;
+      |                       ^
+../src/fdir/supervisor.h:83:22: warning: padding struct 'supervisor_t' with 7 bytes to align 'ops' [-Wpadded]
+   83 |     const sup_ops_t *ops;
+      |                      ^
+../src/fdir/supervisor.h:100:5: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  100 |     s->tasks[idx].heartbeat = s->tasks[idx].heartbeat + 1u;
+      |     ^~~~~~~~
+../src/fdir/supervisor.h:100:31: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  100 |     s->tasks[idx].heartbeat = s->tasks[idx].heartbeat + 1u;
+      |                               ^~~~~~~~
+../src/fdir/supervisor.c:29:10: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   29 |     t = &s->tasks[s->count];
+      |          ^~~~~~~~
+../src/fdir/supervisor.c:42:28: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   42 |     const sup_task_t *t = &s->tasks[idx];
+      |                            ^~~~~~~~
+../src/fdir/supervisor.c:50:33: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   50 |         if ((uint32_t)(now_ms - t->restart_ms[i]) < s->window_ms) {
+      |                                 ^~~~~~~~~~~~~
+../src/fdir/supervisor.c:69:26: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   69 |         sup_task_t *t = &s->tasks[i];
+      |                          ^~~~~~~~
+../src/fdir/supervisor.c:119:9: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  119 |         t->restart_ms[t->restart_next] = now_ms;
+      |         ^~~~~~~~~~~~~
+10 warnings generated.
+
+### clang -std=c99 -O2 -Weverything -DFDIR_TEST_BUILD -I../src/sim -I../src/core -I../src/fdir -I../src/security -I../src/app -I../src/test -I../src/third_party/tinycrypt/include -c ../src/fdir/watchdog.c -o /dev/null
+../src/fdir/watchdog.c:43:5: warning: default label in switch which covers all enumeration values [-Wcovered-switch-default]
+   43 |     default:
+      |     ^
+1 warning generated.
+
+### clang -std=c99 -O2 -Weverything -DFDIR_TEST_BUILD -I../src/sim -I../src/core -I../src/fdir -I../src/security -I../src/app -I../src/test -I../src/third_party/tinycrypt/include -c ../src/fdir/nvstate.c -o /dev/null
+../src/fdir/nvstate.c:11:5: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   11 |     p[1] = (uint8_t)(v & 0xFFu);
+      |     ^
+../src/fdir/nvstate.c:17:5: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   17 |     p[1] = (uint8_t)((v >> 16) & 0xFFu);
+      |     ^
+../src/fdir/nvstate.c:18:5: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   18 |     p[2] = (uint8_t)((v >> 8) & 0xFFu);
+      |     ^
+../src/fdir/nvstate.c:19:5: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   19 |     p[3] = (uint8_t)(v & 0xFFu);
+      |     ^
+../src/fdir/nvstate.c:24:47: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   24 |     return (uint16_t)(((uint16_t)p[0] << 8) | p[1]);
+      |                                               ^
+../src/fdir/nvstate.c:29:48: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   29 |     return ((uint32_t)p[0] << 24) | ((uint32_t)p[1] << 16) |
+      |                                                ^
+../src/fdir/nvstate.c:30:23: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   30 |            ((uint32_t)p[2] << 8) | (uint32_t)p[3];
+      |                       ^
+../src/fdir/nvstate.c:30:46: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   30 |            ((uint32_t)p[2] << 8) | (uint32_t)p[3];
+      |                                              ^
+../src/fdir/nvstate.c:49:12: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   49 |     put16(&image[4], NV_VERSION);
+      |            ^~~~~
+../src/fdir/nvstate.c:50:12: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   50 |     put16(&image[6], r->boot_count);
+      |            ^~~~~
+../src/fdir/nvstate.c:51:12: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   51 |     put16(&image[8], r->reset_count);
+      |            ^~~~~
+../src/fdir/nvstate.c:52:5: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   52 |     image[10] = r->pending_reset;
+      |     ^~~~~
+../src/fdir/nvstate.c:53:5: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   53 |     image[11] = r->last_reset_cause;
+      |     ^~~~~
+../src/fdir/nvstate.c:54:12: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   54 |     put16(&image[12], r->escalation_count);
+      |            ^~~~~
+../src/fdir/nvstate.c:55:5: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   55 |     image[14] = r->last_esc_task;
+      |     ^~~~~
+../src/fdir/nvstate.c:56:5: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   56 |     image[15] = r->last_esc_action;
+      |     ^~~~~
+../src/fdir/nvstate.c:57:12: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   57 |     put16(&image[16], r->last_esc_boot);
+      |            ^~~~~
+../src/fdir/nvstate.c:58:12: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   58 |     put32(&image[18], r->last_esc_uptime_s);
+      |            ^~~~~
+../src/fdir/nvstate.c:59:5: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   59 |     image[22] = r->last_safe_src;
+      |     ^~~~~
+../src/fdir/nvstate.c:60:5: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   60 |     image[23] = r->spare;
+      |     ^~~~~
+../src/fdir/nvstate.c:61:12: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   61 |     put16(&image[24], r->last_safe_detail);
+      |            ^~~~~
+../src/fdir/nvstate.c:62:12: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   62 |     put16(&image[26], crc16_ccitt(image, NV_IMAGE_LEN - 2u));
+      |            ^~~~~
+../src/fdir/nvstate.c:67:48: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   67 |     if (get32(&image[0]) != NV_MAGIC || get16(&image[4]) != NV_VERSION ||
+      |                                                ^~~~~
+../src/fdir/nvstate.c:68:57: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   68 |         crc16_ccitt(image, NV_IMAGE_LEN - 2u) != get16(&image[26])) {
+      |                                                         ^~~~~
+../src/fdir/nvstate.c:72:35: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   72 |     r->boot_count        = get16(&image[6]);
+      |                                   ^~~~~
+../src/fdir/nvstate.c:73:35: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   73 |     r->reset_count       = get16(&image[8]);
+      |                                   ^~~~~
+../src/fdir/nvstate.c:74:28: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   74 |     r->pending_reset     = image[10];
+      |                            ^~~~~
+../src/fdir/nvstate.c:75:28: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   75 |     r->last_reset_cause  = image[11];
+      |                            ^~~~~
+../src/fdir/nvstate.c:76:35: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   76 |     r->escalation_count  = get16(&image[12]);
+      |                                   ^~~~~
+../src/fdir/nvstate.c:77:28: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   77 |     r->last_esc_task     = image[14];
+      |                            ^~~~~
+../src/fdir/nvstate.c:78:28: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   78 |     r->last_esc_action   = image[15];
+      |                            ^~~~~
+../src/fdir/nvstate.c:79:35: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   79 |     r->last_esc_boot     = get16(&image[16]);
+      |                                   ^~~~~
+../src/fdir/nvstate.c:80:35: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   80 |     r->last_esc_uptime_s = get32(&image[18]);
+      |                                   ^~~~~
+../src/fdir/nvstate.c:81:28: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   81 |     r->last_safe_src     = image[22];
+      |                            ^~~~~
+../src/fdir/nvstate.c:82:28: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   82 |     r->spare             = image[23];
+      |                            ^~~~~
+../src/fdir/nvstate.c:83:35: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   83 |     r->last_safe_detail  = get16(&image[24]);
+      |                                   ^~~~~
+36 warnings generated.
+
+### clang -std=c99 -O2 -Weverything -DFDIR_TEST_BUILD -I../src/sim -I../src/core -I../src/fdir -I../src/security -I../src/app -I../src/test -I../src/third_party/tinycrypt/include -c ../src/fdir/schedule.c -o /dev/null
+In file included from ../src/fdir/schedule.c:2:
+../src/fdir/schedule.h:24:9: warning: padding size of 'sched_entry_t' with 1 byte to alignment boundary [-Wpadded]
+   24 | typedef struct {
+      |         ^
+../src/fdir/schedule.h:31:9: warning: padding size of 'sched_t' with 3 bytes to alignment boundary [-Wpadded]
+   31 | typedef struct {
+      |         ^
+../src/fdir/schedule.c:20:14: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   20 |         if (!s->e[i].used) {
+      |              ^~~~
+../src/fdir/schedule.c:21:13: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   21 |             s->e[i].used = 1u;
+      |             ^~~~
+../src/fdir/schedule.c:22:13: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   22 |             s->e[i].release_s = release_s;
+      |             ^~~~
+../src/fdir/schedule.c:23:13: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   23 |             s->e[i].len = (uint16_t)len;
+      |             ^~~~
+../src/fdir/schedule.c:24:20: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   24 |             memcpy(s->e[i].tc, tc, len);
+      |                    ^~~~
+../src/fdir/schedule.c:35:9: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   35 |         s->e[i].used = 0u;
+      |         ^~~~
+../src/fdir/schedule.c:48:14: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   48 |         n += s->e[i].used ? 1u : 0u;
+      |              ^~~~
+../src/fdir/schedule.c:61:17: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   61 |             if (s->e[i].used && s->e[i].release_s <= now_s &&
+      |                 ^~~~
+../src/fdir/schedule.c:61:33: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   61 |             if (s->e[i].used && s->e[i].release_s <= now_s &&
+      |                                 ^~~~
+../src/fdir/schedule.c:63:18: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   63 |                  s->e[i].release_s < s->e[best].release_s)) {
+      |                  ^~~~
+../src/fdir/schedule.c:63:38: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   63 |                  s->e[i].release_s < s->e[best].release_s)) {
+      |                                      ^~~~
+../src/fdir/schedule.c:73:31: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   73 |             sched_entry_t e = s->e[best];
+      |                               ^~~~
+../src/fdir/schedule.c:74:13: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   74 |             s->e[best].used = 0u;
+      |             ^~~~
+15 warnings generated.
+
+### clang -std=c99 -O2 -Weverything -DFDIR_TEST_BUILD -I../src/sim -I../src/core -I../src/fdir -I../src/security -I../src/app -I../src/test -I../src/third_party/tinycrypt/include -c ../src/fdir/mode_sm.c -o /dev/null
+In file included from ../src/fdir/mode_sm.c:14:
+../src/fdir/mode_sm.h:47:14: warning: padding struct 'mode_sm_payload_t' with 1 byte to align 'detail' [-Wpadded]
+   47 |     uint16_t detail;
+      |              ^
+../src/fdir/mode_sm.h:68:21: warning: padding struct 'mode_sm_result_t' with 3 bytes to align 'from' [-Wpadded]
+   68 |     mode_sm_state_t from;
+      |                     ^
+../src/fdir/mode_sm.c:69:39: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   69 |     const mode_sm_payload_t *cause = &sm->payload[MODE_SM_EV_TC_MODE_SAFE];
+      |                                       ^~~~~~~~~~~
+../src/fdir/mode_sm.c:82:39: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   82 |     const mode_sm_payload_t *cause = &sm->payload[MODE_SM_EV_FAULT_CRITICAL];
+      |                                       ^~~~~~~~~~~
+../src/fdir/mode_sm.c:95:39: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   95 |     const mode_sm_payload_t *cause = &sm->payload[MODE_SM_EV_TC_MODE_DEGRADED];
+      |                                       ^~~~~~~~~~~
+../src/fdir/mode_sm.c:108:39: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  108 |     const mode_sm_payload_t *cause = &sm->payload[MODE_SM_EV_FAULT_NONCRITICAL];
+      |                                       ^~~~~~~~~~~
+../src/fdir/mode_sm.c:121:39: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  121 |     const mode_sm_payload_t *cause = &sm->payload[MODE_SM_EV_FAULT_CRITICAL];
+      |                                       ^~~~~~~~~~~
+../src/fdir/mode_sm.c:133:39: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  133 |     const mode_sm_payload_t *cause = &sm->payload[MODE_SM_EV_FAULT_NONCRITICAL];
+      |                                       ^~~~~~~~~~~
+../src/fdir/mode_sm.c:145:39: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  145 |     const mode_sm_payload_t *cause = &sm->payload[MODE_SM_EV_TC_MODE_SAFE];
+      |                                       ^~~~~~~~~~~
+../src/fdir/mode_sm.c:158:39: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  158 |     const mode_sm_payload_t *cause = &sm->payload[MODE_SM_EV_FAULT_CRITICAL];
+      |                                       ^~~~~~~~~~~
+../src/fdir/mode_sm.c:171:39: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  171 |     const mode_sm_payload_t *cause = &sm->payload[MODE_SM_EV_TC_MODE_NOMINAL];
+      |                                       ^~~~~~~~~~~
+../src/fdir/mode_sm.c:184:39: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  184 |     const mode_sm_payload_t *cause = &sm->payload[MODE_SM_EV_FAULT_CRITICAL];
+      |                                       ^~~~~~~~~~~
+../src/fdir/mode_sm.c:196:39: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  196 |     const mode_sm_payload_t *cause = &sm->payload[MODE_SM_EV_TC_MODE_DEGRADED];
+      |                                       ^~~~~~~~~~~
+../src/fdir/mode_sm.c:210:39: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  210 |     const mode_sm_payload_t *cause = &sm->payload[MODE_SM_EV_TC_MODE_NOMINAL];
+      |                                       ^~~~~~~~~~~
+../src/fdir/mode_sm.c:281:9: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  281 |         sm->payload[i] = none;
+      |         ^~~~~~~~~~~
+../src/fdir/mode_sm.c:301:5: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  301 |     sm->payload[event] = cause;
+      |     ^~~~~~~~~~~
+../src/fdir/mode_sm.c:354:46: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  354 |     lost = pending & ONE_SHOT & ~consumed & ~IGNORED[start];
+      |                                              ^~~~~~~
+../src/fdir/mode_sm.c:365:41: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  365 |         consumed |= pending & LATCHED & IGNORED[start];
+      |                                         ^~~~~~~
+../src/fdir/mode_sm.c:371:63: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  371 |             mode_sm_on_discard(sm->user, (mode_sm_event_t)e, &sm->payload[e]);
+      |                                                               ^~~~~~~~~~~
+19 warnings generated.
+
+### clang -std=c99 -O2 -Weverything -DFDIR_TEST_BUILD -I../src/sim -I../src/core -I../src/fdir -I../src/security -I../src/app -I../src/test -I../src/third_party/tinycrypt/include -c ../src/fdir/thermal.c -o /dev/null
+In file included from ../src/fdir/thermal.c:2:
+../src/fdir/thermal.h:48:14: warning: padding struct 'thermal_t' with 1 byte to align 'next_ms' [-Wpadded]
+   48 |     uint32_t next_ms;    /* time of the next attempt       */
+      |              ^
+1 warning generated.
+
+### clang -std=c99 -O2 -Weverything -DFDIR_TEST_BUILD -I../src/sim -I../src/core -I../src/fdir -I../src/security -I../src/app -I../src/test -I../src/third_party/tinycrypt/include -c ../src/fdir/fdir.c -o /dev/null
+In file included from ../src/fdir/fdir.c:22:
+In file included from ../src/fdir/fdir.h:21:
+../src/fdir/schedule.h:24:9: warning: padding size of 'sched_entry_t' with 1 byte to alignment boundary [-Wpadded]
+   24 | typedef struct {
+      |         ^
+In file included from ../src/fdir/fdir.c:22:
+In file included from ../src/fdir/fdir.h:22:
+../src/fdir/supervisor.h:59:23: warning: padding struct 'sup_task_t' with 3 bytes to align 'os_id' [-Wpadded]
+   59 |     uint32_t          os_id;           /* for ops->restart (RTEMS id)    */
+      |                       ^
+../src/fdir/supervisor.h:66:23: warning: padding struct 'sup_task_t' with 2 bytes to align 'misses_total' [-Wpadded]
+   66 |     uint32_t          misses_total;
+      |                       ^
+In file included from ../src/fdir/fdir.c:28:
+../src/fdir/mode_sm.h:47:14: warning: padding struct 'mode_sm_payload_t' with 1 byte to align 'detail' [-Wpadded]
+   47 |     uint16_t detail;
+      |              ^
+In file included from ../src/fdir/fdir.c:32:
+In file included from ../src/core/pus.h:34:
+../src/core/sp.h:39:15: warning: padding struct 'sp_primary_header_t' with 3 bytes to align 'type' [-Wpadded]
+   39 |     sp_type_t type;          /* 1 bit  */
+      |               ^
+../src/core/sp.h:41:15: warning: padding struct 'sp_primary_header_t' with 1 byte to align 'apid' [-Wpadded]
+   41 |     uint16_t  apid;          /* 11 bits */
+      |               ^
+../src/core/sp.h:43:15: warning: padding struct 'sp_primary_header_t' with 1 byte to align 'seq_count' [-Wpadded]
+   43 |     uint16_t  seq_count;     /* 14 bits */
+      |               ^
+../src/core/sp.h:37:9: warning: padding size of 'sp_primary_header_t' with 2 bytes to alignment boundary [-Wpadded]
+   37 | typedef struct {
+      |         ^
+In file included from ../src/fdir/fdir.c:35:
+In file included from ../src/app/tmtc.h:16:
+../src/core/tc_handler.h:76:17: warning: padding struct 'tc_service_t' with 7 bytes to align 'check' [-Wpadded]
+   76 |     tc_check_fn check;
+      |                 ^
+In file included from ../src/fdir/fdir.c:30:
+../src/fdir/monitor.h:57:17: warning: padding struct 'monitor_entry_t' with 2 bytes to align 'limit_high' [-Wpadded]
+   57 |     int32_t     limit_high;       /* alarm threshold                   */
+      |                 ^
+../src/fdir/monitor.h:71:17: warning: padding struct 'monitor_entry_t' with 2 bytes to align 'filtered' [-Wpadded]
+   71 |     uint32_t    filtered;         /* violations rejected by persistence  */
+      |                 ^
+In file included from ../src/fdir/fdir.c:22:
+In file included from ../src/fdir/fdir.h:21:
+../src/fdir/schedule.h:31:9: warning: padding size of 'sched_t' with 3 bytes to alignment boundary [-Wpadded]
+   31 | typedef struct {
+      |         ^
+../src/fdir/fdir.c:44:22: warning: padding struct 'struct (unnamed at ../src/fdir/fdir.c:42:8)' with 3 bytes to align 'until_ms' [-Wpadded]
+   44 |     uint32_t         until_ms;
+      |                      ^
+In file included from ../src/fdir/fdir.c:22:
+In file included from ../src/fdir/fdir.h:22:
+../src/fdir/supervisor.h:83:22: warning: padding struct 'supervisor_t' with 7 bytes to align 'ops' [-Wpadded]
+   83 |     const sup_ops_t *ops;
+      |                      ^
+In file included from ../src/fdir/fdir.c:28:
+../src/fdir/mode_sm.h:68:21: warning: padding struct 'mode_sm_result_t' with 3 bytes to align 'from' [-Wpadded]
+   68 |     mode_sm_state_t from;
+      |                     ^
+../src/fdir/fdir.c:486:14: warning: padding struct 'struct (unnamed at ../src/fdir/fdir.c:484:14)' with 2 bytes to align 'on_high' [-Wpadded]
+  486 |     vmode_t  on_high;
+      |              ^
+In file included from ../src/fdir/fdir.c:34:
+../src/fdir/thermal.h:48:14: warning: padding struct 'thermal_t' with 1 byte to align 'next_ms' [-Wpadded]
+   48 |     uint32_t next_ms;    /* time of the next attempt       */
+      |              ^
+../src/fdir/fdir.c:679:5: warning: default label in switch which covers all enumeration values [-Wcovered-switch-default]
+  679 |     default:
+      |     ^
+In file included from ../src/fdir/fdir.c:32:
+../src/core/pus.h:63:9: warning: padding size of 'obt_t' with 2 bytes to alignment boundary [-Wpadded]
+   63 | typedef struct {
+      |         ^
+In file included from ../src/fdir/fdir.c:22:
+In file included from ../src/fdir/fdir.h:22:
+../src/fdir/supervisor.h:100:5: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  100 |     s->tasks[idx].heartbeat = s->tasks[idx].heartbeat + 1u;
+      |     ^~~~~~~~
+../src/fdir/supervisor.h:100:31: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  100 |     s->tasks[idx].heartbeat = s->tasks[idx].heartbeat + 1u;
+      |                               ^~~~~~~~
+../src/fdir/fdir.c:167:5: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  167 |     aux[2] = kind;
+      |     ^~~
+../src/fdir/fdir.c:168:18: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  168 |     pus_put_u16(&aux[3], subject);
+      |                  ^~~
+../src/fdir/fdir.c:213:9: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  213 |         aux[2] = (uint8_t)sched_count(&g_sched);
+      |         ^~~
+../src/fdir/fdir.c:236:5: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  236 |     aux[2] = (uint8_t)from;
+      |     ^~~
+../src/fdir/fdir.c:237:5: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  237 |     aux[3] = (uint8_t)to;
+      |     ^~~
+../src/fdir/fdir.c:238:5: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  238 |     aux[4] = cause->src;
+      |     ^~~
+../src/fdir/fdir.c:239:18: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  239 |     pus_put_u16(&aux[5], cause->detail);
+      |                  ^~~
+../src/fdir/fdir.c:255:5: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  255 |     aux[2] = (uint8_t)event;
+      |     ^~~
+../src/fdir/fdir.c:256:5: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  256 |     aux[3] = cause->src;
+      |     ^~~
+../src/fdir/fdir.c:265:18: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  265 |     pus_put_u32(&aux[2], raw_state);
+      |                  ^~~
+../src/fdir/fdir.c:305:5: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  305 |     aux[2] = on ? 1u : 0u;
+      |     ^~~
+../src/fdir/fdir.c:306:18: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  306 |     pus_put_u16(&aux[3], duration_s);
+      |                  ^~~
+../src/fdir/fdir.c:307:5: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  307 |     aux[5] = (uint8_t)reason;
+      |     ^~~
+../src/fdir/fdir.c:364:9: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  364 |         aux[2] = payload_cmd;
+      |         ^~~
+../src/fdir/fdir.c:365:9: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  365 |         aux[3] = (uint8_t)((payload_allowed && payload_cmd) ? 1u : 0u);
+      |         ^~~
+../src/fdir/fdir.c:410:5: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  410 |     aux[2] = (uint8_t)idx;
+      |     ^~~
+../src/fdir/fdir.c:411:5: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  411 |     aux[3] = sat8(value);
+      |     ^~~
+../src/fdir/fdir.c:503:13: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  503 |         if (g_mon[i].param_id == param_id) {
+      |             ^~~~~
+../src/fdir/fdir.c:504:13: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  504 |             mon_request[i] = enable ? 1u : 2u;
+      |             ^~~~~~~~~~~
+../src/fdir/fdir.c:512:12: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  512 |     return g_values[param_id - 1u];
+      |            ^~~~~~~~
+../src/fdir/fdir.c:527:18: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  527 |     pus_put_u16(&aux[2], e->param_id);
+      |                  ^~~
+../src/fdir/fdir.c:528:5: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  528 |     aux[4] = (uint8_t)e->state;
+      |     ^~~
+../src/fdir/fdir.c:529:5: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  529 |     aux[5] = (uint8_t)(tr == MON_RAISED_HIGH ? MON_SIDE_HIGH :
+      |     ^~~
+../src/fdir/fdir.c:531:18: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  531 |     pus_put_u32(&aux[6], (uint32_t)value);
+      |                  ^~~
+../src/fdir/fdir.c:532:18: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  532 |     pus_put_u32(&aux[10], (uint32_t)limit);
+      |                  ^~~
+../src/fdir/fdir.c:542:13: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  542 |         if (event_actions[i].param_id == e->param_id) {
+      |             ^~~~~~~~~~~~~
+../src/fdir/fdir.c:543:56: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  543 |             vmode_t target = (tr == MON_RAISED_HIGH) ? event_actions[i].on_high
+      |                                                        ^~~~~~~~~~~~~
+../src/fdir/fdir.c:544:56: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  544 |                                                      : event_actions[i].on_low;
+      |                                                        ^~~~~~~~~~~~~
+../src/fdir/fdir.c:584:13: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  584 |         if (g_mon[i].enabled) { en |= (uint8_t)(1u << i); }
+      |             ^~~~~
+../src/fdir/fdir.c:585:39: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  585 |         states |= (uint8_t)(((uint8_t)g_mon[i].state & 3u) << (2u * i));
+      |                                       ^~~~~
+../src/fdir/fdir.c:586:21: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  586 |         filtered += g_mon[i].filtered;
+      |                     ^~~~~
+../src/fdir/fdir.c:589:13: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  589 |         if (g_sup.tasks[i].status == SUP_TASK_FAILED) {
+      |             ^~~~~~~~~~~
+../src/fdir/fdir.c:595:18: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  595 |     pus_put_u16(&d[1], sat16((uint32_t)(g_values[0] < 0 ? 0 : g_values[0])));
+      |                  ^
+../src/fdir/fdir.c:596:14: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  596 |     put_i16(&d[3], g_values[1]);
+      |              ^
+../src/fdir/fdir.c:596:20: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  596 |     put_i16(&d[3], g_values[1]);
+      |                    ^~~~~~~~
+../src/fdir/fdir.c:597:14: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  597 |     put_i16(&d[5], g_values[2]);
+      |              ^
+../src/fdir/fdir.c:597:20: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  597 |     put_i16(&d[5], g_values[2]);
+      |                    ^~~~~~~~
+../src/fdir/fdir.c:599:5: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  599 |     d[7] = (uint8_t)mode;   /* SA-01: no cast of a call result */
+      |     ^
+../src/fdir/fdir.c:600:5: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  600 |     d[8] = g_last_src;
+      |     ^
+../src/fdir/fdir.c:601:18: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  601 |     pus_put_u16(&d[9], g_last_detail);
+      |                  ^
+../src/fdir/fdir.c:602:5: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  602 |     d[11] = status_byte();
+      |     ^
+../src/fdir/fdir.c:603:5: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  603 |     d[12] = en;
+      |     ^
+../src/fdir/fdir.c:604:5: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  604 |     d[13] = states;
+      |     ^
+../src/fdir/fdir.c:605:18: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  605 |     pus_put_u16(&d[14], sat16(filtered));
+      |                  ^
+../src/fdir/fdir.c:606:5: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  606 |     d[16] = g_sup.tasks[TASK_ACS].restarts_total;
+      |     ^
+../src/fdir/fdir.c:607:5: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  607 |     d[17] = g_sup.tasks[TASK_HK].restarts_total;
+      |     ^
+../src/fdir/fdir.c:607:13: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  607 |     d[17] = g_sup.tasks[TASK_HK].restarts_total;
+      |             ^~~~~~~~~~~
+../src/fdir/fdir.c:608:5: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  608 |     d[18] = g_sup.tasks[TASK_LOG].restarts_total;
+      |     ^
+../src/fdir/fdir.c:608:13: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  608 |     d[18] = g_sup.tasks[TASK_LOG].restarts_total;
+      |             ^~~~~~~~~~~
+../src/fdir/fdir.c:609:5: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  609 |     d[19] = failed;
+      |     ^
+../src/fdir/fdir.c:610:18: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  610 |     pus_put_u16(&d[20], g_nv.boot_count);
+      |                  ^
+../src/fdir/fdir.c:611:5: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  611 |     d[22] = g_nv.last_reset_cause;
+      |     ^
+../src/fdir/fdir.c:612:5: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  612 |     d[23] = sat8(g_nv.reset_count);
+      |     ^
+../src/fdir/fdir.c:613:5: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  613 |     d[24] = sat8(g_nv.escalation_count);
+      |     ^
+../src/fdir/fdir.c:614:18: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  614 |     pus_put_u16(&d[25], (uint16_t)tc->accepted);
+      |                  ^
+../src/fdir/fdir.c:615:18: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  615 |     pus_put_u16(&d[27], (uint16_t)tc->rejected);
+      |                  ^
+../src/fdir/fdir.c:616:18: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  616 |     pus_put_u16(&d[29], (uint16_t)tmtc_tm_dropped());
+      |                  ^
+../src/fdir/fdir.c:617:18: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  617 |     pus_put_u32(&d[31], t.coarse);
+      |                  ^
+../src/fdir/fdir.c:618:18: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  618 |     pus_put_u16(&d[35], inhibit_remaining_s(now_ms()));
+      |                  ^
+../src/fdir/fdir.c:628:18: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  628 |     pus_put_u16(&d[1], sat16((uint32_t)(g_values[0] < 0 ? 0 : g_values[0])));
+      |                  ^
+../src/fdir/fdir.c:629:14: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  629 |     put_i16(&d[3], g_values[1]);
+      |              ^
+../src/fdir/fdir.c:629:20: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  629 |     put_i16(&d[3], g_values[1]);
+      |                    ^~~~~~~~
+../src/fdir/fdir.c:631:5: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  631 |     d[5] = (uint8_t)mode;   /* SA-01 */
+      |     ^
+../src/fdir/fdir.c:632:5: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  632 |     d[6] = g_last_src;
+      |     ^
+../src/fdir/fdir.c:633:18: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  633 |     pus_put_u16(&d[7], g_last_detail);
+      |                  ^
+../src/fdir/fdir.c:634:5: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  634 |     d[9] = status_byte();
+      |     ^
+../src/fdir/fdir.c:635:18: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  635 |     pus_put_u16(&d[10], g_nv.boot_count);
+      |                  ^
+../src/fdir/fdir.c:636:5: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  636 |     d[12] = g_nv.last_reset_cause;
+      |     ^
+../src/fdir/fdir.c:637:18: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  637 |     pus_put_u32(&d[13], t.coarse);
+      |                  ^
+../src/fdir/fdir.c:646:21: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  646 |     int alarm_bat = g_mon[1].state == MON_ALARM;
+      |                     ^~~~~
+../src/fdir/fdir.c:647:21: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  647 |     int alarm_obc = g_mon[2].state == MON_ALARM;
+      |                     ^~~~~
+../src/fdir/fdir.c:658:9: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  658 |         aux[2] = g_therm.attempts;
+      |         ^~~
+../src/fdir/fdir.c:659:9: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  659 |         aux[3] = (uint8_t)THERM_MAX_ATTEMPTS;
+      |         ^~~
+../src/fdir/fdir.c:660:22: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  660 |         pus_put_u16(&aux[4], param);
+      |                      ^~~
+../src/fdir/fdir.c:661:22: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  661 |         pus_put_u32(&aux[6], (uint32_t)g_values[param - 1u]);
+      |                      ^~~
+../src/fdir/fdir.c:661:40: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  661 |         pus_put_u32(&aux[6], (uint32_t)g_values[param - 1u]);
+      |                                        ^~~~~~~~
+../src/fdir/fdir.c:666:9: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  666 |         aux[2] = g_therm.attempts;
+      |         ^~~
+../src/fdir/fdir.c:671:9: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  671 |         aux[2] = g_therm.attempts;
+      |         ^~~
+../src/fdir/fdir.c:672:22: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  672 |         pus_put_u16(&aux[3], param);
+      |                      ^~~
+../src/fdir/fdir.c:698:21: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  698 |         uint8_t r = mon_request[i];
+      |                     ^~~~~~~~~~~
+../src/fdir/fdir.c:700:13: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  700 |             mon_request[i] = 0;
+      |             ^~~~~~~~~~~
+../src/fdir/fdir.c:701:30: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  701 |             mon_set_enabled(&g_mon[i], r == 1u);
+      |                              ^~~~~
+../src/fdir/fdir.c:709:22: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  709 |         pus_put_u32(&aux[2], g_wdg.since_kick_ms);
+      |                      ^~~
+../src/fdir/fdir.c:719:9: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  719 |         g_values[1] = FINJ_PARAM(PARAM_TBAT, v.tbat_cdeg);
+      |         ^~~~~~~~
+../src/fdir/fdir.c:720:9: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  720 |         g_values[2] = FINJ_PARAM(PARAM_TOBC, v.tobc_cdeg);
+      |         ^~~~~~~~
+../src/fdir/fdir.c:788:17: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  788 |     mon_define(&g_mon[1], PARAM_TBAT,     0,   200,  4300,  4500, 3, EVT_MON_TBAT, 2);
+      |                 ^~~~~
+../src/fdir/fdir.c:789:17: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  789 |     mon_define(&g_mon[2], PARAM_TOBC, -2000, -1500,  6500,  7000, 5, EVT_MON_TOBC, 2);
+      |                 ^~~~~
+../src/fdir/fdir.c:791:35: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  791 |         if (mon_check_definition(&g_mon[i]) != 0) {
+      |                                   ^~~~~
+../src/fdir/fdir.c:810:18: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  810 |     pus_put_u16(&aux[2], g_nv.boot_count);
+      |                  ^~~
+../src/fdir/fdir.c:811:5: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  811 |     aux[4] = g_nv.last_reset_cause;
+      |     ^~~
+../src/fdir/fdir.c:812:5: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  812 |     aux[5] = sat8(g_nv.reset_count);
+      |     ^~~
+../src/fdir/fdir.c:813:5: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  813 |     aux[6] = sat8(g_nv.escalation_count);
+      |     ^~~
+../src/fdir/fdir.c:814:5: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  814 |     aux[7] = g_nv.last_esc_task;
+      |     ^~~
+../src/fdir/fdir.c:815:5: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  815 |     aux[8] = (uint8_t)boot_mode;
+      |     ^~~
+../src/fdir/fdir.c:816:5: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  816 |     aux[9] = nv_valid ? 1u : 0u;
+      |     ^~~
+In file included from ../src/fdir/fdir.c:35:
+In file included from ../src/app/tmtc.h:16:
+../src/core/tc_handler.h:83:18: warning: padding struct 'struct tc_ctx' with 4 bytes to align 'sink' [-Wpadded]
+   83 |     tm_sink_fn   sink;
+      |                  ^
+117 warnings generated.
+
+### clang -std=c99 -O2 -Weverything -DFDIR_TEST_BUILD -I../src/sim -I../src/core -I../src/fdir -I../src/security -I../src/app -I../src/test -I../src/third_party/tinycrypt/include -c ../src/security/tc_auth.c -o /dev/null
+In file included from ../src/security/tc_auth.c:2:
+In file included from ../src/security/tc_auth.h:41:
+../src/security/keystore.h:53:14: warning: padding struct 'ks_slot_t' with 3 bytes to align 'ctr' [-Wpadded]
+   53 |     uint32_t ctr[3];        /* last accepted counter, three copies       */
+      |              ^
+In file included from ../src/security/tc_auth.c:2:
+In file included from ../src/security/tc_auth.h:42:
+In file included from ../src/core/tc_handler.h:19:
+In file included from ../src/core/pus.h:34:
+../src/core/sp.h:39:15: warning: padding struct 'sp_primary_header_t' with 3 bytes to align 'type' [-Wpadded]
+   39 |     sp_type_t type;          /* 1 bit  */
+      |               ^
+../src/core/sp.h:41:15: warning: padding struct 'sp_primary_header_t' with 1 byte to align 'apid' [-Wpadded]
+   41 |     uint16_t  apid;          /* 11 bits */
+      |               ^
+../src/core/sp.h:43:15: warning: padding struct 'sp_primary_header_t' with 1 byte to align 'seq_count' [-Wpadded]
+   43 |     uint16_t  seq_count;     /* 14 bits */
+      |               ^
+../src/core/sp.h:37:9: warning: padding size of 'sp_primary_header_t' with 2 bytes to alignment boundary [-Wpadded]
+   37 | typedef struct {
+      |         ^
+In file included from ../src/security/tc_auth.c:2:
+In file included from ../src/security/tc_auth.h:42:
+../src/core/tc_handler.h:76:17: warning: padding struct 'tc_service_t' with 7 bytes to align 'check' [-Wpadded]
+   76 |     tc_check_fn check;
+      |                 ^
+In file included from ../src/security/tc_auth.c:6:
+../src/third_party/tinycrypt/include/tinycrypt/utils.h:40:9: warning: macro name is a reserved identifier [-Wreserved-macro-identifier]
+   40 | #define __TC_UTILS_H__
+      |         ^
+../src/third_party/tinycrypt/include/tinycrypt/utils.h:60:14: warning: identifier '_copy' is reserved because it starts with '_' at global scope [-Wreserved-identifier]
+   60 | unsigned int _copy(uint8_t *to, unsigned int to_len,
+      |              ^
+../src/third_party/tinycrypt/include/tinycrypt/utils.h:70:6: warning: identifier '_set' is reserved because it starts with '_' at global scope [-Wreserved-identifier]
+   70 | void _set(void *to, uint8_t val, unsigned int len);
+      |      ^
+../src/third_party/tinycrypt/include/tinycrypt/utils.h:79:9: warning: identifier '_double_byte' is reserved because it starts with '_' at global scope [-Wreserved-identifier]
+   79 | uint8_t _double_byte(uint8_t a);
+      |         ^
+../src/third_party/tinycrypt/include/tinycrypt/utils.h:89:5: warning: identifier '_compare' is reserved because it starts with '_' at global scope [-Wreserved-identifier]
+   89 | int _compare(const uint8_t *a, const uint8_t *b, size_t size);
+      |     ^
+In file included from ../src/security/tc_auth.c:2:
+../src/security/tc_auth.h:79:14: warning: padding struct 'tc_auth_t' with 2 bytes to align 'auth_accepted' [-Wpadded]
+   79 |     uint32_t auth_accepted;           /* authenticated and accepted        */
+      |              ^
+../src/security/tc_auth.h:70:9: warning: padding size of 'tc_auth_t' with 6 bytes to alignment boundary [-Wpadded]
+   70 | typedef struct {
+      |         ^
+../src/security/tc_auth.c:51:5: warning: default label in switch which covers all enumeration values [-Wcovered-switch-default]
+   51 |     default:
+      |     ^
+In file included from ../src/security/tc_auth.c:2:
+In file included from ../src/security/tc_auth.h:41:
+../src/security/keystore.h:59:15: warning: padding struct 'keystore_t' with 3 bytes to align 'challenge' [-Wpadded]
+   59 |     uint32_t  challenge[3];    /* recovery challenge, three copies       */
+      |               ^
+../src/security/keystore.h:56:9: warning: padding size of 'keystore_t' with 3 bytes to alignment boundary [-Wpadded]
+   56 | typedef struct {
+      |         ^
+In file included from ../src/security/tc_auth.c:2:
+In file included from ../src/security/tc_auth.h:42:
+In file included from ../src/core/tc_handler.h:19:
+../src/core/pus.h:86:14: warning: padding struct 'pus_tc_t' with 1 byte to align 'source_id' [-Wpadded]
+   86 |     uint16_t source_id;
+      |              ^
+../src/core/pus.h:87:20: warning: padding struct 'pus_tc_t' with 6 bytes to align 'app_data' [-Wpadded]
+   87 |     const uint8_t *app_data;
+      |                    ^
+../src/core/pus.h:81:9: warning: padding size of 'pus_tc_t' with 4 bytes to alignment boundary [-Wpadded]
+   81 | typedef struct {
+      |         ^
+../src/security/tc_auth.c:58:48: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   58 |     return ((uint32_t)p[0] << 24) | ((uint32_t)p[1] << 16) |
+      |                                                ^
+../src/security/tc_auth.c:59:23: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   59 |            ((uint32_t)p[2] << 8) | (uint32_t)p[3];
+      |                       ^
+../src/security/tc_auth.c:59:46: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   59 |            ((uint32_t)p[2] << 8) | (uint32_t)p[3];
+      |                                              ^
+../src/security/tc_auth.c:86:16: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   86 |     trailer = &tc->app_data[tc->app_len - SEC_TRAILER_LEN];
+      |                ^~~~~~~~~~~~
+../src/security/tc_auth.c:88:20: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   88 |     seq = get_u32(&trailer[1]);
+      |                    ^~~~~~~
+../src/security/tc_auth.c:98:24: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   98 |         _compare(mac, &trailer[5], KS_MAC_LEN) != 0) {   /* constant time */
+      |                        ^~~~~~~
+../src/security/tc_auth.c:166:5: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  166 |     a->rej_total[c]++;
+      |     ^~~~~~~~~~~~
+../src/security/tc_auth.c:167:5: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  167 |     a->rej_last_code[c] = (uint8_t)code;
+      |     ^~~~~~~~~~~~~~~~
+27 warnings generated.
+
+### clang -std=c99 -O2 -Weverything -DFDIR_TEST_BUILD -I../src/sim -I../src/core -I../src/fdir -I../src/security -I../src/app -I../src/test -I../src/third_party/tinycrypt/include -c ../src/security/sec_report.c -o /dev/null
+In file included from ../src/security/sec_report.c:2:
+In file included from ../src/security/sec_report.h:31:
+In file included from ../src/security/tc_auth.h:41:
+../src/security/keystore.h:53:14: warning: padding struct 'ks_slot_t' with 3 bytes to align 'ctr' [-Wpadded]
+   53 |     uint32_t ctr[3];        /* last accepted counter, three copies       */
+      |              ^
+In file included from ../src/security/sec_report.c:2:
+In file included from ../src/security/sec_report.h:31:
+In file included from ../src/security/tc_auth.h:42:
+In file included from ../src/core/tc_handler.h:19:
+In file included from ../src/core/pus.h:34:
+../src/core/sp.h:39:15: warning: padding struct 'sp_primary_header_t' with 3 bytes to align 'type' [-Wpadded]
+   39 |     sp_type_t type;          /* 1 bit  */
+      |               ^
+../src/core/sp.h:41:15: warning: padding struct 'sp_primary_header_t' with 1 byte to align 'apid' [-Wpadded]
+   41 |     uint16_t  apid;          /* 11 bits */
+      |               ^
+../src/core/sp.h:43:15: warning: padding struct 'sp_primary_header_t' with 1 byte to align 'seq_count' [-Wpadded]
+   43 |     uint16_t  seq_count;     /* 14 bits */
+      |               ^
+../src/core/sp.h:37:9: warning: padding size of 'sp_primary_header_t' with 2 bytes to alignment boundary [-Wpadded]
+   37 | typedef struct {
+      |         ^
+In file included from ../src/security/sec_report.c:2:
+In file included from ../src/security/sec_report.h:31:
+In file included from ../src/security/tc_auth.h:42:
+../src/core/tc_handler.h:76:17: warning: padding struct 'tc_service_t' with 7 bytes to align 'check' [-Wpadded]
+   76 |     tc_check_fn check;
+      |                 ^
+In file included from ../src/security/sec_report.c:2:
+../src/security/sec_report.h:43:14: warning: padding struct 'sec_report_t' with 2 bytes to align 'events_emitted' [-Wpadded]
+   43 |     uint32_t events_emitted;
+      |              ^
+../src/security/sec_report.c:9:5: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+    9 |     p[1] = (uint8_t)v;
+      |     ^
+../src/security/sec_report.c:14:32: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   14 |     p[0] = (uint8_t)(v >> 24); p[1] = (uint8_t)(v >> 16);
+      |                                ^
+../src/security/sec_report.c:15:5: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   15 |     p[2] = (uint8_t)(v >> 8);  p[3] = (uint8_t)v;
+      |     ^
+../src/security/sec_report.c:15:32: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   15 |     p[2] = (uint8_t)(v >> 8);  p[3] = (uint8_t)v;
+      |                                ^
+../src/security/sec_report.c:39:26: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   39 |         uint32_t delta = totals[c] - r->reported[c];   /* wraps correctly */
+      |                          ^~~~~~
+../src/security/sec_report.c:39:38: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   39 |         uint32_t delta = totals[c] - r->reported[c];   /* wraps correctly */
+      |                                      ^~~~~~~~~~~
+../src/security/sec_report.c:40:9: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   40 |         r->reported[c] = totals[c];
+      |         ^~~~~~~~~~~
+../src/security/sec_report.c:40:26: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   40 |         r->reported[c] = totals[c];
+      |                          ^~~~~~
+../src/security/sec_report.c:42:28: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   42 |         if (delta > 0u && !r->open[c]) {
+      |                            ^~~~~~~
+../src/security/sec_report.c:45:13: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   45 |             aux[2] = (uint8_t)c;
+      |             ^~~
+../src/security/sec_report.c:46:13: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   46 |             aux[3] = last_code[c];
+      |             ^~~
+../src/security/sec_report.c:46:22: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   46 |             aux[3] = last_code[c];
+      |                      ^~~~~~~~~
+../src/security/sec_report.c:47:20: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   47 |             put32(&aux[4], totals[c]);
+      |                    ^~~
+../src/security/sec_report.c:47:28: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   47 |             put32(&aux[4], totals[c]);
+      |                            ^~~~~~
+../src/security/sec_report.c:50:13: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   50 |             r->open[c] = 1u;
+      |             ^~~~~~~
+../src/security/sec_report.c:51:13: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   51 |             r->window_start[c] = now_ms;
+      |             ^~~~~~~~~~~~~~~
+../src/security/sec_report.c:52:13: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   52 |             r->in_window[c] = delta - 1u;
+      |             ^~~~~~~~~~~~
+../src/security/sec_report.c:54:13: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   54 |             r->in_window[c] += delta;
+      |             ^~~~~~~~~~~~
+../src/security/sec_report.c:59:13: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   59 |         if (r->open[c] && now_ms - r->window_start[c] >= SEC_REPORT_WINDOW_MS) {
+      |             ^~~~~~~
+../src/security/sec_report.c:59:36: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   59 |         if (r->open[c] && now_ms - r->window_start[c] >= SEC_REPORT_WINDOW_MS) {
+      |                                    ^~~~~~~~~~~~~~~
+../src/security/sec_report.c:60:17: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   60 |             if (r->in_window[c] > 0u) {
+      |                 ^~~~~~~~~~~~
+../src/security/sec_report.c:62:17: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   62 |                 aux[2] = (uint8_t)c;
+      |                 ^~~
+../src/security/sec_report.c:63:17: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   63 |                 aux[3] = last_code[c];
+      |                 ^~~
+../src/security/sec_report.c:63:26: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   63 |                 aux[3] = last_code[c];
+      |                          ^~~~~~~~~
+../src/security/sec_report.c:64:24: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   64 |                 put32(&aux[4], r->in_window[c]);
+      |                        ^~~
+../src/security/sec_report.c:64:32: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   64 |                 put32(&aux[4], r->in_window[c]);
+      |                                ^~~~~~~~~~~~
+../src/security/sec_report.c:65:24: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   65 |                 put32(&aux[8], totals[c]);
+      |                        ^~~
+../src/security/sec_report.c:65:32: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   65 |                 put32(&aux[8], totals[c]);
+      |                                ^~~~~~
+../src/security/sec_report.c:66:24: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   66 |                 put16(&aux[12], (now_ms - r->window_start[c]) / 1000u);
+      |                        ^~~
+../src/security/sec_report.c:66:43: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   66 |                 put16(&aux[12], (now_ms - r->window_start[c]) / 1000u);
+      |                                           ^~~~~~~~~~~~~~~
+../src/security/sec_report.c:69:17: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   69 |                 r->in_window[c] = 0u;
+      |                 ^~~~~~~~~~~~
+../src/security/sec_report.c:70:17: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   70 |                 r->window_start[c] = now_ms;    /* still active: new window */
+      |                 ^~~~~~~~~~~~~~~
+../src/security/sec_report.c:72:17: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   72 |                 r->open[c] = 0u;                /* a quiet window: close   */
+      |                 ^~~~~~~
+40 warnings generated.
+
+### clang -std=c99 -O2 -Weverything -DFDIR_TEST_BUILD -I../src/sim -I../src/core -I../src/fdir -I../src/security -I../src/app -I../src/test -I../src/third_party/tinycrypt/include -c ../src/security/keystore.c -o /dev/null
+In file included from ../src/security/keystore.c:2:
+../src/security/keystore.h:53:14: warning: padding struct 'ks_slot_t' with 3 bytes to align 'ctr' [-Wpadded]
+   53 |     uint32_t ctr[3];        /* last accepted counter, three copies       */
+      |              ^
+In file included from ../src/security/keystore.c:7:
+../src/third_party/tinycrypt/include/tinycrypt/aes.h:50:9: warning: macro name is a reserved identifier [-Wreserved-macro-identifier]
+   50 | #define __TC_AES_H__
+      |         ^
+In file included from ../src/security/keystore.c:8:
+../src/third_party/tinycrypt/include/tinycrypt/ccm_mode.h:75:9: warning: macro name is a reserved identifier [-Wreserved-macro-identifier]
+   75 | #define __TC_CCM_MODE_H__
+      |         ^
+In file included from ../src/security/keystore.c:9:
+../src/third_party/tinycrypt/include/tinycrypt/constants.h:40:9: warning: macro name is a reserved identifier [-Wreserved-macro-identifier]
+   40 | #define __TC_CONSTANTS_H__
+      |         ^
+In file included from ../src/security/keystore.c:10:
+../src/third_party/tinycrypt/include/tinycrypt/hmac.h:64:9: warning: macro name is a reserved identifier [-Wreserved-macro-identifier]
+   64 | #define __TC_HMAC_H__
+      |         ^
+In file included from ../src/security/keystore.c:10:
+In file included from ../src/third_party/tinycrypt/include/tinycrypt/hmac.h:66:
+../src/third_party/tinycrypt/include/tinycrypt/sha256.h:58:9: warning: macro name is a reserved identifier [-Wreserved-macro-identifier]
+   58 | #define __TC_SHA256_H__
+      |         ^
+../src/third_party/tinycrypt/include/tinycrypt/sha256.h:121:12: warning: parameter 'Sha256' not found in the function declaration [-Wdocumentation]
+  121 |  *  @param Sha256 state struct
+      |            ^~~~~~
+../src/third_party/tinycrypt/include/tinycrypt/sha256.h:121:12: note: did you mean 's'?
+  121 |  *  @param Sha256 state struct
+      |            ^~~~~~
+      |            s
+In file included from ../src/security/keystore.c:2:
+../src/security/keystore.h:59:15: warning: padding struct 'keystore_t' with 3 bytes to align 'challenge' [-Wpadded]
+   59 |     uint32_t  challenge[3];    /* recovery challenge, three copies       */
+      |               ^
+../src/security/keystore.h:56:9: warning: padding size of 'keystore_t' with 3 bytes to alignment boundary [-Wpadded]
+   56 | typedef struct {
+      |         ^
+In file included from ../src/security/keystore.c:8:
+../src/third_party/tinycrypt/include/tinycrypt/ccm_mode.h:91:16: warning: padding size of 'struct tc_ccm_mode_struct' with 4 bytes to alignment boundary [-Wpadded]
+   91 | typedef struct tc_ccm_mode_struct {
+      |                ^
+../src/security/keystore.c:45:9: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   45 |         v[i] = 0u;
+      |         ^
+../src/security/keystore.c:54:18: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   54 |     (void)memcpy(k->key_copy[1], key, KS_KEY_LEN);
+      |                  ^~~~~~~~~~~
+../src/security/keystore.c:56:5: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   56 |     k->kcv[1] = kcv;
+      |     ^~~~~~
+../src/security/keystore.c:57:5: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   57 |     k->kcv[2] = kcv;
+      |     ^~~~~~
+../src/security/keystore.c:69:17: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   69 |     if (c[0] == c[1] || c[0] == c[2]) {
+      |                 ^
+../src/security/keystore.c:69:33: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   69 |     if (c[0] == c[1] || c[0] == c[2]) {
+      |                                 ^
+../src/security/keystore.c:71:16: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   71 |     } else if (c[1] == c[2]) {
+      |                ^
+../src/security/keystore.c:71:24: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   71 |     } else if (c[1] == c[2]) {
+      |                        ^
+../src/security/keystore.c:72:16: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   72 |         *out = c[1];
+      |                ^
+../src/security/keystore.c:77:14: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   77 |         m = (c[1] > m) ? c[1] : m;
+      |              ^
+../src/security/keystore.c:77:26: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   77 |         m = (c[1] > m) ? c[1] : m;
+      |                          ^
+../src/security/keystore.c:78:14: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   78 |         m = (c[2] > m) ? c[2] : m;
+      |              ^
+../src/security/keystore.c:78:26: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   78 |         m = (c[2] > m) ? c[2] : m;
+      |                          ^
+../src/security/keystore.c:80:19: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   80 |         c[0] = m; c[1] = m; c[2] = m;
+      |                   ^
+../src/security/keystore.c:80:29: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   80 |         c[0] = m; c[1] = m; c[2] = m;
+      |                             ^
+../src/security/keystore.c:84:5: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   84 |     c[1] = *out;
+      |     ^
+../src/security/keystore.c:85:5: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   85 |     c[2] = *out;
+      |     ^
+../src/security/keystore.c:94:17: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   94 |     return vote(ks->slot[slot].ctr, out);
+      |                 ^~~~~~~~
+../src/security/keystore.c:100:9: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  100 |         ks->slot[slot].ctr[0] = value;
+      |         ^~~~~~~~
+../src/security/keystore.c:101:9: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  101 |         ks->slot[slot].ctr[1] = value;
+      |         ^~~~~~~~~~~~~~~~~~
+../src/security/keystore.c:101:9: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  101 |         ks->slot[slot].ctr[1] = value;
+      |         ^~~~~~~~
+../src/security/keystore.c:102:9: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  102 |         ks->slot[slot].ctr[2] = value;
+      |         ^~~~~~~~~~~~~~~~~~
+../src/security/keystore.c:102:9: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  102 |         ks->slot[slot].ctr[2] = value;
+      |         ^~~~~~~~
+../src/security/keystore.c:127:5: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  127 |     ks->challenge[1] = value;
+      |     ^~~~~~~~~~~~~
+../src/security/keystore.c:128:5: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  128 |     ks->challenge[2] = value;
+      |     ^~~~~~~~~~~~~
+../src/security/keystore.c:160:50: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  160 |     return ((uint32_t)mac[0] << 24) | ((uint32_t)mac[1] << 16) |
+      |                                                  ^~~
+../src/security/keystore.c:161:23: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  161 |            ((uint32_t)mac[2] << 8) | (uint32_t)mac[3];
+      |                       ^~~
+../src/security/keystore.c:161:48: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  161 |            ((uint32_t)mac[2] << 8) | (uint32_t)mac[3];
+      |                                                ^~~
+../src/security/keystore.c:172:12: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  172 |     return ks->slot[slot].state == (uint8_t)KS_LOADED ||
+      |            ^~~~~~~~
+../src/security/keystore.c:173:12: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  173 |            ks->slot[slot].state == (uint8_t)KS_ACTIVE;
+      |            ^~~~~~~~
+../src/security/keystore.c:185:17: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  185 |     return hmac(ks->slot[slot].key, data, len, mac);
+      |                 ^~~~~~~~
+../src/security/keystore.c:193:14: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  193 |     put_key(&ks->slot[1], ks_rom_provisioned_key);
+      |              ^~~~~~~~
+../src/security/keystore.c:194:5: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  194 |     ks->slot[1].state = (uint8_t)KS_ACTIVE;
+      |     ^~~~~~~~
+../src/security/keystore.c:195:5: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  195 |     ks->slot[2].state = (uint8_t)KS_EMPTY;
+      |     ^~~~~~~~
+../src/security/keystore.c:214:21: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  214 |     aad[0] = 0x4Bu; aad[1] = 0x45u; aad[2] = 0x59u;   /* "KEY" */
+      |                     ^~~
+../src/security/keystore.c:214:37: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  214 |     aad[0] = 0x4Bu; aad[1] = 0x45u; aad[2] = 0x59u;   /* "KEY" */
+      |                                     ^~~
+../src/security/keystore.c:215:5: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  215 |     aad[3] = slot;                  /* a key wrapped for slot 1 fails in 2 */
+      |     ^~~
+../src/security/keystore.c:228:14: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  228 |     put_key(&ks->slot[slot], key);
+      |              ^~~~~~~~
+../src/security/keystore.c:230:5: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  230 |     ks->slot[slot].state = (uint8_t)KS_LOADED;
+      |     ^~~~~~~~
+../src/security/keystore.c:238:9: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  238 |         ks->slot[slot].state != (uint8_t)KS_LOADED) {
+      |         ^~~~~~~~
+../src/security/keystore.c:242:9: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  242 |         ks->slot[ks->active].state == (uint8_t)KS_ACTIVE) {
+      |         ^~~~~~~~
+../src/security/keystore.c:243:9: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  243 |         ks->slot[ks->active].state = (uint8_t)KS_LOADED;  /* the fallback */
+      |         ^~~~~~~~
+../src/security/keystore.c:245:5: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  245 |     ks->slot[slot].state = (uint8_t)KS_ACTIVE;
+      |     ^~~~~~~~
+../src/security/keystore.c:255:13: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  255 |     zeroise(ks->slot[slot].key, KS_KEY_LEN);
+      |             ^~~~~~~~
+../src/security/keystore.c:256:13: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  256 |     zeroise(ks->slot[slot].key_copy, sizeof(ks->slot[slot].key_copy));
+      |             ^~~~~~~~
+../src/security/keystore.c:257:13: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  257 |     zeroise(ks->slot[slot].kcv, sizeof(ks->slot[slot].kcv));
+      |             ^~~~~~~~
+../src/security/keystore.c:258:5: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  258 |     ks->slot[slot].state = (uint8_t)KS_EMPTY;
+      |     ^~~~~~~~
+../src/security/keystore.c:269:25: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  269 |         ks_slot_t *k = &ks->slot[s];
+      |                         ^~~~~~~~
+../src/security/keystore.c:279:25: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  279 |             uint8_t a = k->key[i], b = k->key_copy[0][i], c = k->key_copy[1][i];
+      |                         ^~~~~~
+../src/security/keystore.c:279:40: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  279 |             uint8_t a = k->key[i], b = k->key_copy[0][i], c = k->key_copy[1][i];
+      |                                        ^~~~~~~~~~~~~~
+../src/security/keystore.c:279:63: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  279 |             uint8_t a = k->key[i], b = k->key_copy[0][i], c = k->key_copy[1][i];
+      |                                                               ^~~~~~~~~~~~~~
+../src/security/keystore.c:279:63: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  279 |             uint8_t a = k->key[i], b = k->key_copy[0][i], c = k->key_copy[1][i];
+      |                                                               ^~~~~~~~~~~
+../src/security/keystore.c:280:13: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  280 |             voted[i] = (uint8_t)((a & b) | (a & c) | (b & c));
+      |             ^~~~~
+../src/security/keystore.c:283:28: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  283 |         kcv = (k->kcv[0] & k->kcv[1]) | (k->kcv[0] & k->kcv[2]) |
+      |                            ^~~~~~
+../src/security/keystore.c:283:54: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  283 |         kcv = (k->kcv[0] & k->kcv[1]) | (k->kcv[0] & k->kcv[2]) |
+      |                                                      ^~~~~~
+../src/security/keystore.c:284:16: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  284 |               (k->kcv[1] & k->kcv[2]);
+      |                ^~~~~~
+../src/security/keystore.c:284:28: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  284 |               (k->kcv[1] & k->kcv[2]);
+      |                            ^~~~~~
+../src/security/keystore.c:285:33: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  285 |         differ |= (k->kcv[0] != k->kcv[1]) || (k->kcv[0] != k->kcv[2]);
+      |                                 ^~~~~~
+../src/security/keystore.c:285:61: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  285 |         differ |= (k->kcv[0] != k->kcv[1]) || (k->kcv[0] != k->kcv[2]);
+      |                                                             ^~~~~~
+../src/security/keystore.c:306:32: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  306 |     p[0] = (uint8_t)(v >> 24); p[1] = (uint8_t)(v >> 16);
+      |                                ^
+../src/security/keystore.c:307:5: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  307 |     p[2] = (uint8_t)(v >> 8);  p[3] = (uint8_t)v;
+      |     ^
+../src/security/keystore.c:307:32: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  307 |     p[2] = (uint8_t)(v >> 8);  p[3] = (uint8_t)v;
+      |                                ^
+../src/security/keystore.c:312:48: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  312 |     return ((uint32_t)p[0] << 24) | ((uint32_t)p[1] << 16) |
+      |                                                ^
+../src/security/keystore.c:313:23: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  313 |            ((uint32_t)p[2] << 8) | (uint32_t)p[3];
+      |                       ^
+../src/security/keystore.c:313:46: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  313 |            ((uint32_t)p[2] << 8) | (uint32_t)p[3];
+      |                                              ^
+../src/security/keystore.c:324:12: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  324 |     put32(&out[4], ((uint32_t)KS_VERSION << 16) | (uint32_t)sizeof(keystore_t));
+      |            ^~~
+../src/security/keystore.c:325:19: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  325 |     (void)memcpy(&out[8], ks, sizeof(keystore_t));
+      |                   ^~~
+../src/security/keystore.c:327:5: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  327 |     out[8u + sizeof(keystore_t)] = (uint8_t)(crc >> 8);
+      |     ^~~
+../src/security/keystore.c:328:5: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  328 |     out[9u + sizeof(keystore_t)] = (uint8_t)crc;
+      |     ^~~
+../src/security/keystore.c:338:16: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  338 |         get32(&in[4]) != (((uint32_t)KS_VERSION << 16) |
+      |                ^~
+../src/security/keystore.c:343:9: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  343 |     if (in[8u + sizeof(keystore_t)] != (uint8_t)(crc >> 8) ||
+      |         ^~
+../src/security/keystore.c:344:9: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  344 |         in[9u + sizeof(keystore_t)] != (uint8_t)crc) {
+      |         ^~
+../src/security/keystore.c:347:25: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  347 |     (void)memcpy(&tmp, &in[8], sizeof(tmp));
+      |                         ^~
+83 warnings generated.
+
+### clang -std=c99 -O2 -Weverything -DFDIR_TEST_BUILD -I../src/sim -I../src/core -I../src/fdir -I../src/security -I../src/app -I../src/test -I../src/third_party/tinycrypt/include -c ../src/security/sec_service.c -o /dev/null
+In file included from ../src/security/sec_service.c:2:
+In file included from ../src/security/sec_service.h:28:
+In file included from ../src/security/tc_auth.h:41:
+../src/security/keystore.h:53:14: warning: padding struct 'ks_slot_t' with 3 bytes to align 'ctr' [-Wpadded]
+   53 |     uint32_t ctr[3];        /* last accepted counter, three copies       */
+      |              ^
+In file included from ../src/security/sec_service.c:2:
+In file included from ../src/security/sec_service.h:28:
+In file included from ../src/security/tc_auth.h:42:
+In file included from ../src/core/tc_handler.h:19:
+In file included from ../src/core/pus.h:34:
+../src/core/sp.h:39:15: warning: padding struct 'sp_primary_header_t' with 3 bytes to align 'type' [-Wpadded]
+   39 |     sp_type_t type;          /* 1 bit  */
+      |               ^
+../src/core/sp.h:41:15: warning: padding struct 'sp_primary_header_t' with 1 byte to align 'apid' [-Wpadded]
+   41 |     uint16_t  apid;          /* 11 bits */
+      |               ^
+../src/core/sp.h:43:15: warning: padding struct 'sp_primary_header_t' with 1 byte to align 'seq_count' [-Wpadded]
+   43 |     uint16_t  seq_count;     /* 14 bits */
+      |               ^
+../src/core/sp.h:37:9: warning: padding size of 'sp_primary_header_t' with 2 bytes to alignment boundary [-Wpadded]
+   37 | typedef struct {
+      |         ^
+In file included from ../src/security/sec_service.c:2:
+In file included from ../src/security/sec_service.h:28:
+In file included from ../src/security/tc_auth.h:42:
+../src/core/tc_handler.h:76:17: warning: padding struct 'tc_service_t' with 7 bytes to align 'check' [-Wpadded]
+   76 |     tc_check_fn check;
+      |                 ^
+In file included from ../src/security/sec_service.c:2:
+../src/security/sec_service.h:45:9: warning: padding size of 'sec_service_t' with 4 bytes to alignment boundary [-Wpadded]
+   45 | typedef struct {
+      |         ^
+In file included from ../src/security/sec_service.c:2:
+In file included from ../src/security/sec_service.h:28:
+../src/security/tc_auth.h:79:14: warning: padding struct 'tc_auth_t' with 2 bytes to align 'auth_accepted' [-Wpadded]
+   79 |     uint32_t auth_accepted;           /* authenticated and accepted        */
+      |              ^
+../src/security/tc_auth.h:70:9: warning: padding size of 'tc_auth_t' with 6 bytes to alignment boundary [-Wpadded]
+   70 | typedef struct {
+      |         ^
+In file included from ../src/security/sec_service.c:2:
+In file included from ../src/security/sec_service.h:28:
+In file included from ../src/security/tc_auth.h:42:
+In file included from ../src/core/tc_handler.h:19:
+../src/core/pus.h:86:14: warning: padding struct 'pus_tc_t' with 1 byte to align 'source_id' [-Wpadded]
+   86 |     uint16_t source_id;
+      |              ^
+../src/core/pus.h:87:20: warning: padding struct 'pus_tc_t' with 6 bytes to align 'app_data' [-Wpadded]
+   87 |     const uint8_t *app_data;
+      |                    ^
+../src/core/pus.h:81:9: warning: padding size of 'pus_tc_t' with 4 bytes to alignment boundary [-Wpadded]
+   81 | typedef struct {
+      |         ^
+In file included from ../src/security/sec_service.c:2:
+In file included from ../src/security/sec_service.h:28:
+In file included from ../src/security/tc_auth.h:41:
+../src/security/keystore.h:59:15: warning: padding struct 'keystore_t' with 3 bytes to align 'challenge' [-Wpadded]
+   59 |     uint32_t  challenge[3];    /* recovery challenge, three copies       */
+      |               ^
+../src/security/keystore.h:56:9: warning: padding size of 'keystore_t' with 3 bytes to alignment boundary [-Wpadded]
+   56 | typedef struct {
+      |         ^
+In file included from ../src/security/sec_service.c:2:
+In file included from ../src/security/sec_service.h:28:
+In file included from ../src/security/tc_auth.h:42:
+../src/core/tc_handler.h:83:18: warning: padding struct 'struct tc_ctx' with 4 bytes to align 'sink' [-Wpadded]
+   83 |     tm_sink_fn   sink;
+      |                  ^
+../src/security/sec_service.c:10:32: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   10 |     p[0] = (uint8_t)(v >> 24); p[1] = (uint8_t)(v >> 16);
+      |                                ^
+../src/security/sec_service.c:11:5: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   11 |     p[2] = (uint8_t)(v >> 8);  p[3] = (uint8_t)v;
+      |     ^
+../src/security/sec_service.c:11:32: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   11 |     p[2] = (uint8_t)(v >> 8);  p[3] = (uint8_t)v;
+      |                                ^
+../src/security/sec_service.c:16:48: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   16 |     return ((uint32_t)p[0] << 24) | ((uint32_t)p[1] << 16) |
+      |                                                ^
+../src/security/sec_service.c:17:23: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   17 |            ((uint32_t)p[2] << 8) | (uint32_t)p[3];
+      |                       ^
+../src/security/sec_service.c:17:46: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   17 |            ((uint32_t)p[2] << 8) | (uint32_t)p[3];
+      |                                              ^
+../src/security/sec_service.c:36:18: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   36 |     (void)memcpy(s->ev[i], aux, len);
+      |                  ^~~~~
+../src/security/sec_service.c:37:5: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   37 |     s->ev_len[i] = (uint8_t)len;
+      |     ^~~~~~~~~
+../src/security/sec_service.c:38:5: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   38 |     s->ev_sev[i] = severity;
+      |     ^~~~~~~~~
+../src/security/sec_service.c:50:11: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   50 |     len = s->ev_len[s->ev_head];
+      |           ^~~~~~~~~
+../src/security/sec_service.c:51:23: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   51 |     (void)memcpy(out, s->ev[s->ev_head], len);
+      |                       ^~~~~
+../src/security/sec_service.c:52:17: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   52 |     *severity = s->ev_sev[s->ev_head];
+      |                 ^~~~~~~~~
+../src/security/sec_service.c:63:5: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   63 |     aux[1] = (uint8_t)id;
+      |     ^~~
+../src/security/sec_service.c:64:19: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   64 |     (void)memcpy(&aux[2], data, n);
+      |                   ^~~
+../src/security/sec_service.c:98:13: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   98 |             ks->slot[slot].state != (uint8_t)KS_LOADED) {
+      |             ^~~~~~~~
+../src/security/sec_service.c:120:13: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  120 |             ks->slot[slot].state != (uint8_t)KS_LOADED) {
+      |             ^~~~~~~~
+../src/security/sec_service.c:147:5: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  147 |     d[1] = prev;
+      |     ^
+../src/security/sec_service.c:148:12: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  148 |     put32(&d[2], ks->slot[slot].kcv[0]);
+      |            ^
+../src/security/sec_service.c:148:18: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  148 |     put32(&d[2], ks->slot[slot].kcv[0]);
+      |                  ^~~~~~~~
+../src/security/sec_service.c:149:5: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  149 |     d[6] = recovery;
+      |     ^
+../src/security/sec_service.c:166:32: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  166 |         if (ks_load(ks, slot, &tc->app_data[1], &tc->app_data[1u + KS_NONCE_LEN])
+      |                                ^~~~~~~~~~~~
+../src/security/sec_service.c:166:50: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  166 |         if (ks_load(ks, slot, &tc->app_data[1], &tc->app_data[1u + KS_NONCE_LEN])
+      |                                                  ^~~~~~~~~~~~
+../src/security/sec_service.c:173:20: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  173 |             put32(&d[1], ks->slot[slot].kcv[0]);
+      |                    ^
+../src/security/sec_service.c:173:26: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  173 |             put32(&d[1], ks->slot[slot].kcv[0]);
+      |                          ^~~~~~~~
+../src/security/sec_service.c:190:39: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  190 |         uint32_t floor_value = get32(&tc->app_data[1]);
+      |                                       ^~~~~~~~~~~~
+../src/security/sec_service.c:195:9: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  195 |         d[1] = slot;
+      |         ^
+../src/security/sec_service.c:196:16: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  196 |         put32(&d[2], used - 1u);        /* the challenge this command used */
+      |                ^
+../src/security/sec_service.c:202:16: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  202 |         put32(&d[1], old);
+      |                ^
+../src/security/sec_service.c:203:16: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  203 |         put32(&d[5], floor_value);
+      |                ^
+../src/security/sec_service.c:209:9: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  209 |         d[1] = slot;
+      |         ^
+../src/security/sec_service.c:211:16: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  211 |         put32(&d[2], old - 1u);
+      |                ^
+46 warnings generated.
+
+### clang -std=c99 -O2 -Weverything -DFDIR_TEST_BUILD -I../src/sim -I../src/core -I../src/fdir -I../src/security -I../src/app -I../src/test -I../src/third_party/tinycrypt/include -c ../src/security/security.c -o /dev/null
+In file included from ../src/security/security.c:2:
+In file included from ../src/security/security.h:24:
+In file included from ../src/core/tc_handler.h:19:
+In file included from ../src/core/pus.h:34:
+../src/core/sp.h:39:15: warning: padding struct 'sp_primary_header_t' with 3 bytes to align 'type' [-Wpadded]
+   39 |     sp_type_t type;          /* 1 bit  */
+      |               ^
+../src/core/sp.h:41:15: warning: padding struct 'sp_primary_header_t' with 1 byte to align 'apid' [-Wpadded]
+   41 |     uint16_t  apid;          /* 11 bits */
+      |               ^
+../src/core/sp.h:43:15: warning: padding struct 'sp_primary_header_t' with 1 byte to align 'seq_count' [-Wpadded]
+   43 |     uint16_t  seq_count;     /* 14 bits */
+      |               ^
+../src/core/sp.h:37:9: warning: padding size of 'sp_primary_header_t' with 2 bytes to alignment boundary [-Wpadded]
+   37 | typedef struct {
+      |         ^
+In file included from ../src/security/security.c:2:
+In file included from ../src/security/security.h:24:
+../src/core/tc_handler.h:76:17: warning: padding struct 'tc_service_t' with 7 bytes to align 'check' [-Wpadded]
+   76 |     tc_check_fn check;
+      |                 ^
+In file included from ../src/security/security.c:9:
+../src/security/keystore.h:53:14: warning: padding struct 'ks_slot_t' with 3 bytes to align 'ctr' [-Wpadded]
+   53 |     uint32_t ctr[3];        /* last accepted counter, three copies       */
+      |              ^
+../src/security/keystore.h:59:15: warning: padding struct 'keystore_t' with 3 bytes to align 'challenge' [-Wpadded]
+   59 |     uint32_t  challenge[3];    /* recovery challenge, three copies       */
+      |               ^
+../src/security/keystore.h:56:9: warning: padding size of 'keystore_t' with 3 bytes to alignment boundary [-Wpadded]
+   56 | typedef struct {
+      |         ^
+In file included from ../src/security/security.c:11:
+In file included from ../src/security/sec_report.h:31:
+../src/security/tc_auth.h:79:14: warning: padding struct 'tc_auth_t' with 2 bytes to align 'auth_accepted' [-Wpadded]
+   79 |     uint32_t auth_accepted;           /* authenticated and accepted        */
+      |              ^
+../src/security/tc_auth.h:70:9: warning: padding size of 'tc_auth_t' with 6 bytes to alignment boundary [-Wpadded]
+   70 | typedef struct {
+      |         ^
+In file included from ../src/security/security.c:12:
+../src/security/sec_service.h:45:9: warning: padding size of 'sec_service_t' with 4 bytes to alignment boundary [-Wpadded]
+   45 | typedef struct {
+      |         ^
+In file included from ../src/security/security.c:11:
+../src/security/sec_report.h:43:14: warning: padding struct 'sec_report_t' with 2 bytes to align 'events_emitted' [-Wpadded]
+   43 |     uint32_t events_emitted;
+      |              ^
+In file included from ../src/security/security.c:2:
+In file included from ../src/security/security.h:24:
+../src/core/tc_handler.h:83:18: warning: padding struct 'struct tc_ctx' with 4 bytes to align 'sink' [-Wpadded]
+   83 |     tm_sink_fn   sink;
+      |                  ^
+../src/security/security.c:109:48: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  109 |     return ((uint32_t)p[0] << 24) | ((uint32_t)p[1] << 16) |
+      |                                                ^
+../src/security/security.c:110:23: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  110 |            ((uint32_t)p[2] << 8) | (uint32_t)p[3];
+      |                       ^
+../src/security/security.c:110:46: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  110 |            ((uint32_t)p[2] << 8) | (uint32_t)p[3];
+      |                                              ^
+../src/security/security.c:122:17: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  122 |                 tc->app_data[1] != 0u && tc->app_data[1] < 8u &&
+      |                 ^~~~~~~~~~~~
+../src/security/security.c:122:42: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  122 |                 tc->app_data[1] != 0u && tc->app_data[1] < 8u &&
+      |                                          ^~~~~~~~~~~~
+../src/security/security.c:123:17: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  123 |                 tc->app_data[2] < KS_KEY_LEN)
+      |                 ^~~~~~~~~~~~
+../src/security/security.c:131:21: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  131 |     ks_slot_t *k = &g_ks.slot[tc->app_data[0]];
+      |                     ^~~~~~~~~
+../src/security/security.c:134:28: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  134 |         k->ctr[0] = get32(&tc->app_data[1]);
+      |                            ^~~~~~~~~~~~
+../src/security/security.c:135:9: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  135 |         k->ctr[1] = get32(&tc->app_data[5]);
+      |         ^~~~~~
+../src/security/security.c:135:28: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  135 |         k->ctr[1] = get32(&tc->app_data[5]);
+      |                            ^~~~~~~~~~~~
+../src/security/security.c:136:9: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  136 |         k->ctr[2] = get32(&tc->app_data[9]);
+      |         ^~~~~~
+../src/security/security.c:136:28: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  136 |         k->ctr[2] = get32(&tc->app_data[9]);
+      |                            ^~~~~~~~~~~~
+../src/security/security.c:138:26: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  138 |         uint8_t copies = tc->app_data[1], at = tc->app_data[2], m = tc->app_data[3];
+      |                          ^~~~~~~~~~~~
+../src/security/security.c:138:48: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  138 |         uint8_t copies = tc->app_data[1], at = tc->app_data[2], m = tc->app_data[3];
+      |                                                ^~~~~~~~~~~~
+../src/security/security.c:138:69: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  138 |         uint8_t copies = tc->app_data[1], at = tc->app_data[2], m = tc->app_data[3];
+      |                                                                     ^~~~~~~~~~~~
+../src/security/security.c:139:36: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  139 |         if ((copies & 1u) != 0u) { k->key[at] ^= m; }
+      |                                    ^~~~~~
+../src/security/security.c:140:36: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  140 |         if ((copies & 2u) != 0u) { k->key_copy[0][at] ^= m; }
+      |                                    ^~~~~~~~~~~~~~
+../src/security/security.c:141:36: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  141 |         if ((copies & 4u) != 0u) { k->key_copy[1][at] ^= m; }
+      |                                    ^~~~~~~~~~~~~~
+../src/security/security.c:141:36: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  141 |         if ((copies & 4u) != 0u) { k->key_copy[1][at] ^= m; }
+      |                                    ^~~~~~~~~~~
+../src/security/security.c:216:32: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  216 |     p[0] = (uint8_t)(v >> 24); p[1] = (uint8_t)(v >> 16);
+      |                                ^
+../src/security/security.c:217:5: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  217 |     p[2] = (uint8_t)(v >> 8);  p[3] = (uint8_t)v;
+      |     ^
+../src/security/security.c:217:32: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  217 |     p[2] = (uint8_t)(v >> 8);  p[3] = (uint8_t)v;
+      |                                ^
+../src/security/security.c:228:5: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  228 |     d[1] = g_ks.active;
+      |     ^
+../src/security/security.c:230:9: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  230 |         d[1u + s] = g_ks.slot[s].state;
+      |         ^
+../src/security/security.c:230:21: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  230 |         d[1u + s] = g_ks.slot[s].state;
+      |                     ^~~~~~~~~
+../src/security/security.c:231:16: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  231 |         put32(&d[4u + 4u * (s - 1u)], g_ks.slot[s].kcv[0]);
+      |                ^
+../src/security/security.c:231:39: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  231 |         put32(&d[4u + 4u * (s - 1u)], g_ks.slot[s].kcv[0]);
+      |                                       ^~~~~~~~~
+../src/security/security.c:235:16: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  235 |         put32(&d[12u + 4u * (s - 1u)], v);
+      |                ^
+../src/security/security.c:240:12: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  240 |     put32(&d[20], v);
+      |            ^
+../src/security/security.c:242:22: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  242 |         pus_put_u16(&d[24u + 2u * c], sat16(g_auth.rej_total[c]));
+      |                      ^
+../src/security/security.c:242:45: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  242 |         pus_put_u16(&d[24u + 2u * c], sat16(g_auth.rej_total[c]));
+      |                                             ^~~~~~~~~~~~~~~~
+../src/security/security.c:244:5: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  244 |     d[36] = sat8(g_ks.scrub_errors);
+      |     ^
+../src/security/security.c:245:5: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  245 |     d[37] = sat8(g_ks.scrub_repairs);
+      |     ^
+../src/security/security.c:246:5: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  246 |     d[38] = (uint8_t)(g_flags | (g_svc.ev_dropped > 0u ? SEC_FL_EV_DROPPED : 0u) |
+      |     ^
+../src/security/security.c:249:18: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  249 |     pus_put_u16(&d[39], sat16(g_auth.auth_accepted));
+      |                  ^
+../src/security/security.c:273:13: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  273 |             a[2] = (uint8_t)lost;
+      |             ^
+../src/security/security.c:274:26: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  274 |             pus_put_u16(&a[3], sat16(g_ks.scrub_errors));
+      |                          ^
+../src/security/security.c:280:26: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  280 |             pus_put_u16(&a[2], sat16(g_ks.scrub_repairs));
+      |                          ^
+../src/security/security.c:291:9: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  291 |         a[2] = g_auth.vote_repairs;
+      |         ^
+../src/security/security.c:299:13: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  299 |            (ev_len[n_ev] = sec_service_take(&g_svc, &ev_sev[n_ev], ev[n_ev])) > 0u) {
+      |             ^~~~~~
+../src/security/security.c:299:54: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  299 |            (ev_len[n_ev] = sec_service_take(&g_svc, &ev_sev[n_ev], ev[n_ev])) > 0u) {
+      |                                                      ^~~~~~
+../src/security/security.c:299:68: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  299 |            (ev_len[n_ev] = sec_service_take(&g_svc, &ev_sev[n_ev], ev[n_ev])) > 0u) {
+      |                                                                    ^~
+../src/security/security.c:306:20: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  306 |         emit_event(ev_sev[i], ev[i], ev_len[i], NULL);
+      |                    ^~~~~~
+../src/security/security.c:306:31: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  306 |         emit_event(ev_sev[i], ev[i], ev_len[i], NULL);
+      |                               ^~
+../src/security/security.c:306:38: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  306 |         emit_event(ev_sev[i], ev[i], ev_len[i], NULL);
+      |                                      ^~~~~~
+In file included from ../src/security/security.c:2:
+In file included from ../src/security/security.h:24:
+In file included from ../src/core/tc_handler.h:19:
+../src/core/pus.h:86:14: warning: padding struct 'pus_tc_t' with 1 byte to align 'source_id' [-Wpadded]
+   86 |     uint16_t source_id;
+      |              ^
+../src/core/pus.h:87:20: warning: padding struct 'pus_tc_t' with 6 bytes to align 'app_data' [-Wpadded]
+   87 |     const uint8_t *app_data;
+      |                    ^
+../src/core/pus.h:81:9: warning: padding size of 'pus_tc_t' with 4 bytes to alignment boundary [-Wpadded]
+   81 | typedef struct {
+      |         ^
+../src/core/pus.h:63:9: warning: padding size of 'obt_t' with 2 bytes to alignment boundary [-Wpadded]
+   63 | typedef struct {
+      |         ^
+62 warnings generated.
+
+### clang -std=c99 -O2 -Weverything -DFDIR_TEST_BUILD -I../src/sim -I../src/core -I../src/fdir -I../src/security -I../src/app -I../src/test -I../src/third_party/tinycrypt/include -c ../src/app/services.c -o /dev/null
+In file included from ../src/app/services.c:22:
+In file included from ../src/app/services.h:6:
+In file included from ../src/core/tc_handler.h:19:
+In file included from ../src/core/pus.h:34:
+../src/core/sp.h:39:15: warning: padding struct 'sp_primary_header_t' with 3 bytes to align 'type' [-Wpadded]
+   39 |     sp_type_t type;          /* 1 bit  */
+      |               ^
+../src/core/sp.h:41:15: warning: padding struct 'sp_primary_header_t' with 1 byte to align 'apid' [-Wpadded]
+   41 |     uint16_t  apid;          /* 11 bits */
+      |               ^
+../src/core/sp.h:43:15: warning: padding struct 'sp_primary_header_t' with 1 byte to align 'seq_count' [-Wpadded]
+   43 |     uint16_t  seq_count;     /* 14 bits */
+      |               ^
+../src/core/sp.h:37:9: warning: padding size of 'sp_primary_header_t' with 2 bytes to alignment boundary [-Wpadded]
+   37 | typedef struct {
+      |         ^
+In file included from ../src/app/services.c:22:
+In file included from ../src/app/services.h:6:
+../src/core/tc_handler.h:76:17: warning: padding struct 'tc_service_t' with 7 bytes to align 'check' [-Wpadded]
+   76 |     tc_check_fn check;
+      |                 ^
+In file included from ../src/app/services.c:24:
+In file included from ../src/fdir/fdir.h:21:
+../src/fdir/schedule.h:24:9: warning: padding size of 'sched_entry_t' with 1 byte to alignment boundary [-Wpadded]
+   24 | typedef struct {
+      |         ^
+In file included from ../src/app/services.c:24:
+In file included from ../src/fdir/fdir.h:22:
+../src/fdir/supervisor.h:59:23: warning: padding struct 'sup_task_t' with 3 bytes to align 'os_id' [-Wpadded]
+   59 |     uint32_t          os_id;           /* for ops->restart (RTEMS id)    */
+      |                       ^
+../src/fdir/supervisor.h:66:23: warning: padding struct 'sup_task_t' with 2 bytes to align 'misses_total' [-Wpadded]
+   66 |     uint32_t          misses_total;
+      |                       ^
+In file included from ../src/app/services.c:24:
+In file included from ../src/fdir/fdir.h:21:
+../src/fdir/schedule.h:31:9: warning: padding size of 'sched_t' with 3 bytes to alignment boundary [-Wpadded]
+   31 | typedef struct {
+      |         ^
+In file included from ../src/app/services.c:22:
+In file included from ../src/app/services.h:6:
+../src/core/tc_handler.h:83:18: warning: padding struct 'struct tc_ctx' with 4 bytes to align 'sink' [-Wpadded]
+   83 |     tm_sink_fn   sink;
+      |                  ^
+In file included from ../src/app/services.c:24:
+In file included from ../src/fdir/fdir.h:22:
+../src/fdir/supervisor.h:100:5: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  100 |     s->tasks[idx].heartbeat = s->tasks[idx].heartbeat + 1u;
+      |     ^~~~~~~~
+../src/fdir/supervisor.h:100:31: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  100 |     s->tasks[idx].heartbeat = s->tasks[idx].heartbeat + 1u;
+      |                               ^~~~~~~~
+../src/app/services.c:31:48: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   31 |     return ((uint32_t)p[0] << 24) | ((uint32_t)p[1] << 16) |
+      |                                                ^
+../src/app/services.c:32:23: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   32 |            ((uint32_t)p[2] << 8) | (uint32_t)p[3];
+      |                       ^
+../src/app/services.c:32:46: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   32 |            ((uint32_t)p[2] << 8) | (uint32_t)p[3];
+      |                                              ^
+../src/app/services.c:47:16: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   47 |         return tc->app_data[1] > (uint8_t)MODE_SAFE ? PUS_FAIL_APP_DATA : PUS_OK;
+      |                ^~~~~~~~~~~~
+../src/app/services.c:50:16: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   50 |         return tc->app_data[1] > 1u ? PUS_FAIL_APP_DATA : PUS_OK;
+      |                ^~~~~~~~~~~~
+../src/app/services.c:59:37: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   59 |         return fdir_payload_command(tc->app_data[1] != 0u) == 0
+      |                                     ^~~~~~~~~~~~
+../src/app/services.c:62:38: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   62 |     (void)fdir_mode_request((vmode_t)tc->app_data[1], CAUSE_GROUND, 0);
+      |                                      ^~~~~~~~~~~~
+../src/app/services.c:94:41: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   94 |         return sched_insert(s, get_u32(&tc->app_data[1]), &tc->app_data[5],
+      |                                         ^~~~~~~~~~~~
+../src/app/services.c:94:60: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   94 |         return sched_insert(s, get_u32(&tc->app_data[1]), &tc->app_data[5],
+      |                                                            ^~~~~~~~~~~~
+../src/app/services.c:117:44: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  117 |         if (!fdir_param_known(pus_get_u16(&tc->app_data[1u + 2u * i]))) {
+      |                                            ^~~~~~~~~~~~
+../src/app/services.c:129:42: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  129 |         fdir_monitor_enable(pus_get_u16(&tc->app_data[1u + 2u * i]),
+      |                                          ^~~~~~~~~~~~
+../src/app/services.c:179:13: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  179 |             tc->app_data[1] == 0u) {
+      |             ^~~~~~~~~~~~
+../src/app/services.c:196:63: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  196 |         finj_param_override(pus_get_u16(d), (int32_t)get_u32(&d[2]),
+      |                                                               ^
+../src/app/services.c:197:42: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  197 |                             pus_get_u16(&d[6]));
+      |                                          ^
+../src/app/services.c:199:35: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  199 |     case 2u: finj_task_hang(d[0], d[1]); break;
+      |                                   ^
+In file included from ../src/app/services.c:22:
+In file included from ../src/app/services.h:6:
+In file included from ../src/core/tc_handler.h:19:
+../src/core/pus.h:86:14: warning: padding struct 'pus_tc_t' with 1 byte to align 'source_id' [-Wpadded]
+   86 |     uint16_t source_id;
+      |              ^
+../src/core/pus.h:87:20: warning: padding struct 'pus_tc_t' with 6 bytes to align 'app_data' [-Wpadded]
+   87 |     const uint8_t *app_data;
+      |                    ^
+../src/core/pus.h:81:9: warning: padding size of 'pus_tc_t' with 4 bytes to alignment boundary [-Wpadded]
+   81 | typedef struct {
+      |         ^
+30 warnings generated.
+
+### clang -std=c99 -O2 -Weverything -DFDIR_TEST_BUILD -I../src/sim -I../src/core -I../src/fdir -I../src/security -I../src/app -I../src/test -I../src/third_party/tinycrypt/include -c ../src/app/tmtc.c -o /dev/null
+In file included from ../src/app/tmtc.c:2:
+In file included from ../src/app/tmtc.h:16:
+In file included from ../src/core/tc_handler.h:19:
+In file included from ../src/core/pus.h:34:
+../src/core/sp.h:39:15: warning: padding struct 'sp_primary_header_t' with 3 bytes to align 'type' [-Wpadded]
+   39 |     sp_type_t type;          /* 1 bit  */
+      |               ^
+../src/core/sp.h:41:15: warning: padding struct 'sp_primary_header_t' with 1 byte to align 'apid' [-Wpadded]
+   41 |     uint16_t  apid;          /* 11 bits */
+      |               ^
+../src/core/sp.h:43:15: warning: padding struct 'sp_primary_header_t' with 1 byte to align 'seq_count' [-Wpadded]
+   43 |     uint16_t  seq_count;     /* 14 bits */
+      |               ^
+../src/core/sp.h:37:9: warning: padding size of 'sp_primary_header_t' with 2 bytes to alignment boundary [-Wpadded]
+   37 | typedef struct {
+      |         ^
+In file included from ../src/app/tmtc.c:2:
+In file included from ../src/app/tmtc.h:16:
+../src/core/tc_handler.h:76:17: warning: padding struct 'tc_service_t' with 7 bytes to align 'check' [-Wpadded]
+   76 |     tc_check_fn check;
+      |                 ^
+In file included from ../src/app/tmtc.c:2:
+In file included from ../src/app/tmtc.h:16:
+In file included from ../src/core/tc_handler.h:19:
+../src/core/pus.h:63:9: warning: padding size of 'obt_t' with 2 bytes to alignment boundary [-Wpadded]
+   63 | typedef struct {
+      |         ^
+In file included from ../src/app/tmtc.c:2:
+In file included from ../src/app/tmtc.h:16:
+../src/core/tc_handler.h:83:18: warning: padding struct 'struct tc_ctx' with 4 bytes to align 'sink' [-Wpadded]
+   83 |     tm_sink_fn   sink;
+      |                  ^
+../src/app/tmtc.c:89:1: warning: function 'tm_tx_task' could be declared with attribute 'noreturn' [-Wmissing-noreturn]
+   89 | {
+      | ^
+../src/app/tmtc.c:145:1: warning: function 'tc_rx_task' could be declared with attribute 'noreturn' [-Wmissing-noreturn]
+  145 | {
+      | ^
+../src/app/tmtc.c:36:9: warning: unsafe pointer arithmetic [-Wunsafe-buffer-usage]
+   36 |         buf += n;
+      |         ^~~
+../src/app/tmtc.c:102:9: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  102 |         line[n++] = 'T'; line[n++] = 'M'; line[n++] = ':';
+      |         ^~~~
+../src/app/tmtc.c:102:26: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  102 |         line[n++] = 'T'; line[n++] = 'M'; line[n++] = ':';
+      |                          ^~~~
+../src/app/tmtc.c:102:43: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  102 |         line[n++] = 'T'; line[n++] = 'M'; line[n++] = ':';
+      |                                           ^~~~
+../src/app/tmtc.c:104:13: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  104 |             line[n++] = HEX[packet[i] >> 4];
+      |             ^~~~
+../src/app/tmtc.c:104:25: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  104 |             line[n++] = HEX[packet[i] >> 4];
+      |                         ^~~
+../src/app/tmtc.c:104:29: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  104 |             line[n++] = HEX[packet[i] >> 4];
+      |                             ^~~~~~
+../src/app/tmtc.c:105:13: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  105 |             line[n++] = HEX[packet[i] & 0x0Fu];
+      |             ^~~~
+../src/app/tmtc.c:105:25: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  105 |             line[n++] = HEX[packet[i] & 0x0Fu];
+      |                         ^~~
+../src/app/tmtc.c:105:29: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  105 |             line[n++] = HEX[packet[i] & 0x0Fu];
+      |                             ^~~~~~
+../src/app/tmtc.c:107:9: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  107 |         line[n++] = '\n';
+      |         ^~~~
+../src/app/tmtc.c:119:39: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  119 |     if (len < 3u || line[0] != 'T' || line[1] != 'C' || line[2] != ':') {
+      |                                       ^~~~
+../src/app/tmtc.c:119:57: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  119 |     if (len < 3u || line[0] != 'T' || line[1] != 'C' || line[2] != ':') {
+      |                                                         ^~~~
+../src/app/tmtc.c:122:5: warning: unsafe pointer arithmetic [-Wunsafe-buffer-usage]
+  122 |     line += 3;
+      |     ^~~~
+../src/app/tmtc.c:131:28: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  131 |         int hi = hex_value(line[i]);
+      |                            ^~~~
+../src/app/tmtc.c:132:28: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  132 |         int lo = hex_value(line[i + 1u]);
+      |                            ^~~~
+../src/app/tmtc.c:139:9: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  139 |         frame[n++] = (uint8_t)((hi << 4) | lo);
+      |         ^~~~~
+../src/app/tmtc.c:169:22: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  169 |             char c = chunk[i];
+      |                      ^~~~~
+../src/app/tmtc.c:186:17: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  186 |                 line[line_len++] = c;
+      |                 ^~~~
+28 warnings generated.
+
+### clang -std=c99 -O2 -Weverything -DFDIR_TEST_BUILD -I../src/sim -I../src/core -I../src/fdir -I../src/security -I../src/app -I../src/test -I../src/third_party/tinycrypt/include -c ../src/app/sensors.c -o /dev/null
+
+### clang -std=c99 -O2 -Weverything -DFDIR_TEST_BUILD -I../src/sim -I../src/core -I../src/fdir -I../src/security -I../src/app -I../src/test -I../src/third_party/tinycrypt/include -c ../src/app/main.c -o /dev/null
+In file included from ../src/app/main.c:5:
+In file included from ../src/fdir/fdir.h:21:
+../src/fdir/schedule.h:24:9: warning: padding size of 'sched_entry_t' with 1 byte to alignment boundary [-Wpadded]
+   24 | typedef struct {
+      |         ^
+In file included from ../src/app/main.c:5:
+In file included from ../src/fdir/fdir.h:22:
+../src/fdir/supervisor.h:59:23: warning: padding struct 'sup_task_t' with 3 bytes to align 'os_id' [-Wpadded]
+   59 |     uint32_t          os_id;           /* for ops->restart (RTEMS id)    */
+      |                       ^
+../src/fdir/supervisor.h:66:23: warning: padding struct 'sup_task_t' with 2 bytes to align 'misses_total' [-Wpadded]
+   66 |     uint32_t          misses_total;
+      |                       ^
+In file included from ../src/app/main.c:8:
+In file included from ../src/security/security.h:24:
+In file included from ../src/core/tc_handler.h:19:
+In file included from ../src/core/pus.h:34:
+../src/core/sp.h:39:15: warning: padding struct 'sp_primary_header_t' with 3 bytes to align 'type' [-Wpadded]
+   39 |     sp_type_t type;          /* 1 bit  */
+      |               ^
+../src/core/sp.h:41:15: warning: padding struct 'sp_primary_header_t' with 1 byte to align 'apid' [-Wpadded]
+   41 |     uint16_t  apid;          /* 11 bits */
+      |               ^
+../src/core/sp.h:43:15: warning: padding struct 'sp_primary_header_t' with 1 byte to align 'seq_count' [-Wpadded]
+   43 |     uint16_t  seq_count;     /* 14 bits */
+      |               ^
+../src/core/sp.h:37:9: warning: padding size of 'sp_primary_header_t' with 2 bytes to alignment boundary [-Wpadded]
+   37 | typedef struct {
+      |         ^
+In file included from ../src/app/main.c:8:
+In file included from ../src/security/security.h:24:
+../src/core/tc_handler.h:76:17: warning: padding struct 'tc_service_t' with 7 bytes to align 'check' [-Wpadded]
+   76 |     tc_check_fn check;
+      |                 ^
+../src/app/main.c:114:1: warning: function 'finj_block_forever' could be declared with attribute 'noreturn' [-Wmissing-noreturn]
+  114 | {
+      | ^
+../src/app/main.c:129:1: warning: function 'acs_ctrl_task' could be declared with attribute 'noreturn' [-Wmissing-noreturn]
+  129 | {
+      | ^
+../src/app/main.c:144:1: warning: function 'tm_hk_task' could be declared with attribute 'noreturn' [-Wmissing-noreturn]
+  144 | {
+      | ^
+../src/app/main.c:161:1: warning: function 'pl_log_task' could be declared with attribute 'noreturn' [-Wmissing-noreturn]
+  161 | {
+      | ^
+../src/app/main.c:185:1: warning: function 'supervisor_task' could be declared with attribute 'noreturn' [-Wmissing-noreturn]
+  185 | {
+      | ^
+../src/app/main.c:203:1: warning: function 'sched_task' could be declared with attribute 'noreturn' [-Wmissing-noreturn]
+  203 | {
+      | ^
+In file included from ../src/app/main.c:8:
+In file included from ../src/security/security.h:24:
+../src/core/tc_handler.h:83:18: warning: padding struct 'struct tc_ctx' with 4 bytes to align 'sink' [-Wpadded]
+   83 |     tm_sink_fn   sink;
+      |                  ^
+../src/app/main.c:66:9: warning: macro is not used [-Wunused-macros]
+   66 | #define CONFIGURE_MICROSECONDS_PER_TICK 10000
+      |         ^
+../src/app/main.c:51:9: warning: macro is not used [-Wunused-macros]
+   51 | #define CONFIGURE_APPLICATION_NEEDS_CONSOLE_DRIVER
+      |         ^
+../src/app/main.c:72:9: warning: macro is not used [-Wunused-macros]
+   72 | #define CONFIGURE_INIT
+      |         ^
+../src/app/main.c:68:9: warning: macro is not used [-Wunused-macros]
+   68 | #define CONFIGURE_INIT_TASK_ATTRIBUTES RTEMS_FLOATING_POINT
+      |         ^
+../src/app/main.c:64:9: warning: macro is not used [-Wunused-macros]
+   64 | #define CONFIGURE_EXTRA_TASK_STACKS (5u * TASK_STACK)
+      |         ^
+../src/app/main.c:55:9: warning: macro is not used [-Wunused-macros]
+   55 | #define CONFIGURE_MAXIMUM_TASKS            8
+      |         ^
+../src/app/main.c:56:9: warning: macro is not used [-Wunused-macros]
+   56 | #define CONFIGURE_MAXIMUM_PERIODS          5
+      |         ^
+../src/app/main.c:50:9: warning: macro is not used [-Wunused-macros]
+   50 | #define CONFIGURE_APPLICATION_NEEDS_CLOCK_DRIVER
+      |         ^
+../src/app/main.c:57:9: warning: macro is not used [-Wunused-macros]
+   57 | #define CONFIGURE_MAXIMUM_SEMAPHORES       6
+      |         ^
+../src/app/main.c:58:9: warning: macro is not used [-Wunused-macros]
+   58 | #define CONFIGURE_MAXIMUM_TIMERS           1
+      |         ^
+../src/app/main.c:59:9: warning: macro is not used [-Wunused-macros]
+   59 | #define CONFIGURE_MAXIMUM_MESSAGE_QUEUES   1
+      |         ^
+../src/app/main.c:60:9: warning: macro is not used [-Wunused-macros]
+   60 | #define CONFIGURE_MESSAGE_BUFFER_MEMORY \
+      |         ^
+../src/app/main.c:69:9: warning: macro is not used [-Wunused-macros]
+   69 | #define CONFIGURE_INIT_TASK_STACK_SIZE (16 * 1024)
+      |         ^
+../src/app/main.c:71:9: warning: macro is not used [-Wunused-macros]
+   71 | #define CONFIGURE_RTEMS_INIT_TASKS_TABLE
+      |         ^
+In file included from ../src/app/main.c:5:
+In file included from ../src/fdir/fdir.h:22:
+../src/fdir/supervisor.h:100:5: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  100 |     s->tasks[idx].heartbeat = s->tasks[idx].heartbeat + 1u;
+      |     ^~~~~~~~
+../src/fdir/supervisor.h:100:31: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+  100 |     s->tasks[idx].heartbeat = s->tasks[idx].heartbeat + 1u;
+      |                               ^~~~~~~~
+31 warnings generated.
+
+### clang -std=c99 -O2 -Weverything -DFDIR_TEST_BUILD -I../src/sim -I../src/core -I../src/fdir -I../src/security -I../src/app -I../src/test -I../src/third_party/tinycrypt/include -c ../src/test/finj.c -o /dev/null
+../src/test/finj.c:10:23: warning: padding struct 'finj_param_t' with 1 byte to align 'param_id' [-Wpadded]
+   10 |     volatile uint16_t param_id;
+      |                       ^
+../src/test/finj.c:8:9: warning: padding size of 'finj_param_t' with 2 bytes to alignment boundary [-Wpadded]
+    8 | typedef struct {
+      |         ^
+../src/test/finj.c:23:9: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   23 |         params[i].active = 0;
+      |         ^~~~~~
+../src/test/finj.c:26:9: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   26 |         task_hang[i] = 0;
+      |         ^~~~~~~~~
+../src/test/finj.c:35:13: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   35 |         if (params[i].active && params[i].param_id == param_id) {
+      |             ^~~~~~
+../src/test/finj.c:35:33: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   35 |         if (params[i].active && params[i].param_id == param_id) {
+      |                                 ^~~~~~
+../src/test/finj.c:39:14: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   39 |         if (!params[i].active && slot == FINJ_MAX_PARAMS) {
+      |              ^~~~~~
+../src/test/finj.c:46:5: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   46 |     params[slot].active    = 0;          /* publish the fields last */
+      |     ^~~~~~
+../src/test/finj.c:47:5: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   47 |     params[slot].param_id  = param_id;
+      |     ^~~~~~
+../src/test/finj.c:48:5: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   48 |     params[slot].value     = value;
+      |     ^~~~~~
+../src/test/finj.c:49:5: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   49 |     params[slot].remaining = samples;
+      |     ^~~~~~
+../src/test/finj.c:50:5: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   50 |     params[slot].active    = 1;
+      |     ^~~~~~
+../src/test/finj.c:56:9: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   56 |         task_hang[task_idx] = times;
+      |         ^~~~~~~~~
+../src/test/finj.c:69:13: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   69 |         if (params[i].active && params[i].param_id == param_id) {
+      |             ^~~~~~
+../src/test/finj.c:69:33: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   69 |         if (params[i].active && params[i].param_id == param_id) {
+      |                                 ^~~~~~
+../src/test/finj.c:70:25: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   70 |             int32_t v = params[i].value;
+      |                         ^~~~~~
+../src/test/finj.c:71:17: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   71 |             if (params[i].remaining > 0u) {
+      |                 ^~~~~~
+../src/test/finj.c:72:17: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   72 |                 params[i].remaining = (uint16_t)(params[i].remaining - 1u);
+      |                 ^~~~~~
+../src/test/finj.c:72:50: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   72 |                 params[i].remaining = (uint16_t)(params[i].remaining - 1u);
+      |                                                  ^~~~~~
+../src/test/finj.c:73:21: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   73 |                 if (params[i].remaining == 0u) {
+      |                     ^~~~~~
+../src/test/finj.c:74:21: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   74 |                     params[i].active = 0;
+      |                     ^~~~~~
+../src/test/finj.c:85:38: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   85 |     if (task_idx < FINJ_MAX_TASKS && task_hang[task_idx] > 0u) {
+      |                                      ^~~~~~~~~
+../src/test/finj.c:86:9: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   86 |         task_hang[task_idx] = (uint8_t)(task_hang[task_idx] - 1u);
+      |         ^~~~~~~~~
+../src/test/finj.c:86:41: warning: unsafe buffer access [-Wunsafe-buffer-usage]
+   86 |         task_hang[task_idx] = (uint8_t)(task_hang[task_idx] - 1u);
+      |                                         ^~~~~~~~~
+24 warnings generated.
+
