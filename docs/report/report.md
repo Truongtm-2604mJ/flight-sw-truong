@@ -555,7 +555,7 @@ cannot drift from the tests.
 
 ## 6.5 What integration broke that unit testing did not catch
 
-Integration found five problems (`evidence/ncr-log.md`). A sixth, TA-07, was my own expectation being wrong: a test assumed a counter with one bad copy would raise a vote event, but two agreeing copies are a majority and the repair is silent, by design.
+Integration found six problems (`evidence/ncr-log.md`). A sixth, TA-07, was my own expectation being wrong: a test assumed a counter with one bad copy would raise a vote event, but two agreeing copies are a majority and the repair is silent, by design.
 
 - **The first contact ate the boot event** (TA-04). The secure link performs a recovery command on the
   first boot of a factory key store, and that exchange consumed the boot event the first validation test
@@ -572,6 +572,10 @@ Integration found five problems (`evidence/ncr-log.md`). A sixth, TA-07, was my 
   supervisor cycle. In between, the next HK cycle saw "DEGRADED with an alarm" and started a second
   sequence. The fix is the "spent" latch.
 
+- **Helper names repeated across files** (NCR-05, minor, fixed). The first CI run of the integrated
+  tree failed. cppcheck's whole-program MISRA check found static helpers with the same name in
+  different files (`put32`, `event`, `persist`, ...), and no per-lab analysis could have seen that.
+
 None of these is visible to a module tested alone. Each comes from two correct components meeting a
 timing or an assumption they did not share.
 
@@ -583,6 +587,8 @@ timing or an assumption they did not share.
 | NCR-02 | NCR | TMTC-030 | minor | fixed: an over-long line was dropped uncounted |
 | NCR-03 | NCR | FDIR-110 | major | fixed: second thermal recovery sequence after EXHAUSTED |
 | NCR-04 | NCR | SEC-020 | major | **open**: on SIS the key store is RAM, so counters do not survive a reset |
+| NCR-05 | NCR | MISRA 5.9 | minor | fixed: static helper names repeated across files, found by the first CI run of the integrated tree |
+| OBS-03 | OBS | (static analysis) | | **open**: 12 cppcheck findings in files never analysed by cppcheck before, not yet triaged |
 | OBS-01 | OBS | (FDIR-120 candidate) | | **open**: ground can return to NOMINAL while an alarm is still active, with no reminder |
 | OBS-02 | OBS | MM-030 | | **open**: SID 2 (SAFE) has no monitor states |
 | TA-01 to TA-07 | test anomalies | | | fixed (the test was wrong; no flight code changed) |

@@ -22,6 +22,7 @@ Severity (NCR): critical, loss of vehicle or mission possible; major, requiremen
 | TA-06 | TA | SEC-040 | - | **fixed** | IT-16, first run |
 | TA-07 | TA | SEC-030 | - | **fixed** | VT-SEC-020, first host run |
 | OBS-03 | OBS | (none; static analysis process) | - | **open** | Capstone integration, static analysis set-up |
+| NCR-05 | NCR | (coding standard - MISRA C:2012 rule 5.9, advisory) | minor | **fixed** | fast-checks CI, static analysis job, first push of the integrated tree (commit 45eb083) |
 
 ## NCR-01: Nonconformance, TMTC-040
 
@@ -179,3 +180,15 @@ Severity (NCR): critical, loss of vehicle or mission possible; major, requiremen
 **Description.** cppcheck and its MISRA C:2012 addon have not been run on the Session 8 security files and the capstone thermal recovery (tc_auth.c, keystore.c, sec_service.c, sec_report.c, security.c, thermal.c). GCC and clang at the maximum warning set, GCC -fanalyzer and the clang analyser have, with every finding dispositioned.
 
 **Disposition.** Open. The fast-checks CI job runs cppcheck on every push. Findings in these files that no project-wide rule covers match SA-50 (disposition "open") and are listed in findings-current.md, so they are visible without failing every build. To close - triage each one into fixed, justified or accepted, then delete SA-50.
+
+## NCR-05: Nonconformance, (coding standard - MISRA C:2012 rule 5.9, advisory)
+
+**Status:** fixed. **Severity:** minor.
+
+**Description.** cppcheck's whole-program MISRA check found static helper functions with the same name in different files of the one application (put16, put32, get32, get_u32, event, nv_path, persist, sat8, sat16), and one variable whose scope could be reduced (aux in fdir_payload_command). Each lab had been analysed on its own, where no two files shared a program.
+
+**Cause.** Integration. The Session 8 security files reuse the helper names of the Session 4 and 5 files. Rule 5.9 asks for unique internal identifiers across the program, so that a reader, or a debugger symbol table, never confuses two different functions.
+
+**Disposition.** Fixed in commit 5fcd74f. The security files use their own prefixes (rep_, svc_, ks_, auth_, sec_, inj_), and aux moved into its block. All test levels were rerun, and the CI static analysis job is green.
+
+**Retest.** fast-checks run 44120294053 green; unit 142, integration 16/16, scenario 28/28.

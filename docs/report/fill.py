@@ -96,13 +96,16 @@ def main():
                 "\n".join(f"| {t} | {n}{' (not run here, see below)' if t == 'cppcheck' and no_cpp else ''} |"
                            for t, n in tools) +
                 "\n\nDispositions: " + disp_s + "." +
-                ("\n\n**cppcheck and the MISRA addon are missing from this table.** The environment "
-                 "that produced the committed evidence could not install cppcheck. The fast-checks CI "
-                 "job runs all five tools on every push and fails on any finding without a "
-                 "disposition. For the files cppcheck has never seen (the Session 8 security files and "
-                 "the thermal recovery), leftovers match SA-50, disposition *open*, and are tracked as "
-                 "OBS-03 until triaged. The Session 7 run, on the code before integration, had 85 "
-                 "cppcheck findings, all dispositioned." if no_cpp else ""))
+                ("\n\n**cppcheck and the MISRA addon are missing from this table**, which was produced "
+                 "where cppcheck could not be installed. The fast-checks CI job runs all five tools on "
+                 "every push (`evidence/static-analysis/ci-summary.md`). On the integrated tree it "
+                 "reports 180 distinct findings: gcc 14, clang 28, analyzer 14, fanalyzer 1, "
+                 "cppcheck 123. Of these, 69 are justified, 99 accepted and 12 open. The 12 open ones "
+                 "are cppcheck findings in files cppcheck had never seen (the Session 8 security "
+                 "files and the thermal recovery). They match SA-50 and are tracked as OBS-03 until "
+                 "triaged. The first CI run of the integrated tree failed on 5 findings without a "
+                 "disposition. They were helper names repeated across files (MISRA 5.9) and one "
+                 "variable scope, recorded as NCR-05 and fixed." if no_cpp else ""))
     budget = read("timing", "budget-estimate.md")
     tt = budget[budget.index("## Task set"):budget.index("Verdict")].replace("## Task set\n", "")
     subs = {

@@ -123,7 +123,7 @@ survivor is an equivalent mutant, and I can show why.
 
 ## 9. What did integration break that unit testing did not catch?
 
-Five things, all from two correct parts meeting:
+Six things, all from two correct parts meeting:
 
 - **The thermal recovery re-triggered** (NCR-03, major, fixed). EXHAUSTED requests SAFE, but SAFE is
   applied at the next 2 s supervisor cycle. In between, the HK cycle saw "DEGRADED with an alarm" and
@@ -131,6 +131,9 @@ Five things, all from two correct parts meeting:
 - **The first contact consumed the boot event** the first validation test needed (TA-04).
 - **The security HK** is a second (3,25) stream, which the campaign decoded as FDIR HK (TA-05).
 - **A test order dependency through SAFE** suspending the schedule (TA-06).
+- **Helper names repeated across files** (NCR-05). The first CI run of the integrated tree failed:
+  cppcheck's whole-program MISRA check (rule 5.9) found the same static helper names in different
+  files. No single-lab analysis could see it.
 - **NCR-01, still deferred.** The Session 4 contract "TM(1,7) when exec returns" met the Session 6
   cyclic mode machine, so a mode command reports completion up to 2 s before the mode changes. It is
   open on purpose, with an MCS workaround.
