@@ -1,0 +1,126 @@
+[
+  {
+    "eventId": "MON_VBUS",
+    "template": "V_BUS monitor {ev_mon_state} {ev_side}: {ev_value} mV (limit {ev_limit})"
+  },
+  {
+    "eventId": "MON_TBAT",
+    "template": "T_BAT monitor {ev_mon_state} {ev_side}: {ev_value} cdegC (limit {ev_limit})"
+  },
+  {
+    "eventId": "MON_TOBC",
+    "template": "T_OBC monitor {ev_mon_state} {ev_side}: {ev_value} cdegC (limit {ev_limit})"
+  },
+  {
+    "eventId": "HEARTBEAT_MISSED",
+    "template": "Heartbeat missed: {ev_task} (miss {ev_count})"
+  },
+  {
+    "eventId": "TASK_RESTARTED",
+    "template": "Task restarted: {ev_task} ({ev_count} in window)"
+  },
+  {
+    "eventId": "TASK_ESCALATED",
+    "template": "Task escalated: {ev_task} after {ev_count} restarts"
+  },
+  {
+    "eventId": "ACTION_INHIBITED",
+    "template": "FDIR action inhibited (kind {ev_kind}, subject {ev_subject})"
+  },
+  {
+    "eventId": "TASK_RECOVERED",
+    "template": "Task recovered: {ev_task}"
+  },
+  {
+    "eventId": "MODE_CHANGED",
+    "template": "MODE {ev_mode_from} -> {ev_mode_to} (cause {ev_cause} {ev_cause_detail})"
+  },
+  {
+    "eventId": "INHIBIT_CHANGED",
+    "template": "FDIR inhibit on={ev_on} for {ev_duration} s (reason {ev_reason})"
+  },
+  {
+    "eventId": "SCHED_SUSPENDED",
+    "template": "Schedule suspended ({ev_entries} activities kept)"
+  },
+  {
+    "eventId": "MODE_CMD_DISCARDED",
+    "template": "Mode command discarded (event {ev_sm_event}, source {ev_src})"
+  },
+  {
+    "eventId": "MODE_INVALID",
+    "template": "Mode state invalid ({ev_raw_state}), recovered to SAFE"
+  },
+  {
+    "eventId": "THERMAL_RECOVERY_ATTEMPT",
+    "template": "THERMAL recovery attempt {ev_attempt}/{ev_attempt_max}: {ev_param} = {ev_value} cdegC"
+  },
+  {
+    "eventId": "THERMAL_RECOVERED",
+    "template": "THERMAL recovered after {ev_attempts} attempt(s), staying DEGRADED"
+  },
+  {
+    "eventId": "THERMAL_RECOVERY_EXHAUSTED",
+    "template": "THERMAL recovery EXHAUSTED after {ev_attempts} attempts ({ev_param}): SAFE requested"
+  },
+  {
+    "eventId": "PAYLOAD_COMMANDED",
+    "template": "PAYLOAD enable={ev_payload_cmd} running={ev_payload_running}"
+  },
+  {
+    "eventId": "BOOT_REPORT",
+    "template": "BOOT #{ev_boot_count}: last reset {ev_last_reset}, mode {ev_boot_mode}, NV valid {ev_nv_valid}"
+  },
+  {
+    "eventId": "WDG_WARNING",
+    "template": "Watchdog early warning ({ev_since_kick_ms} ms since kick)"
+  },
+  {
+    "eventId": "SEC_REJECT_FIRST",
+    "template": "SECURITY: TC rejected, class {ev_rej_class} ({ev_rej_code}), total {ev_rej_total}"
+  },
+  {
+    "eventId": "SEC_REJECT_SUMMARY",
+    "template": "SECURITY: {ev_rej_count} more {ev_rej_class} rejections in {ev_rej_window} s, total {ev_rej_total}"
+  },
+  {
+    "eventId": "SEC_KEY_LOADED",
+    "template": "SECURITY: key loaded in slot {ev_slot}, KCV {ev_kcv; %08X}"
+  },
+  {
+    "eventId": "SEC_KEY_ACTIVATED",
+    "template": "SECURITY: slot {ev_slot} ACTIVE (was {ev_prev_slot}), KCV {ev_kcv; %08X}, by recovery {ev_by_recovery}"
+  },
+  {
+    "eventId": "SEC_KEY_CORRUPT",
+    "template": "SECURITY: key LOST in slot mask {ev_slot_mask} (scrub errors {ev_scrub_errors})"
+  },
+  {
+    "eventId": "SEC_COUNTER_VOTE",
+    "template": "SECURITY: counter copies disagreed (mask {ev_slot_mask}), largest taken"
+  },
+  {
+    "eventId": "SEC_RECOVERY_USED",
+    "template": "SECURITY: RECOVERY command {ev_rec_subtype} slot {ev_slot}, challenge {ev_challenge}"
+  },
+  {
+    "eventId": "SEC_KEY_ERASED",
+    "template": "SECURITY: slot {ev_slot} erased"
+  },
+  {
+    "eventId": "SEC_COUNTER_SET",
+    "template": "SECURITY: slot {ev_slot} counter {ev_old} -> {ev_new}"
+  },
+  {
+    "eventId": "SEC_KEY_LOAD_FAILED",
+    "template": "SECURITY: wrapped key for slot {ev_slot} did not verify"
+  },
+  {
+    "eventId": "SEC_FACTORY_STATE",
+    "template": "SECURITY: key store blank or invalid, factory state"
+  },
+  {
+    "eventId": "SEC_KEY_REPAIRED",
+    "template": "SECURITY: key store upset repaired by the scrub ({ev_repairs})"
+  }
+]

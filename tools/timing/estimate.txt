@@ -1,0 +1,6 @@
+calibration: work loop 10.0 instr/iteration = 0.441 us on SIS -> 44.1 ns per x86 instruction
+plain       12543 instr/op  ~    553.0 us on LEON3 (estimate)
+accept      45287 instr/op  ~   1996.5 us on LEON3 (estimate)
+reject      41360 instr/op  ~   1823.4 us on LEON3 (estimate)
+scrub       54067 instr/op  ~   2383.6 us on LEON3 (estimate)
+load        48999 instr/op  ~   2160.1 us on LEON3 (estimate)

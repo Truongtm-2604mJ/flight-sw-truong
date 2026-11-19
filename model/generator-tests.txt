@@ -1,0 +1,13 @@
+[ OK ] real model accepted
+[ OK ] mutate_unhandled: INCOMPLETE: event fault_critical is neither handled nor ignored in state SAFE
+[ OK ] mutate_guard_gap: INCOMPLETE: in NOMINAL, event fault_critical with inputs {'fdir_inhibited': True} enables no transition
+[ OK ] mutate_priority_clash: state NOMINAL: two transitions share a priority
+[ OK ] mutate_handled_and_ignored: T01: event tc_mode_safe is both handled and ignored in NOMINAL
+[ OK ] mutate_unknown_input: guard '!fdir_disabled': 'fdir_disabled' is not a declared input
+[ OK ] mutate_self_transition: T03: self transitions are not supported; use internal: true
+[ OK ] mutate_unreachable: unreachable states: ['DEGRADED']
+[ OK ] mutate_semantics: semantics: max_transitions_per_cycle = 2 is not supported by this generator
+[ OK ] mutate_semantics_missing: semantics: 'self_transition_runs_entry' must be stated explicitly
+[ OK ] mutate_bad_guard: guard 'fdir_inhibited &&': expected operand
+
+11 cases, 0 failed

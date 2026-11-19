@@ -1,0 +1,71 @@
+# LOTUS-1 Yamcs instance "lotus1": the integrated flight software
+# (host simulation or SIS) behind the ground security unit
+# (../../bridge/sc_bridge.py), which Yamcs reaches over TCP:
+#   TM  localhost:10015  every packet the spacecraft sends, CCSDS framed
+#   TC  localhost:10025  PUS TCs from Yamcs; the bridge adds SPI/SEQ/MAC
+services:
+  - class: org.yamcs.archive.XtceTmRecorder
+  - class: org.yamcs.archive.ParameterRecorder
+  - class: org.yamcs.archive.AlarmRecorder
+  - class: org.yamcs.archive.EventRecorder
+  - class: org.yamcs.archive.ReplayServer
+  - class: org.yamcs.parameter.SystemParametersService
+    args:
+      producers: ["jvm", "fs"]
+  - class: org.yamcs.ProcessorCreatorService
+    args:
+      name: realtime
+      type: realtime
+  - class: org.yamcs.archive.CommandHistoryRecorder
+  - class: org.yamcs.parameterarchive.ParameterArchive
+  - class: org.yamcs.plists.ParameterListService
+  - class: org.yamcs.pus.PusEventDecoder
+    args:
+      eventIdParameter: /LOTUS1/event_id
+      eventTemplateFile: etc/events.json
+
+dataLinks:
+  - name: tm_realtime
+    class: org.yamcs.tctm.TcpTmDataLink
+    stream: tm_realtime
+    host: localhost
+    port: 10015
+    initialDelay: 1000
+    # Onboard time counts from boot, so the generation time is the reception
+    # time; the onboard time is still decoded (obt_coarse, obt_fine).
+    packetPreprocessorClassName: org.yamcs.tctm.GenericPacketPreprocessor
+    packetPreprocessorArgs:
+      timestampOffset: -1
+      seqCountOffset: 2
+      errorDetection:
+        type: CRC-16-CCIIT
+
+  - name: tc_realtime
+    class: org.yamcs.tctm.TcpTcDataLink
+    stream: tc_realtime
+    host: localhost
+    port: 10025
+    initialDelay: 1000
+    commandPostprocessorClassName: org.yamcs.pus.PusCommandPostprocessor
+    commandPostprocessorArgs:
+      errorDetection:
+        type: CRC-16-CCIIT
+
+mdb:
+  - type: xtce
+    spec: mdb/lotus1.xml
+
+streamConfig:
+  tm:
+    - name: tm_realtime
+      processor: realtime
+      rootContainer: /LOTUS1/ccsds
+  invalidTm: invalid_tm_stream
+  cmdHist: ["cmdhist_realtime", "cmdhist_dump"]
+  event: ["events_realtime", "events_dump"]
+  param: ["pp_realtime", "sys_param", "proc_param"]
+  parameterAlarm: ["alarms_realtime"]
+  eventAlarm: ["event_alarms_realtime"]
+  tc:
+    - name: tc_realtime
+      processor: realtime

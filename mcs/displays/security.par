@@ -1,0 +1,12 @@
+{
+  "scroll": true,
+  "parameters": [
+    "/LOTUS1/sec_active_slot",
+    "/LOTUS1/sec_slot1_counter",
+    "/LOTUS1/sec_slot2_counter",
+    "/LOTUS1/sec_challenge",
+    "/LOTUS1/sec_rej_auth",
+    "/LOTUS1/sec_rej_replay",
+    "/LOTUS1/sec_auth_accepted"
+  ]
+}

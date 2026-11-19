@@ -1,4 +1,4 @@
-# Lab 7.3 - Fast checks: every push and pull request. Target: under 10 minutes.
+# LOTUS-1 (capstone; from Lab 7.3) - Fast checks: every push and pull request. Target: under 10 minutes.
 # Host build at the maximum warning set, unit and integration tests, static
 # analysis (fails on any finding without a disposition), coverage and MC/DC.
 # Every action is pinned to a commit SHA and every tool to an exact version
@@ -27,7 +27,8 @@ jobs:
         run: |
           sudo apt-get update -q
           sudo apt-get install -y -q --no-install-recommends \
-              gcc-13 clang-18 clang-tidy-18 llvm-18 libclang-rt-18-dev cppcheck python3-yaml
+              gcc-13 clang-18 clang-tidy-18 llvm-18 libclang-rt-18-dev cppcheck python3-yaml \
+              python3-cryptography
           for t in clang clang-tidy llvm-cov llvm-profdata; do sudo ln -sf /usr/bin/$t-18 /usr/local/bin/$t; done
           python3 -m pip install --break-system-packages --user gcovr==7.2
           echo "$HOME/.local/bin" >> "$GITHUB_PATH"
@@ -50,16 +51,20 @@ jobs:
       - name: Coverage (gcov, gcovr) and MC/DC (clang)
         run: make -C tests coverage mcdc
 
-      - name: Session 6 model checks (generator, back-to-back, traceability)
-        run: make -C labs/session-06 test
+      - name: Generated mode machine matches the model (model/mode_machine.yaml)
+        run: make check-generated
 
-      - name: Session 8 security (warnings, unit tests with ASan/UBSan, MDB check, system tests)
-        run: |
-          sudo apt-get install -y -q --no-install-recommends python3-cryptography
-          make -C labs/session-08 warnings unit mdb-check system-test
+      - name: Integrated application, host builds (test and flight)
+        run: make host
+
+      - name: Yamcs MDB agrees with the ground decoders
+        run: make mdb-check
+
+      - name: Mission scenario, 7 steps, automated (host simulation)
+        run: make scenario
 
       - name: Show where regenerated evidence differs from the committed copy (informational)
-        run: git diff --stat -- labs/session-07 labs/session-06 || true
+        run: git diff --stat -- evidence || true
 
       - name: Archive reports
         if: always()
@@ -69,7 +74,8 @@ jobs:
           retention-days: 14
           path: |
             tests/build/coverage-report
-            labs/session-07/coverage/mcdc-*
-            labs/session-07/static-analysis
+            evidence/coverage/mcdc-*
+            evidence/static-analysis
+            evidence/demo
             tests/build/unit/*.txt
             tests/build/integration/*.log

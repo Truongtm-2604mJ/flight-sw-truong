@@ -1,0 +1,89 @@
+# LOTUS-1 - unit and integration tests that also verify each requirement
+# (validation tests list their requirements themselves, in
+# tests/validation/run_campaign.py). Read by build_matrix.py, which takes
+# every verdict from the test outputs.
+#   unit:        Unity test function names (tests/unit/*.c)
+#   integration: IT ids (tests/integration/int_tc_path.c)
+#   analysis:    evidence files: PASS if the file exists and matches 'expect',
+#                NOT RUN if the file is missing (target evidence not produced yet)
+#   s6:          Session 6 model tests (labs/session-06, run on the same generated mode_sm.c)
+TIM-010:
+  analysis:
+  - {file: evidence/timing/budget-estimate.md, expect: the task set CLOSES, name: response time analysis (estimate)}
+  - {file: evidence/timing/budget-sis.md, expect: 'the task set CLOSES \(every R <= T, no missed period\)', name: 'SIS
+      run, 60 s'}
+TIM-020:
+  analysis:
+  - {file: tools/timing/estimate.txt, expect: 'accept +\d+ instr/op +~ +[0-4]\d{3}\.\d us', name: instruction count
+      estimate}
+  - {file: labs/session-08/docs/timing/budget-sis.md, expect: '\| accept \| [\d.]+ \| [\d.]+ \| [0-4]\.\d+ \|',
+    name: 'SIS measurement, Session 8 build (same tc_auth.c, keystore.c, tinycrypt): accept max 1.326 ms, reject max 1.223 ms'}
+TMTC-010:
+  unit: [test_valid_ping_gives_accept_report_complete_in_order, test_ack_flags_select_success_reports]
+  integration: [IT-01, IT-06, IT-09, IT-12]
+TMTC-020:
+  unit: [test_corrupted_checksum_is_rejected_and_not_executed, test_unimplemented_service_has_its_own_failure_code,
+    test_validation_sequence_failure_codes, test_s7_tc_validate_rejects_null_arguments]
+  integration: [IT-02, IT-03, IT-04, IT-05, IT-12]
+TMTC-040: {}
+TMTC-050:
+  unit: [test_tm_sequence_count_wraps_at_14_bits, test_sequence_count_increments_across_exchange]
+  integration: [IT-01, IT-11]
+TMTC-060: {}
+TMTC-070: {}
+SEC-010:
+  unit: [test_wrong_key_rejected_at_auth, test_plain_tc_rejected, test_check_order, test_mac_matches_ground]
+  integration: [IT-15]
+SEC-020:
+  unit: [test_replay_rejected, test_far_future_rejected_by_window, test_counter_not_advanced_by_semantic_reject,
+    test_valid_executes_and_advances]
+  integration: [IT-15]
+SEC-030:
+  unit: [test_burst_gives_bounded_events, test_sustained_flood_bounded, test_event_queue_bounded]
+SEC-040:
+  unit: [test_factory_state, test_first_contact_after_factory, test_trusted_release, test_spi_rules]
+  integration: [IT-15, IT-16]
+FDIR-010:
+  unit: [test_single_out_of_limit_sample_raises_nothing, test_counter_resets_on_any_in_limit_sample]
+FDIR-020:
+  unit: [test_three_consecutive_samples_raise_exactly_one_event, test_twenty_further_samples_raise_no_more_events,
+    test_mcdc_MC1_case1_A1_B1_in_band_counts, test_mcdc_MC2_case1_A1_B1_flip_counts_abandoned_run]
+FDIR-030: {}
+FDIR-040:
+  unit: [test_single_missed_heartbeat_restarts_only_that_task, test_mcdc_MC3_case3_A1_B0_not_inhibited_restarts]
+FDIR-060:
+  unit: [test_watchdog_warns_then_resets, test_watchdog_late_kick_cannot_cancel_reset, test_nv_boot_sequence]
+FDIR-070:
+  unit: [test_healthy_tasks_raise_nothing, test_watchdog_kicked_never_fires]
+FDIR-100:
+  unit: [test_three_attempts_then_exhausted, test_recovered_stops_and_reports, test_mode_change_stands_down_silently,
+    test_time_wraps]
+FDIR-110:
+  unit: [test_three_attempts_then_exhausted, test_no_new_sequence_until_degraded_left]
+PL-010:
+  integration: [IT-14]
+PL-020:
+  integration: [IT-14]
+MM-010:
+  unit: [test_autonomous_events_never_leave_safe, test_T11_T12_safe_left_by_ground_with_exit_action]
+  s6: [TC-SAFE-EXIT-01, TC-SAFE-EXIT-02, TC-SAFE-EXIT-03]
+MM-020:
+  integration: [IT-06]
+  s6: [TC-SAFE-ENTRY-02]
+MM-030:
+  unit: [test_T01_nominal_to_safe_on_ground, test_boot_safe_after_watchdog_reset]
+  s6: [TC-SAFE-ENTRY-01]
+MM-040:
+  unit: [test_T02_nominal_to_safe_on_critical_fault, test_T04_nominal_to_degraded_on_noncritical_fault, test_T07_T08_degraded_to_safe]
+  s6: [TC-FAULT-01]
+MM-050:
+  unit: [test_autonomous_events_never_leave_safe]
+  s6: [TC-NOREC-01]
+MM-080:
+  integration: [IT-06]
+  s6: [TC-REP-01]
+MM-090:
+  unit: [test_boot_nominal_runs_entry_actions_without_report, test_boot_safe_after_watchdog_reset, test_boot_in_degraded_is_refused_and_enters_safe]
+  s6: [TC-BOOT-01]
+MM-150:
+  s6: [TC-LAT-01, TC-LAT-SYS-host-sim]

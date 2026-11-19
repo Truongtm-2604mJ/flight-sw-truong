@@ -1,0 +1,287 @@
+# LOTUS-1 requirement set (capstone, Phase 3).
+#
+# 30 requirements in six groups: timing, TM/TC, telecommand security, FDIR
+# (thermal recovery included), payload, mode management. Taken from the
+# Session 7 TM/TC and FDIR set and the Lab 6.4 mode management set, cut to
+# what the mission depends on, plus the timing, security, thermal recovery
+# and payload requirements written for the capstone. Requirements left out
+# (TMTC-030, FDIR-050, FDIR-080, FDIR-090, MM-060, MM-070, MM-100 to MM-140)
+# are still tested by the campaign and stay in labs/session-06 and
+# labs/session-07 as history.
+#
+# Fields:
+#   method  T    test through the ground interface (validation campaign)
+#           T-I  test at integration level (tests/integration)
+#           A    analysis (evidence/timing)
+#   group   section of the traceability matrix
+#   design  where the design is described; code: where it is implemented (under src/)
+# Read by tests/validation/build_matrix.py.
+
+requirements:
+- id: TIM-010
+  text: Every periodic task of the integrated application shall complete before its next release (deadline
+    equal to period) with every task running, the worst blocking by the TC path, and a flood of rejected
+    telecommands at the uplink rate; the analysis shall show the response time of each task, and the measured
+    run on the target shall show no missed period.
+  source: Lab 3.2 task set (rate monotonic; ACS_CTRL 100 ms is the control loop); Session 8 timing budget
+    with authentication; capstone Phase 1 (recomputed budget).
+  method: A, T
+  group: Timing
+  design: architecture.md S1; evidence/timing/
+  code: app/main.c (tasks, periods); app/mission.h (priorities)
+- id: TIM-020
+  text: Authenticating one telecommand, and rejecting one forged telecommand, shall each cost no more
+    than 5 ms of processor time on the LEON3 target, so that a TC_RX flood at the S-band uplink rate stays
+    below 2 % of the processor.
+  source: 'Session 8 timing budget (security-report.md Section 4): the MAC must not threaten the control
+    loop.'
+  method: A, T
+  group: Timing
+  design: labs/session-08/docs/security-report.md S4; evidence/timing/
+  code: security/tc_auth.c; third_party/tinycrypt (SHA-256, HMAC)
+- id: TMTC-010
+  text: In every mode, a telecommand that passes acceptance shall be answered with TM(1,1) if acceptance
+    acknowledgement is requested and, after successful execution, with TM(1,7) if completion acknowledgement
+    is requested, both carrying the telecommand's request ID.
+  source: Operators must know that every command was received and executed (PUS service 1). Session 4
+    design note, Section 3.
+  method: T
+  group: TM/TC
+  design: architecture.md S4
+  code: core/tc_handler.c tc_handle; core/pus.c
+- id: TMTC-020
+  text: A telecommand that fails an acceptance check shall not be executed and shall be answered with
+    TM(1,2) carrying the code of the first failed check (checksum 3, APID 5, service 7, subtype 8, application
+    data 9).
+  source: A corrupted or wrong command must never act ("validate before you act"). Session 4 design note,
+    Section 3.
+  method: T
+  group: TM/TC
+  design: architecture.md S4
+  code: core/tc_handler.c tc_handle (acceptance checks)
+- id: TMTC-040
+  text: The completion report TM(1,7) of a telecommand shall be sent only once the function it commands
+    has taken effect.
+  source: Operations procedures move to their next step on TM(1,7) (PUS service 1 meaning of "completion
+    of execution"). Session 4 design note, Section 3.
+  method: T
+  group: TM/TC
+  design: architecture.md S4 (NCR-01)
+  code: app/services.c svc8_exec; fdir/fdir.c
+- id: TMTC-050
+  text: Every telemetry packet shall pass the ground's packet checks (CRC, length, version), and within
+    one boot the sequence count of each APID shall advance by exactly one per packet while the TM drop
+    counter stays 0.
+  source: The ground detects lost or corrupted telemetry from the sequence count and the CRC. Session
+    4 design note, Sections 1 and 6.
+  method: T
+  group: TM/TC
+  design: architecture.md S1 (TMQ1)
+  code: core/sp.c; app/tmtc.c tm_tx_task
+- id: TMTC-060
+  text: In NOMINAL, the full housekeeping report (SID 1) shall be generated every 1.0 s, each interval
+    within 0.9 s to 1.1 s of onboard time.
+  source: The HK rate sizes the ground's view of the vehicle and the downlink budget. Session 4 design
+    note (HK), Session 5 design note Section 2 (1 Hz in NOMINAL).
+  method: T
+  group: TM/TC
+  design: architecture.md S1 (TM_HK)
+  code: app/main.c tm_hk_task; fdir/fdir.c fdir_hk_cycle
+- id: TMTC-070
+  text: The flight build shall not contain the fault injection service; every TC(200,x) shall be rejected
+    with TM(1,2) code 7 and have no effect.
+  source: Test hooks must not fly. Session 5 review.
+  method: T
+  group: TM/TC
+  design: architecture.md S6 (build variants)
+  code: Makefile; test/finj.c (FDIR_TEST_BUILD)
+- id: SEC-010
+  group: Telecommand security
+  method: T
+  text: Every telecommand other than a recovery command (SPI 0) shall carry a valid HMAC-SHA-256/128 trailer
+    under the active key. A telecommand that fails the structure, CRC or MAC check shall not be executed
+    and shall not be answered with any TM(1,x).
+  source: 'Mission statement: commands come only from the LOTUS-1 control centre. Session 8 threat model
+    (spoofing, R-01), security-report.md Section 2; no verification report before authentication so the
+    receiver is not an oracle.'
+  design: architecture.md S4; labs/session-08/docs/security-report.md S2
+  code: security/tc_auth.c (hook called by tc_handle); security/security.c
+- id: SEC-020
+  group: Telecommand security
+  method: T
+  text: A telecommand whose counter is not above the last accepted counter of its key slot, or is more
+    than the window above it, shall be rejected as a replay without effect and without TM(1,x); the counter
+    shall advance only when a telecommand is accepted.
+  source: Session 8 threat model (replay of a recorded pass, R-02); Lab 8.1 design.
+  design: labs/session-08/docs/security-report.md S2
+  code: security/tc_auth.c; security/keystore.c counters
+- id: SEC-030
+  group: Telecommand security
+  method: T
+  text: 'Every rejected telecommand shall be counted per rejection class in security housekeeping (SID
+    3), and security events shall be rate limited: the first rejection of a class in a window raises one
+    event, the rest are summarised.'
+  source: Operators must see an attack without the event stream being flooded (Session 8 security report,
+    Section 3).
+  design: architecture.md S3 (two emitters)
+  code: security/sec_report.c
+- id: SEC-040
+  group: Telecommand security
+  method: T
+  text: A factory key store shall accept no authenticated telecommand until its counter floor has been
+    set by a recovery command (SPI 0) carrying the onboard challenge; time-tagged commands authenticated
+    at upload shall be released by the schedule without a trailer check.
+  source: Lab 8.2 key management (first contact), Session 8 mentor review; the schedule must keep working
+    in a pass-less period.
+  design: architecture.md S4; labs/session-08/lab-8.2-key-management/design-analysis.md
+  code: security/keystore.c; security/sec_service.c TC(210,10); security/security.c security_trusted
+- id: FDIR-010
+  text: A monitored parameter out of its limits for fewer consecutive samples than its persistence shall
+    raise no event and cause no action, and the rejected transient shall be counted in housekeeping.
+  source: Single sample glitches (EMI, ADC) must not trigger FDIR. Session 5 design note, Sections 1 and
+    2.
+  method: T
+  group: FDIR
+  design: architecture.md S5
+  code: fdir/monitor.c mon_table_run
+- id: FDIR-020
+  text: A monitored parameter out of its limits for its persistence shall raise exactly one alarm event,
+    no later than (persistence + 1) sample periods after the first violating sample, and no further event
+    while it stays out of limits.
+  source: Detection latency budget and no event flooding. Session 5 design note, Section 2.
+  method: T
+  group: FDIR
+  design: architecture.md S5
+  code: fdir/monitor.c; fdir/fdir.c on_monitor
+- id: FDIR-030
+  text: Bus under voltage (V_BUS below 26.0 V for 3 samples) shall put the vehicle in SAFE.
+  source: Power negative threatens survival. Session 5 design note, Sections 1 and 2.
+  method: T
+  group: FDIR
+  design: architecture.md S5
+  code: fdir/fdir.c monitor table (V_BUS critical)
+- id: FDIR-040
+  text: A supervised task that misses one heartbeat check shall be restarted, and the miss and the restart
+    reported, no later than 4.0 s after the hang begins, with no mode change.
+  source: Transient task faults are handled at subsystem level. Session 5 design note, Section 4 (2 s
+    check).
+  method: T
+  group: FDIR
+  design: architecture.md S1 (SUP)
+  code: fdir/supervisor.c sup_check
+- id: FDIR-060
+  text: If the supervisor stops, a watchdog warning shall be reported and the processor reset no later
+    than 6 s after the last kick; the vehicle shall then boot in SAFE and report the watchdog reset as
+    the cause.
+  source: Last line of defence; 5 s timeout plus 1 s grace. Session 5 design note, Section 4.
+  method: T
+  group: FDIR
+  design: architecture.md S1 (WDOG)
+  code: fdir/watchdog.c; fdir/fdir.c wdg_isr; fdir/nvstate.c
+- id: FDIR-070
+  text: With no fault injected, the FDIR shall raise no alarm, restart or mode change during 300 s of
+    nominal operation.
+  source: False alarms cost operations and science time. Session 5 design note, Section 5 (false positive
+    run).
+  method: T
+  group: FDIR
+  design: architecture.md S5
+  code: fdir/monitor.c persistence filter
+- id: FDIR-100
+  group: FDIR
+  method: T
+  text: In DEGRADED with a T_BAT or T_OBC alarm, the FDIR shall make at most 3 thermal recovery attempts,
+    10 s apart (±0.5 s), each reported by an event with the attempt number and the parameter value; if
+    the alarm clears, recovery shall stop with one RECOVERED event and the mode shall stay DEGRADED.
+  source: Mission statement (thermal anomaly, bounded recovery before SAFE). Capstone design, src/fdir/thermal.h.
+  design: architecture.md S5 step 2
+  code: fdir/thermal.c thermal_step; fdir/fdir.c thermal_cycle
+- id: FDIR-110
+  group: FDIR
+  method: T
+  text: If the thermal alarm is still present after the last recovery attempt, the FDIR shall report EXHAUSTED
+    once and command SAFE with cause MONITOR, no later than 12 s after the last attempt; no new attempt
+    sequence shall start before DEGRADED is left.
+  source: Capstone scenario step 5; escalation ladder of the Session 5 design note, Section 4.
+  design: architecture.md S5 step 3
+  code: fdir/thermal.c (spent latch); fdir/fdir.c fdir_mode_request
+- id: PL-010
+  group: Payload
+  method: T
+  text: The payload shall be off at boot and shall run only while the ground has enabled it (TC(8,1) function
+    2) and the mode is NOMINAL; enable and disable shall be reported by an event giving the commanded
+    and effective states.
+  source: 'Mission statement: imaging only on ground request, inside a planned pass; HK shows both states
+    (ST_PAYLOAD, ST_PAYLOAD_ENABLED).'
+  design: architecture.md S3 (payload state)
+  code: fdir/fdir.c fdir_payload_command; app/services.c TC(8,1) f2
+- id: PL-020
+  group: Payload
+  method: T
+  text: Entry to DEGRADED shall suspend the payload; entry to SAFE shall switch it off and clear the ground
+    enable; an enable commanded outside NOMINAL shall be refused with TM(1,8) code 16 and have no effect.
+  source: Mission statement (payload suspended in DEGRADED); MM-030; capstone scenario steps 4 and 5.
+  design: architecture.md S3 (payload state)
+  code: fdir/fdir.c payload_allowed; mode_sm actions
+- id: MM-010
+  text: SAFE and DEGRADED shall be exited only by ground telecommand.
+  source: S5 design note 3 ("Only the ground leaves SAFE or DEGRADED")
+  method: T
+  group: Mode management
+  design: model/mode_machine.yaml; model/semantics.md
+  code: fdir/mode_sm.c (generated); fdir/fdir.c
+- id: MM-020
+  text: Entry to SAFE shall suspend the onboard command schedule; leaving SAFE shall not resume it.
+  source: S5 design note 3, schedule.h
+  method: T
+  group: Mode management
+  design: model/mode_machine.yaml; model/semantics.md
+  code: fdir/mode_sm.c (generated); fdir/fdir.c
+- id: MM-030
+  text: Entry to SAFE shall switch the payload off, reduce telemetry to essentials, keep monitoring at
+    its tightened rate, command sun pointing and keep the receiver on.
+  source: S5 design note 3 (mode table)
+  method: T
+  group: Mode management
+  design: model/mode_machine.yaml; model/semantics.md
+  code: fdir/mode_sm.c (generated); fdir/fdir.c
+- id: MM-040
+  text: When FDIR actions are not inhibited, a confirmed critical fault shall command SAFE and a confirmed
+    non critical fault shall command DEGRADED from any less severe mode.
+  source: S5 design note 1 (failure mode table)
+  method: T
+  group: Mode management
+  design: model/mode_machine.yaml; model/semantics.md
+  code: fdir/mode_sm.c (generated); fdir/fdir.c
+- id: MM-050
+  text: No autonomous event shall lower the mode; a parameter returning inside its limits shall not cause
+    recovery.
+  source: S5 design note 3 ("Autonomous requests only escalate")
+  method: T
+  group: Mode management
+  design: model/mode_machine.yaml; model/semantics.md
+  code: fdir/mode_sm.c (generated); fdir/fdir.c
+- id: MM-080
+  text: Every mode transition shall be reported, with its triggering cause and detail.
+  source: S5 design note 3 ("Every transition is reported")
+  method: T
+  group: Mode management
+  design: model/mode_machine.yaml; model/semantics.md
+  code: fdir/mode_sm.c (generated); fdir/fdir.c
+- id: MM-090
+  text: The vehicle shall start in NOMINAL after a cold boot and in SAFE after a watchdog reset, with
+    no transition report at boot.
+  source: S5 design note 4 (escalation level 3), fdir.c fdir_boot()
+  method: T
+  group: Mode management
+  design: model/mode_machine.yaml; model/semantics.md
+  code: fdir/mode_sm.c (generated); fdir/fdir.c
+- id: MM-150
+  text: A ground mode command shall take effect, and its mode transition shall be reported, no later than
+    3.0 s after its execution completion report TM(1,7).
+  source: Session 6 review, divergence D-07. Design constraint derived from the 2 s supervisor period
+    (semantics.md, "Latency requirement")
+  method: T
+  group: Mode management
+  design: model/mode_machine.yaml; model/semantics.md
+  code: fdir/mode_sm.c (generated); fdir/fdir.c

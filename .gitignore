@@ -1,0 +1,13 @@
+# build outputs
+/build/
+/tests/build/
+__pycache__/
+*.pyc
+# runtime state (simulated non volatile memory, ground security unit state)
+/mcs/.run/
+*.bin
+*.bin.sec
+*.ground.json
+# intermediate report output
+/docs/report/report.html
+/docs/report/report.filled.md

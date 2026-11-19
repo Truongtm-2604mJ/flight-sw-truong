@@ -1,0 +1,274 @@
+### clang --analyze -Xclang -analyzer-output=text -Xclang -analyzer-checker=core,security,unix,deadcode,optin.portability -I../src/sim -I../src/core -I../src/fdir -I../src/security -I../src/app -I../src/test -I../src/third_party/tinycrypt/include ../src/core/sp.c -o /dev/null
+../src/core/sp.c:54:5: warning: Call to function 'memcpy' is insecure as it does not provide security checks introduced in the C11 standard. Replace with analogous functions that support length arguments or provides boundary checks such as 'memcpy_s' in case of C11 [security.insecureAPI.DeprecatedOrUnsafeBufferHandling]
+   54 |     memcpy(&out[SP_PRIMARY_HEADER_LEN], payload, payload_len);
+      |     ^~~~~~
+../src/core/sp.c:54:5: note: Call to function 'memcpy' is insecure as it does not provide security checks introduced in the C11 standard. Replace with analogous functions that support length arguments or provides boundary checks such as 'memcpy_s' in case of C11
+   54 |     memcpy(&out[SP_PRIMARY_HEADER_LEN], payload, payload_len);
+      |     ^~~~~~
+1 warning generated.
+
+### clang --analyze -Xclang -analyzer-output=text -Xclang -analyzer-checker=core,security,unix,deadcode,optin.portability -I../src/sim -I../src/core -I../src/fdir -I../src/security -I../src/app -I../src/test -I../src/third_party/tinycrypt/include ../src/core/crc16.c -o /dev/null
+
+### clang --analyze -Xclang -analyzer-output=text -Xclang -analyzer-checker=core,security,unix,deadcode,optin.portability -I../src/sim -I../src/core -I../src/fdir -I../src/security -I../src/app -I../src/test -I../src/third_party/tinycrypt/include ../src/core/pus.c -o /dev/null
+../src/core/pus.c:87:9: warning: Call to function 'memcpy' is insecure as it does not provide security checks introduced in the C11 standard. Replace with analogous functions that support length arguments or provides boundary checks such as 'memcpy_s' in case of C11 [security.insecureAPI.DeprecatedOrUnsafeBufferHandling]
+   87 |         memcpy(&field[PUS_TM_SEC_HDR_LEN], data, data_len);
+      |         ^~~~~~
+../src/core/pus.c:87:9: note: Call to function 'memcpy' is insecure as it does not provide security checks introduced in the C11 standard. Replace with analogous functions that support length arguments or provides boundary checks such as 'memcpy_s' in case of C11
+   87 |         memcpy(&field[PUS_TM_SEC_HDR_LEN], data, data_len);
+      |         ^~~~~~
+../src/core/pus.c:131:9: warning: Call to function 'memcpy' is insecure as it does not provide security checks introduced in the C11 standard. Replace with analogous functions that support length arguments or provides boundary checks such as 'memcpy_s' in case of C11 [security.insecureAPI.DeprecatedOrUnsafeBufferHandling]
+  131 |         memcpy(&field[PUS_TC_SEC_HDR_LEN], app_data, app_len);
+      |         ^~~~~~
+../src/core/pus.c:131:9: note: Call to function 'memcpy' is insecure as it does not provide security checks introduced in the C11 standard. Replace with analogous functions that support length arguments or provides boundary checks such as 'memcpy_s' in case of C11
+  131 |         memcpy(&field[PUS_TC_SEC_HDR_LEN], app_data, app_len);
+      |         ^~~~~~
+../src/core/pus.c:157:5: warning: Call to function 'memset' is insecure as it does not provide security checks introduced in the C11 standard. Replace with analogous functions that support length arguments or provides boundary checks such as 'memset_s' in case of C11 [security.insecureAPI.DeprecatedOrUnsafeBufferHandling]
+  157 |     memset(tc, 0, sizeof(*tc));
+      |     ^~~~~~
+../src/core/pus.c:157:5: note: Call to function 'memset' is insecure as it does not provide security checks introduced in the C11 standard. Replace with analogous functions that support length arguments or provides boundary checks such as 'memset_s' in case of C11
+  157 |     memset(tc, 0, sizeof(*tc));
+      |     ^~~~~~
+../src/core/pus.c:164:5: warning: Call to function 'memcpy' is insecure as it does not provide security checks introduced in the C11 standard. Replace with analogous functions that support length arguments or provides boundary checks such as 'memcpy_s' in case of C11 [security.insecureAPI.DeprecatedOrUnsafeBufferHandling]
+  164 |     memcpy(tc->request_id, frame, PUS_REQUEST_ID_LEN);
+      |     ^~~~~~
+../src/core/pus.c:164:5: note: Call to function 'memcpy' is insecure as it does not provide security checks introduced in the C11 standard. Replace with analogous functions that support length arguments or provides boundary checks such as 'memcpy_s' in case of C11
+  164 |     memcpy(tc->request_id, frame, PUS_REQUEST_ID_LEN);
+      |     ^~~~~~
+4 warnings generated.
+
+### clang --analyze -Xclang -analyzer-output=text -Xclang -analyzer-checker=core,security,unix,deadcode,optin.portability -I../src/sim -I../src/core -I../src/fdir -I../src/security -I../src/app -I../src/test -I../src/third_party/tinycrypt/include ../src/core/tc_handler.c -o /dev/null
+../src/core/tc_handler.c:43:5: warning: Call to function 'memcpy' is insecure as it does not provide security checks introduced in the C11 standard. Replace with analogous functions that support length arguments or provides boundary checks such as 'memcpy_s' in case of C11 [security.insecureAPI.DeprecatedOrUnsafeBufferHandling]
+   43 |     memcpy(data, tc->request_id, PUS_REQUEST_ID_LEN);
+      |     ^~~~~~
+../src/core/tc_handler.c:43:5: note: Call to function 'memcpy' is insecure as it does not provide security checks introduced in the C11 standard. Replace with analogous functions that support length arguments or provides boundary checks such as 'memcpy_s' in case of C11
+   43 |     memcpy(data, tc->request_id, PUS_REQUEST_ID_LEN);
+      |     ^~~~~~
+../src/core/tc_handler.c:57:5: warning: Call to function 'memset' is insecure as it does not provide security checks introduced in the C11 standard. Replace with analogous functions that support length arguments or provides boundary checks such as 'memset_s' in case of C11 [security.insecureAPI.DeprecatedOrUnsafeBufferHandling]
+   57 |     memset(ctx, 0, sizeof(*ctx));
+      |     ^~~~~~
+../src/core/tc_handler.c:57:5: note: Call to function 'memset' is insecure as it does not provide security checks introduced in the C11 standard. Replace with analogous functions that support length arguments or provides boundary checks such as 'memset_s' in case of C11
+   57 |     memset(ctx, 0, sizeof(*ctx));
+      |     ^~~~~~
+2 warnings generated.
+
+### clang --analyze -Xclang -analyzer-output=text -Xclang -analyzer-checker=core,security,unix,deadcode,optin.portability -I../src/sim -I../src/core -I../src/fdir -I../src/security -I../src/app -I../src/test -I../src/third_party/tinycrypt/include ../src/fdir/monitor.c -o /dev/null
+../src/fdir/monitor.c:11:5: warning: Call to function 'memset' is insecure as it does not provide security checks introduced in the C11 standard. Replace with analogous functions that support length arguments or provides boundary checks such as 'memset_s' in case of C11 [security.insecureAPI.DeprecatedOrUnsafeBufferHandling]
+   11 |     memset(e, 0, sizeof(*e));
+      |     ^~~~~~
+../src/fdir/monitor.c:11:5: note: Call to function 'memset' is insecure as it does not provide security checks introduced in the C11 standard. Replace with analogous functions that support length arguments or provides boundary checks such as 'memset_s' in case of C11
+   11 |     memset(e, 0, sizeof(*e));
+      |     ^~~~~~
+1 warning generated.
+
+### clang --analyze -Xclang -analyzer-output=text -Xclang -analyzer-checker=core,security,unix,deadcode,optin.portability -I../src/sim -I../src/core -I../src/fdir -I../src/security -I../src/app -I../src/test -I../src/third_party/tinycrypt/include ../src/fdir/supervisor.c -o /dev/null
+../src/fdir/supervisor.c:12:5: warning: Call to function 'memset' is insecure as it does not provide security checks introduced in the C11 standard. Replace with analogous functions that support length arguments or provides boundary checks such as 'memset_s' in case of C11 [security.insecureAPI.DeprecatedOrUnsafeBufferHandling]
+   12 |     memset(s, 0, sizeof(*s));
+      |     ^~~~~~
+../src/fdir/supervisor.c:12:5: note: Call to function 'memset' is insecure as it does not provide security checks introduced in the C11 standard. Replace with analogous functions that support length arguments or provides boundary checks such as 'memset_s' in case of C11
+   12 |     memset(s, 0, sizeof(*s));
+      |     ^~~~~~
+../src/fdir/supervisor.c:30:5: warning: Call to function 'memset' is insecure as it does not provide security checks introduced in the C11 standard. Replace with analogous functions that support length arguments or provides boundary checks such as 'memset_s' in case of C11 [security.insecureAPI.DeprecatedOrUnsafeBufferHandling]
+   30 |     memset(t, 0, sizeof(*t));
+      |     ^~~~~~
+../src/fdir/supervisor.c:30:5: note: Call to function 'memset' is insecure as it does not provide security checks introduced in the C11 standard. Replace with analogous functions that support length arguments or provides boundary checks such as 'memset_s' in case of C11
+   30 |     memset(t, 0, sizeof(*t));
+      |     ^~~~~~
+2 warnings generated.
+
+### clang --analyze -Xclang -analyzer-output=text -Xclang -analyzer-checker=core,security,unix,deadcode,optin.portability -I../src/sim -I../src/core -I../src/fdir -I../src/security -I../src/app -I../src/test -I../src/third_party/tinycrypt/include ../src/fdir/watchdog.c -o /dev/null
+
+### clang --analyze -Xclang -analyzer-output=text -Xclang -analyzer-checker=core,security,unix,deadcode,optin.portability -I../src/sim -I../src/core -I../src/fdir -I../src/security -I../src/app -I../src/test -I../src/third_party/tinycrypt/include ../src/fdir/nvstate.c -o /dev/null
+../src/fdir/nvstate.c:35:5: warning: Call to function 'memset' is insecure as it does not provide security checks introduced in the C11 standard. Replace with analogous functions that support length arguments or provides boundary checks such as 'memset_s' in case of C11 [security.insecureAPI.DeprecatedOrUnsafeBufferHandling]
+   35 |     memset(r, 0, sizeof(*r));
+      |     ^~~~~~
+../src/fdir/nvstate.c:35:5: note: Call to function 'memset' is insecure as it does not provide security checks introduced in the C11 standard. Replace with analogous functions that support length arguments or provides boundary checks such as 'memset_s' in case of C11
+   35 |     memset(r, 0, sizeof(*r));
+      |     ^~~~~~
+1 warning generated.
+
+### clang --analyze -Xclang -analyzer-output=text -Xclang -analyzer-checker=core,security,unix,deadcode,optin.portability -I../src/sim -I../src/core -I../src/fdir -I../src/security -I../src/app -I../src/test -I../src/third_party/tinycrypt/include ../src/fdir/schedule.c -o /dev/null
+../src/fdir/schedule.c:8:5: warning: Call to function 'memset' is insecure as it does not provide security checks introduced in the C11 standard. Replace with analogous functions that support length arguments or provides boundary checks such as 'memset_s' in case of C11 [security.insecureAPI.DeprecatedOrUnsafeBufferHandling]
+    8 |     memset(s, 0, sizeof(*s));
+      |     ^~~~~~
+../src/fdir/schedule.c:8:5: note: Call to function 'memset' is insecure as it does not provide security checks introduced in the C11 standard. Replace with analogous functions that support length arguments or provides boundary checks such as 'memset_s' in case of C11
+    8 |     memset(s, 0, sizeof(*s));
+      |     ^~~~~~
+../src/fdir/schedule.c:24:13: warning: Call to function 'memcpy' is insecure as it does not provide security checks introduced in the C11 standard. Replace with analogous functions that support length arguments or provides boundary checks such as 'memcpy_s' in case of C11 [security.insecureAPI.DeprecatedOrUnsafeBufferHandling]
+   24 |             memcpy(s->e[i].tc, tc, len);
+      |             ^~~~~~
+../src/fdir/schedule.c:24:13: note: Call to function 'memcpy' is insecure as it does not provide security checks introduced in the C11 standard. Replace with analogous functions that support length arguments or provides boundary checks such as 'memcpy_s' in case of C11
+   24 |             memcpy(s->e[i].tc, tc, len);
+      |             ^~~~~~
+2 warnings generated.
+
+### clang --analyze -Xclang -analyzer-output=text -Xclang -analyzer-checker=core,security,unix,deadcode,optin.portability -I../src/sim -I../src/core -I../src/fdir -I../src/security -I../src/app -I../src/test -I../src/third_party/tinycrypt/include ../src/fdir/mode_sm.c -o /dev/null
+
+### clang --analyze -Xclang -analyzer-output=text -Xclang -analyzer-checker=core,security,unix,deadcode,optin.portability -I../src/sim -I../src/core -I../src/fdir -I../src/security -I../src/app -I../src/test -I../src/third_party/tinycrypt/include ../src/fdir/thermal.c -o /dev/null
+../src/fdir/thermal.c:8:11: warning: Call to function 'memset' is insecure as it does not provide security checks introduced in the C11 standard. Replace with analogous functions that support length arguments or provides boundary checks such as 'memset_s' in case of C11 [security.insecureAPI.DeprecatedOrUnsafeBufferHandling]
+    8 |     (void)memset(t, 0, sizeof(*t));
+      |           ^~~~~~
+../src/fdir/thermal.c:8:11: note: Call to function 'memset' is insecure as it does not provide security checks introduced in the C11 standard. Replace with analogous functions that support length arguments or provides boundary checks such as 'memset_s' in case of C11
+    8 |     (void)memset(t, 0, sizeof(*t));
+      |           ^~~~~~
+1 warning generated.
+
+### clang --analyze -Xclang -analyzer-output=text -Xclang -analyzer-checker=core,security,unix,deadcode,optin.portability -I../src/sim -I../src/core -I../src/fdir -I../src/security -I../src/app -I../src/test -I../src/third_party/tinycrypt/include ../src/fdir/fdir.c -o /dev/null
+../src/fdir/fdir.c:117:5: warning: Call to function 'memset' is insecure as it does not provide security checks introduced in the C11 standard. Replace with analogous functions that support length arguments or provides boundary checks such as 'memset_s' in case of C11 [security.insecureAPI.DeprecatedOrUnsafeBufferHandling]
+  117 |     memset(img, 0, NV_IMAGE_LEN);
+      |     ^~~~~~
+../src/fdir/fdir.c:117:5: note: Call to function 'memset' is insecure as it does not provide security checks introduced in the C11 standard. Replace with analogous functions that support length arguments or provides boundary checks such as 'memset_s' in case of C11
+  117 |     memset(img, 0, NV_IMAGE_LEN);
+      |     ^~~~~~
+../src/fdir/fdir.c:120:13: warning: Call to function 'memset' is insecure as it does not provide security checks introduced in the C11 standard. Replace with analogous functions that support length arguments or provides boundary checks such as 'memset_s' in case of C11 [security.insecureAPI.DeprecatedOrUnsafeBufferHandling]
+  120 |             memset(img, 0, NV_IMAGE_LEN);   /* short file: treat as blank */
+      |             ^~~~~~
+../src/fdir/fdir.c:120:13: note: Call to function 'memset' is insecure as it does not provide security checks introduced in the C11 standard. Replace with analogous functions that support length arguments or provides boundary checks such as 'memset_s' in case of C11
+  120 |             memset(img, 0, NV_IMAGE_LEN);   /* short file: treat as blank */
+      |             ^~~~~~
+2 warnings generated.
+
+### clang --analyze -Xclang -analyzer-output=text -Xclang -analyzer-checker=core,security,unix,deadcode,optin.portability -I../src/sim -I../src/core -I../src/fdir -I../src/security -I../src/app -I../src/test -I../src/third_party/tinycrypt/include ../src/security/tc_auth.c -o /dev/null
+../src/security/tc_auth.c:11:11: warning: Call to function 'memset' is insecure as it does not provide security checks introduced in the C11 standard. Replace with analogous functions that support length arguments or provides boundary checks such as 'memset_s' in case of C11 [security.insecureAPI.DeprecatedOrUnsafeBufferHandling]
+   11 |     (void)memset(a, 0, sizeof(*a));
+      |           ^~~~~~
+../src/security/tc_auth.c:11:11: note: Call to function 'memset' is insecure as it does not provide security checks introduced in the C11 standard. Replace with analogous functions that support length arguments or provides boundary checks such as 'memset_s' in case of C11
+   11 |     (void)memset(a, 0, sizeof(*a));
+      |           ^~~~~~
+1 warning generated.
+
+### clang --analyze -Xclang -analyzer-output=text -Xclang -analyzer-checker=core,security,unix,deadcode,optin.portability -I../src/sim -I../src/core -I../src/fdir -I../src/security -I../src/app -I../src/test -I../src/third_party/tinycrypt/include ../src/security/sec_report.c -o /dev/null
+../src/security/sec_report.c:28:11: warning: Call to function 'memset' is insecure as it does not provide security checks introduced in the C11 standard. Replace with analogous functions that support length arguments or provides boundary checks such as 'memset_s' in case of C11 [security.insecureAPI.DeprecatedOrUnsafeBufferHandling]
+   28 |     (void)memset(r, 0, sizeof(*r));
+      |           ^~~~~~
+../src/security/sec_report.c:28:11: note: Call to function 'memset' is insecure as it does not provide security checks introduced in the C11 standard. Replace with analogous functions that support length arguments or provides boundary checks such as 'memset_s' in case of C11
+   28 |     (void)memset(r, 0, sizeof(*r));
+      |           ^~~~~~
+1 warning generated.
+
+### clang --analyze -Xclang -analyzer-output=text -Xclang -analyzer-checker=core,security,unix,deadcode,optin.portability -I../src/sim -I../src/core -I../src/fdir -I../src/security -I../src/app -I../src/test -I../src/third_party/tinycrypt/include ../src/security/keystore.c -o /dev/null
+../src/security/keystore.c:52:11: warning: Call to function 'memcpy' is insecure as it does not provide security checks introduced in the C11 standard. Replace with analogous functions that support length arguments or provides boundary checks such as 'memcpy_s' in case of C11 [security.insecureAPI.DeprecatedOrUnsafeBufferHandling]
+   52 |     (void)memcpy(k->key, key, KS_KEY_LEN);
+      |           ^~~~~~
+../src/security/keystore.c:52:11: note: Call to function 'memcpy' is insecure as it does not provide security checks introduced in the C11 standard. Replace with analogous functions that support length arguments or provides boundary checks such as 'memcpy_s' in case of C11
+   52 |     (void)memcpy(k->key, key, KS_KEY_LEN);
+      |           ^~~~~~
+../src/security/keystore.c:53:11: warning: Call to function 'memcpy' is insecure as it does not provide security checks introduced in the C11 standard. Replace with analogous functions that support length arguments or provides boundary checks such as 'memcpy_s' in case of C11 [security.insecureAPI.DeprecatedOrUnsafeBufferHandling]
+   53 |     (void)memcpy(k->key_copy[0], key, KS_KEY_LEN);
+      |           ^~~~~~
+../src/security/keystore.c:53:11: note: Call to function 'memcpy' is insecure as it does not provide security checks introduced in the C11 standard. Replace with analogous functions that support length arguments or provides boundary checks such as 'memcpy_s' in case of C11
+   53 |     (void)memcpy(k->key_copy[0], key, KS_KEY_LEN);
+      |           ^~~~~~
+../src/security/keystore.c:54:11: warning: Call to function 'memcpy' is insecure as it does not provide security checks introduced in the C11 standard. Replace with analogous functions that support length arguments or provides boundary checks such as 'memcpy_s' in case of C11 [security.insecureAPI.DeprecatedOrUnsafeBufferHandling]
+   54 |     (void)memcpy(k->key_copy[1], key, KS_KEY_LEN);
+      |           ^~~~~~
+../src/security/keystore.c:54:11: note: Call to function 'memcpy' is insecure as it does not provide security checks introduced in the C11 standard. Replace with analogous functions that support length arguments or provides boundary checks such as 'memcpy_s' in case of C11
+   54 |     (void)memcpy(k->key_copy[1], key, KS_KEY_LEN);
+      |           ^~~~~~
+../src/security/keystore.c:145:15: warning: Call to function 'memcpy' is insecure as it does not provide security checks introduced in the C11 standard. Replace with analogous functions that support length arguments or provides boundary checks such as 'memcpy_s' in case of C11 [security.insecureAPI.DeprecatedOrUnsafeBufferHandling]
+  145 |         (void)memcpy(mac, full, KS_MAC_LEN);  /* truncated to 128 bits */
+      |               ^~~~~~
+../src/security/keystore.c:145:15: note: Call to function 'memcpy' is insecure as it does not provide security checks introduced in the C11 standard. Replace with analogous functions that support length arguments or provides boundary checks such as 'memcpy_s' in case of C11
+  145 |         (void)memcpy(mac, full, KS_MAC_LEN);  /* truncated to 128 bits */
+      |               ^~~~~~
+../src/security/keystore.c:192:11: warning: Call to function 'memset' is insecure as it does not provide security checks introduced in the C11 standard. Replace with analogous functions that support length arguments or provides boundary checks such as 'memset_s' in case of C11 [security.insecureAPI.DeprecatedOrUnsafeBufferHandling]
+  192 |     (void)memset(ks, 0, sizeof(*ks));
+      |           ^~~~~~
+../src/security/keystore.c:192:11: note: Call to function 'memset' is insecure as it does not provide security checks introduced in the C11 standard. Replace with analogous functions that support length arguments or provides boundary checks such as 'memset_s' in case of C11
+  192 |     (void)memset(ks, 0, sizeof(*ks));
+      |           ^~~~~~
+../src/security/keystore.c:216:11: warning: Call to function 'memcpy' is insecure as it does not provide security checks introduced in the C11 standard. Replace with analogous functions that support length arguments or provides boundary checks such as 'memcpy_s' in case of C11 [security.insecureAPI.DeprecatedOrUnsafeBufferHandling]
+  216 |     (void)memcpy(n, nonce, sizeof(n));
+      |           ^~~~~~
+../src/security/keystore.c:216:11: note: Call to function 'memcpy' is insecure as it does not provide security checks introduced in the C11 standard. Replace with analogous functions that support length arguments or provides boundary checks such as 'memcpy_s' in case of C11
+  216 |     (void)memcpy(n, nonce, sizeof(n));
+      |           ^~~~~~
+../src/security/keystore.c:325:11: warning: Call to function 'memcpy' is insecure as it does not provide security checks introduced in the C11 standard. Replace with analogous functions that support length arguments or provides boundary checks such as 'memcpy_s' in case of C11 [security.insecureAPI.DeprecatedOrUnsafeBufferHandling]
+  325 |     (void)memcpy(&out[8], ks, sizeof(keystore_t));
+      |           ^~~~~~
+../src/security/keystore.c:325:11: note: Call to function 'memcpy' is insecure as it does not provide security checks introduced in the C11 standard. Replace with analogous functions that support length arguments or provides boundary checks such as 'memcpy_s' in case of C11
+  325 |     (void)memcpy(&out[8], ks, sizeof(keystore_t));
+      |           ^~~~~~
+../src/security/keystore.c:347:11: warning: Call to function 'memcpy' is insecure as it does not provide security checks introduced in the C11 standard. Replace with analogous functions that support length arguments or provides boundary checks such as 'memcpy_s' in case of C11 [security.insecureAPI.DeprecatedOrUnsafeBufferHandling]
+  347 |     (void)memcpy(&tmp, &in[8], sizeof(tmp));
+      |           ^~~~~~
+../src/security/keystore.c:347:11: note: Call to function 'memcpy' is insecure as it does not provide security checks introduced in the C11 standard. Replace with analogous functions that support length arguments or provides boundary checks such as 'memcpy_s' in case of C11
+  347 |     (void)memcpy(&tmp, &in[8], sizeof(tmp));
+      |           ^~~~~~
+8 warnings generated.
+
+### clang --analyze -Xclang -analyzer-output=text -Xclang -analyzer-checker=core,security,unix,deadcode,optin.portability -I../src/sim -I../src/core -I../src/fdir -I../src/security -I../src/app -I../src/test -I../src/third_party/tinycrypt/include ../src/security/sec_service.c -o /dev/null
+../src/security/sec_service.c:22:11: warning: Call to function 'memset' is insecure as it does not provide security checks introduced in the C11 standard. Replace with analogous functions that support length arguments or provides boundary checks such as 'memset_s' in case of C11 [security.insecureAPI.DeprecatedOrUnsafeBufferHandling]
+   22 |     (void)memset(s, 0, sizeof(*s));
+      |           ^~~~~~
+../src/security/sec_service.c:22:11: note: Call to function 'memset' is insecure as it does not provide security checks introduced in the C11 standard. Replace with analogous functions that support length arguments or provides boundary checks such as 'memset_s' in case of C11
+   22 |     (void)memset(s, 0, sizeof(*s));
+      |           ^~~~~~
+../src/security/sec_service.c:36:11: warning: Call to function 'memcpy' is insecure as it does not provide security checks introduced in the C11 standard. Replace with analogous functions that support length arguments or provides boundary checks such as 'memcpy_s' in case of C11 [security.insecureAPI.DeprecatedOrUnsafeBufferHandling]
+   36 |     (void)memcpy(s->ev[i], aux, len);
+      |           ^~~~~~
+../src/security/sec_service.c:36:11: note: Call to function 'memcpy' is insecure as it does not provide security checks introduced in the C11 standard. Replace with analogous functions that support length arguments or provides boundary checks such as 'memcpy_s' in case of C11
+   36 |     (void)memcpy(s->ev[i], aux, len);
+      |           ^~~~~~
+../src/security/sec_service.c:51:11: warning: Call to function 'memcpy' is insecure as it does not provide security checks introduced in the C11 standard. Replace with analogous functions that support length arguments or provides boundary checks such as 'memcpy_s' in case of C11 [security.insecureAPI.DeprecatedOrUnsafeBufferHandling]
+   51 |     (void)memcpy(out, s->ev[s->ev_head], len);
+      |           ^~~~~~
+../src/security/sec_service.c:51:11: note: Call to function 'memcpy' is insecure as it does not provide security checks introduced in the C11 standard. Replace with analogous functions that support length arguments or provides boundary checks such as 'memcpy_s' in case of C11
+   51 |     (void)memcpy(out, s->ev[s->ev_head], len);
+      |           ^~~~~~
+../src/security/sec_service.c:64:11: warning: Call to function 'memcpy' is insecure as it does not provide security checks introduced in the C11 standard. Replace with analogous functions that support length arguments or provides boundary checks such as 'memcpy_s' in case of C11 [security.insecureAPI.DeprecatedOrUnsafeBufferHandling]
+   64 |     (void)memcpy(&aux[2], data, n);
+      |           ^~~~~~
+../src/security/sec_service.c:64:11: note: Call to function 'memcpy' is insecure as it does not provide security checks introduced in the C11 standard. Replace with analogous functions that support length arguments or provides boundary checks such as 'memcpy_s' in case of C11
+   64 |     (void)memcpy(&aux[2], data, n);
+      |           ^~~~~~
+4 warnings generated.
+
+### clang --analyze -Xclang -analyzer-output=text -Xclang -analyzer-checker=core,security,unix,deadcode,optin.portability -I../src/sim -I../src/core -I../src/fdir -I../src/security -I../src/app -I../src/test -I../src/third_party/tinycrypt/include ../src/security/security.c -o /dev/null
+../src/security/security.c:54:15: warning: Call to function 'snprintf' is insecure as it does not provide security checks introduced in the C11 standard. Replace with analogous functions that support length arguments or provides boundary checks such as 'snprintf_s' in case of C11 [security.insecureAPI.DeprecatedOrUnsafeBufferHandling]
+   54 |         (void)snprintf(path, sizeof(path), "%s.sec", f);
+      |               ^~~~~~~~
+../src/security/security.c:54:15: note: Call to function 'snprintf' is insecure as it does not provide security checks introduced in the C11 standard. Replace with analogous functions that support length arguments or provides boundary checks such as 'snprintf_s' in case of C11
+   54 |         (void)snprintf(path, sizeof(path), "%s.sec", f);
+      |               ^~~~~~~~
+../src/security/security.c:64:11: warning: Call to function 'memset' is insecure as it does not provide security checks introduced in the C11 standard. Replace with analogous functions that support length arguments or provides boundary checks such as 'memset_s' in case of C11 [security.insecureAPI.DeprecatedOrUnsafeBufferHandling]
+   64 |     (void)memset(img, 0, len);
+      |           ^~~~~~
+../src/security/security.c:64:11: note: Call to function 'memset' is insecure as it does not provide security checks introduced in the C11 standard. Replace with analogous functions that support length arguments or provides boundary checks such as 'memset_s' in case of C11
+   64 |     (void)memset(img, 0, len);
+      |           ^~~~~~
+../src/security/security.c:96:11: warning: Call to function 'memset' is insecure as it does not provide security checks introduced in the C11 standard. Replace with analogous functions that support length arguments or provides boundary checks such as 'memset_s' in case of C11 [security.insecureAPI.DeprecatedOrUnsafeBufferHandling]
+   96 |     (void)memset(img, 0, sizeof(img));
+      |           ^~~~~~
+../src/security/security.c:96:11: note: Call to function 'memset' is insecure as it does not provide security checks introduced in the C11 standard. Replace with analogous functions that support length arguments or provides boundary checks such as 'memset_s' in case of C11
+   96 |     (void)memset(img, 0, sizeof(img));
+      |           ^~~~~~
+../src/security/security.c:167:11: warning: Call to function 'memset' is insecure as it does not provide security checks introduced in the C11 standard. Replace with analogous functions that support length arguments or provides boundary checks such as 'memset_s' in case of C11 [security.insecureAPI.DeprecatedOrUnsafeBufferHandling]
+  167 |     (void)memset(img, 0, sizeof(img));
+      |           ^~~~~~
+../src/security/security.c:167:11: note: Call to function 'memset' is insecure as it does not provide security checks introduced in the C11 standard. Replace with analogous functions that support length arguments or provides boundary checks such as 'memset_s' in case of C11
+  167 |     (void)memset(img, 0, sizeof(img));
+      |           ^~~~~~
+../src/security/security.c:296:11: warning: Call to function 'memcpy' is insecure as it does not provide security checks introduced in the C11 standard. Replace with analogous functions that support length arguments or provides boundary checks such as 'memcpy_s' in case of C11 [security.insecureAPI.DeprecatedOrUnsafeBufferHandling]
+  296 |     (void)memcpy(totals, g_auth.rej_total, sizeof(totals));
+      |           ^~~~~~
+../src/security/security.c:296:11: note: Call to function 'memcpy' is insecure as it does not provide security checks introduced in the C11 standard. Replace with analogous functions that support length arguments or provides boundary checks such as 'memcpy_s' in case of C11
+  296 |     (void)memcpy(totals, g_auth.rej_total, sizeof(totals));
+      |           ^~~~~~
+../src/security/security.c:297:11: warning: Call to function 'memcpy' is insecure as it does not provide security checks introduced in the C11 standard. Replace with analogous functions that support length arguments or provides boundary checks such as 'memcpy_s' in case of C11 [security.insecureAPI.DeprecatedOrUnsafeBufferHandling]
+  297 |     (void)memcpy(codes, g_auth.rej_last_code, sizeof(codes));
+      |           ^~~~~~
+../src/security/security.c:297:11: note: Call to function 'memcpy' is insecure as it does not provide security checks introduced in the C11 standard. Replace with analogous functions that support length arguments or provides boundary checks such as 'memcpy_s' in case of C11
+  297 |     (void)memcpy(codes, g_auth.rej_last_code, sizeof(codes));
+      |           ^~~~~~
+6 warnings generated.
+
+### clang --analyze -Xclang -analyzer-output=text -Xclang -analyzer-checker=core,security,unix,deadcode,optin.portability -I../src/sim -I../src/core -I../src/fdir -I../src/security -I../src/app -I../src/test -I../src/third_party/tinycrypt/include ../src/app/services.c -o /dev/null
+
+### clang --analyze -Xclang -analyzer-output=text -Xclang -analyzer-checker=core,security,unix,deadcode,optin.portability -I../src/sim -I../src/core -I../src/fdir -I../src/security -I../src/app -I../src/test -I../src/third_party/tinycrypt/include ../src/app/tmtc.c -o /dev/null
+
+### clang --analyze -Xclang -analyzer-output=text -Xclang -analyzer-checker=core,security,unix,deadcode,optin.portability -I../src/sim -I../src/core -I../src/fdir -I../src/security -I../src/app -I../src/test -I../src/third_party/tinycrypt/include ../src/app/sensors.c -o /dev/null
+
+### clang --analyze -Xclang -analyzer-output=text -Xclang -analyzer-checker=core,security,unix,deadcode,optin.portability -I../src/sim -I../src/core -I../src/fdir -I../src/security -I../src/app -I../src/test -I../src/third_party/tinycrypt/include ../src/app/main.c -o /dev/null
+
+### clang --analyze -Xclang -analyzer-output=text -Xclang -analyzer-checker=core,security,unix,deadcode,optin.portability -I../src/sim -I../src/core -I../src/fdir -I../src/security -I../src/app -I../src/test -I../src/third_party/tinycrypt/include ../src/test/finj.c -o /dev/null
+

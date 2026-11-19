@@ -1,0 +1,103 @@
+### gcc -std=c99 -O2 -fanalyzer -DFDIR_TEST_BUILD -I../src/sim -I../src/core -I../src/fdir -I../src/security -I../src/app -I../src/test -I../src/third_party/tinycrypt/include -c ../src/core/sp.c -o /dev/null
+
+### gcc -std=c99 -O2 -fanalyzer -DFDIR_TEST_BUILD -I../src/sim -I../src/core -I../src/fdir -I../src/security -I../src/app -I../src/test -I../src/third_party/tinycrypt/include -c ../src/core/crc16.c -o /dev/null
+
+### gcc -std=c99 -O2 -fanalyzer -DFDIR_TEST_BUILD -I../src/sim -I../src/core -I../src/fdir -I../src/security -I../src/app -I../src/test -I../src/third_party/tinycrypt/include -c ../src/core/pus.c -o /dev/null
+
+### gcc -std=c99 -O2 -fanalyzer -DFDIR_TEST_BUILD -I../src/sim -I../src/core -I../src/fdir -I../src/security -I../src/app -I../src/test -I../src/third_party/tinycrypt/include -c ../src/core/tc_handler.c -o /dev/null
+
+### gcc -std=c99 -O2 -fanalyzer -DFDIR_TEST_BUILD -I../src/sim -I../src/core -I../src/fdir -I../src/security -I../src/app -I../src/test -I../src/third_party/tinycrypt/include -c ../src/fdir/monitor.c -o /dev/null
+
+### gcc -std=c99 -O2 -fanalyzer -DFDIR_TEST_BUILD -I../src/sim -I../src/core -I../src/fdir -I../src/security -I../src/app -I../src/test -I../src/third_party/tinycrypt/include -c ../src/fdir/supervisor.c -o /dev/null
+
+### gcc -std=c99 -O2 -fanalyzer -DFDIR_TEST_BUILD -I../src/sim -I../src/core -I../src/fdir -I../src/security -I../src/app -I../src/test -I../src/third_party/tinycrypt/include -c ../src/fdir/watchdog.c -o /dev/null
+
+### gcc -std=c99 -O2 -fanalyzer -DFDIR_TEST_BUILD -I../src/sim -I../src/core -I../src/fdir -I../src/security -I../src/app -I../src/test -I../src/third_party/tinycrypt/include -c ../src/fdir/nvstate.c -o /dev/null
+
+### gcc -std=c99 -O2 -fanalyzer -DFDIR_TEST_BUILD -I../src/sim -I../src/core -I../src/fdir -I../src/security -I../src/app -I../src/test -I../src/third_party/tinycrypt/include -c ../src/fdir/schedule.c -o /dev/null
+
+### gcc -std=c99 -O2 -fanalyzer -DFDIR_TEST_BUILD -I../src/sim -I../src/core -I../src/fdir -I../src/security -I../src/app -I../src/test -I../src/third_party/tinycrypt/include -c ../src/fdir/mode_sm.c -o /dev/null
+
+### gcc -std=c99 -O2 -fanalyzer -DFDIR_TEST_BUILD -I../src/sim -I../src/core -I../src/fdir -I../src/security -I../src/app -I../src/test -I../src/third_party/tinycrypt/include -c ../src/fdir/thermal.c -o /dev/null
+
+### gcc -std=c99 -O2 -fanalyzer -DFDIR_TEST_BUILD -I../src/sim -I../src/core -I../src/fdir -I../src/security -I../src/app -I../src/test -I../src/third_party/tinycrypt/include -c ../src/fdir/fdir.c -o /dev/null
+
+### gcc -std=c99 -O2 -fanalyzer -DFDIR_TEST_BUILD -I../src/sim -I../src/core -I../src/fdir -I../src/security -I../src/app -I../src/test -I../src/third_party/tinycrypt/include -c ../src/security/tc_auth.c -o /dev/null
+
+### gcc -std=c99 -O2 -fanalyzer -DFDIR_TEST_BUILD -I../src/sim -I../src/core -I../src/fdir -I../src/security -I../src/app -I../src/test -I../src/third_party/tinycrypt/include -c ../src/security/sec_report.c -o /dev/null
+
+### gcc -std=c99 -O2 -fanalyzer -DFDIR_TEST_BUILD -I../src/sim -I../src/core -I../src/fdir -I../src/security -I../src/app -I../src/test -I../src/third_party/tinycrypt/include -c ../src/security/keystore.c -o /dev/null
+
+### gcc -std=c99 -O2 -fanalyzer -DFDIR_TEST_BUILD -I../src/sim -I../src/core -I../src/fdir -I../src/security -I../src/app -I../src/test -I../src/third_party/tinycrypt/include -c ../src/security/sec_service.c -o /dev/null
+
+### gcc -std=c99 -O2 -fanalyzer -DFDIR_TEST_BUILD -I../src/sim -I../src/core -I../src/fdir -I../src/security -I../src/app -I../src/test -I../src/third_party/tinycrypt/include -c ../src/security/security.c -o /dev/null
+
+### gcc -std=c99 -O2 -fanalyzer -DFDIR_TEST_BUILD -I../src/sim -I../src/core -I../src/fdir -I../src/security -I../src/app -I../src/test -I../src/third_party/tinycrypt/include -c ../src/app/services.c -o /dev/null
+
+### gcc -std=c99 -O2 -fanalyzer -DFDIR_TEST_BUILD -I../src/sim -I../src/core -I../src/fdir -I../src/security -I../src/app -I../src/test -I../src/third_party/tinycrypt/include -c ../src/app/tmtc.c -o /dev/null
+../src/app/tmtc.c: In function ‘process_line’:
+../src/app/tmtc.c:119:43: warning: use of uninitialized value ‘line[1]’ [CWE-457] [-Wanalyzer-use-of-uninitialized-value]
+  119 |     if (len < 3u || line[0] != 'T' || line[1] != 'C' || line[2] != ':') {
+      |                                       ~~~~^~~
+  ‘tc_rx_task’: events 1-11
+    |
+    |  144 | static rtems_task tc_rx_task(rtems_task_argument arg)
+    |      |                   ^~~~~~~~~~
+    |      |                   |
+    |      |                   (1) entry to ‘tc_rx_task’
+    |......
+    |  147 |     char line[LINE_MAX_CHARS];
+    |      |          ~~~~      
+    |      |          |
+    |      |          (2) region created on stack here
+    |......
+    |  170 |             if (c == '\n' || c == '\r') {
+    |      |                ~   
+    |      |                |
+    |      |                (5) following ‘true’ branch...
+    |  171 |                 if (overflow) {
+    |      |                    ~
+    |      |                    |
+    |      |                    (6) ...to here
+    |      |                    (7) following ‘false’ branch (when ‘overflow == 0’)...
+    |......
+    |  178 |                 } else if (line_len > 0u) {
+    |      |                           ~
+    |      |                           |
+    |      |                           (8) ...to here
+    |      |                           (9) following ‘true’ branch (when ‘line_len != 0’)...
+    |  179 |                     process_line(line, line_len);
+    |      |                     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    |      |                     |
+    |      |                     (10) ...to here
+    |      |                     (11) calling ‘process_line’ from ‘tc_rx_task’
+    |......
+    |  185 |             } else if (line_len < sizeof(line)) {
+    |      |                       ~
+    |      |                       |
+    |      |                       (3) following ‘true’ branch (when ‘line_len <= 243’)...
+    |  186 |                 line[line_len++] = c;
+    |      |                      ~~~~~~~~~~
+    |      |                              |
+    |      |                              (4) ...to here
+    |
+    +--> ‘process_line’: events 12-15
+           |
+           |  114 | static void process_line(const char *line, size_t len)
+           |      |             ^~~~~~~~~~~~
+           |      |             |
+           |      |             (12) entry to ‘process_line’
+           |......
+           |  119 |     if (len < 3u || line[0] != 'T' || line[1] != 'C' || line[2] != ':') {
+           |      |        ~                              ~~~~~~~
+           |      |        |                                  |
+           |      |        |                                  (14) ...to here
+           |      |        (13) following ‘false’ branch...   (15) use of uninitialized value ‘line[1]’ here
+           |
+
+### gcc -std=c99 -O2 -fanalyzer -DFDIR_TEST_BUILD -I../src/sim -I../src/core -I../src/fdir -I../src/security -I../src/app -I../src/test -I../src/third_party/tinycrypt/include -c ../src/app/sensors.c -o /dev/null
+
+### gcc -std=c99 -O2 -fanalyzer -DFDIR_TEST_BUILD -I../src/sim -I../src/core -I../src/fdir -I../src/security -I../src/app -I../src/test -I../src/third_party/tinycrypt/include -c ../src/app/main.c -o /dev/null
+
+### gcc -std=c99 -O2 -fanalyzer -DFDIR_TEST_BUILD -I../src/sim -I../src/core -I../src/fdir -I../src/security -I../src/app -I../src/test -I../src/third_party/tinycrypt/include -c ../src/test/finj.c -o /dev/null
+

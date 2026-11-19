@@ -11,7 +11,7 @@
    has been shown to matter; one whose mutation fails nothing is either
    untested or (MC-5, C) has no independent effect by construction.
 
-    python3 support/mcdc_clang.py --root .. --out ../labs/session-07/coverage
+    python3 support/mcdc_clang.py --root .. --out ../evidence/coverage
 
 Needs clang, llvm-profdata, llvm-cov 18 and the compiler-rt profile runtime
 (Ubuntu: libclang-rt-18-dev).
@@ -38,23 +38,20 @@ def main():
     ap.add_argument("--work", default=os.path.join(TESTS, "build", "mcdc"))
     a = ap.parse_args()
     root = os.path.abspath(a.root)
-    L = os.path.join(root, "labs")
-    S4, S5, S6 = (os.path.join(L, s) for s in ("session-04", "session-05", "session-06"))
-    gen = os.path.join(S6, "lab-6.2-generation", "generated")
+    S = os.path.join(root, "src")
+    core, fd, sec = (os.path.join(S, d) for d in ("core", "fdir", "security"))
     unity = os.path.join(HERE, "unity")
-    inc = [f"-I{unity}", f"-I{S4}/lab-4.1-space-packet", f"-I{S4}/lab-4.2-pus-service17",
-           f"-I{S5}/lab-5.1-monitoring", f"-I{S5}/lab-5.2-liveness",
-           f"-I{S5}/lab-5.3-safe-mode", f"-I{gen}"]
-    crc = f"{S4}/lab-4.2-pus-service17/crc16.c"
+    inc = [f"-I{unity}", f"-I{core}", f"-I{fd}", f"-I{sec}", f"-I{S}/app",
+           f"-I{S}/third_party/tinycrypt/include"]
+    crc = f"{core}/crc16.c"
     suites = {
-        "test_sp":       [f"{S4}/lab-4.1-space-packet/sp.c"],
-        "test_pus":      [crc, f"{S4}/lab-4.2-pus-service17/pus.c",
-                          f"{S4}/lab-4.2-pus-service17/tc_handler.c", f"{S4}/lab-4.1-space-packet/sp.c"],
-        "test_monitor":  [f"{S5}/lab-5.1-monitoring/monitor.c"],
-        "test_liveness": [f"{S5}/lab-5.2-liveness/supervisor.c", f"{S5}/lab-5.2-liveness/watchdog.c",
-                          f"{S5}/lab-5.2-liveness/nvstate.c", crc],
-        "test_schedule": [f"{S5}/lab-5.3-safe-mode/schedule.c"],
-        "test_mode_sm":  [f"{gen}/mode_sm.c"],
+        "test_sp":       [f"{core}/sp.c"],
+        "test_pus":      [crc, f"{core}/pus.c", f"{core}/tc_handler.c", f"{core}/sp.c"],
+        "test_monitor":  [f"{fd}/monitor.c"],
+        "test_liveness": [f"{fd}/supervisor.c", f"{fd}/watchdog.c", f"{fd}/nvstate.c", crc],
+        "test_schedule": [f"{fd}/schedule.c"],
+        "test_mode_sm":  [f"{fd}/mode_sm.c"],
+        "test_thermal":  [f"{fd}/thermal.c"],
     }
     flags = ["-std=c99", "-O0", "-fprofile-instr-generate", "-fcoverage-mapping",
              "-fcoverage-mcdc", "-DMODE_SM_WITH_NAMES"]
@@ -107,9 +104,9 @@ def main():
     # ---- 2. mutation check ---------------------------------------------------
     mut_dir = os.path.join(a.work, "mut")
     os.makedirs(mut_dir)
-    mon = f"{S5}/lab-5.1-monitoring/monitor.c"
-    sup = f"{S5}/lab-5.2-liveness/supervisor.c"
-    msm = f"{gen}/mode_sm.c"
+    mon = f"{fd}/monitor.c"
+    sup = f"{fd}/supervisor.c"
+    msm = f"{fd}/mode_sm.c"
     T02 = r"(pending & BIT(MODE_SM_EV_FAULT_CRITICAL)) != 0U && (!in->fdir_inhibited)) {   /* T02"
     T05 = r"(pending & BIT(MODE_SM_EV_FAULT_CRITICAL)) != 0U && in->fdir_inhibited) {   /* T05"
     mutations = [

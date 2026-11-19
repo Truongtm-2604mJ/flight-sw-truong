@@ -8,9 +8,9 @@ its requirements, preconditions, steps and expected result; the script
 records the actual result and a verdict.
 
     # host simulation (tests/Makefile: make validation)
-    python3 run_campaign.py --target host-sim --spawn ../../labs/session-06/app/lab6-test.host \
-        --spawn-flight ../../labs/session-06/app/lab6-flight.host \
-        --out ../../labs/session-07/validation/results-host-sim
+    python3 run_campaign.py --target host-sim --spawn ../../build/host/lotus1-test.host \
+        --spawn-flight ../../build/host/lotus1-flight.host \
+        --out ../../evidence/validation/results-host-sim
 
     # RTEMS 6 / LEON3 on SIS (make target, nightly CI)
     python3 run_campaign.py --target sis --pty --nv-volatile \
@@ -20,7 +20,7 @@ records the actual result and a verdict.
     python3 run_campaign.py --spec-only --out ...   # write test-spec.md only
 
 Outputs in --out: results.md, results.json, campaign.log. The test
-specification (labs/session-07/validation/test-spec.md) is written from the
+specification (evidence/validation/test-spec.md) is written from the
 same definitions, so the specification and the executed tests cannot drift.
 Exit code: 0 if no test FAILED (N/A and OBSERVED do not fail the run).
 """
@@ -29,6 +29,7 @@ import argparse
 import copy
 import datetime
 import json
+import re
 import os
 import struct
 import sys
@@ -36,11 +37,13 @@ import time
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.abspath(os.path.join(HERE, "..", ".."))
-GROUND = os.path.join(ROOT, "labs", "session-05", "lab-5.4-fault-injection", "ground")
+GROUND = os.path.join(ROOT, "ground")
 sys.path.insert(0, GROUND)
 
-import fdir  # noqa: E402  (Session 5 ground codec)
-from link import Link  # noqa: E402
+import fdir  # noqa: E402  (ground codec)
+import seclink  # noqa: E402  (every TC through the ground security unit)
+
+Link = seclink.SecureLink
 
 EVT_DISCARD = 0x0404                    # model v3, MM-140 (fdir6.c)
 EV_TC_MODE_NOMINAL = 0                  # mode_sm_event_t order in mode_sm.h
@@ -83,6 +86,12 @@ class Campaign:
                 os.remove(args.nv_file)
             if self.link is None:
                 self.link = Link(args)
+                # A factory key store accepts nothing until its counter floor
+                # is set with the recovery key (first contact, SEC-040). Then
+                # a cold restart (FDIR NV blank, key store kept), so the run
+                # starts with the boot it expects.
+                if self.link.first_contact():
+                    self.link.restart(keep_nv=False)
             else:
                 self.link.args = args
                 self.link.start()
@@ -108,7 +117,7 @@ class Campaign:
 
     @staticmethod
     def is_hk(sid=None):
-        return lambda tm: tm.kind == (3, 25) and (sid is None or tm.data[0] == sid)
+        return lambda tm: (tm.kind == (3, 25) and tm.apid == fdir.APID_HK) and (sid is None or tm.data[0] == sid)
 
     def since(self, idx):
         return self.link.telemetry[idx:]
@@ -127,7 +136,7 @@ class Campaign:
 
     def last_hk(self, sid=None):
         for tm in reversed(self.link.telemetry):
-            if tm.kind == (3, 25) and (sid is None or tm.data[0] == sid):
+            if (tm.kind == (3, 25) and tm.apid == fdir.APID_HK) and (sid is None or tm.data[0] == sid):
                 return tm, fdir.decode_hk(tm)
         return None, None
 
@@ -240,7 +249,11 @@ def vt_rejections(c):
     c.wait(3)
     _, h1 = c.last_hk(1)
     rej = (h1["tc_rej"] - h0["tc_rej"]) if h0 and h1 else None
-    ok = codes == [3, 5, 7, 8, 9, 9] and executed == 0 and c.mode() == NOMINAL and rej == 6
+    # Capstone (SEC-030): a TC failing a check before authentication (CRC,
+    # APID) is not answered at all; it is counted, and reported by class in
+    # HK SID 3 and the security events. Authenticated TCs keep TM(1,2).
+    ok = (codes == [None, None, 7, 8, 9, 9] and executed == 0 and c.mode() == NOMINAL
+          and rej == 6)
     return ok, (f"codes {codes}; {executed} executions; mode {MODE.get(c.mode())}; "
                 f"TC rejected counter +{rej}")
 
@@ -273,7 +286,7 @@ def vt_link_noise(c):
 def vt_hk_rate(c):
     idx = c.now_idx()
     c.wait(12)
-    t = [tm.time for tm in c.since(idx) if tm.kind == (3, 25) and tm.data[0] == 1]
+    t = [tm.time for tm in c.since(idx) if (tm.kind == (3, 25) and tm.apid == fdir.APID_HK) and tm.data[0] == 1]
     d = [b - a for a, b in zip(t, t[1:])]
     ok = len(d) >= 11 and all(0.9 <= x <= 1.1 for x in d)
     return ok, (f"{len(d)} intervals, min {min(d):.3f} s, max {max(d):.3f} s" if d
@@ -305,7 +318,7 @@ def vt_ground_safe(c):
     e = fdir.decode_event(ev) if ev else None
     t7 = done.time if done else None
     tm = ev.time if ev else None
-    hk_after = next((h for h in c.since(idx) if h.kind == (3, 25) and t7 is not None
+    hk_after = next((h for h in c.since(idx) if (h.kind == (3, 25) and h.apid == fdir.APID_HK) and t7 is not None
                      and h.time > t7), None)
     hk_mode = fdir.decode_hk(hk_after)["mode"] if hk_after else None
     lat = (tm - t7) if (tm is not None and t7 is not None) else None
@@ -348,7 +361,7 @@ def vt_safe_config(c):
     # This boot only (onboard time restarts at every boot). Run 1 used every
     # boot's telemetry here and failed on SID 1 reports from run R1: test
     # anomaly TA-01, corrected.
-    hks = [t for t in c.since(c.mark) if t.kind == (3, 25) and tmode is not None
+    hks = [t for t in c.since(c.mark) if (t.kind == (3, 25) and t.apid == fdir.APID_HK) and tmode is not None
            and t.time > tmode]
     sids = sorted({t.data[0] for t in hks})
     _, h = c.last_hk(2)
@@ -701,7 +714,7 @@ def vt_watchdog(c):
     part1 = warn is not None and dt is not None and dt <= 6.0 and reset
     boot = c.boot("R7 after watchdog reset", keep_nv=True)
     c.wait(4)
-    hk2 = next((t for t in c.since(c.mark) if t.kind == (3, 25) and t.data[0] == 2), None)
+    hk2 = next((t for t in c.since(c.mark) if (t.kind == (3, 25) and t.apid == fdir.APID_HK) and t.data[0] == 2), None)
     h = fdir.decode_hk(hk2) if hk2 else None
     trans = c.events(c.mark, fdir.EVT_MODE)
     head = (f"warning after {dt:.3f} s, reset {reset}; " if dt is not None
@@ -738,6 +751,135 @@ def vt_false_positive(c):
 
 # After all test build runs -----------------------------------------------------------------------
 
+# R10 - capstone: payload command, telecommand security, thermal escalation -----------------------
+
+@vt("VT-PL-010", ["PL-010", "PL-020"], "Payload: ground enable, NOMINAL only", "R10",
+    "Fresh test build in NOMINAL (payload off at boot).",
+    ["Read HK.", "Send TC(8,1) function 2 ON.", "Read HK.", "Send TC(8,1) SAFE; wait 3 s.",
+     "Send TC(8,1) function 2 ON.", "Back in NOMINAL: send TC(8,1) with an unknown function, "
+     "TC(8,2), and TC(8,1) with one octet of data."],
+    "Boot: payload off. ON in NOMINAL: TM(1,7), payload running. In SAFE: payload off and its "
+    "enable cleared; ON refused with TM(1,8) code 16. Unknown function: TM(1,2) code 9; "
+    "subtype 2: TM(1,2) code 8; one octet: TM(1,2) code 9.")
+def vt_payload(c):
+    c.boot("R10 capstone: payload, security, thermal")
+    c.wait(1.5)
+    _, h0 = c.last_hk(1)
+    off_at_boot = h0 is not None and not h0["status"] & fdir.ST_PAYLOAD
+    on = c.command(fdir.tc_payload(1), "payload ON")
+    c.wait(1.5)
+    _, h1 = c.last_hk(1)
+    running = h1 is not None and bool(h1["status"] & fdir.ST_PAYLOAD)
+    c.command(fdir.tc_set_mode("SAFE"), "mode SAFE")
+    c.wait(3)
+    _, h2 = c.last_hk(2)
+    cleared = h2 is not None and not h2["status"] & (fdir.ST_PAYLOAD | fdir.ST_PAYLOAD_ENABLED)
+    _, final, _ = c.send(fdir.tc_payload(1), "payload ON in SAFE")
+    refused = final is not None and final.subtype == 8 and final.data[4] == 16
+    c.command(fdir.tc_set_mode("NOMINAL"), "back to NOMINAL")
+    c.wait(3)
+    codes = []
+    for cmd, note in (((8, 1, bytes([9, 0])), "unknown function 9"),
+                      ((8, 2, bytes([2, 1])), "subtype 2"),
+                      ((8, 1, bytes([2])), "function code only, no argument")):
+        _, rep, _ = c.send(cmd, note)
+        codes.append(rep.data[4] if rep is not None and rep.subtype == 2 else None)
+    ok = (off_at_boot and on is not None and running and cleared and refused
+          and codes == [9, 8, 9])
+    return ok, (f"off at boot {off_at_boot}; ON accepted {on is not None}, running {running}; "
+                f"SAFE clears it {cleared}; ON in SAFE refused with TM(1,8) code 16 {refused}; "
+                f"malformed TC(8,x) codes {codes}")
+
+
+@vt("VT-SEC-010", ["SEC-010", "SEC-020", "SEC-030"], "Forged and replayed commands", "R10",
+    "Spacecraft in NOMINAL, payload ON.",
+    ["Send TC(8,1) payload OFF under a wrong key.", "Send a valid TC(17,1), then the same "
+     "packet again.", "Wait 12 s; read HK SID 3 and the security events."],
+    "No TM(1,x) for the forged or the replayed TC; payload still ON; SID 3 AUTH +1, REPLAY +1; "
+    "a security rejection event for each class (first or summary).")
+def vt_forged(c):
+    c.command(fdir.tc_payload(1), "payload ON")
+    idx = c.now_idx()
+    s0 = c.link.latest_sid3(3.0)
+    forged = c.link.send(fdir.tc_payload(0), "payload OFF, FORGED", key=bytes(32))
+    ping = c.link.send((17, 1, b""), "valid ping")
+    c.wait(1.5)
+    c.link.send_raw(ping, "the same ping again (replay)")
+    c.wait(12)
+    answered = [t for t in c.since(idx) if t.service == 1 and t.data[:4] in (forged[:4],)]
+    replay_answers = [t for t in c.since(idx) if t.kind == (17, 2)]
+    _, h = c.last_hk(1)
+    s1 = c.link.latest_sid3(3.0)
+    d_auth = s1["rejected"]["AUTH"] - s0["rejected"]["AUTH"] if s0 and s1 else None
+    d_rep = s1["rejected"]["REPLAY"] - s0["rejected"]["REPLAY"] if s0 and s1 else None
+    firsts = sorted({e["cls"] for e in c.link.sec_events(idx)
+                     if e["name"] in ("REJECT_FIRST", "REJECT_SUMMARY")})
+    ok = (not answered and len(replay_answers) == 1 and h is not None
+          and h["status"] & fdir.ST_PAYLOAD and d_auth == 1 and d_rep == 1
+          and {"AUTH", "REPLAY"} <= set(firsts))
+    return ok, (f"forged answered {len(answered)}; ping executed {len(replay_answers)} time(s); "
+                f"payload ON {bool(h and h['status'] & fdir.ST_PAYLOAD)}; SID 3 AUTH +{d_auth}, "
+                f"REPLAY +{d_rep}; rejection events for {firsts}")
+
+
+@vt("VT-SEC-020", ["SEC-030"], "Key store upsets: repaired, voted, reported", "R10",
+    "Test build in NOMINAL. Memory upsets stand in for radiation: TC(211,x), test build only.",
+    ["TC(211,2): flip one bit of one stored copy of the active key.",
+     "TC(211,1): set the three counter copies of slot 1 to N, N + 3, N + 7 (N = that TC's "
+     "counter): no majority.", "Wait 4 s; read SID 3 and the security events.",
+     "Ground moves its next counter above N + 7; send a valid TC(17,1)."],
+    "One KEY_REPAIRED event (scrub repairs the copy); one COUNTER_VOTE event and the counter "
+    "in SID 3 = N + 7 (no majority: the largest copy, so no used value becomes valid again); "
+    "scrub repairs +1; active slot still ACTIVE; the next TC accepted.")
+def vt_upsets(c):
+    idx = c.now_idx()
+    s0 = c.link.latest_sid3(3.0)
+    c.command((211, 2, bytes([1, 2, 0, 0x01])), "flip bit 0 of key copy 1, slot 1")
+    n = c.link.su.next_seq(1)
+    c.command((211, 1, struct.pack(">BIII", 1, n, n + 3, n + 7)), "counter copies N, N+3, N+7")
+    c.wait(4)
+    s1 = c.link.latest_sid3(3.0)
+    names = [e["name"] for e in c.link.sec_events(idx)]
+    c.link.su.set_next_seq(1, n + 8)
+    ping = c.command((17, 1, b""), "ping after the upsets, counter N+8")
+    rep = (s1["scrub_repairs"] - s0["scrub_repairs"]) if s0 and s1 else None
+    ctr = s1["counter"][1] if s1 else None
+    ok = ("KEY_REPAIRED" in names and "COUNTER_VOTE" in names and rep is not None and rep >= 1
+          and ctr == n + 7 and s1["state"][1] == s0["state"][1] and ping is not None)
+    return ok, (f"security events {names}; scrub repairs +{rep}; counter {ctr} (N + 7 = "
+                f"{n + 7}); slot 1 state {s1['state'][1] if s1 else None}; ping accepted "
+                f"{ping is not None}")
+
+
+@vt("VT-FDIR-100", ["FDIR-100", "FDIR-110", "MM-040"], "Thermal anomaly: DEGRADED, bounded "
+    "recovery attempts, then SAFE", "R10",
+    "Spacecraft in NOMINAL, payload ON.",
+    ["Force T_BAT to 48.00 C (TC(200,1), sustained).", "Observe 45 s.",
+     "Clear the injection; command NOMINAL; read HK."],
+    "One T_BAT ALARM event; DEGRADED (payload suspended); 3 THERMAL_RECOVERY_ATTEMPT events "
+    "10 s apart, one EXHAUSTED; SAFE with cause MONITOR; schedule suspended; after the ground "
+    "command, NOMINAL.")
+def vt_thermal(c):
+    idx = c.now_idx()
+    c.command(fdir.tc_inject_param("T_BAT", 4800), "force T_BAT 48.00 C")
+    c.wait(45)
+    alarms = [e for _, e in c.events(idx, 0x0220) if e["state"] == 2]
+    att = [(t.time, e["attempt"]) for t, e in c.events(idx, fdir.EVT_THERM_ATTEMPT)]
+    exh = c.events(idx, fdir.EVT_THERM_EXHAUSTED)
+    modes = [(e["frm"], e["to"], e["src"]) for _, e in c.events(idx, fdir.EVT_MODE)]
+    gaps = [round(b[0] - a[0], 1) for a, b in zip(att, att[1:])]
+    c.command(fdir.tc_inject_clear(), "clear the injection")
+    c.wait(4)
+    c.command(fdir.tc_set_mode("NOMINAL"), "ground: NOMINAL")
+    c.wait(3)
+    ok = (len(alarms) == 1 and [a for _, a in att] == [1, 2, 3] and len(exh) == 1
+          and modes[:2] == [(NOMINAL, DEGRADED, CAUSE_MONITOR), (DEGRADED, SAFE, CAUSE_MONITOR)]
+          and all(9.5 <= g <= 10.6 for g in gaps) and c.mode() == NOMINAL)
+    return ok, (f"{len(alarms)} ALARM event; attempts {[a for _, a in att]} with gaps {gaps} s; "
+                f"{len(exh)} EXHAUSTED; transitions {modes}; mode after the ground command "
+                f"{MODE.get(c.mode())}")
+
+
 @vt("VT-TMTC-050", ["TMTC-050"], "Telemetry integrity over every run of the campaign", "END",
     "All runs R1 to R8 completed.",
     ["For each boot: check per-APID sequence counts.", "Count the lines the ground rejected.",
@@ -752,7 +894,7 @@ def vt_integrity(c):
         drop = None
         for tm in c.link.telemetry[start:end]:
             by.setdefault(tm.apid, []).append(tm.seq_count)
-            if tm.kind == (3, 25) and tm.data[0] == 1:
+            if (tm.kind == (3, 25) and tm.apid == fdir.APID_HK) and tm.data[0] == 1:
                 drop = fdir.decode_hk(tm)["tm_drop"]
         packets += end - start
         for apid, seqs in by.items():
@@ -796,9 +938,8 @@ def vt_flight(c):
     ["Read the generator's completeness report and its negative test results."],
     "0 unhandled (state, event) pairs; generator negative tests all pass.")
 def vt_completeness(c):
-    rep = open(os.path.join(ROOT, "labs", "session-06", "lab-6.1-model", "completeness.md")).read()
-    gen = open(os.path.join(ROOT, "labs", "session-06", "lab-6.2-generation", "tests",
-                            "results.txt")).read()
+    rep = open(os.path.join(ROOT, "model", "completeness.md")).read()
+    gen = open(os.path.join(ROOT, "model", "generator-tests.txt")).read()
     import re
     m = re.search(r"(\d+) unhandled", rep)
     unhandled = int(m.group(1)) if m else None
@@ -832,6 +973,7 @@ RUN_TITLES = {"R1": "R1 - TM/TC basics", "R2": "R2 - ground mode commands, SAFE"
               "R6b": "R6b - repeated payload task failure",
               "R7": "R7 - watchdog", "R8": "R8 - false positive run",
               "END": "After all test build runs", "R9": "R9 - flight build",
+              "R10": "R10 - capstone: payload, telecommand security, thermal escalation",
               "A": "Analysis and integration level evidence"}
 
 
@@ -897,7 +1039,7 @@ def main():
                                                              "int_tc_path.host.log"))
     p.add_argument("--spec-only", action="store_true")
     a = p.parse_args()
-    spec = os.path.join(ROOT, "labs", "session-07", "validation", "test-spec.md")
+    spec = os.path.join(ROOT, "evidence", "validation", "test-spec.md")
     write_spec(spec)
     if a.spec_only:
         print(f"wrote {spec}")
@@ -905,6 +1047,9 @@ def main():
     os.makedirs(a.out, exist_ok=True)
     a.log = os.path.join(a.out, "campaign.log")
     a.nv_file = os.path.join(a.out, "nv.bin")
+    for f in (a.nv_file, a.nv_file + ".sec", a.nv_file + ".ground.json"):
+        if os.path.exists(f):
+            os.remove(f)          # factory key store: the campaign starts with first contact
     only = {r for r in a.only.split(",") if r}
     c = Campaign(a)
     started = datetime.datetime.now(datetime.timezone.utc).strftime("%Y-%m-%d %H:%M")
@@ -927,12 +1072,33 @@ def main():
             print(f"# {t['id']} {verdict}: {actual}")
     if c.link is not None:
         c.link.close()
-    if os.path.exists(a.nv_file):
-        os.remove(a.nv_file)
+    for f in (a.nv_file, a.nv_file + ".sec", a.nv_file + ".ground.json"):
+        if os.path.exists(f):
+            os.remove(f)
     write_results(c, a.out, started, time.monotonic() - t0)
     fails = [k for k, r in c.results.items() if r["verdict"] == "FAIL"]
-    print(f"campaign: {len(c.results)} tests, {len(fails)} failed {fails}")
-    return 1 if fails else 0
+    known = known_failures()
+    new_fails = [k for k in fails if k not in known]
+    print(f"campaign: {len(c.results)} tests, {len(fails)} failed {fails}"
+          + (f"; known (open or deferred NCR): {[f'{k} {known[k]}' for k in fails if k in known]}"
+             if any(k in known for k in fails) else ""))
+    # A failure recorded against an open or deferred NCR stays FAIL in the
+    # results and the matrix; only a failure nobody has recorded fails the job.
+    return 1 if new_fails else 0
+
+
+def known_failures():
+    """Test ids named in found_by of an NCR that is open or deferred."""
+    import yaml
+    path = os.path.join(ROOT, "evidence", "ncr.yaml")
+    if not os.path.exists(path):
+        return {}
+    out = {}
+    for n in yaml.safe_load(open(path))["ncrs"]:
+        if n["kind"] == "NCR" and n["status"] in ("open", "deferred"):
+            for tid in re.findall(r"VT-[A-Z]+-\d+\w*", n.get("found_by", "")):
+                out[tid] = n["id"]
+    return out
 
 
 if __name__ == "__main__":
