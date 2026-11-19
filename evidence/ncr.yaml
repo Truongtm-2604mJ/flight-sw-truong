@@ -304,3 +304,26 @@ ncrs:
       analysis job is green.
     retest: fast-checks run 44120294053 green; unit 142, integration 16/16, scenario 28/28.
 
+  - id: TA-08
+    kind: TA
+    requirement: SEC-040
+    status: fixed
+    found_by: First SIS run of the integrated campaign (make sis), 29 of 35 tests failed
+    description: >-
+      On SIS every command after the first spacecraft run was refused with
+      SEC_STATE and no TM(1,x). SID 3 showed FIRST CONTACT NEEDED (slot 1
+      counter untrusted) at every boot.
+    cause: >-
+      The campaign performed the first contact once, when the link was
+      created. On the host the key store is a file, so the floor survives
+      every restart. On SIS it is RAM (NCR-04): every boot is a factory key
+      store and needs its own first contact. The flight code behaved as
+      SEC-040 requires (fail closed); the harness assumed host behaviour.
+    disposition: >-
+      Fixed in run_campaign.py. The first contact runs after every boot,
+      once the boot report has been captured, and is a no-op when the
+      counter is trusted. FDIR event checks now select APID 0x021, so the
+      RECOVERY_USED security event of each first contact is not counted as
+      an unexpected FDIR event.
+    retest: Host campaign rerun (unchanged verdicts); SIS campaign rerun by the user.
+

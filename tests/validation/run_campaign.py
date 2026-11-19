@@ -86,12 +86,6 @@ class Campaign:
                 os.remove(args.nv_file)
             if self.link is None:
                 self.link = Link(args)
-                # A factory key store accepts nothing until its counter floor
-                # is set with the recovery key (first contact, SEC-040). Then
-                # a cold restart (FDIR NV blank, key store kept), so the run
-                # starts with the boot it expects.
-                if self.link.first_contact():
-                    self.link.restart(keep_nv=False)
             else:
                 self.link.args = args
                 self.link.start()
@@ -103,13 +97,19 @@ class Campaign:
         self.mark = len(self.link.telemetry)
         boot = self.link.wait_for(self.is_event(fdir.EVT_BOOT), 20)
         self.link.wait_for(self.is_hk(), 10)
+        # A factory key store accepts nothing until its counter floor is set
+        # with the recovery key (first contact, SEC-040). On the host the key
+        # store is a file and this happens once; on SIS it is RAM, so after
+        # every boot (NCR-04). Done after the boot report has been captured,
+        # so every run still sees the boot it expects (TA-04).
+        self.link.first_contact()
         return fdir.decode_event(boot) if boot else None
 
     # -- predicates and helpers ---------------------------------------------------
     @staticmethod
     def is_event(eid, **fields):
         def pred(tm):
-            if tm.service != 5 or len(tm.data) < 2:
+            if tm.service != 5 or tm.apid != fdir.APID_EVENT or len(tm.data) < 2:
                 return False
             e = fdir.decode_event(tm)
             return e["id"] == eid and all(e.get(k) == v for k, v in fields.items())
@@ -128,7 +128,10 @@ class Campaign:
     def events(self, idx, eid=None):
         out = []
         for tm in self.since(idx):
-            if tm.service == 5 and len(tm.data) >= 2:
+            # FDIR events only: security events (APID 0x022) have their own
+            # stream and decoder (link.sec_events), and on SIS every boot
+            # adds a RECOVERY_USED event from the first contact.
+            if tm.service == 5 and tm.apid == fdir.APID_EVENT and len(tm.data) >= 2:
                 e = fdir.decode_event(tm)
                 if eid is None or e["id"] == eid:
                     out.append((tm, e))

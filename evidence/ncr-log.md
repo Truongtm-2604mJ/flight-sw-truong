@@ -23,6 +23,7 @@ Severity (NCR): critical, loss of vehicle or mission possible; major, requiremen
 | TA-07 | TA | SEC-030 | - | **fixed** | VT-SEC-020, first host run |
 | OBS-03 | OBS | (none; static analysis process) | - | **open** | Capstone integration, static analysis set-up |
 | NCR-05 | NCR | (coding standard - MISRA C:2012 rule 5.9, advisory) | minor | **fixed** | fast-checks CI, static analysis job, first push of the integrated tree (commit 45eb083) |
+| TA-08 | TA | SEC-040 | - | **fixed** | First SIS run of the integrated campaign (make sis), 29 of 35 tests failed |
 
 ## NCR-01: Nonconformance, TMTC-040
 
@@ -192,3 +193,15 @@ Severity (NCR): critical, loss of vehicle or mission possible; major, requiremen
 **Disposition.** Fixed in commit 5fcd74f. The security files use their own prefixes (rep_, svc_, ks_, auth_, sec_, inj_), and aux moved into its block. All test levels were rerun, and the CI static analysis job is green.
 
 **Retest.** fast-checks run 44120294053 green; unit 142, integration 16/16, scenario 28/28.
+
+## TA-08: Test anomaly, SEC-040
+
+**Status:** fixed.
+
+**Description.** On SIS every command after the first spacecraft run was refused with SEC_STATE and no TM(1,x). SID 3 showed FIRST CONTACT NEEDED (slot 1 counter untrusted) at every boot.
+
+**Cause.** The campaign performed the first contact once, when the link was created. On the host the key store is a file, so the floor survives every restart. On SIS it is RAM (NCR-04): every boot is a factory key store and needs its own first contact. The flight code behaved as SEC-040 requires (fail closed); the harness assumed host behaviour.
+
+**Disposition.** Fixed in run_campaign.py. The first contact runs after every boot, once the boot report has been captured, and is a no-op when the counter is trusted. FDIR event checks now select APID 0x021, so the RECOVERY_USED security event of each first contact is not counted as an unexpected FDIR event.
+
+**Retest.** Host campaign rerun (unchanged verdicts); SIS campaign rerun by the user.
