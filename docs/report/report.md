@@ -641,10 +641,19 @@ calibrated instruction counts, and allowances for SUP and SCHED. On SIS, `make s
 periodic task in the integrated flight build over 60 s (rate monotonic statistics, missed periods) and
 every security operation, and regenerates the table with the comparison.
 
-**Security cost.** Authenticating one 120-octet TC costs an estimated 2.0 ms on LEON3 (1.44 ms of it is
-the MAC). Rejecting a forgery costs 1.8 ms. Both are within TIM-020's 5 ms. At the S-band uplink rate
-(3.9 TC/s at most) a flood of forgeries costs 0.7 % of the processor. On the lab console (47 TC/s) it
-costs 8.6 %, and the task set still closes.
+**Security cost.** The security operations were measured on SIS, in the Session 8 build. That build
+has the same `tc_auth.c`, `keystore.c` and tinycrypt code, 200 runs each
+(`labs/session-08/docs/timing/budget-sis.md`):
+
+- authenticating one TC costs 1.33 ms at most (estimate 2.0 ms), of which the MAC is 1.04 ms;
+- rejecting a forgery costs 1.22 ms (estimate 1.8 ms);
+- the key scrub costs 1.77 ms.
+
+All are within TIM-020's 5 ms, and the estimates were pessimistic by 26 to 48 %. At the S-band uplink
+rate (3.9 TC/s at most), a flood of forgeries costs 0.5 % of the processor. On the lab console
+(47 TC/s) it costs 5.8 %. The same SIS run measured the Session 8 flight build, which differs from
+this application only by the payload and thermal recovery code: U = 0.383, no missed period in 60 s,
+largest R/T = 0.19.
 
 # 8. Limitations and future work
 

@@ -16,7 +16,8 @@ TIM-020:
   analysis:
   - {file: tools/timing/estimate.txt, expect: 'accept +\d+ instr/op +~ +[0-4]\d{3}\.\d us', name: instruction count
       estimate}
-  - {file: evidence/timing/budget-sis.md, expect: '\| accept \| [\d.]+ \| [\d.]+ \| [0-4]\.\d+ \|', name: SIS measurement}
+  - {file: labs/session-08/docs/timing/budget-sis.md, expect: '\| accept \| [\d.]+ \| [\d.]+ \| [0-4]\.\d+ \|',
+    name: 'SIS measurement, Session 8 build (same tc_auth.c, keystore.c, tinycrypt): accept max 1.326 ms, reject max 1.223 ms'}
 TMTC-010:
   unit: [test_valid_ping_gives_accept_report_complete_in_order, test_ack_flags_select_success_reports]
   integration: [IT-01, IT-06, IT-09, IT-12]
