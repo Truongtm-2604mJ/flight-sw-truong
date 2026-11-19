@@ -1,6 +1,6 @@
 **Session 8 - Security in flight software and ground integration** :lock:
-Commit: <COMMIT_LINK>
-Recording (1:50): <VIDEO_LINK> - Yamcs live TM, SET_MODE DEGRADED from Yamcs, Accepted -> TM(1,7) -> Complete when HK shows the new mode, event decoded.
+Commit: https://github.com/Truongtm-2604mJ/flight-sw-truong/commit/17517c920f56a790389e1311c80532a343dd789f
+Recording (1:50): https://youtu.be/Rl9rrbU8lpA - Yamcs live TM, SET_MODE DEGRADED from Yamcs, Accepted -> TM(1,7) -> Complete when HK shows the new mode, event decoded.
 
 **8.1 Authentication** - HMAC-SHA-256/128 (tinycrypt; ground uses Python hmac/cryptography, so two independent implementations agree), 21-octet trailer (SPI, 32-bit counter, MAC) inside the PUS packet. Order: structure -> CRC -> MAC -> counter -> semantic -> commit -> execute; counter committed only after full acceptance and persisted. Rejections up to freshness get **no TM(1,2)** (no oracle), 6 classes, counted on the TC path and reported by the HK task: 400 invalid TCs -> 8 events, all counted. Far-future counter (> 65 536 ahead): rejected, never jumped to. Hooked into the S4 handler by one NULL-safe pointer; S5/S6 code untouched (linker wraps). UBSan found 2 undefined shifts in tinycrypt's AES key schedule: patched, recorded.
 **8.2 Keys** - slot 0 recovery (ROM), slots 1-2 operational; keys/KCVs/counters/challenge stored x3, voted, scrubbed at 1 Hz; rekey = wrapped load (AES-CCM, slot-bound) + KCV check on ground + separate activate; key *state* only in HK SID 3. The analysis found a hole: NV loss -> factory state -> counter 0 -> every command ever sent under the provisioned key valid again. Fixed: a factory key store trusts no counter until a "first contact" recovery command sets the floor.

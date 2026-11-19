@@ -34,7 +34,8 @@ echo "== 2/4 flight build, 60 s simulated, rate monotonic statistics (a few min)
 python3 pty_run.py --until "Simulation finished" --timeout 1500 --log $T/sis-rm.log -- \
     $SIS -leon3 -r lab8-timing.exe
 echo "== 3/4 timing budget"
-python3 $T/budget.py --sec-timing $T/sis-sec-timing.log --rm $T/sis-rm.log --out $T/budget-sis.md
+python3 $T/budget.py --sec-timing $T/sis-sec-timing.log --rm $T/sis-rm.log --out $T/budget-sis.md \
+    --report ../docs/security-report.md
 echo "== 4/4 system tests on SIS (about 3 min)"
 python3 ../lab-8.1-authentication/tests/test_auth_system.py --pty \
     --spawn "$SIS -leon3 -rt -r lab8-test.exe" \

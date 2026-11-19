@@ -7,7 +7,9 @@ Inputs, best available first:
 Without them it uses estimate.txt (instruction counts calibrated on the
 Session 4 SIS run) and the Session 4 SIS task measurements.
 
-Writes budget.md (or --out) and prints it.
+Writes budget.md (or --out). With --report, also replaces the block between
+the SIS-TIMING markers in that file with the measured results and their
+comparison with the estimate.
 """
 import argparse
 import math
@@ -19,7 +21,13 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 # Session 4 SIS timing run (tmtc-design.md S5): C max (ms), T (ms), priority
 S4 = {"ACS_CTRL": (18.957, 100, 10), "TM_HK": (47.764, 500, 20),
       "PL_LOG": (95.644, 1000, 30)}
-RM_NAMES = {"ACS1": "ACS_CTRL", "HK11": "TM_HK", "LOG1": "PL_LOG"}
+# Every periodic task of the integrated application (fdir_app.h):
+# rate monotonic period owner name -> (task, T ms, RTEMS priority)
+PERIODIC = {"SUP1": ("SUPERVISOR", 2000, 5), "ACS1": ("ACS_CTRL", 100, 10),
+            "HK11": ("TM_HK", 500, 20), "LOG1": ("PL_LOG", 1000, 30),
+            "SCHD": ("SCHED", 1000, 45)}
+OPS = ("plain", "accept", "reject", "scrub", "load")
+MEANINGFUL = 0.25        # a difference above 25 % is called out in the text
 
 # Uplink assumptions for the TC_RX demand (aperiodic, priority 40).
 LINK = {"lab console, 115200 baud, hex lines": 115200 / 10 / (3 + 2 * 120 + 1),
@@ -28,27 +36,45 @@ LINK = {"lab console, 115200 baud, hex lines": 115200 / 10 / (3 + 2 * 120 + 1),
 
 def parse_ops(path, est):
     ops = {}
-    with open(path) as f:
+    with open(path, errors="replace") as f:
         for line in f:
             if est:
                 m = re.match(r"(\w+)\s+\d+ instr/op\s+~\s+([\d.]+) us", line)
                 if m:
-                    ops[m.group(1)] = (float(m.group(2)) / 1000, float(m.group(2)) / 1000)
+                    v = float(m.group(2)) / 1000
+                    ops[m.group(1)] = (v, v)
             else:
-                m = re.match(r"\s+(\w+)\s+mean\s+([\d.]+) us\s+max\s+([\d.]+) us", line)
+                m = re.match(r"\s*(\w+)\s+mean\s+([\d.]+) us\s+max\s+([\d.]+) us", line)
                 if m:
                     ops[m.group(1)] = (float(m.group(2)) / 1000, float(m.group(3)) / 1000)
     return ops
 
 
+def seconds(tok):
+    """'0.018957', '0:00.018957' or '00:00:00.018957' -> seconds."""
+    parts = tok.split(":")
+    v = 0.0
+    for p in parts:
+        v = v * 60 + float(p)
+    return v
+
+
 def parse_rm(path):
+    """rtems_rate_monotonic_report_statistics() lines:
+    ID OWNER COUNT MISSED cpu_min/max/avg wall_min/max/avg"""
     tasks = {}
-    rx = re.compile(r"0x[0-9a-fA-F]+\s+(\S+)\s+(\d+)\s+(\d+)\s+([\d.]+)/([\d.]+)/([\d.]+)")
-    with open(path) as f:
+    num = r"[\d:.]+"
+    rx = re.compile(rf"0x[0-9a-fA-F]+\s+(\S+)\s+(\d+)\s+(\d+)\s+({num})/({num})/({num})"
+                    rf"(?:\s+({num})/({num})/({num}))?")
+    with open(path, errors="replace") as f:
         for line in f:
             m = rx.search(line)
-            if m and m.group(1) in RM_NAMES:
-                tasks[RM_NAMES[m.group(1)]] = (float(m.group(5)) * 1000, int(m.group(3)))
+            if m and m.group(1) in PERIODIC:
+                name = PERIODIC[m.group(1)][0]
+                tasks[name] = dict(count=int(m.group(2)), missed=int(m.group(3)),
+                                   cpu_max=seconds(m.group(5)) * 1000,
+                                   cpu_avg=seconds(m.group(6)) * 1000,
+                                   wall_max=seconds(m.group(8)) * 1000 if m.group(8) else None)
     return tasks
 
 
@@ -60,7 +86,7 @@ def rta(tasks, blocking):
         c, t, _ = tasks[name]
         b = blocking.get(name, 0.0)
         r = c + b
-        for _ in range(100):
+        for _ in range(200):
             new = c + b + sum(math.ceil(r / tasks[h][1]) * tasks[h][0] for h in order[:i])
             if abs(new - r) < 1e-9:
                 break
@@ -69,67 +95,155 @@ def rta(tasks, blocking):
     return out
 
 
+def diff(measured, estimated):
+    if estimated <= 0:
+        return "n/a"
+    d = (measured - estimated) / estimated
+    return f"{d * 100:+.0f} %"
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--sec-timing")
     ap.add_argument("--rm")
     ap.add_argument("--out", default=os.path.join(HERE, "budget.md"))
+    ap.add_argument("--report", help="file with <!-- SIS-TIMING:BEGIN/END --> markers")
     a = ap.parse_args()
 
-    if a.sec_timing:
-        ops, src_ops = parse_ops(a.sec_timing, False), f"SIS, `{os.path.basename(a.sec_timing)}`"
-    else:
-        ops, src_ops = parse_ops(os.path.join(HERE, "estimate.txt"), True), \
-            "ESTIMATE (instruction counts, calibrated on Session 4 SIS)"
-    lines = [f"# Timing budget with authentication\n", f"Operation costs: {src_ops}.\n"]
-    lines.append("| Operation | mean (ms) | max (ms) |\n|---|---:|---:|")
-    for k in ("plain", "accept", "reject", "scrub", "load"):
-        if k in ops:
-            lines.append(f"| {k} | {ops[k][0]:.3f} | {ops[k][1]:.3f} |")
-    mac = ops["accept"][1] - ops["plain"][1]
+    est = parse_ops(os.path.join(HERE, "estimate.txt"), True)
+    sis = parse_ops(a.sec_timing, False) if a.sec_timing else {}
+    if a.sec_timing and not all(k in sis for k in OPS):
+        print(f"WARNING: {a.sec_timing} lacks some operations "
+              f"({[k for k in OPS if k not in sis]}): using the estimate for them")
+    ops = {k: sis.get(k, est[k]) for k in OPS}
+    measured_ops = bool(sis)
+    rm = parse_rm(a.rm) if a.rm else {}
+    if a.rm and not rm:
+        print(f"WARNING: no rate monotonic statistics found in {a.rm}: using Session 4 values")
 
-    # TM_HK: scrub every 2nd 500 ms cycle, plus SID 3 and events (~ a TM build).
-    hk_extra = ops["scrub"][1] + 0.2
-    tasks = {}
-    measured = parse_rm(a.rm) if a.rm else {}
+    mac = ops["accept"][1] - ops["plain"][1]
+    hk_extra = ops["scrub"][1] + 0.2           # scrub every 2nd cycle + SID 3
+
+    # Task set: measured C when available, else Session 4 + the estimated additions.
+    tasks, est_tasks = {}, {}
     for n, (c, t, p) in S4.items():
-        if n in measured:
-            tasks[n] = (measured[n][0], t, p)
-        else:
-            tasks[n] = (c + (hk_extra if n == "TM_HK" else 0.0), t, p)
-    src_tasks = (f"SIS rate monotonic statistics of the Session 8 flight build "
-                 f"(`{os.path.basename(a.rm)}`)" if measured else
-                 "Session 4 SIS C max, plus the Session 8 additions to TM_HK")
-    # Longest tc lock section by a task below TM_HK: one TC(210,1),
-    # verify + unwrap (+ an NV write, a memcpy on this target).
-    b = ops["accept"][1] + ops["load"][1]
-    blocking = {"TM_HK": b, "PL_LOG": b}
+        est_tasks[n] = (c + (est["scrub"][1] + 0.2 if n == "TM_HK" else 0.0), t, p)
+    for name, t, p in PERIODIC.values():
+        if name in rm:
+            tasks[name] = (rm[name]["cpu_max"], t, p)
+        elif name in est_tasks:
+            tasks[name] = est_tasks[name]
+    b = ops["accept"][1] + ops["load"][1]       # one TC(210,1) under the tc lock
+    blocking = {n: b for n in tasks if tasks[n][2] >= 20}
     r = rta(tasks, blocking)
     u = sum(c / t for c, t, _ in tasks.values())
-    lines.append(f"\nTask set: {src_tasks}.\n")
-    lines.append("| Task | P | T (ms) | C (ms) | U | B (ms) | R (ms) | R <= T |"
-                 "\n|---|---:|---:|---:|---:|---:|---:|---|")
-    for n in sorted(tasks, key=lambda k: tasks[k][2]):
-        c, t, p = tasks[n]
-        lines.append(f"| {n} | {p} | {t} | {c:.3f} | {c / t:.4f} | "
-                     f"{blocking.get(n, 0.0):.3f} | {r[n]:.1f} | "
-                     f"{'yes' if r[n] <= t else 'NO'} |")
+    u_est = sum(c / t for c, t, _ in est_tasks.values())
     n = len(tasks)
-    lines.append(f"\nPeriodic utilisation U = {u:.4f} (Session 4: 0.3807); "
-                 f"Liu and Layland bound for n = {n}: {n * (2 ** (1 / n) - 1):.4f}.\n")
-    lines.append("TC_RX (priority 40, below the three periodic tasks) under a flood of "
-                 "invalid TCs, each costing one rejection:\n")
-    lines.append("| Uplink | TC/s max | TC_RX load | U with TC_RX | bound n = 4 |"
-                 "\n|---|---:|---:|---:|---:|")
+    bound = n * (2 ** (1 / n) - 1)
+    missed = sum(v["missed"] for v in rm.values())
+    closes = all(r[k] <= tasks[k][1] for k in tasks) and missed == 0
+
+    src = ("SIS (`" + os.path.basename(a.sec_timing) + "`)") if measured_ops else \
+        "ESTIMATE (instruction counts calibrated on Session 4 SIS)"
+    L = [f"# Timing budget with authentication\n",
+         f"Operation costs: {src}. Task set: " +
+         ("SIS rate monotonic statistics of the Session 8 flight build, 60 s (`" +
+          os.path.basename(a.rm) + "`)." if rm else
+          "Session 4 SIS C max plus the Session 8 additions to TM_HK (estimate)."), ""]
+    L.append("## Security operations\n")
+    L.append("| Operation | estimate (ms) | " + ("SIS mean (ms) | SIS max (ms) | max vs estimate |"
+             if measured_ops else "") + "\n|---|---:|" + ("---:|---:|---:|" if measured_ops else ""))
+    for k in OPS:
+        row = f"| {k} | {est[k][1]:.3f} |"
+        if measured_ops and k in sis:
+            row += f" {sis[k][0]:.3f} | {sis[k][1]:.3f} | {diff(sis[k][1], est[k][1])} |"
+        L.append(row)
+    L.append(f"\nMAC cost per command (accept minus plain): {mac:.3f} ms"
+             + (f" (estimate {est['accept'][1] - est['plain'][1]:.3f} ms)." if measured_ops else "."))
+
+    L.append("\n## Task set\n")
+    L.append("| Task | P | T (ms) | C (ms) | U | B (ms) | R (ms) | R <= T |" +
+             (" missed | estimate C (ms) | C vs estimate |" if rm else "") +
+             "\n|---|---:|---:|---:|---:|---:|---:|---|" + ("---:|---:|---:|" if rm else ""))
+    for k in sorted(tasks, key=lambda x: tasks[x][2]):
+        c, t, p = tasks[k]
+        row = (f"| {k} | {p} | {t} | {c:.3f} | {c / t:.4f} | {blocking.get(k, 0.0):.3f} | "
+               f"{r[k]:.1f} | {'yes' if r[k] <= t else 'NO'} |")
+        if rm:
+            e = est_tasks.get(k)
+            row += (f" {rm[k]['missed'] if k in rm else '-'} | "
+                    f"{e[0]:.3f} | {diff(c, e[0])} |" if e else
+                    f" {rm[k]['missed'] if k in rm else '-'} | - | - |")
+        L.append(row)
+    L.append(f"\nPeriodic utilisation U = {u:.4f} (Session 4: 0.3807; Session 8 estimate "
+             f"for the three tasks: {u_est:.4f}). Liu and Layland bound for n = {n}: "
+             f"{bound:.4f}. Missed periods: {missed if rm else 'not measured'}.\n")
+    L.append("TC_RX (priority 40, below the periodic tasks except SCHED) under a flood of "
+             "invalid TCs, each costing one rejection:\n")
+    L.append("| Uplink | TC/s max | TC_RX load | U with TC_RX |\n|---|---:|---:|---:|")
     for name, rate in LINK.items():
         ut = rate * ops["reject"][1] / 1000
-        lines.append(f"| {name} | {rate:.1f} | {ut:.4f} | {u + ut:.4f} | "
-                     f"{4 * (2 ** 0.25 - 1):.4f} |")
-    lines.append(f"\nMAC cost per command: {mac:.3f} ms (accept minus plain).")
-    text = "\n".join(lines) + "\n"
+        L.append(f"| {name} | {rate:.1f} | {ut:.4f} | {u + ut:.4f} |")
+    L.append(f"\nVerdict: the task set {'CLOSES' if closes else 'DOES NOT CLOSE'}"
+             f" (every R <= T{', no missed period' if rm else ''}).")
+    text = "\n".join(L) + "\n"
     with open(a.out, "w") as f:
         f.write(text)
     print(text)
+
+    if a.report:
+        notes = []
+        if measured_ops:
+            for k in OPS:
+                if k in sis:
+                    d = (sis[k][1] - est[k][1]) / est[k][1]
+                    if abs(d) > MEANINGFUL:
+                        notes.append(f"`{k}` measured {sis[k][1]:.3f} ms against an estimate of "
+                                     f"{est[k][1]:.3f} ms ({d * 100:+.0f} %)")
+        for k, v in rm.items():
+            e = est_tasks.get(k)
+            if e and abs(v["cpu_max"] - e[0]) / e[0] > 0.05:
+                notes.append(f"{k} C max {v['cpu_max']:.3f} ms against {e[0]:.3f} ms expected "
+                             f"({diff(v['cpu_max'], e[0])})")
+        block = [
+            "**Measured on SIS** (`docs/timing/budget-sis.md`, generated from "
+            "`sis-sec-timing.log` and `sis-rm.log` by `budget.py`).\n",
+            "| Quantity | Estimate | SIS | Difference |", "|---|---:|---:|---:|"]
+        for k in OPS:
+            if k in sis:
+                block.append(f"| {k}, max (ms) | {est[k][1]:.3f} | {sis[k][1]:.3f} | "
+                             f"{diff(sis[k][1], est[k][1])} |")
+        if measured_ops:
+            block.append(f"| MAC per TC (ms) | {est['accept'][1] - est['plain'][1]:.3f} | "
+                         f"{mac:.3f} | {diff(mac, est['accept'][1] - est['plain'][1])} |")
+        for k in ("ACS_CTRL", "TM_HK", "PL_LOG"):
+            if k in rm:
+                block.append(f"| {k} C max (ms) | {est_tasks[k][0]:.3f} | {rm[k]['cpu_max']:.3f} | "
+                             f"{diff(rm[k]['cpu_max'], est_tasks[k][0])} |")
+        if rm:
+            u3 = sum(rm[k]["cpu_max"] / S4[k][1] for k in S4 if k in rm)
+            block.append(f"| U, three Session 3 tasks | {u_est:.4f} | {u3:.4f} | "
+                         f"{diff(u3, u_est)} |")
+            block.append(f"| U, all {n} periodic tasks | - | {u:.4f} | - |")
+            block.append(f"| Missed periods in 60 s | 0 | {missed} | - |")
+        block.append("")
+        if notes:
+            block.append("Differences above 25 % for operations, or 5 % for task C: " +
+                         "; ".join(notes) + ".")
+        else:
+            block.append("No operation differs from its estimate by more than 25 %, and no "
+                         "task C by more than 5 %.")
+        block.append(f"\nWith the measured values the task set {'still closes' if closes else 'DOES NOT CLOSE'}: "
+                     f"U = {u:.4f} for {n} periodic tasks (bound {bound:.4f}), largest R/T = "
+                     f"{max(r[k] / tasks[k][1] for k in tasks):.3f}"
+                     + (f", {missed} missed periods." if rm else "."))
+        rp = open(a.report).read()
+        begin, end = "<!-- SIS-TIMING:BEGIN -->", "<!-- SIS-TIMING:END -->"
+        i, j = rp.index(begin) + len(begin), rp.index(end)
+        rp = rp[:i] + "\n" + "\n".join(block) + "\n" + rp[j:]
+        with open(a.report, "w") as f:
+            f.write(rp)
+        print(f"updated {a.report}")
 
 
 if __name__ == "__main__":
