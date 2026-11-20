@@ -1,7 +1,9 @@
 # Capstone Phase 0: inventory (Tran Manh Truong)
 
-Target: **SIS** (LEON3, RTEMS 6). This project has used SIS since Session 3, with the same LEON3 BSP the
-course uses under QEMU. Host simulation of the RTEMS API is used for fast tests.
+Target: **SIS** (LEON3, RTEMS 6). This project has used SIS since Session 3. It runs the same LEON3 BSP
+as the course's QEMU set-up, but SIS is a different simulator (instruction level, its own cycle model,
+no caches), so SIS results are not QEMU results and neither is a board. Host simulation of the RTEMS
+API is used for fast tests.
 
 | Component | From | Status | Works on target? | Evidence |
 |---|---|---|---|---|

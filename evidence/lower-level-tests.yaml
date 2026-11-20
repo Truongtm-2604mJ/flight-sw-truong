@@ -4,7 +4,7 @@
 # every verdict from the test outputs.
 #   unit:        Unity test function names (tests/unit/*.c)
 #   integration: IT ids (tests/integration/int_tc_path.c)
-#   analysis:    evidence files: PASS if the file exists and matches 'expect',
+#   analysis:    evidence files (analysis, and the security system test logs): PASS if the file exists and matches 'expect',
 #                NOT RUN if the file is missing (target evidence not produced yet)
 #   s6:          Session 6 model tests (labs/session-06, run on the same generated mode_sm.c)
 TIM-010:
@@ -17,7 +17,8 @@ TIM-020:
   - {file: tools/timing/estimate.txt, expect: 'accept +\d+ instr/op +~ +[0-4]\d{3}\.\d us', name: instruction count
       estimate}
   - {file: labs/session-08/docs/timing/budget-sis.md, expect: '\| accept \| [\d.]+ \| [\d.]+ \| [0-4]\.\d+ \|',
-    name: 'SIS measurement, Session 8 build (same tc_auth.c, keystore.c, tinycrypt): accept max 1.326 ms, reject max 1.223 ms'}
+    name: 'SIS measurement, Session 8 build (same tc_auth.c, keystore.c, tinycrypt): accept max 1.326 ms, reject
+      max 1.223 ms'}
 TMTC-010:
   unit: [test_valid_ping_gives_accept_report_complete_in_order, test_ack_flags_select_success_reports]
   integration: [IT-01, IT-06, IT-09, IT-12]
@@ -34,15 +35,26 @@ TMTC-070: {}
 SEC-010:
   unit: [test_wrong_key_rejected_at_auth, test_plain_tc_rejected, test_check_order, test_mac_matches_ground]
   integration: [IT-15]
+  analysis:
+  - &id001 {file: evidence/test-runs/security-system-host-sim.log, expect: '# result: 58 passed, 0 failed', name: 'Session
+      8 security system tests, 58 checks, host'}
 SEC-020:
   unit: [test_replay_rejected, test_far_future_rejected_by_window, test_counter_not_advanced_by_semantic_reject,
     test_valid_executes_and_advances]
   integration: [IT-15]
+  analysis:
+  - *id001
+  - {file: evidence/test-runs/security-system-sis.log, expect: '# result: 57 passed, 1 failed', name: 'same on SIS
+      (57/58: [8.1-6] key store persistence fails by design, NCR-04)'}
 SEC-030:
   unit: [test_burst_gives_bounded_events, test_sustained_flood_bounded, test_event_queue_bounded]
+  analysis:
+  - *id001
 SEC-040:
   unit: [test_factory_state, test_first_contact_after_factory, test_trusted_release, test_spi_rules]
   integration: [IT-15, IT-16]
+  analysis:
+  - *id001
 FDIR-010:
   unit: [test_single_out_of_limit_sample_raises_nothing, test_counter_resets_on_any_in_limit_sample]
 FDIR-020:

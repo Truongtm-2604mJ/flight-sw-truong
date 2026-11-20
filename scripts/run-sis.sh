@@ -4,7 +4,7 @@
 #   RTEMS_PREFIX=$HOME/quick-start/rtems/6 make sis      (from the repository root)
 #   or: RTEMS_PREFIX=... sh scripts/run-sis.sh [step...]
 #
-# Steps (all by default, or name some: timing demo validation):
+# Steps (all by default, or name some: timing demo security validation):
 #   timing      1. build/rtems/sec-timing.exe    cost of each security operation
 #               2. build/rtems/lotus1-timing.exe integrated flight build, 60 s,
 #                                                rate monotonic statistics
@@ -12,7 +12,9 @@
 #                  -> evidence/timing/sis-sec-timing.log, sis-rm.log, budget-sis.md
 #   demo        4. demo/scenario.py              the 7 step mission scenario on SIS
 #                  -> evidence/demo/scenario-sis.log, scenario-sis.json
-#   validation  5. make -C tests target          integration test image on SIS, then
+#   security    5. tests/security/test_auth_system.py  Session 8 security system tests
+#                  -> evidence/test-runs/security-system-sis.log ([8.1-6] fails on SIS: NCR-04)
+#   validation  6. make -C tests target          integration test image on SIS, then
 #                                                the validation campaign on SIS
 #                  -> evidence/validation/results-sis/
 #
@@ -27,7 +29,7 @@ else
     SIS=${SIS:-sparc-rtems6-sis}
 fi
 command -v "$SIS" >/dev/null 2>&1 || { echo "SIS not found: $SIS (set RTEMS_PREFIX or SIS)"; exit 2; }
-STEPS=${*:-timing demo validation}
+STEPS=${*:-timing demo security validation}
 E=evidence
 mkdir -p $E/timing $E/demo
 
@@ -58,11 +60,20 @@ for s in $STEPS; do
             --log $E/demo/scenario-sis.log --json $E/demo/scenario-sis.json || rc=1
         rm -f $E/demo/nv-sis.bin $E/demo/nv-sis.bin.sec $E/demo/nv-sis.bin.ground.json
         ;;
+    security)
+        echo "== security system tests on SIS (about 3 min)"
+        mkdir -p $E/test-runs
+        rm -f /tmp/lotus1_system_nv.bin*
+        python3 tests/security/test_auth_system.py --pty \
+            --spawn "$SIS -leon3 -rt -r build/rtems/lotus1-test.exe" \
+            --log $E/test-runs/security-system-sis.log > /dev/null 2>&1
+        grep -E "FAIL|result" $E/test-runs/security-system-sis.log | tail -4
+        ;;
     validation)
         echo "== integration image and validation campaign on SIS (about 20 min)"
         make -C tests target SIS="$SIS" ${RTEMS_PREFIX:+RTEMS_PREFIX="$RTEMS_PREFIX"} || rc=1
         ;;
-    *) echo "unknown step: $s (timing, demo, validation)"; exit 2 ;;
+    *) echo "unknown step: $s (timing, demo, security, validation)"; exit 2 ;;
     esac
 done
 echo "== done (rc=$rc): commit evidence/timing, evidence/demo and evidence/validation/results-sis"

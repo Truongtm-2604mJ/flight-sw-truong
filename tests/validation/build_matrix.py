@@ -139,7 +139,7 @@ def main():
         if r["group"] != group:
             group = r["group"]
             out += [f"## {group}", "",
-                    "| Req | Requirement | Method | Design | Code (src/) | Unit | Integration | Analysis, model tests | "
+                    "| Req | Requirement | Method | Design | Code (src/) | Unit | Integration | System tests, analysis, model tests | "
                     + " | ".join(f"Validation ({t})" for t in targets) + " | Status |",
                     "|---|---|---|---|---|---|---|---|" + "---|" * len(targets) + "---|"]
         out.append(f"| {r['id']} | {r['text']} | {r['method']} | {r.get('design', '-')} | "

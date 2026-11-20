@@ -15,7 +15,7 @@ wrote them; nothing here is typed by hand except the YAML sources marked
 | 5 | **Non-conformance log**: every defect found in integration and validation, severity, disposition; open items open | `ncr-log.md` (from `ncr.yaml` *(source)*) | `make -C tests matrix` |
 | 6 | **Timing analysis** of the integrated task set | `timing/budget-estimate.md` (estimate), `timing/budget-sis.md`, `timing/sis-*.log` (SIS) | `tools/timing/budget.py`; on SIS `make sis` |
 | 7 | Validation campaign: specification and results | `validation/test-spec.md`, `validation/results-host-sim/` (`results.md`, `results.json`, `campaign.log`), `validation/results-sis/` | `make -C tests validation`; on SIS `make -C tests target` |
-| 8 | Unit and integration test outputs | `test-runs/unit-results.txt`, `test-runs/integration-host-sim.log` | `make -C tests evidence` |
+| 8 | Unit, integration and security system test outputs | `test-runs/unit-results.txt`, `test-runs/integration-host-sim.log`, `test-runs/security-system-host-sim.log` (58/58), `test-runs/security-system-sis.log` | `make -C tests evidence security`; on SIS `make sis STEPS=security` |
 | 9 | Mission scenario (the demonstration), automated | `demo/scenario-host-sim.log`, `.json`; `demo/scenario-sis.*` | `make scenario`; on SIS `make sis STEPS=demo` |
 
 ## Reading order for a reviewer

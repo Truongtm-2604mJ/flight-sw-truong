@@ -60,6 +60,9 @@ jobs:
       - name: Yamcs MDB agrees with the ground decoders
         run: make mdb-check
 
+      - name: Security system tests, Session 8 Labs 8.1/8.2 (58 checks, host simulation)
+        run: make -C tests security
+
       - name: Mission scenario, 7 steps, automated (host simulation)
         run: make scenario
 

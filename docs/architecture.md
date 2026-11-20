@@ -88,6 +88,29 @@ first event per class, then a summary per window), so a forged-command flood
 cannot fill the FDIR event stream or starve it. The MCS shows both streams in
 one event view.
 
+## 3a. One owner per capability
+
+| Capability | Owner (one place in `src/`) | Host and SIS builds |
+|---|---|---|
+| RTOS tasks, priorities, periods | `app/main.c` (tasks, RTEMS configuration), `app/mission.h` (priorities, periods) | same source; RTEMS API from RTEMS on SIS, from `sim/rtems_shim.c` on the host |
+| TM/TC | `app/tmtc.c` (TC_RX, TM_TX, queue), `core/` (packets, PUS, the TC handler) | same |
+| FDIR | `fdir/monitor.c`, `supervisor.c`, `watchdog.c`, `thermal.c`, bound together in `fdir/fdir.c` | same |
+| Mode management | `fdir/mode_sm.c`, generated from `model/mode_machine.yaml` by `model/modelgen.py` (with `mode_sm_trace.json` and `model/completeness.md`, and CI checking they agree) | same |
+| Security | `security/` (`tc_auth.c` check, `keystore.c`, `sec_service.c` service 210, `sec_report.c`, bound in `security.c`) | same; key store NV is a file on the host and RAM on SIS (NCR-04) |
+| Mission services | `app/services.c` (PUS 3, 8, 11, 17, 200), `fdir/schedule.c` | same |
+| Ground interface | `ground/` (codec, link, ground security unit), `mcs/` (Yamcs MDB, bridge, displays, procedures) | the same ground code drives both (`--spawn` host image, `--pty` SIS) |
+
+There is one build description (`src/sources.mk`), read by the top-level `Makefile` (host and RTEMS images) and by `tests/Makefile`.
+
+## 3b. The security boundary
+
+- **Yamcs owns no key.** Keys, counters and key generation live in the ground security unit (`mcs/bridge/sc_bridge.py`, `ground/secunit.py`). The MDB's LOAD_KEY carries only a slot number, and the bridge adds the wrapped key.
+- **Authentication before execution.** In `tc_handle` the order is structure, CRC, MAC, freshness, semantic check, commit, execute. No service handler runs, and no TM(1,x) is sent, for a TC that failed the MAC or freshness check (Section 4).
+- **Anti-replay state.** A per-slot counter advances only when a TC is accepted (after the semantic check). It is stored three times and voted. A factory or lost counter is untrusted, and nothing is accepted until a recovery command sets a floor (SEC-040).
+- **A separate, minimal recovery path.** The recovery key (slot 0, ROM) is accepted for two commands only, RECOVERY_SET_COUNTER and RECOVERY_ACTIVATE. Each needs the one-time challenge from SID 3, and each use is reported.
+- **No bypass through the schedule.** A time-tagged command enters only inside TC(11,4), which is itself an uplinked TC and passes the full check above. At release, SCHED marks it trusted (`security_trusted`), because its authentication happened at upload. Nothing else can put a command into the schedule.
+- **Target limitation.** Key store persistence across a reset is shown on the host only. On SIS the store is RAM, [8.1-6] fails there by design, and it is open as NCR-04. No claim of persistence on the target is made.
+
 ## 4. Data flow of one authenticated command
 
 1. The bridge (ground security unit) adds the 21-octet trailer (SPI, counter,

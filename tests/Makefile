@@ -63,13 +63,24 @@ test_thermal_SRC  := $(THERM_SRC)
 test_keystore_SRC := $(SEC_LIB_SRC) $(PUS_SRC) $(SP_SRC)
 test_tc_auth_SRC  := $(SEC_LIB_SRC) $(PUS_SRC) $(SP_SRC)
 
-.PHONY: all test unit integration validation target warnings coverage coverage-full \
+.PHONY: all test unit integration security validation target warnings coverage coverage-full \
         mcdc static tools evidence matrix clean
 
 all: test
 
-test: warnings unit integration validation
+test: warnings unit integration security validation
 	@echo "== all host test levels passed"
+
+# ---- Security system tests (Session 8 Labs 8.1/8.2, migrated) -----------------------------
+# 58 checks through the ground security unit: authentication, replay, window, rate-limited
+# reporting, rekey, recovery key, key upsets, damaged wrapped key. Against the integrated
+# test build; on SIS: scripts/run-sis.sh security.
+security:
+	$(MAKE) -C $(ROOT) -s host
+	mkdir -p $(EVIDENCE)/test-runs
+	$(PYTHON) security/test_auth_system.py --spawn $(ROOT)/build/host/lotus1-test.host \
+	    --log $(EVIDENCE)/test-runs/security-system-host-sim.log > /dev/null
+	grep -E "FAIL|result" $(EVIDENCE)/test-runs/security-system-host-sim.log | tail -3
 
 # ---- Unit level ---------------------------------------------------------------------
 UNIT_BINS := $(addprefix $(OUT)/unit/,$(UNIT_SUITES))
