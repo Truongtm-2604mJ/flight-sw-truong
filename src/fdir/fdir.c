@@ -59,7 +59,13 @@ static tm_source_t      hk_src  = { APID_HK, 0 };
 static tm_source_t      evt_src = { APID_EVENT, 0 };
 
 static volatile uint8_t payload_allowed;  /* by the mode (model actions)    */
+#ifdef TIMING_PAYLOAD_ON
+/* Timing build only: the payload starts enabled, so the 60 s rate monotonic
+ * run measures PL_LOG at its worst case (evidence/timing). */
+static volatile uint8_t payload_cmd = 1u;
+#else
 static volatile uint8_t payload_cmd;      /* by the ground (TC(8,1) func 2) */
+#endif
 static thermal_t        g_therm;           /* TM_HK task only                */
 static volatile uint8_t sun_pointing;
 static volatile uint8_t wdg_warning_pending;

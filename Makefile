@@ -57,10 +57,11 @@ $(OUT)/rtems/lotus1-flight.exe: $(APP_SRC) | $(OUT)/rtems
 	@echo "  RTEMS $@"
 	@$(RTEMS_CC) $(RTEMS_CFLAGS) $(SRC_INC) -o $@ $(APP_SRC) $(RTEMS_LDFLAGS)
 
-# Flight build that runs 60 s and prints the rate monotonic statistics.
+# Flight build that runs 60 s and prints the rate monotonic statistics, with the
+# payload enabled from boot so PL_LOG is measured at its worst case.
 $(OUT)/rtems/lotus1-timing.exe: $(APP_SRC) | $(OUT)/rtems
 	@echo "  RTEMS $@"
-	@$(RTEMS_CC) $(RTEMS_CFLAGS) -DRUN_SECONDS=60 $(SRC_INC) -o $@ $(APP_SRC) $(RTEMS_LDFLAGS)
+	@$(RTEMS_CC) $(RTEMS_CFLAGS) -DRUN_SECONDS=60 -DTIMING_PAYLOAD_ON $(SRC_INC) -o $@ $(APP_SRC) $(RTEMS_LDFLAGS)
 
 # Cost of each security operation (timing budget).
 $(OUT)/rtems/sec-timing.exe: tools/timing/sec_timing.c $(CORE_SRC) $(SEC_LIB_SRC) | $(OUT)/rtems
