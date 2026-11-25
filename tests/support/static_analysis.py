@@ -218,6 +218,12 @@ def main():
           f"dispositions: {dict(by_disp)}")
     if unused:
         print(f"note: dispositions matching nothing now: {unused}")
+    opened = [(e, r) for e, r in rows if r is not None and r["disposition"] == "open"]
+    if opened:
+        print(f"{len(opened)} finding(s) still open (not yet triaged):")
+        for e, r in opened:
+            print(f"  {r['id']} {e['tool']} [{e['check']}] {e['file']}:"
+                  f"{','.join(map(str, sorted(e['lines'])))}: {e['msg']}")
     if new:
         print(f"{len(new)} finding(s) without a valid disposition:")
         for e in new[:40]:
