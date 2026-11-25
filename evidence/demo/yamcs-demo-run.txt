@@ -1,0 +1,52 @@
+# first contact (factory key store): RECOVERY_SET_COUNTER through the supervised queue
+
+==============================================================================
+  1/7  LOTUS-1 in NOMINAL: housekeeping every second to the MCS
+==============================================================================
+   PASS  mode NOMINAL (HK SID 1 decoded by the MDB)
+   PASS  HK live: uptime 11 -> 22 s; T_BAT 27.14 C, V_BUS 28068 mV
+
+==============================================================================
+  2/7  Authenticated TC: payload ON. Acceptance TM(1,1), completion TM(1,7)
+==============================================================================
+   PASS  PAYLOAD ON: Accepted OK (TM(1,1)), Complete OK (TM(1,7)); signed by the ground security unit
+   PASS  payload_enabled ON, payload_on ON
+
+==============================================================================
+  3/7  Forged TC (payload OFF, wrong key) on the raw uplink: rejected, event, payload unchanged
+==============================================================================
+   PASS  SID 3 sec_rej_auth 0 -> 1
+   PASS  payload still ON
+   PASS  no verification report: nothing in Command history
+   PASS  security event: SECURITY: TC rejected, class AUTH (AUTH), total 1
+
+==============================================================================
+  4/7  Thermal anomaly: T_BAT 48 C. Persistence filter, one event, DEGRADED, payload suspended
+==============================================================================
+   PASS  mode DEGRADED (cause MONITOR)
+   PASS  one T_BAT alarm event after 3 samples: ['T_BAT monitor ALARM HIGH: 4800 cdegC (limit 4500)']
+   PASS  payload suspended (payload_on OFF, ground enable kept)
+
+==============================================================================
+  5/7  Recovery attempts 1, 2, 3 (10 s apart), exhausted: SAFE. Payload off, schedule suspended, essential TM
+==============================================================================
+   PASS  3 THERMAL_RECOVERY_ATTEMPT events
+   PASS  THERMAL_RECOVERY_EXHAUSTED event
+   PASS  mode SAFE (cause MONITOR)
+   PASS  payload off, ground enable cleared, schedule suspended
+   PASS  PAYLOAD ON in SAFE refused (TM(1,8))
+
+==============================================================================
+  6/7  Recovery procedure SAFE-01: assess, clear the fault, authenticated SAFE exit, confirm NOMINAL
+==============================================================================
+   PASS  assess: cause MONITOR, T_BAT 48.00 C, boot count 1
+   PASS  fault cleared: T_BAT 25.90 C, below the 43.00 C clear limit (SID 2 carries no monitor state in SAFE: OBS-02)
+   PASS  SET_MODE NOMINAL: authenticated, TM(1,7)
+   PASS  confirmed: mode NOMINAL in HK
+
+==============================================================================
+  7/7  Same commit 4c2eaeb: CI green (fast-checks), coverage report (show the GitHub Actions run and evidence/coverage/coverage.md)
+==============================================================================
+
+# demo checks: 20/20 passed, 152 s
+# captions written to evidence/demo/captions.srt

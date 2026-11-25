@@ -249,12 +249,13 @@ def main():
     # 6 ----------------------------------------------------------------------------------------
     caption("6/7  Recovery procedure SAFE-01: assess, clear the fault, authenticated "
             "SAFE exit, confirm NOMINAL", 40)
+    tb0 = param("tbat")
     check(param("mode_cause") == "MONITOR", f"assess: cause {param('mode_cause')}, "
-          f"T_BAT {param('tbat')} C, boot count {param('boot_count')}")
+          f"T_BAT {tb0:.2f} C, boot count {param('boot_count')}")
     command("TEST_INJECT_CLEAR")
     tb = wait_param("tbat", lambda v: v is not None and v < 43.0, 10)
-    check(tb is not None and tb < 43.0, f"fault cleared: T_BAT {tb} C, monitor "
-          f"{param('mon_state_tbat')}")
+    check(tb is not None and tb < 43.0, f"fault cleared: T_BAT {tb:.2f} C, below the 43.00 C "
+          f"clear limit (SID 2 carries no monitor state in SAFE: OBS-02)")
     h = command("SET_MODE", {"mode": "NOMINAL"}, key="Verifier_Complete_Status", timeout=20)
     check(h.get("Verifier_PUS_Completed_Status") == "OK", "SET_MODE NOMINAL: authenticated, "
           "TM(1,7)")
