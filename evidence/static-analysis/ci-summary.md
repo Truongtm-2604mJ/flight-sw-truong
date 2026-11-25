@@ -12,3 +12,12 @@ all five tools happens in the fast-checks job on every push. Its summary line, f
   a run on the commit that closed it reports no open finding.
 - The run before it, on commit 45eb083, failed with 5 findings that had no disposition. That run found
   NCR-05 (MISRA 5.9) and one `variableScope`. Both were fixed in 5fcd74f.
+
+## After OBS-03 was closed
+
+For commit 44b2afb (fast-checks green):
+
+    static analysis: 178 distinct findings (gcc 14, clang 28, analyzer 14, fanalyzer 1, cppcheck 121);
+    dispositions: {'justified': 75, 'accepted': 103}
+
+No finding is open and none is without a disposition. The 2 fixes removed 2 findings: 180 became 178.
