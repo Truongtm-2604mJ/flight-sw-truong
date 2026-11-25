@@ -83,6 +83,14 @@ def main():
               "operational workaround. It stays a FAIL in the results and the matrix; the CI job "
               "accepts it only because an open or deferred NCR names the test, so any new failure "
               "still fails the job.")
+    sis = os.path.join(EV, "validation", "results-sis", "results.json")
+    if os.path.exists(sis):
+        cs = collections.Counter(r["verdict"] for r in json.load(open(sis))["results"].values())
+        vt.append("")
+        vt.append(f"**On SIS** (RTEMS 6 / LEON3, `evidence/validation/results-sis/`): "
+                  f"{cs.get('PASS', 0)} PASS, {cs.get('FAIL', 0)} FAIL (the same NCR-01), "
+                  f"{cs.get('OBSERVED', 0)} observation, {cs.get('N/A', 0)} not applicable. The N/A test "
+                  "needs state kept across a processor reset, which SIS cannot provide (NCR-04).")
     lines_v = re.search(r"\(([\d.]+ %)\)", allc[6]).group(1)
     br_v = allc[7]
     core_v = re.search(r"\(([\d.]+ %)\)", corec[6]).group(1)

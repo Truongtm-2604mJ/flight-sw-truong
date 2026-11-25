@@ -45,7 +45,7 @@ step matrix           make -s -C tests evidence matrix
 if [ -z "${SKIP_SIS:-}" ]; then
     if [ -n "${RTEMS_PREFIX:-}" ] && [ -x "$RTEMS_PREFIX/bin/sparc-rtems6-sis" ] || command -v sparc-rtems6-sis >/dev/null; then
         step sis      make sis ${RTEMS_PREFIX:+RTEMS_PREFIX="$RTEMS_PREFIX"}
-        make -s -C tests matrix > /dev/null 2>&1
+        make -s -C tests matrix > "$L/matrix.log" 2>&1     # again, with the SIS results
     else
         note "SKIP  sis  (set RTEMS_PREFIX to the RTEMS 6 install)"
     fi
