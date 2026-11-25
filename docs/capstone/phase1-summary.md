@@ -39,7 +39,7 @@ Scheduled commands enter only through an authenticated TC(11,4) (`docs/architect
 | MC/DC | Session 7, on `monitor.c`, `supervisor.c`, `mode_sm.c` | the same files, unchanged byte for byte, in `src/fdir/`. `make -C tests mcdc` runs in CI. | 9/10 mutants killed. The survivor is an equivalent mutant (argued in `evidence/coverage/mcdc.md`). |
 | Coverage | Session 7 justifications | `evidence/coverage/`. Line numbers were re-mapped by source text, and the new security and thermal lines are justified or tested. | 96.6 % of lines; 0 unclassified |
 | Static analysis dispositions | Session 7 `dispositions.yaml` | `evidence/static-analysis/`. File names were updated. SA-50 (open) covers files never analysed by cppcheck before (OBS-03). | CI: 180 findings, all dispositioned |
-| Timing | Session 4 SIS, Session 8 SIS | `tools/timing/budget.py` covers the integrated task set: SUP, ACS, HK, LOG and SCHED. | Integrated SIS run (nightly CI): every R <= T, 0 missed periods. Worst case U = 0.383 with PL_LOG running; the timing build now enables the payload so this is measured directly. |
+| Timing | Session 4 SIS, Session 8 SIS | `tools/timing/budget.py` covers the integrated task set: SUP, ACS, HK, LOG and SCHED. | Integrated SIS run (nightly CI): every R <= T, 0 missed periods. With the payload running (timing build): U = 0.383, PL_LOG R = 185 ms against 1000 ms, measured on the integrated application. |
 | Yamcs procedures | Lab 8.3 | `mcs/procedures/` (SAFE-01, contingency C-SEC). The MDB is regenerated with the payload and thermal additions. | `make mdb-check`: 0 mismatches |
 | Traceability | Session 6 and 7 matrices | `evidence/traceability-matrix.md`: 30 requirements, from requirement to design to code to tests | 29 PASS, 1 FAIL (TMTC-040, NCR-01) |
 

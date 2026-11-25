@@ -24,7 +24,12 @@ worst case. Two things replace it:
   (`-DTIMING_PAYLOAD_ON`, timing build only), so the next nightly run measures PL_LOG at its worst
   case directly.
 
-Raw budget table from that run:
+**Update, nightly run  on commit 854a295 (timing build with the payload enabled):** PL_LOG measured
+95.671 ms, R = 185.4 ms against a 1000 ms deadline, U = 0.3829 for the integrated task set, 0 missed
+periods. The worst case is now measured directly on the integrated application. The other results are
+unchanged: scenario 28/28, security tests 57/58 (NCR-04), validation 34/35 (NCR-01).
+
+Raw budget table from the first run (payload off):
 
 ```
 # LOTUS-1 timing budget (integrated application)
