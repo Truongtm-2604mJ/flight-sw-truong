@@ -1,32 +1,32 @@
 1
-00:00:00,000 --> 00:00:06,256
+00:00:00,000 --> 00:00:04,677
 LOTUS-1 operated from Yamcs. The spacecraft has just restarted cold; first contact sets the key-store counter floor
 
 2
-00:00:06,256 --> 00:00:27,882
+00:00:04,677 --> 00:00:26,306
 1/7  LOTUS-1 in NOMINAL: housekeeping every second to the MCS
 
 3
-00:00:27,882 --> 00:00:46,478
+00:00:26,306 --> 00:00:45,348
 2/7  Authenticated TC: payload ON. Acceptance TM(1,1), completion TM(1,7)
 
 4
-00:00:46,478 --> 00:01:11,761
+00:00:45,348 --> 00:01:10,618
 3/7  Forged TC (payload OFF, wrong key) on the raw uplink: rejected, event, payload unchanged
 
 5
-00:01:11,761 --> 00:01:29,644
+00:01:10,618 --> 00:01:28,076
 4/7  Thermal anomaly: T_BAT 48 C. Persistence filter, one event, DEGRADED, payload suspended
 
 6
-00:01:29,644 --> 00:02:03,331
+00:01:28,076 --> 00:02:02,101
 5/7  Recovery attempts 1, 2, 3 (10 s apart), exhausted: SAFE. Payload off, schedule suspended, essential TM
 
 7
-00:02:03,331 --> 00:02:22,447
+00:02:02,101 --> 00:02:21,333
 6/7  Recovery procedure SAFE-01: assess, clear the fault, authenticated SAFE exit, confirm NOMINAL
 
 8
-00:02:22,447 --> 00:02:37,852
-7/7  Same commit e35c6e8: CI and coverage
+00:02:21,333 --> 00:02:36,389
+7/7  Same commit 7c5a010: CI and coverage
 

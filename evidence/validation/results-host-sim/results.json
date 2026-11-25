@@ -1,6 +1,6 @@
 {
  "target": "host-sim",
- "executed": "2026-11-19 16:26",
+ "executed": "2026-11-25 16:37",
  "minutes": 9.9,
  "results": {
   "VT-01": {
@@ -44,14 +44,14 @@
     "TMTC-040"
    ],
    "verdict": "FAIL",
-   "actual": "TM(1,7) at 0.004 s, transition report at 2.001 s (+1.997 s after TM(1,7)); first HK after TM(1,7): NOMINAL"
+   "actual": "TM(1,7) at 0.002 s, transition report at 2.001 s (+1.999 s after TM(1,7)); first HK after TM(1,7): NOMINAL"
   },
   "VT-MM-150": {
    "reqs": [
     "MM-150"
    ],
    "verdict": "PASS",
-   "actual": "1.997 s"
+   "actual": "1.999 s"
   },
   "VT-MM-080": {
    "reqs": [
@@ -160,7 +160,7 @@
     "MM-040"
    ],
    "verdict": "PASS",
-   "actual": "V_BUS alarm True; SAFE after 4.000 s, cause MONITOR"
+   "actual": "V_BUS alarm True; SAFE after 3.999 s, cause MONITOR"
   },
   "VT-FDIR-040": {
    "reqs": [
@@ -237,7 +237,7 @@
     "TMTC-050"
    ],
    "verdict": "PASS",
-   "actual": "1459 packets in 11 boots; no gap, no rejection, no drop"
+   "actual": "1460 packets in 11 boots; no gap, no rejection, no drop"
   },
   "VT-TMTC-070": {
    "reqs": [

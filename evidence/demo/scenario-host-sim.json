@@ -57,7 +57,7 @@
   "step": "4",
   "check": "mode NOMINAL -> DEGRADED, cause MONITOR T_BAT",
   "ok": true,
-  "measured": "0.00 s after the monitor event (2 s mode cycle)"
+  "measured": "2.00 s after the monitor event (2 s mode cycle)"
  },
  {
   "step": "4",
@@ -75,7 +75,7 @@
   "step": "5",
   "check": "3 recovery attempts, then EXHAUSTED",
   "ok": true,
-  "measured": "exhausted 30.50 s after DEGRADED"
+  "measured": "exhausted 30.00 s after DEGRADED"
  },
  {
   "step": "5",
@@ -117,7 +117,7 @@
   "step": "6",
   "check": "fault condition cleared: T_BAT below the 43.00 C clear threshold",
   "ok": true,
-  "measured": "T_BAT 35.05 C"
+  "measured": "T_BAT 34.38 C"
  },
  {
   "step": "6",

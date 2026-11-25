@@ -4,7 +4,7 @@
   1/7  LOTUS-1 in NOMINAL: housekeeping every second to the MCS
 ==============================================================================
    PASS  mode NOMINAL (HK SID 1 decoded by the MDB)
-   PASS  HK live: uptime 9 -> 20 s; T_BAT 27.02 C, V_BUS 28055 mV
+   PASS  HK live: uptime 11 -> 22 s; T_BAT 27.14 C, V_BUS 28068 mV
 
 ==============================================================================
   2/7  Authenticated TC: payload ON. Acceptance TM(1,1), completion TM(1,7)
@@ -40,13 +40,13 @@
   6/7  Recovery procedure SAFE-01: assess, clear the fault, authenticated SAFE exit, confirm NOMINAL
 ==============================================================================
    PASS  assess: cause MONITOR, T_BAT 48.00 C, boot count 1
-   PASS  fault cleared: T_BAT 26.72 C, below the 43.00 C clear limit (SID 2 carries no monitor state in SAFE: OBS-02)
+   PASS  fault cleared: T_BAT 26.93 C, below the 43.00 C clear limit (SID 2 carries no monitor state in SAFE: OBS-02)
    PASS  SET_MODE NOMINAL: authenticated, TM(1,7)
    PASS  confirmed: mode NOMINAL in HK
 
 ==============================================================================
-  7/7  Same commit e35c6e8: CI green (fast-checks), coverage report (show the GitHub Actions run and evidence/coverage/coverage.md)
+  7/7  Same commit 7c5a010: CI green (fast-checks), coverage report (show the GitHub Actions run and evidence/coverage/coverage.md)
 ==============================================================================
 
-# demo checks: 20/20 passed, 140 s
-# captions written to /home/claude/repo/evidence/demo/captions-raw.srt
+# demo checks: 20/20 passed, 139 s
+# captions written to /home/truongtm/Work/02.Study/04.FlightSoftware/flight-sw-truong/evidence/demo/captions-raw.srt

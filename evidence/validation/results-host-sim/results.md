@@ -1,6 +1,6 @@
 # Validation campaign results: host-sim
 
-- Executed: 2026-11-19 16:26 UTC, 9.9 min
+- Executed: 2026-11-25 16:37 UTC, 9.9 min
 - Spacecraft: `lotus1-test.host` (test build), `lotus1-flight.host` (flight build)
 - Log: `campaign.log` (every TC and TM, decoded)
 - Verdicts: FAIL 1, OBSERVED 1, PASS 33
@@ -12,8 +12,8 @@
 | VT-TMTC-020 | TMTC-020, MM-120 | TM(1,2) codes 3, 5, 7, 8, 9, 9 in that order; no TM(1,7) and no TM(17,2) for any of them; mode still NOMINAL; HK TC rejected counter up by 6. | codes [None, None, 7, 8, 9, 9]; 0 executions; mode NOMINAL; TC rejected counter +6 | **PASS** |
 | VT-TMTC-030 | TMTC-030 | No TM(1,x) for any of the four lines; HK TC rejected counter up by 4; TC(17,1) still answered. | 0 verification reports; TC rejected counter +4; alive True | **PASS** |
 | VT-TMTC-060 | TMTC-060 | At least 11 intervals, every one within 0.9 s to 1.1 s. | 11 intervals, min 1.000 s, max 1.000 s | **PASS** |
-| VT-TMTC-040 | TMTC-040 | The mode transition is reported no later than TM(1,7), and the first HK after TM(1,7) shows SAFE. (The same execution provides the data for VT-MM-150 and VT-MM-080.) | TM(1,7) at 0.004 s, transition report at 2.001 s (+1.997 s after TM(1,7)); first HK after TM(1,7): NOMINAL | **FAIL** |
-| VT-MM-150 | MM-150 | Transition reported at most 3.0 s after TM(1,7). | 1.997 s | **PASS** |
+| VT-TMTC-040 | TMTC-040 | The mode transition is reported no later than TM(1,7), and the first HK after TM(1,7) shows SAFE. (The same execution provides the data for VT-MM-150 and VT-MM-080.) | TM(1,7) at 0.002 s, transition report at 2.001 s (+1.999 s after TM(1,7)); first HK after TM(1,7): NOMINAL | **FAIL** |
+| VT-MM-150 | MM-150 | Transition reported at most 3.0 s after TM(1,7). | 1.999 s | **PASS** |
 | VT-MM-080 | MM-080, MM-070 | From NOMINAL to SAFE, cause GROUND. | NOMINAL -> SAFE, cause GROUND | **PASS** |
 | VT-MM-030 | MM-030 | Only essential HK (SID 2) after the transition; status: payload off, schedule disabled, sun pointing, receiver on; mode SAFE. | HK SIDs after the transition [2]; status 0x18 (payload False, schedule False, sun True, RX True); mode SAFE | **PASS** |
 | VT-TMTC-010b | TMTC-010 | TM(1,1), TM(17,2), TM(1,7). | [(1, 1), (17, 2), (1, 7)] | **PASS** |
@@ -28,7 +28,7 @@
 | VT-FDIR-090 | FDIR-090 | No T_BAT event while disabled; one T_BAT alarm within 6 s of re-enabling. | T_BAT events while disabled: 0; alarms after enable: 1 | **PASS** |
 | VT-MM-060 | MM-060, MM-070 | Alarm reported; ACTION INHIBITED event (kind mode change); mode stays NOMINAL. The ground command is applied: NOMINAL to DEGRADED, cause GROUND. | alarm True; 1 refusal(s); mode after fault NOMINAL; ground DEGRADED applied True | **PASS** |
 | VT-FDIR-080 | FDIR-080 | Inhibit ON event; OFF event with reason timeout 4.5 s to 7 s after TM(1,7); HK inhibit bit cleared. | OFF after 5.497 s, reason 2; HK inhibited bit False | **PASS** |
-| VT-FDIR-030 | FDIR-030, MM-040 | V_BUS alarm (low); transition NOMINAL to SAFE with cause MONITOR, within 6 s of TM(1,7) (detection 4 s + one supervisor period). | V_BUS alarm True; SAFE after 4.000 s, cause MONITOR | **PASS** |
+| VT-FDIR-030 | FDIR-030, MM-040 | V_BUS alarm (low); transition NOMINAL to SAFE with cause MONITOR, within 6 s of TM(1,7) (detection 4 s + one supervisor period). | V_BUS alarm True; SAFE after 3.999 s, cause MONITOR | **PASS** |
 | VT-FDIR-040 | FDIR-040 | HEARTBEAT MISSED and TASK RESTARTED events for PL_LOG; no transition; mode NOMINAL. Timing: the hang begins at PL_LOG's next release, which the ground cannot see, up to one PL_LOG period (1.0 s) after TM(1,7); so the restart must be reported no later than 5.0 s after TM(1,7) (4.0 s + 1.0 s). | missed 1, restarted 1 after 3.999 s; 0 transitions | **PASS** |
 | VT-FDIR-050 | FDIR-050, MM-040 | Three TASK RESTARTED events, then TASK ESCALATED; transition to SAFE with cause LIVENESS; no restart after the escalation. | 3 restarts, escalation True, 0 restarts after it; transitions [('SAFE', 'LIVENESS')] | **PASS** |
 | VT-FDIR-050b | FDIR-050 | Three TASK RESTARTED events, then TASK ESCALATED for PL_LOG; transition to DEGRADED with cause LIVENESS; no restart after the escalation; full HK shows PL_LOG (bit 2) in the failed mask. | 3 restarts, escalation True, 0 restarts after it; transitions [('DEGRADED', 'LIVENESS')]; HK failed mask 0x04 | **PASS** |
@@ -38,7 +38,7 @@
 | VT-SEC-010 | SEC-010, SEC-020, SEC-030 | No TM(1,x) for the forged or the replayed TC; payload still ON; SID 3 AUTH +1, REPLAY +1; a security rejection event for each class (first or summary). | forged answered 0; ping executed 1 time(s); payload ON True; SID 3 AUTH +1, REPLAY +1; rejection events for ['AUTH', 'REPLAY'] | **PASS** |
 | VT-SEC-020 | SEC-030 | One KEY_REPAIRED event (scrub repairs the copy); one COUNTER_VOTE event and the counter in SID 3 = N + 7 (no majority: the largest copy, so no used value becomes valid again); scrub repairs +1; active slot still ACTIVE; the next TC accepted. | security events ['KEY_REPAIRED', 'COUNTER_VOTE']; scrub repairs +1; counter 60 (N + 7 = 60); slot 1 state 2; ping accepted True | **PASS** |
 | VT-FDIR-100 | FDIR-100, FDIR-110, MM-040 | One T_BAT ALARM event; DEGRADED (payload suspended); 3 THERMAL_RECOVERY_ATTEMPT events 10 s apart, one EXHAUSTED; SAFE with cause MONITOR; schedule suspended; after the ground command, NOMINAL. | 1 ALARM event; attempts [1, 2, 3] with gaps [10.0, 10.0] s; 1 EXHAUSTED; transitions [(0, 1, 2), (1, 2, 2)]; mode after the ground command NOMINAL | **PASS** |
-| VT-TMTC-050 | TMTC-050 | Every per-APID sequence advances by exactly 1; 0 lines rejected by the ground; TM drop 0. | 1459 packets in 11 boots; no gap, no rejection, no drop | **PASS** |
+| VT-TMTC-050 | TMTC-050 | Every per-APID sequence advances by exactly 1; 0 lines rejected by the ground; TM drop 0. | 1460 packets in 11 boots; no gap, no rejection, no drop | **PASS** |
 | VT-TMTC-070 | TMTC-070 | Five TM(1,2) with code 7; no TM(1,7); no event; mode NOMINAL; T_BAT unchanged. | codes [7, 7, 7, 7, 7]; events []; mode NOMINAL, T_BAT 25.02 C | **PASS** |
 | VT-MM-100 | MM-100 | 0 unhandled (state, event) pairs; generator negative tests all pass. | 0 unhandled pairs (completeness.md); generator tests pass True | **PASS** |
 | VT-MM-130 | MM-130 | IT-10 PASS. | IT-10 PASS (int_tc_path.host.log) | **PASS** |
