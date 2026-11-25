@@ -5,7 +5,9 @@ set -eu
 cd "$(dirname "$0")"
 python3 figures.py
 python3 fill.py > /dev/null
-pandoc report.filled.md -s --toc --toc-depth=1 --mathml --css report.css --embed-resources \
+# pandoc 2.19+ has --embed-resources; older ones (Ubuntu 22.04: 2.9) use --self-contained.
+if pandoc --help | grep -q -- --embed-resources; then EMBED=--embed-resources; else EMBED=--self-contained; fi
+pandoc report.filled.md -s --toc --toc-depth=1 --mathml --css report.css $EMBED \
     --metadata lang=en -o report.html
 python3 - <<'PY'
 import os
