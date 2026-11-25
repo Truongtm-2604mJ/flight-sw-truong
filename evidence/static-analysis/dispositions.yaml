@@ -233,7 +233,7 @@ dispositions:
     check: misra-c2012-10\.7
     file: keystore\.c
     disposition: fixed
-    argument: ks_scrub() or-ed the composite expression 1u << s into the result. The bit is now computed into its own variable first. Unit tests (test_keystore) were rerun and pass.
+    argument: ks_scrub() or-ed 1u << s into an unsigned int. In the MISRA essential type model 1u is essentially unsigned char, so the composite was narrower than the result. The constant is now cast to unsigned int before the shift. (A first fix through a separate variable broke rule 10.6 and clang's declaration-after-statement warning, and CI caught it.) Unit tests (test_keystore) were rerun and pass.
   - id: SA-52
     tool: cppcheck
     check: misra-c2012-13\.4
