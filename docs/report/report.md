@@ -588,7 +588,7 @@ timing or an assumption they did not share.
 | NCR-03 | NCR | FDIR-110 | major | fixed: second thermal recovery sequence after EXHAUSTED |
 | NCR-04 | NCR | SEC-020 | major | **open**: on SIS the key store is RAM, so counters do not survive a reset |
 | NCR-05 | NCR | MISRA 5.9 | minor | fixed: static helper names repeated across files, found by the first CI run of the integrated tree |
-| OBS-03 | OBS | (static analysis) | | **open**: 12 cppcheck findings in files never analysed by cppcheck before, not yet triaged |
+| OBS-03 | OBS | (static analysis) | | closed: 12 cppcheck findings in files never analysed by cppcheck before, triaged one by one (2 fixed, 2 accepted, 3 justified rules) |
 | OBS-01 | OBS | (FDIR-120 candidate) | | **open**: ground can return to NOMINAL while an alarm is still active, with no reminder |
 | OBS-02 | OBS | MM-030 | | **open**: SID 2 (SAFE) has no monitor states |
 | TA-01 to TA-07 | test anomalies | | | fixed (the test was wrong; no flight code changed) |
@@ -636,14 +636,14 @@ independently of the demonstration.
 
 @@TIMING_TABLE@@
 
-The estimate uses the Session 4 SIS measurements for ACS_CTRL, TM_HK and PL_LOG, the security costs from
-calibrated instruction counts, and allowances for SUP and SCHED. On SIS, `make sis` measures every
-periodic task in the integrated flight build over 60 s (rate monotonic statistics, missed periods) and
-every security operation, and regenerates the table with the comparison.
+The table was measured on SIS by the nightly CI job, on the integrated flight build with the payload
+running (`evidence/timing/budget-sis.md`). The "estimate C" column is the design-time estimate:
+Session 4 SIS figures for ACS_CTRL, TM_HK and PL_LOG, and allowances for SUP and SCHED. On SIS, SUP and
+SCHED cost far less than their 5 ms and 4 ms allowances. The first integrated run had the payload off,
+so it measured PL_LOG at 0.04 ms, which is not its worst case. The timing build now starts with the
+payload enabled, and the table above is from that run.
 
-**Security cost.** The security operations were measured on SIS, in the Session 8 build. That build
-has the same `tc_auth.c`, `keystore.c` and tinycrypt code, 200 runs each
-(`labs/session-08/docs/timing/budget-sis.md`):
+**Security cost.** The integrated SIS run measured each security operation 200 times:
 
 - authenticating one TC costs 1.33 ms at most (estimate 2.0 ms), of which the MAC is 1.04 ms;
 - rejecting a forgery costs 1.22 ms (estimate 1.8 ms);
@@ -651,9 +651,7 @@ has the same `tc_auth.c`, `keystore.c` and tinycrypt code, 200 runs each
 
 All are within TIM-020's 5 ms, and the estimates were pessimistic by 26 to 48 %. At the S-band uplink
 rate (3.9 TC/s at most), a flood of forgeries costs 0.5 % of the processor. On the lab console
-(47 TC/s) it costs 5.8 %. The same SIS run measured the Session 8 flight build, which differs from
-this application only by the payload and thermal recovery code: U = 0.383, no missed period in 60 s,
-largest R/T = 0.19.
+(47 TC/s) it costs 5.8 %, and the task set still closes.
 
 # 8. Limitations and future work
 

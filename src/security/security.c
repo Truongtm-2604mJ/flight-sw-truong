@@ -295,8 +295,11 @@ void security_hk_cycle(void)
     }
     (void)memcpy(totals, g_auth.rej_total, sizeof(totals));
     (void)memcpy(codes, g_auth.rej_last_code, sizeof(codes));
-    while (n_ev < SEC_EVQ_DEPTH &&
-           (ev_len[n_ev] = sec_service_take(&g_svc, &ev_sev[n_ev], ev[n_ev])) > 0u) {
+    while (n_ev < SEC_EVQ_DEPTH) {           /* MISRA 13.4: no assignment in the condition */
+        ev_len[n_ev] = sec_service_take(&g_svc, &ev_sev[n_ev], ev[n_ev]);
+        if (ev_len[n_ev] == 0u) {
+            break;
+        }
         n_ev++;
     }
     tmtc_unlock();

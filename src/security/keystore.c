@@ -292,7 +292,8 @@ unsigned ks_scrub(keystore_t *ks)
         } else {
             k->state = (uint8_t)KS_CORRUPT;   /* keeps its slot number but  */
             ks->scrub_errors++;               /* can never authenticate     */
-            found |= 1u << s;
+            const unsigned bit = 1u << s; /* MISRA 10.7: no composite operand */
+            found |= bit;
         }
         zeroise(voted, sizeof(voted));
     }

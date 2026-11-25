@@ -59,9 +59,9 @@ github.com/Truongtm-2604mJ/flight-sw-truong
   commands get no reply, and the cost is 2.0 ms per command on LEON3 (estimate).
 - Verification:
   - 142 unit tests, 16 integration tests, 35 validation tests through the ground interface;
-  - 96.6 % line coverage, with every uncovered line justified;
+  - 96.6 % cumulative line coverage (unit + integration + validation), with every uncovered line justified;
   - MC/DC on the FDIR guards;
-  - MISRA C:2012 static analysis with every finding dispositioned;
+  - MISRA C:2012 static analysis, each finding fixed, justified or accepted with a stated risk;
   - CI on GitHub Actions with a nightly SIS job.
 
 ## Personal site

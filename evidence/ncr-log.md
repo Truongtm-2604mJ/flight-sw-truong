@@ -21,7 +21,7 @@ Severity (NCR): critical, loss of vehicle or mission possible; major, requiremen
 | TA-05 | TA | TMTC-020 | - | **fixed** | VT-TMTC-020, first host run of the integrated campaign (exception) |
 | TA-06 | TA | SEC-040 | - | **fixed** | IT-16, first run |
 | TA-07 | TA | SEC-030 | - | **fixed** | VT-SEC-020, first host run |
-| OBS-03 | OBS | (none; static analysis process) | - | **open** | Capstone integration, static analysis set-up |
+| OBS-03 | OBS | (none; static analysis process) | - | **closed** | Capstone integration, static analysis set-up |
 | NCR-05 | NCR | (coding standard - MISRA C:2012 rule 5.9, advisory) | minor | **fixed** | fast-checks CI, static analysis job, first push of the integrated tree (commit 45eb083) |
 | TA-08 | TA | SEC-040 | - | **fixed** | First SIS run of the integrated campaign (make sis), 29 of 35 tests failed |
 
@@ -176,11 +176,11 @@ Severity (NCR): critical, loss of vehicle or mission possible; major, requiremen
 
 ## OBS-03: Validation observation, (none; static analysis process)
 
-**Status:** open.
+**Status:** closed.
 
 **Description.** cppcheck and its MISRA C:2012 addon have not been run on the Session 8 security files and the capstone thermal recovery (tc_auth.c, keystore.c, sec_service.c, sec_report.c, security.c, thermal.c). GCC and clang at the maximum warning set, GCC -fanalyzer and the clang analyser have, with every finding dispositioned.
 
-**Disposition.** Open. The fast-checks CI job runs cppcheck on every push. Findings in these files that no project-wide rule covers match SA-50 (disposition "open") and are listed in findings-current.md, so they are visible without failing every build. To close - triage each one into fixed, justified or accepted, then delete SA-50.
+**Disposition.** Closed. The 12 findings (fast-checks run 45637380657) were triaged one by one. 2 were fixed in the code (SA-51 MISRA 10.7 in keystore.c, SA-52 MISRA 13.4 in security.c). 2 were accepted with a stated risk (SA-53 void-pointer callback context, SA-54 memcpy of the key store image). 3 were justified (SA-55 host-only stdio and getenv, SA-56 cppcheck configuration, SA-57 the always-false check on the SIS RAM stand-in). The broad SA-50 rule is removed, so any new finding in these files fails CI. History of the item - The fast-checks CI job runs cppcheck on every push. Findings in these files that no project-wide rule covers match SA-50 (disposition "open") and are listed in findings-current.md, so they are visible without failing every build. To close - triage each one into fixed, justified or accepted, then delete SA-50.
 
 ## NCR-05: Nonconformance, (coding standard - MISRA C:2012 rule 5.9, advisory)
 

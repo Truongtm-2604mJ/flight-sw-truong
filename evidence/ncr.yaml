@@ -268,7 +268,7 @@ ncrs:
   - id: OBS-03
     kind: OBS
     requirement: (none; static analysis process)
-    status: open
+    status: closed
     found_by: Capstone integration, static analysis set-up
     description: >-
       cppcheck and its MISRA C:2012 addon have not been run on the Session 8
@@ -277,7 +277,13 @@ ncrs:
       the maximum warning set, GCC -fanalyzer and the clang analyser have, with
       every finding dispositioned.
     disposition: >-
-      Open. The fast-checks CI job runs cppcheck on every push. Findings in
+      Closed. The 12 findings (fast-checks run 45637380657) were triaged one by
+      one. 2 were fixed in the code (SA-51 MISRA 10.7 in keystore.c, SA-52 MISRA
+      13.4 in security.c). 2 were accepted with a stated risk (SA-53 void-pointer
+      callback context, SA-54 memcpy of the key store image). 3 were justified
+      (SA-55 host-only stdio and getenv, SA-56 cppcheck configuration, SA-57 the
+      always-false check on the SIS RAM stand-in). The broad SA-50 rule is
+      removed, so any new finding in these files fails CI. History of the item - The fast-checks CI job runs cppcheck on every push. Findings in
       these files that no project-wide rule covers match SA-50 (disposition
       "open") and are listed in findings-current.md, so they are visible
       without failing every build. To close - triage each one into fixed,

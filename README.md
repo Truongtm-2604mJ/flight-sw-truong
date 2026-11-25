@@ -88,8 +88,8 @@ make sis RTEMS_PREFIX=...                  # on SIS: timing, scenario, integrati
 | Unit tests | 9 suites, 142 tests, all pass |
 | Integration | 16/16 (host simulation of RTEMS; SIS in the nightly job) |
 | Validation | 35 tests through the ground interface: 33 PASS, 1 FAIL (VT-TMTC-040, NCR-01, deferred), 1 observation |
-| Coverage | 96.6 % of flight lines and 84.4 % of branches over all levels (core modules 98.2 %); every other line classified |
-| Static analysis | GCC, clang `-Weverything`, cppcheck + MISRA C:2012, clang and GCC analysers; every finding dispositioned |
+| Coverage | 96.6 % of flight lines, 84.4 % of branches, cumulative over unit + integration + validation (core modules 98.2 %); every other line classified. The fast-checks pipeline alone (unit + integration) gives less. |
+| Static analysis | GCC, clang `-Weverything`, cppcheck + MISRA C:2012, clang and GCC analysers: 180 findings, each fixed, justified or accepted with its risk (`evidence/static-analysis/`) |
 | Timing | U = 0.393 for the integrated estimate, every task R ≤ T ([`evidence/timing/`](evidence/timing/)) |
 | Open items | NCR-01 (deferred), NCR-04, OBS-01, OBS-02: [`evidence/ncr-log.md`](evidence/ncr-log.md) |
 

@@ -100,16 +100,20 @@ def main():
                  "where cppcheck could not be installed. The fast-checks CI job runs all five tools on "
                  "every push (`evidence/static-analysis/ci-summary.md`). On the integrated tree it "
                  "reports 180 distinct findings: gcc 14, clang 28, analyzer 14, fanalyzer 1, "
-                 "cppcheck 123. Of these, 69 are justified, 99 accepted and 12 open. The 12 open ones "
-                 "are cppcheck findings in files cppcheck had never seen (the Session 8 security "
-                 "files and the thermal recovery). They match SA-50 and are tracked as OBS-03 until "
-                 "triaged. The first CI run of the integrated tree failed on 5 findings without a "
+                 "cppcheck 123. The 12 findings in files cppcheck had never seen before (the Session 8 "
+                 "security files) were first routed to a temporary open rule (SA-50, OBS-03), then "
+                 "triaged one by one. 2 were fixed in the code (MISRA 10.7, 13.4), 2 accepted with a "
+                 "stated risk (void-pointer callback context, memcpy of the key store image), and 3 "
+                 "justified (host-only stdio, cppcheck configuration, a check that is always false "
+                 "only on the SIS RAM stand-in). SA-50 is removed, so no finding is left open. "
+                 "The first CI run of the integrated tree failed on 5 findings without a "
                  "disposition. They were helper names repeated across files (MISRA 5.9) and one "
                  "variable scope, recorded as NCR-05 and fixed." if no_cpp else ""))
-    budget = read("timing", "budget-estimate.md")
+    budget = (read("timing", "budget-sis.md") if os.path.exists(os.path.join(EV, "timing", "budget-sis.md"))
+              else read("timing", "budget-estimate.md"))
     tt = budget[budget.index("## Task set"):budget.index("Verdict")].replace("## Task set\n", "")
     subs = {
-        "@@STATIC_SUMMARY@@": f"{sum(int(n) for _, n in tools)} distinct findings, every one dispositioned"
+        "@@STATIC_SUMMARY@@": f"{sum(int(n) for _, n in tools)} distinct findings, each fixed, justified or accepted with a stated risk"
                              + (" (cppcheck: CI only, see 6.3)" if no_cpp else ""),
         "@@UNIT_SUMMARY@@": "142 tests, all pass",
         "@@INT_SUMMARY@@": "16/16 pass",

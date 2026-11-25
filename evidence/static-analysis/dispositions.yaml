@@ -225,16 +225,77 @@ dispositions:
     disposition: accepted
     argument: Advisory style rules. 8.7 and 8.9 ask for objects and functions at the narrowest scope; 12.3 objects to several declarators in one declaration; 13.3 to ++ inside a larger expression; 17.8 to modifying a parameter; 2.3 to an unused type. Kept as written; no behaviour depends on them.
 
-  # ---- Capstone: files never run through cppcheck before -----------------------------
-  - id: SA-50
+  # ---- Capstone: OBS-03 triage, finding by finding (closes SA-50) ------------------
+  # The 12 cppcheck findings that SA-50 held open (fast-checks run 45637380657), each
+  # given its own disposition.
+  - id: SA-51
     tool: cppcheck
-    file: (tc_auth|keystore|sec_service|sec_report|security|thermal)\.c
-    disposition: open
+    check: misra-c2012-10\.7
+    file: keystore\.c
+    disposition: fixed
+    argument: ks_scrub() or-ed the composite expression 1u << s into the result. The bit is now computed into its own variable first. Unit tests (test_keystore) were rerun and pass.
+  - id: SA-52
+    tool: cppcheck
+    check: misra-c2012-13\.4
+    file: security\.c
+    disposition: fixed
+    argument: security_hk_cycle() assigned the event length inside the while condition. The loop now assigns, then tests and breaks. The security system tests (58/58) were rerun and pass.
+  - id: SA-53
+    tool: cppcheck
+    check: misra-c2012-11\.5
+    file: tc_auth\.c|sec_service\.c|keystore\.c
+    disposition: accepted
     argument: >-
-      Triage pending, listed rather than hidden. These files (Session 8 security, capstone thermal
-      recovery) were checked with GCC and clang at the maximum warning set, -fanalyzer and the
-      clang analyser, but never with cppcheck and its MISRA addon. The Session 8 CI ran warnings,
-      unit and system tests only, and the capstone environment had no cppcheck. The project-wide
-      rules above (SA-30 to SA-35) are matched first. Any finding left over lands here, is
-      listed in findings-current.md, and is open item OBS-03 in the NCR log, to be triaged
-      finding by finding.
+      Rule 11.5 (advisory, conversion from pointer to void into pointer to object). Six instances
+      are the context argument of a callback. The TC handler's security hook and the key store's
+      persistence and event hooks take a void *context, the C way of passing an object to a
+      callback, and each callback casts it back (tc_auth.c 68, 144, 163; sec_service.c 77, 156).
+      keystore.c 42 is zeroise(), which writes a key buffer through a volatile pointer so the
+      compiler cannot remove the clearing. Risk - the type is not checked at the cast. Mitigation -
+      each callback is registered exactly once, with exactly one context type, in security_init()
+      (security.c), and the integration and security system tests exercise every hook.
+  - id: SA-54
+    tool: cppcheck
+    check: misra-c2012-21\.15
+    file: keystore\.c
+    disposition: accepted
+    argument: >-
+      Rule 21.15 (required, memcpy pointers to compatible types). ks_encode() and ks_decode()
+      (325, 347) copy the keystore_t structure to and from the byte image written to NV memory.
+      Risk - the image layout depends on the compiler's structure layout and on byte order. It is
+      written and read only by the same build on the same processor. A layout change fails the
+      magic, length or CRC check, and the key store then falls back to the factory state, which
+      needs a first contact (fail closed, SEC-040). A field-by-field serialiser is the alternative
+      if images ever have to move between builds (noted in the report's future work).
+  - id: SA-55
+    tool: cppcheck
+    check: misra-c2012-(21\.6|21\.8|21\.20)
+    file: security\.c
+    disposition: justified
+    argument: >-
+      Same argument as SA-22. The host simulation's NV file uses <stdio.h> (fopen), getenv() and
+      the pointer it returns, all in the #else branch of __rtems__ (security.c 41-83), so none of it
+      is in the RTEMS images. On RTEMS, <stdio.h> provides only the console boot banner (printf),
+      as in main.c and fdir.c.
+  - id: SA-56
+    tool: cppcheck
+    check: misra-config
+    file: keystore\.c|security\.c
+    disposition: justified
+    argument: >-
+      Tool configuration, not code (as SA-21). KS_IMAGE_LEN is 8 + sizeof(keystore_t) + 2, and
+      cppcheck cannot evaluate sizeof of a structure inside a macro, so it reports keystore_t as
+      unknown and the arrays sized by it as "unknown array size". GCC and clang compute the size
+      at compile time, and the -Wall -Wextra -Werror builds would fail on a wrong one.
+  - id: SA-57
+    tool: cppcheck
+    check: knownConditionTrueFalse
+    file: security\.c
+    disposition: justified
+    argument: >-
+      Lines 91 and 154 test the return value of sec_nv_store() and sec_nv_load(). In the RTEMS
+      configuration these are the RAM stand-ins for SIS, which always return 0, so cppcheck sees
+      the condition as always false. The check is kept on purpose. On the host the functions are
+      file I/O and can fail, and on a flight OBC they are the NV driver, whose failure sets
+      SEC_FL_NV_FAIL in SID 3. The stand-in itself is the subject of NCR-04.
+
