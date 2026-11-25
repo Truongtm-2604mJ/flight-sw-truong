@@ -9,6 +9,13 @@ Two ways to run the same 7-step scenario (`docs/mission.md`):
 | Needs | the host build, or SIS (`scripts/run-sis.sh demo`) | Java 17, `mcs/run-bridge.sh`, `mcs/run-yamcs.sh` |
 | Time | about 2 min | about 3 min 45 s at `--pace 1` |
 
+## Unattended: everything, video included
+
+`nohup sh scripts/run-all.sh > run-all.log 2>&1 &` runs every host check, the SIS evidence (with
+`RTEMS_PREFIX`) and `demo/record_demo.py`, which records the three Yamcs views headless and composes
+`evidence/demo/lotus1-demo.mp4` with captions. It needs Java 17+, ffmpeg and Python Playwright. Results
+go to `run-all-summary.txt`.
+
 ## Recording (4 minutes or less)
 
 Setup, before pressing record:

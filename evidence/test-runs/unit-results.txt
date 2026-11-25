@@ -146,17 +146,17 @@ unit/test_thermal.c:88:test_time_wraps:PASS
 6 Tests 0 Failures 0 Ignored 
 OK
 ### build/unit/test_keystore
-unit/test_keystore.c:195:test_factory_state:PASS
-unit/test_keystore.c:196:test_mac_matches_ground:PASS
-unit/test_keystore.c:197:test_load_unwraps_ground_key:PASS
-unit/test_keystore.c:198:test_load_rejects_bad_wrap:PASS
-unit/test_keystore.c:199:test_load_refuses_active_slot:PASS
-unit/test_keystore.c:200:test_activate_and_fallback:PASS
-unit/test_keystore.c:201:test_erase:PASS
-unit/test_keystore.c:202:test_counter_vote:PASS
-unit/test_keystore.c:203:test_scrub_repairs_single_upset:PASS
-unit/test_keystore.c:204:test_scrub_detects_lost_key:PASS
-unit/test_keystore.c:205:test_nv_image:PASS
+unit/test_keystore.c:199:test_factory_state:PASS
+unit/test_keystore.c:200:test_mac_matches_ground:PASS
+unit/test_keystore.c:201:test_load_unwraps_ground_key:PASS
+unit/test_keystore.c:202:test_load_rejects_bad_wrap:PASS
+unit/test_keystore.c:203:test_load_refuses_active_slot:PASS
+unit/test_keystore.c:204:test_activate_and_fallback:PASS
+unit/test_keystore.c:205:test_erase:PASS
+unit/test_keystore.c:206:test_counter_vote:PASS
+unit/test_keystore.c:207:test_scrub_repairs_single_upset:PASS
+unit/test_keystore.c:208:test_scrub_detects_lost_key:PASS
+unit/test_keystore.c:209:test_nv_image:PASS
 
 -----------------------
 11 Tests 0 Failures 0 Ignored 

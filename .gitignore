@@ -11,3 +11,5 @@ __pycache__/
 # intermediate report output
 /docs/report/report.html
 /docs/report/report.filled.md
+/evidence/demo/lotus1-demo.mp4
+/run-all-summary.txt
