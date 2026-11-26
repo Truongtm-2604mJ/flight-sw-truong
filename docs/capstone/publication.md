@@ -39,7 +39,7 @@ Replace `VIDEO_LINK` and `SITE_URL` once the video is uploaded and the page is o
 >   redundancy, and an authentication scheme nobody has reviewed independently.
 >
 > Repository: https://github.com/Truongtm-2604mJ/flight-sw-truong
-> Demo: VIDEO_LINK
+> Demo: https://youtu.be/Cp3vAMY7QOk
 >
 > #flightsoftware #embedded #RTEMS #spacecraft #CCSDS
 

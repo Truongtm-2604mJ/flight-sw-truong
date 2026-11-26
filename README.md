@@ -10,7 +10,7 @@ authenticated commanding. It comes with its requirements, tests and evidence.
 
 ## Demonstration
 
-**▶ [Watch the 4-minute demonstration](VIDEO_LINK)**: the full scenario operated from Yamcs.
+**▶ [Watch the 3-minute demonstration](https://youtu.be/Cp3vAMY7QOk)**: the full scenario operated from Yamcs.
 
 1. Boot to NOMINAL, with HK at 1 Hz.
 2. An authenticated TC enables the payload.
